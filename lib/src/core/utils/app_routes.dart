@@ -1,4 +1,5 @@
 import 'package:stackbudget/src/features/auth/ui/views/auth_view.dart';
+import 'package:stackbudget/src/features/home/ui/views/home_view.dart';
 import 'package:url_strategy/url_strategy.dart' as url;
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +18,11 @@ class AppRoutes {
         path: '/${AuthView.routeName}',
         name: AuthView.routeName,
         builder: (context, state) => const AuthView(),
+      ),
+      GoRoute(
+        path: '/',
+        name: HomeView.routeName,
+        builder: (context, state) => const HomeView(),
       ),
     ],
   );
