@@ -1,0 +1,40 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "stackbudget-2025",
+                    "appId": "1:768307294199:android:91ee5d3f18c8e1d1e4c8f2",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "stackbudget-2025",
+                    "appId": "1:768307294199:ios:738913d0ec755135e4c8f2",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "stackbudget-2025",
+                    "configurations": {
+                        "android": "1:768307294199:android:91ee5d3f18c8e1d1e4c8f2",
+                        "ios": "1:768307294199:ios:738913d0ec755135e4c8f2",
+                        "web": "1:768307294199:web:d4c636d6287a7030e4c8f2"
+                    }
+                }
+            }
+        }
+    },
+    "hosting": {
+        "site": "stackbudget",
+        "public": "build/web",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ]
+    }
+}
