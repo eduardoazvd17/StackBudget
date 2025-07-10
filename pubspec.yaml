@@ -44,6 +44,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   url_strategy: ^0.3.0
+  flutter_animate: ^4.5.2
 
 dev_dependencies:
   flutter_test:
