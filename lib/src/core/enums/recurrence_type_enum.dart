@@ -1,1 +1,1 @@
-enum RecurrenceTypeEnum { none, monthly, yearly }
+enum RecurrenceTypeEnum { monthly, yearly }
