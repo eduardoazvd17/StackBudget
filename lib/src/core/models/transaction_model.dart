@@ -14,7 +14,7 @@ class TransactionModel {
   final DateTime? endDate;
 
   double getValue(DateTime date) => valueByMonth?[date.month] ?? baseValue;
-  bool get isRecurring => recurrenceType != null;
+  bool get isRecurrence => recurrenceType != null;
 
   TransactionModel({
     required this.id,
