@@ -13,14 +13,14 @@ class ErrorHandler {
       final result = await onTry();
       return Right(result);
     } catch (e) {
-      final failure = await onCatch?.call(e) ?? Failure(message: e.toString());
+      final Failure? failure = await onCatch?.call(e);
       developer.log(
-        onCatch == null ? '$e' : '$e\n${failure.toString()}',
+        failure == null ? '$e' : '$e\n${failure.toString()}',
         name: identifier,
         stackTrace: StackTrace.current,
         time: DateTime.now(),
       );
-      return Left(failure);
+      return Left(failure ?? Failure(message: e.toString()));
     }
   }
 }
