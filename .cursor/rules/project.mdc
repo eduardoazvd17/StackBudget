@@ -1,0 +1,34 @@
+---
+alwaysApply: true
+---
+# Descrição do Projeto
+Esse é um projeto de planejamento financeiro e como PO eu quero:
+- Poder planejar meus gastos futuros e manter histórico do passado.
+- Poder inserir gastos recorrentes e alterar valores separados de apenas um mês por exemplo.
+- Mostrar pro usuário o quanto de dinheiro planejado ele possui esse mês e quanto ele gastou/gastará.
+
+Situação 1 - Gasto recorrente com valor dinamico:
+- Tenho gastos recorrentes como a conta de luz. 
+- Adiciono o planejamento recorrente de 400 reais.
+- Então todo mês terá esse gasto sendo contabilizado.
+- Conforme a conta chega eu preciso alterar o valor do mês atual, pois são valores dinâmicos.
+- Eu altero e meu saldo atualiza, me indicando o planejamento correto.
+
+Situação 2 - Gasto parcelado e/ou recorrente (valor fixo):
+- Posso comprar algo parcelado e inserir o valor e o numero de parcelas.
+- Então nos mêses em que essa parcela será paga, deverá constar esse valor também.
+
+Situação 3 - Gasto variável:
+- Posso inserir um gasto que ocorreu durante o dia a dia.
+- Por exemplo, fui num restaurante e gastei 200 reais.
+- Esse valor deve ser somado apenas no mês atual e no mes seguinte não haverá esse gasto lá.
+
+Situação 4 - Gasto anual:
+- Posso inserir um gasto que tenho anualmente, como por exemplo IPVA do meu carro.
+- Esse gasto deve aparecer todo ano, no mês em que eu selecionar.
+
+OBS: 
+- Devemos permitir do usuário selecionar a o mês em que ele ta inserindo o gasto.
+- Devemos otimizar as consultas ao firebase, já que o usuario verá os dados mês a mês.
+- Devemos otimizar a estrutura de dados no firebase pra economizar leituras.
+- Na tela inicial terá um filtro de mês e ano, onde ano será a partir da data de cadastro do usuário até o ano atual.

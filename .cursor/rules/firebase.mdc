@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+## Integração com Firebase
+Este projeto utiliza **Firebase** como backend principal.
+
+### Serviços habilitados
+- **Firebase Auth** → autenticação de usuários (email/senha, Google, etc).
+- **Cloud Firestore** → banco de dados NoSQL para armazenamento de dados em tempo real.
