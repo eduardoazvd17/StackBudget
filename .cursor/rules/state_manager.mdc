@@ -1,0 +1,20 @@
+---
+alwaysApply: true
+---
+## Gerenciamento de Estado
+- O projeto usa **Riverpod** como state manager.
+- Evitar utilizar `setState`, `InheritedWidget` ou `Provider` do pacote antigo.
+- Pode se usar setState com statefulwidgets para casos especificos de estados simples.
+- Todo estado deve ser controlado via `StateNotifier`.
+
+## Padrões de uso
+- Cada **ViewModel** deve ser implementado como `StateNotifier<T>`, onde `T` será um arquivo de estados do tipo `ViewModelState`.
+- Esses estados necessitam ser subclasses que estendem dessa classe abstrata `ViewModelState`, ou seja `ViewModelLoadingState` e etc...
+- Providers devem ser criados dentro da pasta `ui/viewmodels` de cada feature.
+- Nomes de providers devem seguir o padrão: Se a page se chama home_page.dart o view model se chamará home_view_model.dart..
+
+Exemplo:
+```dart
+final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>(
+  (ref) => AuthViewModel(ref.read),
+);

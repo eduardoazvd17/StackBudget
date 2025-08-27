@@ -1,0 +1,22 @@
+---
+alwaysApply: true
+---
+## Estrutura principal
+- `lib/src` → contém todos os arquivos da aplicação.
+- `lib/src/core` → arquivos e utilitários compartilhados entre diferentes features.
+- `lib/src/features` → cada funcionalidade da aplicação fica aqui, isolada em seu próprio módulo.
+
+## Arquitetura das Features (MVVM)
+Estamos utilizando o padrão **MVVM**, alinhado às recomendações oficiais do Flutter.
+Dentro de cada feature, organizamos em dois diretórios principais:
+
+### UI
+- `views` → telas e páginas principais.
+- `viewmodels` → classes responsáveis pela lógica de apresentação e estado da UI.
+  - Dentro de `viewmodels` pode existir uma pasta `widgets` para componentes específicos dessa camada.
+
+### Data
+- `datasources` → integração com APIs externas, banco local, cache ou qualquer serviço relacionado a dados.
+- `models` → definição das entidades e estruturas de dados.
+- `repositories` → abstrações e implementações responsáveis pelo acesso e manipulação dos dados.
+

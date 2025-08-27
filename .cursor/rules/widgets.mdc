@@ -1,0 +1,25 @@
+---
+alwaysApply: true
+---
+# widgets.mdc
+
+## Organização de Widgets
+- Nunca deixar páginas com widgets enormes.  
+- Sempre quebrar em **widgets menores e reutilizáveis** quando:
+  - O widget passar de ~80–200 linhas.
+  - O widget tiver mais de uma responsabilidade.
+  - Um mesmo widget for usado em mais de um lugar.
+
+## Estrutura de Arquivos
+- Cada widget deve ter seu **próprio arquivo `.dart`**.
+- O nome do arquivo deve ser em `snake_case`.
+- O nome da classe deve ser em `UpperCamelCase`.
+- Nunca colocar dois widgets de alto nível no mesmo arquivo.
+- Se o widget for de uso exclusivo de uma feature, ele ficará no diretório de `widgets` dentro de `view`.
+- Se o widget for de uso compartilhado, deverá ficar no diretório `lib/src/core/widgets`.
+
+
+## Boas práticas
+- Evitar criar métodos dentro de `StatefulWidget`/`StatelessWidget` que retornem widgets.  
+  → Prefira sempre criar um **novo widget** em um arquivo separado.  
+- Widgets reutilizáveis que pertencem a uma feature devem ficar dentro de:

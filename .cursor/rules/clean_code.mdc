@@ -1,0 +1,33 @@
+---
+alwaysApply: true
+---
+## Estilo de Código
+- Sempre marcar construtores com `const` quando possível.
+- Usar `final` para todas as variáveis imutáveis.
+- Evitar lógica complexa dentro de `build`.
+- Se houver, mover para o `ViewModel` (Riverpod).
+- Widgets devem receber apenas os parâmetros necessários.
+
+## Componentização
+- Quebrar páginas em:
+- `Scaffold` + estrutura principal → `Page`/`View`.
+- Componentes específicos → `widgets/`.
+
+Exemplo:  
+```dart
+class LoginPage extends ConsumerWidget {
+const LoginPage({super.key});
+
+@override
+Widget build(BuildContext context, WidgetRef ref) {
+  return Scaffold(
+    body: Column(
+      children: const [
+        LoginForm(),
+        SizedBox(height: 16),
+        LoginButton(),
+      ],
+    ),
+  );
+}
+}
