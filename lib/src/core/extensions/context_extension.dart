@@ -9,6 +9,7 @@ import '../core.dart';
 extension BuildContextExtension on BuildContext {
   MediaQueryData get mediaQuery => MediaQuery.of(this);
   ColorScheme get colors => Theme.of(this).colorScheme;
+  ColorScheme get colorScheme => Theme.of(this).colorScheme;
   ThemeData get theme => Theme.of(this);
   TextTheme get textTheme => theme.textTheme;
   TextScaler get textScaler => MediaQuery.of(this).textScaler;

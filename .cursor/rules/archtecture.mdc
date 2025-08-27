@@ -20,3 +20,6 @@ Dentro de cada feature, organizamos em dois diretórios principais:
 - `models` → definição das entidades e estruturas de dados.
 - `repositories` → abstrações e implementações responsáveis pelo acesso e manipulação dos dados.
 
+## Rotas
+O app utiliza o go_router, portanto deve-se mapear as rotas no arquivo `app_routes.dart`.
+
