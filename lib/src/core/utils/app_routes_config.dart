@@ -13,6 +13,7 @@ class AppRoutesConfig {
   // Transaction Routes (futuras)
   static const String transactions = 'transactions';
   static const String addTransaction = 'add-transaction';
+  static const String transactionDetail = 'transaction-detail';
   static const String editTransaction = 'edit-transaction';
 
   // Budget Routes (futuras)
@@ -33,6 +34,7 @@ class AppRoutesConfig {
   static const String homePath = '/';
   static const String transactionsPath = '/$transactions';
   static const String addTransactionPath = '/$addTransaction';
+  static const String transactionDetailPath = '/$transactionDetail';
   static const String editTransactionPath = '/$editTransaction';
   static const String budgetPath = '/$budget';
   static const String monthlyBudgetPath = '/$monthlyBudget';

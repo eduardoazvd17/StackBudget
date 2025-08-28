@@ -1,0 +1,588 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/features/transactions/data/models/models.dart';
+import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
+import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
+
+class TransactionForm extends ConsumerStatefulWidget {
+  final TransactionModel? transaction; // Para edição
+
+  const TransactionForm({super.key, this.transaction});
+
+  @override
+  ConsumerState<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends ConsumerState<TransactionForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _amountController = TextEditingController();
+  final _categoryController = TextEditingController();
+
+  TransactionTypeEnum _selectedType = TransactionTypeEnum.expense;
+  TransactionFrequencyEnum _selectedFrequency =
+      TransactionFrequencyEnum.oneTime;
+  DateTime? _startDate;
+  DateTime? _endDate;
+  int? _totalInstallments;
+  MonthEnum? _selectedYearlyMonth;
+  bool _isDynamic = false;
+
+  bool get _isEditing => widget.transaction != null;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_isEditing) {
+      _populateFieldsForEditing();
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _amountController.dispose();
+    _categoryController.dispose();
+    super.dispose();
+  }
+
+  void _populateFieldsForEditing() {
+    final transaction = widget.transaction!;
+
+    _titleController.text = transaction.title;
+    _descriptionController.text = transaction.description ?? '';
+    _categoryController.text = transaction.category ?? '';
+
+    // Formatar o valor para o campo
+    final formattedAmount = NumberFormat.currency(
+      locale: 'pt_BR',
+      symbol: 'R\$ ',
+      decimalDigits: 2,
+    ).format(transaction.amount);
+    _amountController.text = formattedAmount;
+
+    _selectedType = transaction.type;
+    _selectedFrequency = transaction.frequency;
+    _startDate = transaction.startDate;
+    _endDate = transaction.endDate;
+    _totalInstallments = transaction.totalInstallments;
+    _selectedYearlyMonth = transaction.yearlyMonth;
+    _isDynamic = transaction.isDynamic;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final formState = ref.watch(transactionFormViewModelProvider);
+
+    ref.listen<TransactionFormViewModelState>(
+      transactionFormViewModelProvider,
+      (previous, next) {
+        if (next is TransactionFormSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                _isEditing
+                    ? 'Transação atualizada com sucesso!'
+                    : 'Transação criada com sucesso!',
+              ),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.of(context).pop();
+        } else if (next is TransactionFormErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(next.message),
+              backgroundColor: context.colorScheme.error,
+            ),
+          );
+        }
+      },
+    );
+
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Tipo da transação (Receita/Despesa)
+            _buildTransactionTypeSelector(),
+            const SizedBox(height: Spacing.lg),
+
+            // Título
+            TextFormField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: 'Título *',
+                hintText: 'Ex: Salário, Aluguel, Supermercado...',
+                prefixIcon: Icon(Icons.title),
+              ),
+              textInputAction: TextInputAction.next,
+              validator: Validators.required,
+              enabled: formState is! TransactionFormLoadingState,
+            ),
+            const SizedBox(height: Spacing.md),
+
+            // Valor
+            TextFormField(
+              controller: _amountController,
+              decoration: const InputDecoration(
+                labelText: 'Valor *',
+                hintText: 'R\$ 0,00',
+                prefixIcon: Icon(Icons.attach_money),
+              ),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                CurrencyInputFormatter(currency: 'BRL'),
+              ],
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Valor é obrigatório';
+                }
+                // Extrai apenas os dígitos e converte para double
+                final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
+                if (digitsOnly.isEmpty) {
+                  return 'Valor é obrigatório';
+                }
+                final numValue = double.parse(digitsOnly) / 100;
+                if (numValue <= 0) {
+                  return 'Valor deve ser maior que zero';
+                }
+                return null;
+              },
+              enabled: formState is! TransactionFormLoadingState,
+            ),
+            const SizedBox(height: Spacing.md),
+
+            // Categoria
+            TextFormField(
+              controller: _categoryController,
+              decoration: const InputDecoration(
+                labelText: 'Categoria',
+                hintText: 'Ex: Alimentação, Transporte, Trabalho...',
+                prefixIcon: Icon(Icons.category),
+              ),
+              textInputAction: TextInputAction.next,
+              enabled: formState is! TransactionFormLoadingState,
+            ),
+            const SizedBox(height: Spacing.md),
+
+            // Descrição
+            TextFormField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Descrição',
+                hintText: 'Detalhes adicionais (opcional)',
+                prefixIcon: Icon(Icons.description),
+              ),
+              maxLines: 2,
+              textInputAction: TextInputAction.next,
+              enabled: formState is! TransactionFormLoadingState,
+            ),
+            const SizedBox(height: Spacing.lg),
+
+            // Frequência
+            _buildFrequencySelector(),
+            const SizedBox(height: Spacing.md),
+
+            // Campos específicos por frequência
+            ..._buildFrequencySpecificFields(),
+
+            const SizedBox(height: Spacing.xl),
+
+            // Botão de salvar
+            ElevatedButton(
+              onPressed:
+                  formState is TransactionFormLoadingState ? null : _submitForm,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(Spacing.md),
+              ),
+              child:
+                  formState is TransactionFormLoadingState
+                      ? const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                          SizedBox(width: Spacing.sm),
+                          Text('Salvando...'),
+                        ],
+                      )
+                      : Text(
+                        _isEditing ? 'Atualizar Transação' : 'Salvar Transação',
+                      ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTransactionTypeSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Tipo da Transação',
+          style: context.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: Spacing.sm),
+        Row(
+          children: [
+            Expanded(
+              child: RadioListTile<TransactionTypeEnum>(
+                title: const Text('Receita'),
+                subtitle: const Text('Dinheiro que entra'),
+                value: TransactionTypeEnum.income,
+                groupValue: _selectedType,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() => _selectedType = value);
+                  }
+                },
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
+            Expanded(
+              child: RadioListTile<TransactionTypeEnum>(
+                title: const Text('Despesa'),
+                subtitle: const Text('Dinheiro que sai'),
+                value: TransactionTypeEnum.expense,
+                groupValue: _selectedType,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() => _selectedType = value);
+                  }
+                },
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFrequencySelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Frequência',
+          style: context.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: Spacing.sm),
+        DropdownButtonFormField<TransactionFrequencyEnum>(
+          value: _selectedFrequency,
+          decoration: const InputDecoration(
+            prefixIcon: Icon(Icons.repeat),
+            hintText: 'Selecione a frequência',
+          ),
+          items:
+              TransactionFrequencyEnum.values.map((frequency) {
+                return DropdownMenuItem(
+                  value: frequency,
+                  child: Text(_getFrequencyDisplayName(frequency)),
+                );
+              }).toList(),
+          onChanged: (value) {
+            if (value != null) {
+              setState(() {
+                _selectedFrequency = value;
+                _resetFrequencyFields();
+              });
+            }
+          },
+          validator:
+              (value) => value == null ? 'Selecione uma frequência' : null,
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _buildFrequencySpecificFields() {
+    switch (_selectedFrequency) {
+      case TransactionFrequencyEnum.monthly:
+        return _buildMonthlyFields();
+      case TransactionFrequencyEnum.installment:
+        return _buildInstallmentFields();
+      case TransactionFrequencyEnum.yearly:
+        return _buildYearlyFields();
+      case TransactionFrequencyEnum.oneTime:
+        return [];
+    }
+  }
+
+  List<Widget> _buildMonthlyFields() {
+    return [
+      const SizedBox(height: Spacing.md),
+      Text(
+        'Configurações Mensais',
+        style: context.textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+
+      // Data de início
+      ListTile(
+        leading: const Icon(Icons.calendar_today),
+        title: const Text('Mês de Início *'),
+        subtitle: Text(
+          _startDate != null
+              ? '${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])} de ${_startDate!.year}'
+              : 'Selecione quando começar',
+        ),
+        onTap: () => _selectStartDate(),
+        contentPadding: EdgeInsets.zero,
+      ),
+
+      // Data de fim (opcional)
+      ListTile(
+        leading: const Icon(Icons.event_busy),
+        title: const Text('Mês de Fim (opcional)'),
+        subtitle: Text(
+          _endDate != null
+              ? '${_getMonthDisplayName(MonthEnum.values[_endDate!.month - 1])} de ${_endDate!.year}'
+              : 'Deixe vazio para indefinido',
+        ),
+        onTap: () => _selectEndDate(),
+        contentPadding: EdgeInsets.zero,
+      ),
+
+      // Valor dinâmico
+      SwitchListTile(
+        title: const Text('Valor Dinâmico'),
+        subtitle: const Text('Permite alterar o valor mês a mês'),
+        value: _isDynamic,
+        onChanged: (value) => setState(() => _isDynamic = value),
+        contentPadding: EdgeInsets.zero,
+      ),
+    ];
+  }
+
+  List<Widget> _buildInstallmentFields() {
+    return [
+      const SizedBox(height: Spacing.md),
+      Text(
+        'Configurações de Parcelamento',
+        style: context.textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+
+      // Número de parcelas
+      TextFormField(
+        decoration: const InputDecoration(
+          labelText: 'Número de Parcelas *',
+          hintText: 'Ex: 12',
+          prefixIcon: Icon(Icons.format_list_numbered),
+        ),
+        keyboardType: TextInputType.number,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        onChanged: (value) {
+          _totalInstallments = int.tryParse(value);
+        },
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Número de parcelas é obrigatório';
+          }
+          final num = int.tryParse(value);
+          if (num == null || num <= 0) {
+            return 'Deve ser um número maior que zero';
+          }
+          return null;
+        },
+      ),
+      const SizedBox(height: Spacing.md),
+
+      // Data da primeira parcela
+      ListTile(
+        leading: const Icon(Icons.calendar_today),
+        title: const Text('Mês da 1ª Parcela *'),
+        subtitle: Text(
+          _startDate != null
+              ? '${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])} de ${_startDate!.year}'
+              : 'Selecione o mês da primeira parcela',
+        ),
+        onTap: () => _selectStartDate(),
+        contentPadding: EdgeInsets.zero,
+      ),
+    ];
+  }
+
+  List<Widget> _buildYearlyFields() {
+    return [
+      const SizedBox(height: Spacing.md),
+      Text(
+        'Configurações Anuais',
+        style: context.textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+
+      // Mês do ano
+      DropdownButtonFormField<MonthEnum>(
+        value: _selectedYearlyMonth,
+        decoration: const InputDecoration(
+          labelText: 'Mês do Ano *',
+          prefixIcon: Icon(Icons.calendar_month),
+          hintText: 'Em qual mês ocorre anualmente',
+        ),
+        items:
+            MonthEnum.values.map((month) {
+              return DropdownMenuItem(
+                value: month,
+                child: Text(_getMonthDisplayName(month)),
+              );
+            }).toList(),
+        onChanged: (value) => setState(() => _selectedYearlyMonth = value),
+        validator: (value) => value == null ? 'Selecione o mês' : null,
+      ),
+    ];
+  }
+
+  String _getFrequencyDisplayName(TransactionFrequencyEnum frequency) {
+    switch (frequency) {
+      case TransactionFrequencyEnum.oneTime:
+        return 'Único/Variável';
+      case TransactionFrequencyEnum.monthly:
+        return 'Mensal (Recorrente)';
+      case TransactionFrequencyEnum.installment:
+        return 'Parcelado';
+      case TransactionFrequencyEnum.yearly:
+        return 'Anual';
+    }
+  }
+
+  String _getMonthDisplayName(MonthEnum month) {
+    const months = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
+    ];
+    return months[month.index];
+  }
+
+  Future<void> _selectStartDate() async {
+    final currentDate = _startDate ?? DateTime.now();
+    final selectedDate = await showMonthYearPicker(
+      context: context,
+      initialDate: currentDate,
+    );
+    if (selectedDate != null) {
+      // Define como primeiro dia do mês selecionado
+      setState(
+        () => _startDate = DateTime(selectedDate.year, selectedDate.month, 1),
+      );
+    }
+  }
+
+  Future<void> _selectEndDate() async {
+    final currentDate =
+        _endDate ??
+        _startDate?.add(const Duration(days: 365)) ??
+        DateTime.now().add(const Duration(days: 365));
+    final selectedDate = await showMonthYearPicker(
+      context: context,
+      initialDate: currentDate,
+    );
+    if (selectedDate != null) {
+      // Define como último dia do mês selecionado
+      final lastDay =
+          DateTime(selectedDate.year, selectedDate.month + 1, 0).day;
+      setState(
+        () =>
+            _endDate = DateTime(selectedDate.year, selectedDate.month, lastDay),
+      );
+    }
+  }
+
+  void _resetFrequencyFields() {
+    _startDate = null;
+    _endDate = null;
+    _totalInstallments = null;
+    _selectedYearlyMonth = null;
+    _isDynamic = false;
+  }
+
+  void _submitForm() {
+    if (!_formKey.currentState!.validate()) return;
+
+    // Extrai apenas os dígitos do valor formatado e converte para double
+    final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
+    final amount = digitsOnly.isEmpty ? 0.0 : double.parse(digitsOnly) / 100;
+
+    final viewModel = ref.read(transactionFormViewModelProvider.notifier);
+
+    if (_isEditing) {
+      viewModel.updateTransaction(
+        transactionId: widget.transaction!.id,
+        title: _titleController.text.trim(),
+        description:
+            _descriptionController.text.trim().isEmpty
+                ? null
+                : _descriptionController.text.trim(),
+        amount: amount,
+        type: _selectedType,
+        frequency: _selectedFrequency,
+        category:
+            _categoryController.text.trim().isEmpty
+                ? null
+                : _categoryController.text.trim(),
+        startDate: _startDate,
+        endDate: _endDate,
+        totalInstallments: _totalInstallments,
+        yearlyMonth: _selectedYearlyMonth,
+        isDynamic: _isDynamic,
+      );
+    } else {
+      viewModel.createTransaction(
+        title: _titleController.text.trim(),
+        description:
+            _descriptionController.text.trim().isEmpty
+                ? null
+                : _descriptionController.text.trim(),
+        amount: amount,
+        type: _selectedType,
+        frequency: _selectedFrequency,
+        category:
+            _categoryController.text.trim().isEmpty
+                ? null
+                : _categoryController.text.trim(),
+        startDate: _startDate,
+        endDate: _endDate,
+        totalInstallments: _totalInstallments,
+        yearlyMonth: _selectedYearlyMonth,
+        isDynamic: _isDynamic,
+      );
+    }
+  }
+}

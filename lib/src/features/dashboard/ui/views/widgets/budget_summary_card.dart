@@ -1,23 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
 
 class BudgetSummaryCard extends ConsumerWidget {
   const BudgetSummaryCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: Buscar dados reais do orçamento baseado na data selecionada
-    // final selectedDate = ref.watch(selectedDateProvider);
-    // Por enquanto, usando dados mock
-    const plannedIncome = 5000.0;
-    const actualIncome = 4800.0;
-    const plannedExpenses = 3500.0;
-    const actualExpenses = 2800.0;
+    // Inicializar dashboard quando usuário estiver autenticado
+    ref.watch(dashboardInitializerProvider);
 
-    final plannedBalance = plannedIncome - plannedExpenses;
-    final actualBalance = actualIncome - actualExpenses;
-    final balanceDifference = actualBalance - plannedBalance;
+    final dashboardState = ref.watch(dashboardViewModelProvider);
+
+    // Escutar mudanças no período e recarregar dados
+    ref.listen<DateTime>(selectedPeriodProvider, (previous, next) {
+      if (previous != next) {
+        ref.read(dashboardViewModelProvider.notifier).loadDashboardData(next);
+      }
+    });
+
+    if (dashboardState is DashboardLoadingState) {
+      return const Card(
+        child: Padding(
+          padding: EdgeInsets.all(Spacing.lg),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+
+    if (dashboardState is DashboardErrorState) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(Spacing.lg),
+          child: Column(
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: context.colorScheme.error,
+                size: 48,
+              ),
+              const SizedBox(height: Spacing.md),
+              Text(
+                'Erro ao carregar dados',
+                style: context.textTheme.titleMedium,
+              ),
+              const SizedBox(height: Spacing.xs),
+              Text(
+                dashboardState.message,
+                style: context.textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (dashboardState is! DashboardLoadedState ||
+        dashboardState.budgetSummary == null) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(Spacing.lg),
+          child: Column(
+            children: [
+              Icon(
+                Icons.account_balance_wallet_outlined,
+                color: context.colorScheme.onSurface.withOpacity(0.3),
+                size: 48,
+              ),
+              const SizedBox(height: Spacing.md),
+              Text(
+                'Nenhum dado encontrado',
+                style: context.textTheme.titleMedium,
+              ),
+              const SizedBox(height: Spacing.xs),
+              Text(
+                'Adicione transações para ver o resumo',
+                style: context.textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final budget = dashboardState.budgetSummary!;
+    final actualBalance = budget.actualBalance;
+    final balanceDifference = budget.balanceDifference;
 
     return Card(
       child: Padding(
@@ -117,8 +189,8 @@ class BudgetSummaryCard extends ConsumerWidget {
                   child: _buildSummaryItem(
                     context,
                     'Receitas',
-                    actualIncome,
-                    plannedIncome,
+                    budget.actualIncome,
+                    budget.plannedIncome,
                     Icons.arrow_downward,
                     Colors.green,
                   ),
@@ -128,8 +200,8 @@ class BudgetSummaryCard extends ConsumerWidget {
                   child: _buildSummaryItem(
                     context,
                     'Despesas',
-                    actualExpenses,
-                    plannedExpenses,
+                    budget.actualExpenses,
+                    budget.plannedExpenses,
                     Icons.arrow_upward,
                     Colors.red,
                   ),
@@ -150,8 +222,6 @@ class BudgetSummaryCard extends ConsumerWidget {
     IconData icon,
     Color color,
   ) {
-    final percentage = planned > 0 ? (actual / planned) * 100 : 0.0;
-
     return Container(
       padding: const EdgeInsets.all(Spacing.md),
       decoration: BoxDecoration(
@@ -178,13 +248,6 @@ class BudgetSummaryCard extends ConsumerWidget {
             _formatCurrency(actual),
             style: context.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'de ${_formatCurrency(planned)} (${percentage.toStringAsFixed(0)}%)',
-            style: context.textTheme.bodySmall?.copyWith(
-              color: context.colorScheme.onSurface.withOpacity(0.6),
             ),
           ),
         ],

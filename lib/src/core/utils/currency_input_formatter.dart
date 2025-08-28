@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
-
-import 'utils.dart';
+import 'package:intl/intl.dart';
 
 class CurrencyInputFormatter extends TextInputFormatter {
   final String currency;
@@ -11,9 +10,29 @@ class CurrencyInputFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final value = double.tryParse(newValue.text) ?? 0.0;
-    final formattedText = Formatters.currency(value / 100, currency: currency);
-    return newValue.copyWith(
+    // Remove tudo exceto dígitos
+    final digitsOnly = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
+
+    if (digitsOnly.isEmpty) {
+      return const TextEditingValue(
+        text: '',
+        selection: TextSelection.collapsed(offset: 0),
+      );
+    }
+
+    // Converte para double (centavos para reais)
+    final value = double.parse(digitsOnly) / 100;
+
+    // Formata como moeda brasileira
+    final formatter = NumberFormat.currency(
+      locale: 'pt_BR',
+      symbol: 'R\$ ',
+      decimalDigits: 2,
+    );
+
+    final formattedText = formatter.format(value);
+
+    return TextEditingValue(
       text: formattedText,
       selection: TextSelection.collapsed(offset: formattedText.length),
     );

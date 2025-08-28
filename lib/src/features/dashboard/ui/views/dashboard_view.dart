@@ -5,7 +5,6 @@ import 'package:stackbudget/src/features/dashboard/ui/views/widgets/dashboard_he
 import 'package:stackbudget/src/features/dashboard/ui/views/widgets/month_year_filter.dart';
 import 'package:stackbudget/src/features/dashboard/ui/views/widgets/budget_summary_card.dart';
 import 'package:stackbudget/src/features/dashboard/ui/views/widgets/transactions_list.dart';
-import 'package:stackbudget/src/features/dashboard/ui/views/widgets/quick_actions.dart';
 
 class DashboardView extends ConsumerWidget {
   static const routeName = 'dashboard';
@@ -40,16 +39,6 @@ class DashboardView extends ConsumerWidget {
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.lg)),
 
-            // Ações rápidas (Adicionar transação, etc.)
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: Spacing.lg),
-                child: QuickActions(),
-              ),
-            ),
-
-            const SliverToBoxAdapter(child: SizedBox(height: Spacing.lg)),
-
             // Lista de transações do mês
             const SliverToBoxAdapter(
               child: Padding(
@@ -74,12 +63,7 @@ class DashboardView extends ConsumerWidget {
 
       // Botão flutuante para adicionar transação
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // TODO: Navegar para adicionar transação
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Adicionar transação - Em breve!')),
-          );
-        },
+        onPressed: () => AppRoutes.goToAddTransaction(context),
         icon: const Icon(Icons.add),
         label: const Text('Nova Transação'),
       ),

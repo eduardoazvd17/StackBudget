@@ -1,89 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
-
-// Mock data para demonstração
-class TransactionMock {
-  final String id;
-  final String title;
-  final String? description;
-  final double amount;
-  final TransactionTypeEnum type;
-  final TransactionFrequencyEnum frequency;
-  final DateTime date;
-  final String? category;
-
-  const TransactionMock({
-    required this.id,
-    required this.title,
-    this.description,
-    required this.amount,
-    required this.type,
-    required this.frequency,
-    required this.date,
-    this.category,
-  });
-}
-
-// Mock provider - será substituído por dados reais
-final transactionsProvider = Provider<List<TransactionMock>>((ref) {
-  return [
-    TransactionMock(
-      id: '1',
-      title: 'Salário',
-      amount: 5000.0,
-      type: TransactionTypeEnum.income,
-      frequency: TransactionFrequencyEnum.monthly,
-      date: DateTime.now(),
-      category: 'Trabalho',
-    ),
-    TransactionMock(
-      id: '2',
-      title: 'Aluguel',
-      amount: 1200.0,
-      type: TransactionTypeEnum.expense,
-      frequency: TransactionFrequencyEnum.monthly,
-      date: DateTime.now(),
-      category: 'Moradia',
-    ),
-    TransactionMock(
-      id: '3',
-      title: 'Conta de Luz',
-      amount: 150.0,
-      type: TransactionTypeEnum.expense,
-      frequency: TransactionFrequencyEnum.monthly,
-      date: DateTime.now(),
-      category: 'Utilidades',
-    ),
-    TransactionMock(
-      id: '4',
-      title: 'Supermercado',
-      amount: 350.0,
-      type: TransactionTypeEnum.expense,
-      frequency: TransactionFrequencyEnum.oneTime,
-      date: DateTime.now().subtract(const Duration(days: 2)),
-      category: 'Alimentação',
-    ),
-    TransactionMock(
-      id: '5',
-      title: 'IPVA',
-      amount: 800.0,
-      type: TransactionTypeEnum.expense,
-      frequency: TransactionFrequencyEnum.yearly,
-      date: DateTime.now(),
-      category: 'Veículo',
-    ),
-  ];
-});
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
+import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 class TransactionsList extends ConsumerWidget {
   const TransactionsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final transactions = ref.watch(transactionsProvider);
-    // TODO: Filtrar transações baseado na data selecionada
-    // final selectedDate = ref.watch(selectedDateProvider);
+    final dashboardState = ref.watch(dashboardViewModelProvider);
+
+    if (dashboardState is DashboardLoadingState) {
+      return const SliverToBoxAdapter(
+        child: Padding(
+          padding: EdgeInsets.all(Spacing.xl),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+
+    if (dashboardState is DashboardErrorState) {
+      return SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.all(Spacing.xl),
+          child: Column(
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: 64,
+                color: context.colorScheme.error,
+              ),
+              const SizedBox(height: Spacing.md),
+              Text(
+                'Erro ao carregar transações',
+                style: context.textTheme.titleMedium,
+              ),
+              const SizedBox(height: Spacing.xs),
+              Text(
+                dashboardState.message,
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (dashboardState is! DashboardLoadedState) {
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
+    }
+
+    final transactions = dashboardState.transactions;
 
     if (transactions.isEmpty) {
       return SliverToBoxAdapter(
@@ -134,7 +104,7 @@ class TransactionsList extends ConsumerWidget {
 
   Widget _buildTransactionItem(
     BuildContext context,
-    TransactionMock transaction,
+    TransactionModel transaction,
   ) {
     final isIncome = transaction.type == TransactionTypeEnum.income;
     final color = isIncome ? Colors.green : Colors.red;
@@ -142,6 +112,10 @@ class TransactionsList extends ConsumerWidget {
     return Card(
       margin: EdgeInsets.zero,
       child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: Spacing.md,
+          vertical: Spacing.sm,
+        ),
         leading: Container(
           width: 48,
           height: 48,
@@ -191,7 +165,7 @@ class TransactionsList extends ConsumerWidget {
               ),
             ),
             Text(
-              _formatDate(transaction.date),
+              _formatDate(transaction.createdAt),
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colorScheme.onSurface.withOpacity(0.5),
               ),
@@ -199,17 +173,12 @@ class TransactionsList extends ConsumerWidget {
           ],
         ),
 
-        onTap: () {
-          // TODO: Navegar para detalhes/edição da transação
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Editar ${transaction.title} - Em breve!')),
-          );
-        },
+        onTap: () => AppRoutes.goToTransactionDetail(context, transaction),
       ),
     );
   }
 
-  IconData _getTransactionIcon(TransactionMock transaction) {
+  IconData _getTransactionIcon(TransactionModel transaction) {
     if (transaction.type == TransactionTypeEnum.income) {
       return Icons.arrow_downward;
     }
