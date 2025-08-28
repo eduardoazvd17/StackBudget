@@ -5,8 +5,11 @@ import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
+import 'package:stackbudget/src/features/transactions/ui/views/widgets/monthly_value_editor_dialog.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
 
-class TransactionDetailView extends ConsumerWidget {
+class TransactionDetailView extends ConsumerStatefulWidget {
   static const routeName = 'transaction-detail';
 
   final TransactionModel transaction;
@@ -14,7 +17,14 @@ class TransactionDetailView extends ConsumerWidget {
   const TransactionDetailView({super.key, required this.transaction});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TransactionDetailView> createState() =>
+      _TransactionDetailViewState();
+}
+
+class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
+  @override
+  Widget build(BuildContext context) {
+    final transaction = widget.transaction;
     final formState = ref.watch(transactionFormViewModelProvider);
 
     ref.listen<TransactionFormViewModelState>(
@@ -53,6 +63,16 @@ class TransactionDetailView extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Detalhes da Transação'),
         actions: [
+          // Botão para ajustar valor mensal (só para transações mensais dinâmicas)
+          if (_canAdjustMonthlyValue())
+            IconButton(
+              icon: const Icon(Icons.tune),
+              tooltip: 'Ajustar valor deste mês',
+              onPressed:
+                  formState is TransactionFormLoadingState
+                      ? null
+                      : () => _adjustMonthlyValue(context),
+            ),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed:
@@ -104,30 +124,19 @@ class TransactionDetailView extends ConsumerWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    transaction.title,
+                                    widget.transaction.title,
                                     style: context.textTheme.headlineSmall
                                         ?.copyWith(fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                Text(
-                                  _formatCurrency(transaction.amount),
-                                  style: context.textTheme.headlineSmall
-                                      ?.copyWith(
-                                        color:
-                                            transaction.type ==
-                                                    TransactionTypeEnum.income
-                                                ? Colors.green
-                                                : Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
+                                _buildValueSection(),
                               ],
                             ),
 
-                            if (transaction.description != null) ...[
+                            if (widget.transaction.description != null) ...[
                               const SizedBox(height: Spacing.md),
                               Text(
-                                transaction.description!,
+                                widget.transaction.description!,
                                 style: context.textTheme.bodyLarge,
                               ),
                             ],
@@ -142,20 +151,20 @@ class TransactionDetailView extends ConsumerWidget {
                     _buildDetailSection('Informações Gerais', [
                       _buildDetailItem(
                         'Tipo',
-                        transaction.type == TransactionTypeEnum.income
+                        widget.transaction.type == TransactionTypeEnum.income
                             ? 'Receita'
                             : 'Despesa',
                         Icons.swap_vert,
                       ),
                       _buildDetailItem(
                         'Frequência',
-                        _getFrequencyDisplayName(transaction.frequency),
+                        _getFrequencyDisplayName(widget.transaction.frequency),
                         Icons.repeat,
                       ),
-                      if (transaction.category != null)
+                      if (widget.transaction.category != null)
                         _buildDetailItem(
                           'Categoria',
-                          transaction.category!,
+                          widget.transaction.category!,
                           Icons.category,
                         ),
                     ]),
@@ -181,8 +190,8 @@ class TransactionDetailView extends ConsumerWidget {
                       ),
                     ]),
 
-                    if (transaction.tags != null &&
-                        transaction.tags!.isNotEmpty) ...[
+                    if (widget.transaction.tags != null &&
+                        widget.transaction.tags!.isNotEmpty) ...[
                       const SizedBox(height: Spacing.lg),
                       _buildTagsSection(),
                     ],
@@ -219,25 +228,25 @@ class TransactionDetailView extends ConsumerWidget {
   }
 
   List<Widget> _buildFrequencySpecificInfo() {
-    switch (transaction.frequency) {
+    switch (widget.transaction.frequency) {
       case TransactionFrequencyEnum.monthly:
         return [
           _buildDetailSection('Informações Mensais', [
-            if (transaction.startDate != null)
+            if (widget.transaction.startDate != null)
               _buildDetailItem(
                 'Mês de Início',
-                _formatMonthYear(transaction.startDate!),
+                _formatMonthYear(widget.transaction.startDate!),
                 Icons.play_arrow,
               ),
-            if (transaction.endDate != null)
+            if (widget.transaction.endDate != null)
               _buildDetailItem(
                 'Mês de Fim',
-                _formatMonthYear(transaction.endDate!),
+                _formatMonthYear(widget.transaction.endDate!),
                 Icons.stop,
               ),
             _buildDetailItem(
               'Valor Dinâmico',
-              transaction.isDynamic ? 'Sim' : 'Não',
+              widget.transaction.isDynamic ? 'Sim' : 'Não',
               Icons.tune,
             ),
           ]),
@@ -246,22 +255,22 @@ class TransactionDetailView extends ConsumerWidget {
       case TransactionFrequencyEnum.installment:
         return [
           _buildDetailSection('Informações de Parcelamento', [
-            if (transaction.totalInstallments != null)
+            if (widget.transaction.totalInstallments != null)
               _buildDetailItem(
                 'Total de Parcelas',
-                '${transaction.totalInstallments}x',
+                '${widget.transaction.totalInstallments}x',
                 Icons.format_list_numbered,
               ),
-            if (transaction.currentInstallment != null)
+            if (widget.transaction.currentInstallment != null)
               _buildDetailItem(
                 'Parcela Atual',
-                '${transaction.currentInstallment! + 1}/${transaction.totalInstallments}',
+                '${widget.transaction.currentInstallment! + 1}/${widget.transaction.totalInstallments}',
                 Icons.timeline,
               ),
-            if (transaction.startDate != null)
+            if (widget.transaction.startDate != null)
               _buildDetailItem(
                 'Mês da 1ª Parcela',
-                _formatMonthYear(transaction.startDate!),
+                _formatMonthYear(widget.transaction.startDate!),
                 Icons.calendar_today,
               ),
           ]),
@@ -270,10 +279,10 @@ class TransactionDetailView extends ConsumerWidget {
       case TransactionFrequencyEnum.yearly:
         return [
           _buildDetailSection('Informações Anuais', [
-            if (transaction.yearlyMonth != null)
+            if (widget.transaction.yearlyMonth != null)
               _buildDetailItem(
                 'Mês do Ano',
-                _getMonthDisplayName(transaction.yearlyMonth!),
+                _getMonthDisplayName(widget.transaction.yearlyMonth!),
                 Icons.calendar_month,
               ),
           ]),
@@ -297,7 +306,7 @@ class TransactionDetailView extends ConsumerWidget {
           spacing: Spacing.xs,
           runSpacing: Spacing.xs,
           children:
-              transaction.tags!.map((tag) {
+              widget.transaction.tags!.map((tag) {
                 return Chip(
                   label: Text(tag),
                   backgroundColor: Colors.blue.withOpacity(0.1),
@@ -355,8 +364,156 @@ class TransactionDetailView extends ConsumerWidget {
     return months[month.index];
   }
 
+  Widget _buildValueSection() {
+    final selectedPeriod = ref.watch(selectedPeriodProvider);
+    final dashboardState = ref.watch(dashboardViewModelProvider);
+    
+    final currentPeriodValue = _getCurrentPeriodValue(
+      selectedPeriod.year,
+      selectedPeriod.month,
+      dashboardState,
+    );
+    final hasAdjustment = _hasCurrentPeriodAdjustment(
+      selectedPeriod.year,
+      selectedPeriod.month,
+      dashboardState,
+    );
+
+    final color =
+        widget.transaction.type == TransactionTypeEnum.income
+            ? Colors.green
+            : Colors.red;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Valor principal (do período selecionado)
+        Text(
+          _formatCurrency(currentPeriodValue),
+          style: context.textTheme.headlineSmall?.copyWith(
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        // Se há ajuste, mostrar informação adicional
+        if (hasAdjustment) ...[
+          const SizedBox(height: Spacing.xs),
+          Row(
+            children: [
+              Icon(Icons.tune, size: 16, color: Colors.orange),
+              const SizedBox(width: Spacing.xs),
+              Text(
+                'Valor ajustado para ${_getMonthName(selectedPeriod.month)}/${selectedPeriod.year}',
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: Colors.orange,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: Spacing.xs),
+          Text(
+            'Valor padrão: ${_formatCurrency(widget.transaction.amount)}',
+            style: context.textTheme.bodySmall?.copyWith(
+              color: context.colorScheme.onSurface.withOpacity(0.6),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  bool _hasCurrentPeriodAdjustment(int year, int month, DashboardViewModelState dashboardState) {
+    // Só transações mensais dinâmicas podem ter ajustes
+    if (widget.transaction.frequency != TransactionFrequencyEnum.monthly ||
+        !widget.transaction.isDynamic) {
+      return false;
+    }
+
+    if (dashboardState is DashboardLoadedState) {
+      return dashboardState.monthlyTransactions.any(
+        (mt) =>
+            mt.parentTransactionId == widget.transaction.id &&
+            mt.year == year &&
+            mt.month == month,
+      );
+    }
+
+    return false;
+  }
+
+  double _getCurrentPeriodValue(int year, int month, DashboardViewModelState dashboardState) {
+    // Para transações não dinâmicas, retorna sempre o valor base
+    if (widget.transaction.frequency != TransactionFrequencyEnum.monthly ||
+        !widget.transaction.isDynamic) {
+      return widget.transaction.amount;
+    }
+
+    if (dashboardState is DashboardLoadedState) {
+      final monthlyOverride =
+          dashboardState.monthlyTransactions
+                  .where(
+                    (mt) =>
+                        mt.parentTransactionId == widget.transaction.id &&
+                        mt.year == year &&
+                        mt.month == month,
+                  )
+                  .isNotEmpty
+              ? dashboardState.monthlyTransactions
+                  .where(
+                    (mt) =>
+                        mt.parentTransactionId == widget.transaction.id &&
+                        mt.year == year &&
+                        mt.month == month,
+                  )
+                  .first
+              : null;
+
+      return monthlyOverride?.amount ?? widget.transaction.amount;
+    }
+
+    return widget.transaction.amount;
+  }
+
+  String _getMonthName(int month) {
+    const months = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
+    ];
+    return months[month - 1];
+  }
+
+  bool _canAdjustMonthlyValue() {
+    return widget.transaction.frequency == TransactionFrequencyEnum.monthly &&
+        widget.transaction.isDynamic;
+  }
+
+     void _adjustMonthlyValue(BuildContext context) async {
+    // Usar o período selecionado no dashboard, não o mês atual
+    final selectedPeriod = ref.read(selectedPeriodProvider);
+    final result = await showMonthlyValueEditor(
+      context,
+      transaction: widget.transaction,
+      year: selectedPeriod.year,
+      month: selectedPeriod.month,
+    );
+
+    // A atualização será automática via ref.watch no _buildValueSection
+  }
+
   void _editTransaction(BuildContext context) {
-    AppRoutes.goToEditTransaction(context, transaction);
+    AppRoutes.goToEditTransaction(context, widget.transaction);
   }
 
   void _showDeleteConfirmation(BuildContext context, WidgetRef ref) {
@@ -366,7 +523,7 @@ class TransactionDetailView extends ConsumerWidget {
           (context) => AlertDialog(
             title: const Text('Confirmar Exclusão'),
             content: Text(
-              'Tem certeza que deseja excluir a transação "${transaction.title}"?\n\n'
+              'Tem certeza que deseja excluir a transação "${widget.transaction.title}"?\n\n'
               'Esta ação não pode ser desfeita.',
             ),
             actions: [
@@ -379,7 +536,7 @@ class TransactionDetailView extends ConsumerWidget {
                   Navigator.of(context).pop();
                   ref
                       .read(transactionFormViewModelProvider.notifier)
-                      .deleteTransaction(transaction.id);
+                      .deleteTransaction(widget.transaction.id);
                 },
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
                 child: const Text('Excluir'),

@@ -96,7 +96,7 @@ class TransactionsList extends ConsumerWidget {
             right: Spacing.lg,
             bottom: index == transactions.length - 1 ? 0 : Spacing.sm,
           ),
-          child: _buildTransactionItem(context, transaction),
+          child: _buildTransactionItem(context, transaction, ref),
         );
       }, childCount: transactions.length),
     );
@@ -105,6 +105,7 @@ class TransactionsList extends ConsumerWidget {
   Widget _buildTransactionItem(
     BuildContext context,
     TransactionModel transaction,
+    WidgetRef ref,
   ) {
     final isIncome = transaction.type == TransactionTypeEnum.income;
     final color = isIncome ? Colors.green : Colors.red;
@@ -144,11 +145,27 @@ class TransactionsList extends ConsumerWidget {
                 ),
               ),
             ],
-            Text(
-              _getFrequencyText(transaction.frequency),
-              style: context.textTheme.bodySmall?.copyWith(
-                color: context.colorScheme.onSurface.withOpacity(0.5),
-              ),
+            Row(
+              children: [
+                Text(
+                  _getFrequencyText(transaction.frequency),
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: context.colorScheme.onSurface.withOpacity(0.5),
+                  ),
+                ),
+                if (_hasMonthlyAdjustment(ref, transaction)) ...[
+                  const SizedBox(width: Spacing.xs),
+                  Icon(Icons.tune, size: 14, color: Colors.orange),
+                  const SizedBox(width: 2),
+                  Text(
+                    'Ajustado',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: Colors.orange,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ],
             ),
           ],
         ),
@@ -158,7 +175,7 @@ class TransactionsList extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              '${isIncome ? '+' : '-'} ${_formatCurrency(transaction.amount)}',
+              '${isIncome ? '+' : '-'} ${_formatCurrency(_getCurrentMonthValue(ref, transaction))}',
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: color,
@@ -214,5 +231,65 @@ class TransactionsList extends ConsumerWidget {
 
   String _formatDate(DateTime date) {
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}';
+  }
+
+  bool _hasMonthlyAdjustment(WidgetRef ref, TransactionModel transaction) {
+    // Só transações mensais dinâmicas podem ter ajustes
+    if (transaction.frequency != TransactionFrequencyEnum.monthly ||
+        !transaction.isDynamic) {
+      return false;
+    }
+
+    // Buscar no estado do dashboard se há override para esta transação no período selecionado
+    final dashboardState = ref.read(dashboardViewModelProvider);
+    final selectedPeriod = ref.read(selectedPeriodProvider);
+
+    if (dashboardState is DashboardLoadedState) {
+      return dashboardState.monthlyTransactions.any(
+        (mt) =>
+            mt.parentTransactionId == transaction.id &&
+            mt.year == selectedPeriod.year &&
+            mt.month == selectedPeriod.month,
+      );
+    }
+
+    return false;
+  }
+
+  double _getCurrentMonthValue(WidgetRef ref, TransactionModel transaction) {
+    // Para transações não dinâmicas, retorna sempre o valor base
+    if (transaction.frequency != TransactionFrequencyEnum.monthly ||
+        !transaction.isDynamic) {
+      return transaction.amount;
+    }
+
+    // Buscar override mensal no estado do dashboard para o período selecionado
+    final dashboardState = ref.read(dashboardViewModelProvider);
+    final selectedPeriod = ref.read(selectedPeriodProvider);
+
+    if (dashboardState is DashboardLoadedState) {
+      final monthlyOverride =
+          dashboardState.monthlyTransactions
+                  .where(
+                    (mt) =>
+                        mt.parentTransactionId == transaction.id &&
+                        mt.year == selectedPeriod.year &&
+                        mt.month == selectedPeriod.month,
+                  )
+                  .isNotEmpty
+              ? dashboardState.monthlyTransactions
+                  .where(
+                    (mt) =>
+                        mt.parentTransactionId == transaction.id &&
+                        mt.year == selectedPeriod.year &&
+                        mt.month == selectedPeriod.month,
+                  )
+                  .first
+              : null;
+
+      return monthlyOverride?.amount ?? transaction.amount;
+    }
+
+    return transaction.amount;
   }
 }
