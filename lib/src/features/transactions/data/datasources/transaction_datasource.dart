@@ -4,6 +4,8 @@ import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 abstract class TransactionDatasource {
+  String generateTransactionId();
+  Future<TransactionModel?> getTransactionById(String transactionId);
   Future<List<TransactionModel>> getTransactionsByUser(String userId);
   Future<List<TransactionModel>> getTransactionsByUserAndMonth(
     String userId,
@@ -34,6 +36,27 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
   const TransactionDatasourceImpl({required FirebaseFirestore firestore})
     : _firestore = firestore;
+
+  @override
+  String generateTransactionId() {
+    return _firestore.collection('transactions').doc().id;
+  }
+
+  @override
+  Future<TransactionModel?> getTransactionById(String transactionId) async {
+    try {
+      final doc =
+          await _firestore.collection('transactions').doc(transactionId).get();
+
+      if (!doc.exists || doc.data() == null) {
+        return null;
+      }
+
+      return TransactionModel.fromMap(doc.data()!);
+    } catch (e) {
+      throw Failure(message: 'Erro ao buscar transação: ${e.toString()}');
+    }
+  }
 
   @override
   Future<List<TransactionModel>> getTransactionsByUser(String userId) async {

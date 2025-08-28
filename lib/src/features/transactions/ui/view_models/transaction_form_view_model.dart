@@ -58,7 +58,7 @@ class TransactionFormViewModel
       }
 
       final transaction = TransactionModel(
-        id: _generateTransactionId(),
+        id: _repository.generateTransactionId(),
         userId: userId,
         title: title,
         description: description,
@@ -131,11 +131,6 @@ class TransactionFormViewModel
     }
 
     return null;
-  }
-
-  /// Gera um ID único para a transação
-  String _generateTransactionId() {
-    return 'transaction_${DateTime.now().millisecondsSinceEpoch}';
   }
 
   /// Atualiza uma transação existente

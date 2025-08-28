@@ -225,14 +225,14 @@ class TransactionDetailView extends ConsumerWidget {
           _buildDetailSection('Informações Mensais', [
             if (transaction.startDate != null)
               _buildDetailItem(
-                'Data de Início',
-                _formatDate(transaction.startDate!),
+                'Mês de Início',
+                _formatMonthYear(transaction.startDate!),
                 Icons.play_arrow,
               ),
             if (transaction.endDate != null)
               _buildDetailItem(
-                'Data de Fim',
-                _formatDate(transaction.endDate!),
+                'Mês de Fim',
+                _formatMonthYear(transaction.endDate!),
                 Icons.stop,
               ),
             _buildDetailItem(
@@ -260,8 +260,8 @@ class TransactionDetailView extends ConsumerWidget {
               ),
             if (transaction.startDate != null)
               _buildDetailItem(
-                'Primeira Parcela',
-                _formatDate(transaction.startDate!),
+                'Mês da 1ª Parcela',
+                _formatMonthYear(transaction.startDate!),
                 Icons.calendar_today,
               ),
           ]),
@@ -316,8 +316,8 @@ class TransactionDetailView extends ConsumerWidget {
     ).format(value);
   }
 
-  String _formatDate(DateTime date) {
-    return DateFormat('dd/MM/yyyy').format(date);
+  String _formatMonthYear(DateTime date) {
+    return '${_getMonthDisplayName(MonthEnum.values[date.month - 1])} de ${date.year}';
   }
 
   String _formatDateTime(DateTime date) {

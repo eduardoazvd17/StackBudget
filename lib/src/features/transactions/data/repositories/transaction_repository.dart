@@ -4,6 +4,10 @@ import 'package:stackbudget/src/features/transactions/data/datasources/datasourc
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 abstract class TransactionRepository {
+  String generateTransactionId();
+  Future<Either<Failure, TransactionModel?>> getTransactionById(
+    String transactionId,
+  );
   Future<Either<Failure, List<TransactionModel>>> getTransactionsByUser(
     String userId,
   );
@@ -40,8 +44,27 @@ abstract class TransactionRepository {
 class TransactionRepositoryImpl implements TransactionRepository {
   final TransactionDatasource _datasource;
 
-  const TransactionRepositoryImpl({required TransactionDatasource datasource})
-    : _datasource = datasource;
+    const TransactionRepositoryImpl({required TransactionDatasource datasource})
+     : _datasource = datasource;
+
+  @override
+  String generateTransactionId() {
+    return _datasource.generateTransactionId();
+  }
+
+  @override
+  Future<Either<Failure, TransactionModel?>> getTransactionById(
+    String transactionId,
+  ) async {
+    try {
+      final transaction = await _datasource.getTransactionById(transactionId);
+      return Right(transaction);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
 
   @override
   Future<Either<Failure, List<TransactionModel>>> getTransactionsByUser(

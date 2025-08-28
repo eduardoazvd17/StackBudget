@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
-import 'package:stackbudget/src/core/utils/app_routes.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 import 'package:stackbudget/src/features/auth/ui/views/widgets/auth_form.dart';
@@ -15,7 +14,7 @@ class AuthView extends ConsumerWidget {
     // Redirecionar para home se autenticado
     ref.listen<AuthViewModelState>(authViewModelProvider, (previous, next) {
       if (next is AuthenticatedState) {
-        AppRoutes.goToHome(context);
+        AppRoutes.goToTransactions(context);
       }
     });
 

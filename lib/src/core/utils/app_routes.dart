@@ -7,6 +7,8 @@ import 'package:stackbudget/src/features/dashboard/ui/views/dashboard_view.dart'
 import 'package:stackbudget/src/features/transactions/ui/views/add_transaction_view.dart';
 import 'package:stackbudget/src/features/transactions/ui/views/transaction_detail_view.dart';
 import 'package:stackbudget/src/features/transactions/ui/views/edit_transaction_view.dart';
+import 'package:stackbudget/src/features/transactions/ui/views/transaction_detail_loader.dart';
+import 'package:stackbudget/src/features/transactions/ui/views/edit_transaction_loader.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:url_strategy/url_strategy.dart' as url;
 
@@ -19,7 +21,7 @@ class AppRoutes {
   }
 
   static final GoRouter routerConfig = GoRouter(
-    initialLocation: AppRoutesConfig.homePath,
+    initialLocation: AppRoutesConfig.transactionsPath,
     redirect: (BuildContext context, GoRouterState state) {
       final user = FirebaseAuth.instance.currentUser;
       final isAuthRoute = state.matchedLocation == AppRoutesConfig.authPath;
@@ -29,9 +31,9 @@ class AppRoutes {
         return AppRoutesConfig.authPath;
       }
 
-      // Se está autenticado e está na tela de auth, redireciona para home
+      // Se está autenticado e está na tela de auth, redireciona para transactions
       if (user != null && isAuthRoute) {
-        return AppRoutesConfig.homePath;
+        return AppRoutesConfig.transactionsPath;
       }
 
       // Caso contrário, mantém na rota atual
@@ -45,65 +47,68 @@ class AppRoutes {
         builder: (context, state) => const AuthView(),
       ),
 
-      // Rota Principal (Dashboard)
+      // Rota Principal (Transactions/Dashboard)
       GoRoute(
-        path: AppRoutesConfig.homePath,
-        name: AppRoutesConfig.home,
+        path: AppRoutesConfig.transactionsPath,
+        name: AppRoutesConfig.transactions,
         builder: (context, state) => const DashboardView(),
         routes: [
-          // Rota para adicionar transação
+          // Rota para adicionar transação: /transactions/add
           GoRoute(
-            path: 'add-transaction',
+            path: AppRoutesConfig.addTransaction,
             name: AppRoutesConfig.addTransaction,
             builder: (context, state) => const AddTransactionView(),
           ),
 
-          // Rota para detalhes da transação
+          // Rota para detalhes da transação: /transactions/:id
           GoRoute(
-            path: 'transaction-detail',
+            path: ':id',
             name: AppRoutesConfig.transactionDetail,
             builder: (context, state) {
-              final transaction = state.extra as TransactionModel;
-              return TransactionDetailView(transaction: transaction);
-            },
-          ),
+              final transactionId = state.pathParameters['id']!;
+              final transaction = state.extra as TransactionModel?;
 
-          // Rota para editar transação
-          GoRoute(
-            path: 'edit-transaction',
-            name: AppRoutesConfig.editTransaction,
-            builder: (context, state) {
-              final transaction = state.extra as TransactionModel;
-              return EditTransactionView(transaction: transaction);
+              if (transaction != null) {
+                return TransactionDetailView(transaction: transaction);
+              } else {
+                // Se não tem o objeto, precisa buscar pelo ID
+                return TransactionDetailLoader(transactionId: transactionId);
+              }
             },
-          ),
+            routes: [
+              // Rota para editar transação: /transactions/:id/edit
+              GoRoute(
+                path: AppRoutesConfig.editTransaction,
+                name: AppRoutesConfig.editTransaction,
+                builder: (context, state) {
+                  final transactionId = state.pathParameters['id']!;
+                  final transaction = state.extra as TransactionModel?;
 
-          // Futuras sub-rotas:
-          // GoRoute(
-          //   path: 'transactions',
-          //   name: AppRoutesConfig.transactions,
-          //   builder: (context, state) => const TransactionsView(),
-          // ),
-          //
-          // GoRoute(
-          //   path: 'budget',
-          //   name: AppRoutesConfig.budget,
-          //   builder: (context, state) => const BudgetView(),
-          // ),
-          //
-          // GoRoute(
-          //   path: 'reports',
-          //   name: AppRoutesConfig.reports,
-          //   builder: (context, state) => const ReportsView(),
-          // ),
-          //
-          // GoRoute(
-          //   path: 'settings',
-          //   name: AppRoutesConfig.settings,
-          //   builder: (context, state) => const SettingsView(),
-          // ),
+                  if (transaction != null) {
+                    return EditTransactionView(transaction: transaction);
+                  } else {
+                    // Se não tem o objeto, precisa buscar pelo ID
+                    return EditTransactionLoader(transactionId: transactionId);
+                  }
+                },
+              ),
+            ],
+          ),
         ],
       ),
+
+      // Futuras rotas principais
+      // GoRoute(
+      //   path: AppRoutesConfig.budgetPath,
+      //   name: AppRoutesConfig.budget,
+      //   builder: (context, state) => const BudgetView(),
+      // ),
+      //
+      // GoRoute(
+      //   path: AppRoutesConfig.profilePath,
+      //   name: AppRoutesConfig.profile,
+      //   builder: (context, state) => const ProfileView(),
+      // ),
     ],
   );
 
@@ -112,8 +117,8 @@ class AppRoutes {
     context.goNamed(AppRoutesConfig.auth);
   }
 
-  static void goToHome(BuildContext context) {
-    context.goNamed(AppRoutesConfig.home);
+  static void goToTransactions(BuildContext context) {
+    context.goNamed(AppRoutesConfig.transactions);
   }
 
   // Métodos de navegação implementados
@@ -125,30 +130,50 @@ class AppRoutes {
     BuildContext context,
     TransactionModel transaction,
   ) {
-    context.goNamed(AppRoutesConfig.transactionDetail, extra: transaction);
+    context.goNamed(
+      AppRoutesConfig.transactionDetail,
+      pathParameters: {'id': transaction.id},
+      extra: transaction,
+    );
+  }
+
+  static void goToTransactionDetailById(
+    BuildContext context,
+    String transactionId,
+  ) {
+    context.goNamed(
+      AppRoutesConfig.transactionDetail,
+      pathParameters: {'id': transactionId},
+    );
   }
 
   static void goToEditTransaction(
     BuildContext context,
     TransactionModel transaction,
   ) {
-    context.goNamed(AppRoutesConfig.editTransaction, extra: transaction);
+    context.goNamed(
+      AppRoutesConfig.editTransaction,
+      pathParameters: {'id': transaction.id},
+      extra: transaction,
+    );
+  }
+
+  static void goToEditTransactionById(
+    BuildContext context,
+    String transactionId,
+  ) {
+    context.goNamed(
+      AppRoutesConfig.editTransaction,
+      pathParameters: {'id': transactionId},
+    );
   }
 
   // Futuros métodos de navegação
-  // static void goToTransactions(BuildContext context) {
-  //   context.goNamed(AppRoutesConfig.transactions);
-  // }
-  //
   // static void goToBudget(BuildContext context) {
   //   context.goNamed(AppRoutesConfig.budget);
   // }
   //
   // static void goToReports(BuildContext context) {
   //   context.goNamed(AppRoutesConfig.reports);
-  // }
-  //
-  // static void goToSettings(BuildContext context) {
-  //   context.goNamed(AppRoutesConfig.settings);
   // }
 }
