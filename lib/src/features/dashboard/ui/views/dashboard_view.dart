@@ -4,7 +4,7 @@ import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/dashboard/ui/views/widgets/dashboard_header.dart';
 import 'package:stackbudget/src/features/dashboard/ui/views/widgets/month_year_filter.dart';
 import 'package:stackbudget/src/features/dashboard/ui/views/widgets/budget_summary_card.dart';
-import 'package:stackbudget/src/features/dashboard/ui/views/widgets/transactions_list.dart';
+import 'package:stackbudget/src/features/dashboard/ui/views/widgets/simple_expandable_section.dart';
 
 class DashboardView extends ConsumerWidget {
   static const routeName = 'dashboard';
@@ -39,21 +39,52 @@ class DashboardView extends ConsumerWidget {
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.lg)),
 
-            // Lista de transações do mês
-            const SliverToBoxAdapter(
+            // Header geral das transações
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: Spacing.lg),
-                child: Text(
-                  'Transações do Mês',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
+                child: const Text(
+                  'Transações',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
-            // Lista das transações
-            const TransactionsList(),
+            // Lista de transações recorrentes (mensais e anuais)
+            const SliverToBoxAdapter(
+              child: SimpleExpandableSection(
+                title: 'Transações Recorrentes',
+                icon: Icons.repeat,
+                filterType: TransactionFrequencyEnum.monthly,
+                sectionKey: 'recurring',
+              ),
+            ),
+
+            const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
+
+            // Lista de parcelas
+            const SliverToBoxAdapter(
+              child: SimpleExpandableSection(
+                title: 'Parcelas',
+                icon: Icons.payment,
+                filterType: TransactionFrequencyEnum.installment,
+                sectionKey: 'installment',
+              ),
+            ),
+
+            const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
+
+            // Lista de transações únicas
+            const SliverToBoxAdapter(
+              child: SimpleExpandableSection(
+                title: 'Transações do Mês',
+                icon: Icons.receipt,
+                filterType: TransactionFrequencyEnum.oneTime,
+                sectionKey: 'oneTime',
+              ),
+            ),
 
             // Espaço para o FAB
             const SliverToBoxAdapter(child: SizedBox(height: 80)),

@@ -6,7 +6,13 @@ import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 class TransactionsList extends ConsumerWidget {
-  const TransactionsList({super.key});
+  final bool onlyOneTimeTransactions;
+
+  const TransactionsList({
+    super.key,
+    this.onlyOneTimeTransactions =
+        true, // Por padrão, mostrar apenas transações únicas
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,7 +59,20 @@ class TransactionsList extends ConsumerWidget {
       return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
-    final transactions = dashboardState.transactions;
+    // Filtrar transações baseado no parâmetro
+    var transactions = dashboardState.transactions;
+
+    if (onlyOneTimeTransactions) {
+      // Filtrar apenas transações únicas e ordenar da mais recente para mais antiga
+      transactions =
+          transactions
+              .where(
+                (transaction) =>
+                    transaction.frequency == TransactionFrequencyEnum.oneTime,
+              )
+              .toList()
+            ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    }
 
     if (transactions.isEmpty) {
       return SliverToBoxAdapter(
@@ -96,17 +115,28 @@ class TransactionsList extends ConsumerWidget {
             right: Spacing.lg,
             bottom: index == transactions.length - 1 ? 0 : Spacing.sm,
           ),
-          child: _buildTransactionItem(context, transaction, ref),
+          child: TransactionListItem(
+            transaction: transaction,
+            showAllTypes: !onlyOneTimeTransactions,
+          ),
         );
       }, childCount: transactions.length),
     );
   }
+}
 
-  Widget _buildTransactionItem(
-    BuildContext context,
-    TransactionModel transaction,
-    WidgetRef ref,
-  ) {
+class TransactionListItem extends ConsumerWidget {
+  final TransactionModel transaction;
+  final bool showAllTypes;
+
+  const TransactionListItem({
+    super.key,
+    required this.transaction,
+    this.showAllTypes = false,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final isIncome = transaction.type == TransactionTypeEnum.income;
     final defaultColor = isIncome ? Colors.green : Colors.red;
 
@@ -184,8 +214,9 @@ class TransactionsList extends ConsumerWidget {
                 color: defaultColor,
               ),
             ),
-            // Mostrar data apenas para transações únicas
-            if (transaction.frequency == TransactionFrequencyEnum.oneTime) ...[
+            // Mostrar data apenas para transações únicas ou quando mostrando todos os tipos
+            if (transaction.frequency == TransactionFrequencyEnum.oneTime ||
+                showAllTypes) ...[
               Text(
                 _formatDate(transaction.createdAt),
                 style: context.textTheme.bodySmall?.copyWith(
