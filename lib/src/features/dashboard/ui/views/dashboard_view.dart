@@ -43,9 +43,12 @@ class DashboardView extends ConsumerWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
-                child: const Text(
-                  'Transações',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                child: Text(
+                  context.strings.dashboardTransactions,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -53,9 +56,9 @@ class DashboardView extends ConsumerWidget {
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
             // Lista de transações recorrentes (mensais e anuais)
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SimpleExpandableSection(
-                title: 'Transações Recorrentes',
+                title: context.strings.recurringTransactions,
                 icon: Icons.repeat,
                 filterType: TransactionFrequencyEnum.monthly,
                 sectionKey: 'recurring',
@@ -65,9 +68,9 @@ class DashboardView extends ConsumerWidget {
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
             // Lista de parcelas
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SimpleExpandableSection(
-                title: 'Parcelas',
+                title: context.strings.installments,
                 icon: Icons.payment,
                 filterType: TransactionFrequencyEnum.installment,
                 sectionKey: 'installment',
@@ -77,9 +80,9 @@ class DashboardView extends ConsumerWidget {
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
             // Lista de transações únicas
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SimpleExpandableSection(
-                title: 'Transações do Mês',
+                title: context.strings.monthlyTransactions,
                 icon: Icons.receipt,
                 filterType: TransactionFrequencyEnum.oneTime,
                 sectionKey: 'oneTime',
@@ -96,7 +99,7 @@ class DashboardView extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => AppRoutes.goToAddTransaction(context),
         icon: const Icon(Icons.add),
-        label: const Text('Nova Transação'),
+        label: Text(context.strings.newTransaction),
       ),
     );
   }

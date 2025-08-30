@@ -31,7 +31,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       transactionFormViewModelProvider,
       (previous, next) {
         if (next is TransactionFormSuccessState) {
-          if (next.transaction.title == 'Transação excluída') {
+          if (next.transaction.title == context.strings.deletedTransaction) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Transação excluída com sucesso!'),
@@ -61,41 +61,44 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes da Transação'),
+        title: Text(context.strings.transactionDetails),
         actions: [
           PopupMenuButton<String>(
             enabled: formState is! TransactionFormLoadingState,
             itemBuilder:
                 (context) => [
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'edit',
                     child: Row(
                       children: [
-                        Icon(Icons.edit),
-                        SizedBox(width: 8),
-                        Text('Editar'),
+                        const Icon(Icons.edit),
+                        const SizedBox(width: 8),
+                        Text(context.strings.edit),
                       ],
                     ),
                   ),
                   if (_canAdjustMonthlyValue())
-                    const PopupMenuItem<String>(
+                    PopupMenuItem<String>(
                       value: 'adjust',
                       child: Row(
                         children: [
-                          Icon(Icons.tune),
-                          SizedBox(width: 8),
-                          Text('Ajustar valor deste mês'),
+                          const Icon(Icons.tune),
+                          const SizedBox(width: 8),
+                          Text(context.strings.adjustMonthlyValue),
                         ],
                       ),
                     ),
                   const PopupMenuDivider(),
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'delete',
                     child: Row(
                       children: [
-                        Icon(Icons.delete, color: Colors.red),
-                        SizedBox(width: 8),
-                        Text('Excluir', style: TextStyle(color: Colors.red)),
+                        const Icon(Icons.delete, color: Colors.red),
+                        const SizedBox(width: 8),
+                        Text(
+                          context.strings.delete,
+                          style: const TextStyle(color: Colors.red),
+                        ),
                       ],
                     ),
                   ),
@@ -161,22 +164,25 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                     const SizedBox(height: Spacing.lg),
 
                     // Informações detalhadas
-                    _buildDetailSection('Informações Gerais', [
+                    _buildDetailSection(context.strings.generalInformation, [
                       _buildDetailItem(
-                        'Tipo',
+                        context.strings.type,
                         widget.transaction.type == TransactionTypeEnum.income
-                            ? 'Receita'
-                            : 'Despesa',
+                            ? context.strings.income
+                            : context.strings.expense,
                         Icons.swap_vert,
                       ),
                       _buildDetailItem(
-                        'Frequência',
-                        _getFrequencyDisplayName(widget.transaction.frequency),
+                        context.strings.frequency,
+                        _getFrequencyDisplayName(
+                          context,
+                          widget.transaction.frequency,
+                        ),
                         Icons.repeat,
                       ),
                       if (widget.transaction.category != null)
                         _buildDetailItem(
-                          'Categoria',
+                          context.strings.category,
                           widget.transaction.category!.displayName,
                           Icons.category,
                         ),
@@ -341,16 +347,19 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     return DateFormat('dd/MM/yyyy HH:mm').format(date);
   }
 
-  String _getFrequencyDisplayName(TransactionFrequencyEnum frequency) {
+  String _getFrequencyDisplayName(
+    BuildContext context,
+    TransactionFrequencyEnum frequency,
+  ) {
     switch (frequency) {
       case TransactionFrequencyEnum.oneTime:
-        return 'Única';
+        return context.strings.frequencyOneTime;
       case TransactionFrequencyEnum.monthly:
-        return 'Mensal';
+        return context.strings.frequencyMonthly;
       case TransactionFrequencyEnum.installment:
-        return 'Parcelado';
+        return context.strings.frequencyInstallment;
       case TransactionFrequencyEnum.yearly:
-        return 'Anual';
+        return context.strings.frequencyYearly;
     }
   }
 

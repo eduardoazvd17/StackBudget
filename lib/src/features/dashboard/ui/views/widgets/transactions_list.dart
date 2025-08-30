@@ -40,7 +40,7 @@ class TransactionsList extends ConsumerWidget {
               ),
               const SizedBox(height: Spacing.md),
               Text(
-                'Erro ao carregar transações',
+                context.strings.errorLoadingTransactions,
                 style: context.textTheme.titleMedium,
               ),
               const SizedBox(height: Spacing.xs),
@@ -87,14 +87,14 @@ class TransactionsList extends ConsumerWidget {
               ),
               const SizedBox(height: Spacing.md),
               Text(
-                'Nenhuma transação encontrada',
+                context.strings.noTransactionsFound,
                 style: context.textTheme.titleMedium?.copyWith(
                   color: context.colorScheme.onSurface.withOpacity(0.7),
                 ),
               ),
               const SizedBox(height: Spacing.xs),
               Text(
-                'Adicione sua primeira transação para começar',
+                context.strings.addFirstTransaction,
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: context.colorScheme.onSurface.withOpacity(0.5),
@@ -171,7 +171,7 @@ class TransactionListItem extends ConsumerWidget {
         subtitle: Row(
           children: [
             Text(
-              _getFrequencyText(transaction.frequency),
+              _getFrequencyText(context, transaction.frequency),
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colorScheme.onSurface.withOpacity(0.5),
               ),
@@ -193,7 +193,7 @@ class TransactionListItem extends ConsumerWidget {
               Icon(Icons.tune, size: 14, color: Colors.orange),
               const SizedBox(width: 2),
               Text(
-                'Ajustado',
+                context.strings.adjusted,
                 style: context.textTheme.bodySmall?.copyWith(
                   color: Colors.orange,
                   fontWeight: FontWeight.w500,
@@ -316,16 +316,19 @@ class TransactionListItem extends ConsumerWidget {
     }
   }
 
-  String _getFrequencyText(TransactionFrequencyEnum frequency) {
+  String _getFrequencyText(
+    BuildContext context,
+    TransactionFrequencyEnum frequency,
+  ) {
     switch (frequency) {
       case TransactionFrequencyEnum.monthly:
-        return 'Mensal';
+        return context.strings.frequencyMonthly;
       case TransactionFrequencyEnum.yearly:
-        return 'Anual';
+        return context.strings.frequencyYearly;
       case TransactionFrequencyEnum.installment:
-        return 'Parcelado';
+        return context.strings.frequencyInstallment;
       case TransactionFrequencyEnum.oneTime:
-        return 'Única';
+        return context.strings.frequencyOneTime;
     }
   }
 

@@ -85,11 +85,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         if (next is TransactionFormSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                _isEditing
-                    ? 'Transação atualizada com sucesso!'
-                    : 'Transação criada com sucesso!',
-              ),
+              content: Text(context.strings.transactionSaved),
               backgroundColor: Colors.green,
             ),
           );
@@ -119,10 +115,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             // Título
             TextFormField(
               controller: _titleController,
-              decoration: const InputDecoration(
-                labelText: 'Título *',
-                hintText: 'Ex: Salário, Aluguel, Supermercado...',
-                prefixIcon: Icon(Icons.title),
+              decoration: InputDecoration(
+                labelText: context.strings.titleRequired,
+                hintText: context.strings.titleHint,
+                prefixIcon: const Icon(Icons.title),
               ),
               textInputAction: TextInputAction.next,
               validator: Validators.required,
@@ -133,10 +129,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             // Valor
             TextFormField(
               controller: _amountController,
-              decoration: const InputDecoration(
-                labelText: 'Valor *',
-                hintText: 'R\$ 0,00',
-                prefixIcon: Icon(Icons.attach_money),
+              decoration: InputDecoration(
+                labelText: context.strings.amountRequired,
+                hintText: context.strings.amountHint,
+                prefixIcon: const Icon(Icons.attach_money),
               ),
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
@@ -150,16 +146,16 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
               },
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Valor é obrigatório';
+                  return context.strings.amountRequired;
                 }
                 // Extrai apenas os dígitos e converte para double
                 final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
                 if (digitsOnly.isEmpty) {
-                  return 'Valor é obrigatório';
+                  return context.strings.amountRequired;
                 }
                 final numValue = double.parse(digitsOnly) / 100;
                 if (numValue <= 0) {
-                  return 'Valor deve ser maior que zero';
+                  return context.strings.amountPositive;
                 }
                 return null;
               },
@@ -174,10 +170,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             // Descrição
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Descrição',
-                hintText: 'Detalhes adicionais (opcional)',
-                prefixIcon: Icon(Icons.description),
+              decoration: InputDecoration(
+                labelText: context.strings.description,
+                hintText: context.strings.additionalDetails,
+                prefixIcon: const Icon(Icons.description),
               ),
               maxLines: 2,
               textInputAction: TextInputAction.next,
@@ -203,20 +199,22 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
               ),
               child:
                   formState is TransactionFormLoadingState
-                      ? const Row(
+                      ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           ),
-                          SizedBox(width: Spacing.sm),
-                          Text('Salvando...'),
+                          const SizedBox(width: Spacing.sm),
+                          Text(context.strings.saving),
                         ],
                       )
                       : Text(
-                        _isEditing ? 'Atualizar Transação' : 'Salvar Transação',
+                        _isEditing
+                            ? context.strings.updateTransaction
+                            : context.strings.saveTransaction,
                       ),
             ),
           ],
@@ -230,7 +228,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Tipo da Transação',
+          context.strings.transactionType,
           style: context.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -241,8 +239,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             Expanded(
               child: _buildTypeCard(
                 type: TransactionTypeEnum.income,
-                title: 'Receita',
-                subtitle: 'Dinheiro que entra',
+                title: context.strings.income,
+                subtitle: context.strings.moneyIn,
                 icon: Icons.arrow_downward,
                 color: Colors.green,
                 isSelected: _selectedType == TransactionTypeEnum.income,
@@ -252,8 +250,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             Expanded(
               child: _buildTypeCard(
                 type: TransactionTypeEnum.expense,
-                title: 'Despesa',
-                subtitle: 'Dinheiro que sai',
+                title: context.strings.expense,
+                subtitle: context.strings.moneyOut,
                 icon: Icons.arrow_upward,
                 color: Colors.red,
                 isSelected: _selectedType == TransactionTypeEnum.expense,
@@ -332,7 +330,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Frequência',
+          context.strings.frequency,
           style: context.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -340,9 +338,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         const SizedBox(height: Spacing.sm),
         DropdownButtonFormField<TransactionFrequencyEnum>(
           value: _selectedFrequency,
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.repeat),
-            hintText: 'Selecione a frequência',
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.repeat),
+            hintText: context.strings.selectFrequency,
           ),
           items:
               TransactionFrequencyEnum.values.map((frequency) {
@@ -360,7 +358,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             }
           },
           validator:
-              (value) => value == null ? 'Selecione uma frequência' : null,
+              (value) =>
+                  value == null
+                      ? context.strings.selectFrequencyRequired
+                      : null,
         ),
       ],
     );
@@ -383,7 +384,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     return [
       const SizedBox(height: Spacing.md),
       Text(
-        'Configurações Mensais',
+        context.strings.monthlySettings,
         style: context.textTheme.titleSmall?.copyWith(
           fontWeight: FontWeight.w600,
         ),
@@ -393,11 +394,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       // Data de início
       ListTile(
         leading: const Icon(Icons.calendar_today),
-        title: const Text('Mês de Início *'),
+        title: Text(context.strings.startMonthRequired),
         subtitle: Text(
           _startDate != null
               ? '${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])} de ${_startDate!.year}'
-              : 'Selecione quando começar',
+              : context.strings.selectStartDate,
         ),
         onTap: () => _selectStartDate(),
         contentPadding: EdgeInsets.zero,
@@ -410,15 +411,18 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
           color: _startDate == null ? Colors.grey : null,
         ),
         title: Text(
-          'Mês de Fim (opcional)',
+          context.strings.endMonthOptional,
           style: _startDate == null ? TextStyle(color: Colors.grey) : null,
         ),
         subtitle: Text(
           _endDate != null
               ? '${_getMonthDisplayName(MonthEnum.values[_endDate!.month - 1])} de ${_endDate!.year}'
               : _startDate != null
-              ? 'Deve ser posterior a ${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])}/${_startDate!.year}'
-              : 'Selecione primeiro a data de início',
+              ? context.strings.endDateAfterStartSpecific(
+                _getMonthDisplayName(MonthEnum.values[_startDate!.month - 1]),
+                _startDate!.year.toString(),
+              )
+              : context.strings.selectStartDateFirst,
           style: _startDate == null ? TextStyle(color: Colors.grey) : null,
         ),
         onTap: _startDate != null ? () => _selectEndDate() : null,
@@ -431,7 +435,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     return [
       const SizedBox(height: Spacing.md),
       Text(
-        'Configurações de Parcelamento',
+        context.strings.installmentSettings,
         style: context.textTheme.titleSmall?.copyWith(
           fontWeight: FontWeight.w600,
         ),
@@ -441,10 +445,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       // Número de parcelas
       TextFormField(
         initialValue: _totalInstallments?.toString(),
-        decoration: const InputDecoration(
-          labelText: 'Número de Parcelas *',
-          hintText: 'Ex: 12',
-          prefixIcon: Icon(Icons.format_list_numbered),
+        decoration: InputDecoration(
+          labelText: context.strings.totalInstallmentsRequired,
+          hintText: context.strings.enterInstallments,
+          prefixIcon: const Icon(Icons.format_list_numbered),
         ),
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -455,11 +459,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         },
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
-            return 'Número de parcelas é obrigatório';
+            return context.strings.installmentsRequired;
           }
           final num = int.tryParse(value);
           if (num == null || num <= 0) {
-            return 'Deve ser um número maior que zero';
+            return context.strings.installmentsPositive;
           }
           return null;
         },
@@ -481,7 +485,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 Icon(Icons.calculate, color: Colors.blue.shade700, size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  'Valor por parcela: ${_getInstallmentValueText()}',
+                  '${context.strings.installmentValue}: ${_getInstallmentValueText()}',
                   style: TextStyle(
                     color: Colors.blue.shade700,
                     fontWeight: FontWeight.w600,
@@ -496,11 +500,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       // Data da primeira parcela
       ListTile(
         leading: const Icon(Icons.calendar_today),
-        title: const Text('Mês da 1ª Parcela *'),
+        title: Text('${context.strings.firstInstallmentMonth} *'),
         subtitle: Text(
           _startDate != null
               ? '${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])} de ${_startDate!.year}'
-              : 'Selecione o mês da primeira parcela',
+              : context.strings.selectFirstInstallmentMonth,
         ),
         onTap: () => _selectStartDate(),
         contentPadding: EdgeInsets.zero,
@@ -512,7 +516,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     return [
       const SizedBox(height: Spacing.md),
       Text(
-        'Configurações Anuais',
+        context.strings.yearlySettings,
         style: context.textTheme.titleSmall?.copyWith(
           fontWeight: FontWeight.w600,
         ),
@@ -522,10 +526,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       // Mês do ano
       DropdownButtonFormField<MonthEnum>(
         value: _selectedYearlyMonth,
-        decoration: const InputDecoration(
-          labelText: 'Mês do Ano *',
-          prefixIcon: Icon(Icons.calendar_month),
-          hintText: 'Em qual mês ocorre anualmente',
+        decoration: InputDecoration(
+          labelText: context.strings.yearlyMonthRequired,
+          prefixIcon: const Icon(Icons.calendar_month),
+          hintText: context.strings.selectYearlyMonth,
         ),
         items:
             MonthEnum.values.map((month) {
@@ -535,7 +539,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
               );
             }).toList(),
         onChanged: (value) => setState(() => _selectedYearlyMonth = value),
-        validator: (value) => value == null ? 'Selecione o mês' : null,
+        validator:
+            (value) =>
+                value == null ? context.strings.selectMonthRequired : null,
       ),
     ];
   }
@@ -543,13 +549,13 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   String _getFrequencyDisplayName(TransactionFrequencyEnum frequency) {
     switch (frequency) {
       case TransactionFrequencyEnum.oneTime:
-        return 'Única';
+        return context.strings.frequencyOneTime;
       case TransactionFrequencyEnum.monthly:
-        return 'Mensal';
+        return context.strings.frequencyMonthly;
       case TransactionFrequencyEnum.installment:
-        return 'Parcelado';
+        return context.strings.frequencyInstallment;
       case TransactionFrequencyEnum.yearly:
-        return 'Anual';
+        return context.strings.frequencyYearly;
     }
   }
 
@@ -562,10 +568,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
     return DropdownButtonFormField<TransactionCategoryEnum>(
       value: _selectedCategory,
-      decoration: const InputDecoration(
-        labelText: 'Categoria',
-        hintText: 'Selecione uma categoria',
-        prefixIcon: Icon(Icons.category),
+      decoration: InputDecoration(
+        labelText: context.strings.category,
+        hintText: context.strings.selectCategory,
+        prefixIcon: const Icon(Icons.category),
       ),
       items:
           categories.map((category) {

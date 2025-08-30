@@ -15,7 +15,10 @@ extension BuildContextExtension on BuildContext {
   TextScaler get textScaler => MediaQuery.of(this).textScaler;
   double scale(double value) => textScaler.scale(value);
 
-  AppLocalizations get strings => AppLocalizations.of(this)!;
+  AppLocalizations get strings {
+    final localizations = Localizations.of<AppLocalizations>(this, AppLocalizations);
+    return localizations ?? AppLocalizationsEn();
+  }
   double get width => MediaQuery.of(this).size.width;
   double get height => MediaQuery.of(this).size.height;
   double get keyboardSize => MediaQuery.of(this).viewInsets.bottom;
