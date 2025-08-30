@@ -132,6 +132,15 @@ final dashboardViewModelProvider =
 // Provider para o período selecionado (substitui o antigo selectedDateProvider)
 final selectedPeriodProvider = StateProvider<DateTime>((ref) => DateTime.now());
 
+// Provider para obter a data de cadastro do usuário atual
+final userRegistrationDateProvider = Provider<DateTime?>((ref) {
+  final authState = ref.watch(authViewModelProvider);
+  if (authState is AuthenticatedState) {
+    return authState.user.registrationDate;
+  }
+  return null;
+});
+
 // Provider que inicializa o dashboard quando o usuário está autenticado
 final dashboardInitializerProvider = Provider<void>((ref) {
   final authState = ref.watch(authViewModelProvider);

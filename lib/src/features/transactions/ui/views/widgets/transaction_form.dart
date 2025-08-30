@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
@@ -600,9 +601,23 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
   Future<void> _selectStartDate() async {
     final currentDate = _startDate ?? DateTime.now();
+    final userRegistrationDate = ref.read(userRegistrationDateProvider);
+
+    // Define a data mínima como janeiro do ano de cadastro do usuário, ou 2020 como fallback
+    final firstDate =
+        userRegistrationDate != null
+            ? DateTime(userRegistrationDate.year, 1, 1)
+            : DateTime(2020);
+
+    // Define a data máxima como dezembro do ano atual
+    final now = DateTime.now();
+    final lastDate = DateTime(now.year, 12, 1);
+
     final selectedDate = await showMonthYearPicker(
       context: context,
       initialDate: currentDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
     );
     if (selectedDate != null) {
       // Define como primeiro dia do mês selecionado
@@ -613,13 +628,25 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   Future<void> _selectEndDate() async {
-    final currentDate =
-        _endDate ??
-        _startDate?.add(const Duration(days: 365)) ??
-        DateTime.now().add(const Duration(days: 365));
+    // Sempre abre no mês atual, independente da data de fim já selecionada
+    final now = DateTime.now();
+    final currentDate = _endDate ?? DateTime(now.year, now.month, 1);
+    final userRegistrationDate = ref.read(userRegistrationDateProvider);
+
+    // Define a data mínima como janeiro do ano de cadastro do usuário, ou 2020 como fallback
+    final firstDate =
+        userRegistrationDate != null
+            ? DateTime(userRegistrationDate.year, 1, 1)
+            : DateTime(2020);
+
+    // Define a data máxima como dezembro do ano atual
+    final lastDate = DateTime(now.year, 12, 1);
+
     final selectedDate = await showMonthYearPicker(
       context: context,
       initialDate: currentDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
     );
     if (selectedDate != null) {
       // Define como último dia do mês selecionado

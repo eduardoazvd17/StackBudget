@@ -43,12 +43,16 @@ class MonthYearFilter extends ConsumerWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => _previousMonth(ref),
+                  onPressed:
+                      _canNavigateToPrevious(ref)
+                          ? () => _previousMonth(ref)
+                          : null,
                   icon: const Icon(Icons.chevron_left),
                   tooltip: 'Mês anterior',
                 ),
                 IconButton(
-                  onPressed: () => _nextMonth(ref),
+                  onPressed:
+                      _canNavigateToNext(ref) ? () => _nextMonth(ref) : null,
                   icon: const Icon(Icons.chevron_right),
                   tooltip: 'Próximo mês',
                 ),
@@ -67,29 +71,81 @@ class MonthYearFilter extends ConsumerWidget {
 
   void _previousMonth(WidgetRef ref) {
     final currentDate = ref.read(selectedPeriodProvider);
+    final userRegistrationDate = ref.read(userRegistrationDateProvider);
+
     final previousMonth = DateTime(currentDate.year, currentDate.month - 1, 1);
-    ref.read(selectedPeriodProvider.notifier).state = previousMonth;
+
+    // Verifica se o mês anterior não é menor que janeiro do ano de cadastro
+    final firstAllowedDate =
+        userRegistrationDate != null
+            ? DateTime(userRegistrationDate.year, 1, 1)
+            : DateTime(2020);
+
+    if (!previousMonth.isBefore(firstAllowedDate)) {
+      ref.read(selectedPeriodProvider.notifier).state = previousMonth;
+    }
   }
 
   void _nextMonth(WidgetRef ref) {
     final currentDate = ref.read(selectedPeriodProvider);
     final nextMonth = DateTime(currentDate.year, currentDate.month + 1, 1);
-    ref.read(selectedPeriodProvider.notifier).state = nextMonth;
+
+    // Verifica se o próximo mês não é maior que dezembro do ano atual
+    final now = DateTime.now();
+    final lastAllowedDate = DateTime(now.year, 12, 1);
+
+    if (!nextMonth.isAfter(lastAllowedDate)) {
+      ref.read(selectedPeriodProvider.notifier).state = nextMonth;
+    }
   }
 
   Future<void> _showDatePicker(BuildContext context, WidgetRef ref) async {
     final currentDate = ref.read(selectedPeriodProvider);
+    final userRegistrationDate = ref.read(userRegistrationDateProvider);
+
+    // Define a data mínima como janeiro do ano de cadastro do usuário, ou 2020 como fallback
+    final firstDate =
+        userRegistrationDate != null
+            ? DateTime(userRegistrationDate.year, 1, 1)
+            : DateTime(2020);
+
+    // Define a data máxima como dezembro do ano atual
+    final now = DateTime.now();
+    final lastDate = DateTime(now.year, 12, 1);
 
     final selectedDate = await showMonthYearPicker(
       context: context,
       initialDate: currentDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
+      firstDate: firstDate,
+      lastDate: lastDate,
     );
 
     if (selectedDate != null) {
       ref.read(selectedPeriodProvider.notifier).state = selectedDate;
     }
+  }
+
+  bool _canNavigateToPrevious(WidgetRef ref) {
+    final currentDate = ref.read(selectedPeriodProvider);
+    final userRegistrationDate = ref.read(userRegistrationDateProvider);
+
+    final previousMonth = DateTime(currentDate.year, currentDate.month - 1, 1);
+    final firstAllowedDate =
+        userRegistrationDate != null
+            ? DateTime(userRegistrationDate.year, 1, 1)
+            : DateTime(2020);
+
+    return !previousMonth.isBefore(firstAllowedDate);
+  }
+
+  bool _canNavigateToNext(WidgetRef ref) {
+    final currentDate = ref.read(selectedPeriodProvider);
+    final nextMonth = DateTime(currentDate.year, currentDate.month + 1, 1);
+
+    final now = DateTime.now();
+    final lastAllowedDate = DateTime(now.year, 12, 1);
+
+    return !nextMonth.isAfter(lastAllowedDate);
   }
 
   String _formatMonthYear(DateTime date) {
