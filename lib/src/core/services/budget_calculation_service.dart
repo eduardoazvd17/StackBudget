@@ -46,7 +46,7 @@ class BudgetCalculationService {
         actualExpenses += amount;
 
         // Agrupar por categoria
-        final category = transaction.category ?? 'Outros';
+        final category = transaction.category?.displayName ?? 'Outros';
         plannedExpensesByCategory[category] =
             (plannedExpensesByCategory[category] ?? 0) + transaction.amount;
         actualExpensesByCategory[category] =

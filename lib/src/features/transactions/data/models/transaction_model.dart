@@ -27,7 +27,7 @@ class TransactionModel {
   final bool isDynamic; // Se o valor pode ser alterado mês a mês
 
   // Categoria (opcional para organização)
-  final String? category;
+  final TransactionCategoryEnum? category;
 
   // Tags (opcional)
   final List<String>? tags;
@@ -69,7 +69,7 @@ class TransactionModel {
       'currentInstallment': currentInstallment,
       'yearlyMonth': yearlyMonth?.name,
       'isDynamic': isDynamic,
-      'category': category,
+      'category': category?.name,
       'tags': tags,
     };
   }
@@ -81,9 +81,13 @@ class TransactionModel {
       title: map['title'] as String,
       description: map['description'] as String?,
       amount: (map['amount'] as num).toDouble(),
-      type: TransactionTypeEnum.values.firstWhere((e) => e.name == map['type']),
+      type: TransactionTypeEnum.values.firstWhere(
+        (e) => e.name == map['type'],
+        orElse: () => TransactionTypeEnum.expense,
+      ),
       frequency: TransactionFrequencyEnum.values.firstWhere(
         (e) => e.name == map['frequency'],
+        orElse: () => TransactionFrequencyEnum.oneTime,
       ),
       createdAt: (map['createdAt'] as Timestamp).toDate(),
       updatedAt: (map['updatedAt'] as Timestamp).toDate(),
@@ -99,10 +103,19 @@ class TransactionModel {
       currentInstallment: map['currentInstallment'] as int?,
       yearlyMonth:
           map['yearlyMonth'] != null
-              ? MonthEnum.values.firstWhere((e) => e.name == map['yearlyMonth'])
+              ? MonthEnum.values.firstWhere(
+                  (e) => e.name == map['yearlyMonth'],
+                  orElse: () => MonthEnum.january,
+                )
               : null,
       isDynamic: map['isDynamic'] as bool? ?? false,
-      category: map['category'] as String?,
+      category:
+          map['category'] != null
+              ? TransactionCategoryEnum.values.firstWhere(
+                (e) => e.name == map['category'],
+                orElse: () => TransactionCategoryEnum.other,
+              )
+              : null,
       tags: map['tags'] != null ? List<String>.from(map['tags'] as List) : null,
     );
   }
@@ -123,7 +136,7 @@ class TransactionModel {
     int? currentInstallment,
     MonthEnum? yearlyMonth,
     bool? isDynamic,
-    String? category,
+    TransactionCategoryEnum? category,
     List<String>? tags,
   }) {
     return TransactionModel(

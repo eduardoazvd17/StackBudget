@@ -22,6 +22,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
   final _categoryController = TextEditingController();
+  TransactionCategoryEnum? _selectedCategory;
 
   TransactionTypeEnum _selectedType = TransactionTypeEnum.expense;
   TransactionFrequencyEnum _selectedFrequency =
@@ -56,7 +57,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
     _titleController.text = transaction.title;
     _descriptionController.text = transaction.description ?? '';
-    _categoryController.text = transaction.category ?? '';
+    _selectedCategory = transaction.category;
 
     // Formatar o valor para o campo
     final formattedAmount = NumberFormat.currency(
@@ -164,16 +165,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             const SizedBox(height: Spacing.md),
 
             // Categoria
-            TextFormField(
-              controller: _categoryController,
-              decoration: const InputDecoration(
-                labelText: 'Categoria',
-                hintText: 'Ex: Alimentação, Transporte, Trabalho...',
-                prefixIcon: Icon(Icons.category),
-              ),
-              textInputAction: TextInputAction.next,
-              enabled: formState is! TransactionFormLoadingState,
-            ),
+            _buildCategorySelector(),
             const SizedBox(height: Spacing.md),
 
             // Descrição
@@ -251,7 +243,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 groupValue: _selectedType,
                 onChanged: (value) {
                   if (value != null) {
-                    setState(() => _selectedType = value);
+                    setState(() {
+                      _selectedType = value;
+                      // Reset categoria quando o tipo muda
+                      _selectedCategory = null;
+                    });
                   }
                 },
                 contentPadding: EdgeInsets.zero,
@@ -265,7 +261,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 groupValue: _selectedType,
                 onChanged: (value) {
                   if (value != null) {
-                    setState(() => _selectedType = value);
+                    setState(() {
+                      _selectedType = value;
+                      // Reset categoria quando o tipo muda
+                      _selectedCategory = null;
+                    });
                   }
                 },
                 contentPadding: EdgeInsets.zero,
@@ -473,6 +473,113 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     }
   }
 
+  Widget _buildCategorySelector() {
+    // Filtra as categorias baseado no tipo de transação selecionado
+    final categories =
+        _selectedType == TransactionTypeEnum.income
+            ? TransactionCategoryEnum.incomeCategories
+            : TransactionCategoryEnum.expenseCategories;
+
+    return DropdownButtonFormField<TransactionCategoryEnum>(
+      value: _selectedCategory,
+      decoration: const InputDecoration(
+        labelText: 'Categoria',
+        hintText: 'Selecione uma categoria',
+        prefixIcon: Icon(Icons.category),
+      ),
+      items:
+          categories.map((category) {
+            return DropdownMenuItem(
+              value: category,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    _getCategoryIcon(category),
+                    size: 20,
+                    color: context.colorScheme.onSurface.withOpacity(0.6),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(child: Text(category.displayName)),
+                ],
+              ),
+            );
+          }).toList(),
+      onChanged: (value) => setState(() => _selectedCategory = value),
+      validator: (value) => null, // Categoria é opcional
+    );
+  }
+
+  IconData _getCategoryIcon(TransactionCategoryEnum category) {
+    switch (category.iconName) {
+      case 'work':
+        return Icons.work;
+      case 'laptop':
+        return Icons.laptop;
+      case 'trending_up':
+        return Icons.trending_up;
+      case 'star':
+        return Icons.star;
+      case 'card_giftcard':
+        return Icons.card_giftcard;
+      case 'attach_money':
+        return Icons.attach_money;
+      case 'home':
+        return Icons.home;
+      case 'electrical_services':
+        return Icons.electrical_services;
+      case 'local_grocery_store':
+        return Icons.local_grocery_store;
+      case 'directions_car':
+        return Icons.directions_car;
+      case 'security':
+        return Icons.security;
+      case 'local_hospital':
+        return Icons.local_hospital;
+      case 'restaurant':
+        return Icons.restaurant;
+      case 'movie':
+        return Icons.movie;
+      case 'shopping_bag':
+        return Icons.shopping_bag;
+      case 'flight':
+        return Icons.flight;
+      case 'palette':
+        return Icons.palette;
+      case 'fitness_center':
+        return Icons.fitness_center;
+      case 'face':
+        return Icons.face;
+      case 'account_balance':
+        return Icons.account_balance;
+      case 'credit_card':
+        return Icons.credit_card;
+      case 'receipt':
+        return Icons.receipt;
+      case 'money_off':
+        return Icons.money_off;
+      case 'school':
+        return Icons.school;
+      case 'menu_book':
+        return Icons.menu_book;
+      case 'play_lesson':
+        return Icons.play_lesson;
+      case 'child_care':
+        return Icons.child_care;
+      case 'pets':
+        return Icons.pets;
+      case 'redeem':
+        return Icons.redeem;
+      case 'volunteer_activism':
+        return Icons.volunteer_activism;
+      case 'savings':
+        return Icons.savings;
+      case 'category':
+      default:
+        return Icons.category;
+    }
+  }
+
   String _getMonthDisplayName(MonthEnum month) {
     const months = [
       'Janeiro',
@@ -553,10 +660,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         amount: amount,
         type: _selectedType,
         frequency: _selectedFrequency,
-        category:
-            _categoryController.text.trim().isEmpty
-                ? null
-                : _categoryController.text.trim(),
+        category: _selectedCategory,
         startDate: _startDate,
         endDate: _endDate,
         totalInstallments: _totalInstallments,
@@ -573,10 +677,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         amount: amount,
         type: _selectedType,
         frequency: _selectedFrequency,
-        category:
-            _categoryController.text.trim().isEmpty
-                ? null
-                : _categoryController.text.trim(),
+        category: _selectedCategory,
         startDate: _startDate,
         endDate: _endDate,
         totalInstallments: _totalInstallments,

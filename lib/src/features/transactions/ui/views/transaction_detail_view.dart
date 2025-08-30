@@ -164,7 +164,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                       if (widget.transaction.category != null)
                         _buildDetailItem(
                           'Categoria',
-                          widget.transaction.category!,
+                          widget.transaction.category!.displayName,
                           Icons.category,
                         ),
                     ]),
@@ -367,7 +367,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
   Widget _buildValueSection() {
     final selectedPeriod = ref.watch(selectedPeriodProvider);
     final dashboardState = ref.watch(dashboardViewModelProvider);
-    
+
     final currentPeriodValue = _getCurrentPeriodValue(
       selectedPeriod.year,
       selectedPeriod.month,
@@ -424,7 +424,11 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     );
   }
 
-  bool _hasCurrentPeriodAdjustment(int year, int month, DashboardViewModelState dashboardState) {
+  bool _hasCurrentPeriodAdjustment(
+    int year,
+    int month,
+    DashboardViewModelState dashboardState,
+  ) {
     // Só transações mensais dinâmicas podem ter ajustes
     if (widget.transaction.frequency != TransactionFrequencyEnum.monthly ||
         !widget.transaction.isDynamic) {
@@ -443,7 +447,11 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     return false;
   }
 
-  double _getCurrentPeriodValue(int year, int month, DashboardViewModelState dashboardState) {
+  double _getCurrentPeriodValue(
+    int year,
+    int month,
+    DashboardViewModelState dashboardState,
+  ) {
     // Para transações não dinâmicas, retorna sempre o valor base
     if (widget.transaction.frequency != TransactionFrequencyEnum.monthly ||
         !widget.transaction.isDynamic) {
@@ -499,7 +507,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
         widget.transaction.isDynamic;
   }
 
-     void _adjustMonthlyValue(BuildContext context) async {
+  void _adjustMonthlyValue(BuildContext context) async {
     // Usar o período selecionado no dashboard, não o mês atual
     final selectedPeriod = ref.read(selectedPeriodProvider);
     final result = await showMonthlyValueEditor(

@@ -139,7 +139,7 @@ class TransactionsList extends ConsumerWidget {
           children: [
             if (transaction.category != null) ...[
               Text(
-                transaction.category!,
+                transaction.category!.displayName,
                 style: context.textTheme.bodySmall?.copyWith(
                   color: context.colorScheme.onSurface.withOpacity(0.6),
                 ),
