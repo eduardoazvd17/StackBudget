@@ -33,16 +33,16 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
         if (next is TransactionFormSuccessState) {
           if (next.transaction.title == context.strings.deletedTransaction) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Transação excluída com sucesso!'),
+              SnackBar(
+                content: Text(context.strings.transactionDeletedSuccess),
                 backgroundColor: Colors.green,
               ),
             );
             Navigator.of(context).pop();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Transação atualizada com sucesso!'),
+              SnackBar(
+                content: Text(context.strings.transactionUpdatedSuccess),
                 backgroundColor: Colors.green,
               ),
             );
@@ -84,7 +84,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                         children: [
                           const Icon(Icons.tune),
                           const SizedBox(width: 8),
-                          Text(context.strings.adjustMonthlyValue),
+                          Text(context.strings.adjustMonthlyValueAction),
                         ],
                       ),
                     ),
@@ -182,7 +182,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                       ),
                       if (widget.transaction.category != null)
                         _buildDetailItem(
-                          context.strings.category,
+                          context.strings.categoryField,
                           widget.transaction.category!.displayName,
                           Icons.category,
                         ),
@@ -597,7 +597,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Confirmar Exclusão'),
+            title: Text(context.strings.confirmDelete),
             content: Text(
               'Tem certeza que deseja excluir a transação "${widget.transaction.title}"?\n\n'
               'Esta ação não pode ser desfeita.',
@@ -605,7 +605,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancelar'),
+                child: Text(context.strings.cancel),
               ),
               TextButton(
                 onPressed: () {
@@ -615,7 +615,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                       .deleteTransaction(widget.transaction.id);
                 },
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
-                child: const Text('Excluir'),
+                child: Text(context.strings.delete),
               ),
             ],
           ),

@@ -32,12 +32,12 @@
   "@monthlySettings": {
     "description": "Title for monthly transaction settings"
   },
-  "startMonth": "Start Month",
-  "@startMonth": {
+  "startMonthField": "Start Month",
+  "@startMonthField": {
     "description": "Label for start month field"
   },
-  "endMonth": "End Month",
-  "@endMonth": {
+  "endMonthField": "End Month",
+  "@endMonthField": {
     "description": "Label for end month field"
   },
   "selectStartMonth": "Select start month",
@@ -52,8 +52,8 @@
   "@yearlySettings": {
     "description": "Title for yearly transaction settings"
   },
-  "yearlyMonth": "Yearly Month",
-  "@yearlyMonth": {
+  "yearlyMonthField": "Yearly Month",
+  "@yearlyMonthField": {
     "description": "Label for yearly month field"
   },
   "selectYearlyMonth": "Select the month it occurs yearly",
@@ -68,8 +68,8 @@
   "@installmentSettings": {
     "description": "Title for installment transaction settings"
   },
-  "totalInstallments": "Total Installments",
-  "@totalInstallments": {
+  "totalInstallmentsField": "Total Installments",
+  "@totalInstallmentsField": {
     "description": "Label for total installments field"
   },
   "enterTotalInstallments": "Enter total number of installments",
@@ -132,8 +132,8 @@
   "@newTransaction": {
     "description": "Label for new transaction button"
   },
-  "title": "Title",
-  "@title": {
+  "titleField": "Title",
+  "@titleField": {
     "description": "Label for title field"
   },
   "enterTitle": "Enter transaction title",
@@ -152,8 +152,8 @@
   "@enterDescription": {
     "description": "Hint text for description field"
   },
-  "amount": "Amount",
-  "@amount": {
+  "amountField": "Amount",
+  "@amountField": {
     "description": "Label for amount field"
   },
   "enterAmount": "Enter amount",
@@ -180,8 +180,8 @@
   "@expense": {
     "description": "Label for expense transaction type"
   },
-  "category": "Category",
-  "@category": {
+  "categoryField": "Category",
+  "@categoryField": {
     "description": "Label for category field"
   },
   "selectCategory": "Select category (optional)",
@@ -356,10 +356,6 @@
   "@additionalDetails": {
     "description": "Hint text for description field"
   },
-  "selectCategory": "Select category (optional)",
-  "@selectCategory": {
-    "description": "Hint text for category field"
-  },
   "selectStartDate": "Select when to start",
   "@selectStartDate": {
     "description": "Hint text for start date selection"
@@ -376,9 +372,9 @@
   "@enterInstallments": {
     "description": "Hint text for installments field"
   },
-  "installmentsRequired": "Number of installments is required",
-  "@installmentsRequired": {
-    "description": "Validation message for installments field"
+  "installmentsRequiredForm": "Number of installments is required",
+  "@installmentsRequiredForm": {
+    "description": "Validation message for installments field in form"
   },
   "installmentsPositive": "Must be a number greater than zero",
   "@installmentsPositive": {
@@ -391,6 +387,10 @@
   "installmentValue": "Installment value",
   "@installmentValue": {
     "description": "Label for installment value"
+  },
+  "installmentValueForm": "Installment value",
+  "@installmentValueForm": {
+    "description": "Label for installment value in form"
   },
   "firstInstallmentMonth": "1st Installment Month",
   "@firstInstallmentMonth": {
@@ -408,49 +408,33 @@
   "@endMonthOptional": {
     "description": "Label for optional end month"
   },
-  "startMonthRequired": "Start Month *",
-  "@startMonthRequired": {
+  "startMonthRequiredLabel": "Start Month *",
+  "@startMonthRequiredLabel": {
     "description": "Label for required start month"
   },
-  "yearlyMonthRequired": "Yearly Month *",
-  "@yearlyMonthRequired": {
+  "yearlyMonthRequiredLabel": "Yearly Month *",
+  "@yearlyMonthRequiredLabel": {
     "description": "Label for required yearly month"
   },
-  "totalInstallmentsRequired": "Total Installments *",
-  "@totalInstallmentsRequired": {
+  "totalInstallmentsRequiredLabel": "Total Installments *",
+  "@totalInstallmentsRequiredLabel": {
     "description": "Label for required total installments"
   },
-  "titleRequired": "Title *",
-  "@titleRequired": {
+  "titleRequiredLabel": "Title *",
+  "@titleRequiredLabel": {
     "description": "Label for required title"
   },
-  "amountRequired": "Amount *",
-  "@amountRequired": {
+  "amountRequiredLabel": "Amount *",
+  "@amountRequiredLabel": {
     "description": "Label for required amount"
   },
-  "categoryRequired": "Category *",
-  "@categoryRequired": {
+  "categoryRequiredLabel": "Category *",
+  "@categoryRequiredLabel": {
     "description": "Label for required category"
   },
   "dashboardTransactions": "Transactions",
   "@dashboardTransactions": {
     "description": "Title for transactions section in dashboard"
-  },
-  "monthlyTransactions": "Monthly Transactions",
-  "@monthlyTransactions": {
-    "description": "Title for monthly transactions section"
-  },
-  "errorLoadingTransactions": "Error loading transactions",
-  "@errorLoadingTransactions": {
-    "description": "Error message when loading transactions fails"
-  },
-  "noTransactionsFound": "No transactions found",
-  "@noTransactionsFound": {
-    "description": "Message when no transactions are found"
-  },
-  "addFirstTransaction": "Add your first transaction to get started",
-  "@addFirstTransaction": {
-    "description": "Message encouraging user to add first transaction"
   },
   "adjusted": "Adjusted",
   "@adjusted": {
@@ -460,16 +444,16 @@
   "@transactionDetails": {
     "description": "Title for transaction details screen"
   },
-  "edit": "Edit",
-  "@edit": {
+  "editAction": "Edit",
+  "@editAction": {
     "description": "Label for edit action"
   },
-  "adjustMonthlyValue": "Adjust this month's value",
-  "@adjustMonthlyValue": {
+  "adjustMonthlyValueAction": "Adjust this month's value",
+  "@adjustMonthlyValueAction": {
     "description": "Label for adjust monthly value action"
   },
-  "delete": "Delete",
-  "@delete": {
+  "deleteAction": "Delete",
+  "@deleteAction": {
     "description": "Label for delete action"
   },
   "generalInformation": "General Information",
@@ -492,10 +476,6 @@
   "@tags": {
     "description": "Label for tags"
   },
-  "installmentValue": "Installment value",
-  "@installmentValue": {
-    "description": "Label for installment value"
-  },
   "confirmDelete": "Confirm Delete",
   "@confirmDelete": {
     "description": "Title for delete confirmation dialog"
@@ -503,5 +483,121 @@
   "deletedTransaction": "Deleted transaction",
   "@deletedTransaction": {
     "description": "Label for deleted transaction"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Title for settings screen"
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Title for appearance settings section"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Title for language settings section"
+  },
+  "currency": "Currency",
+  "@currency": {
+    "description": "Title for currency settings section"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Label for retry button"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Label for dark mode setting"
+  },
+  "lightMode": "Light Mode",
+  "@lightMode": {
+    "description": "Label for light mode setting"
+  },
+  "portuguese": "Portuguese",
+  "@portuguese": {
+    "description": "Label for Portuguese language"
+  },
+  "english": "English",
+  "@english": {
+    "description": "Label for English language"
+  },
+  "brazilianReal": "Brazilian Real (R$)",
+  "@brazilianReal": {
+    "description": "Label for Brazilian Real currency"
+  },
+  "usDollar": "US Dollar ($)",
+  "@usDollar": {
+    "description": "Label for US Dollar currency"
+  },
+  "euro": "Euro (€)",
+  "@euro": {
+    "description": "Label for Euro currency"
+  },
+  "selectPeriod": "Select Period",
+  "@selectPeriod": {
+    "description": "Title for period selection dialog"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Label for confirm button"
+  },
+  "transactionDeletedSuccess": "Transaction deleted successfully!",
+  "@transactionDeletedSuccess": {
+    "description": "Success message when transaction is deleted"
+  },
+  "transactionUpdatedSuccess": "Transaction updated successfully!",
+  "@transactionUpdatedSuccess": {
+    "description": "Success message when transaction is updated"
+  },
+  "adjustValue": "Adjust Value - {month}/{year}",
+  "@adjustValue": {
+    "description": "Title for adjust value dialog",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "removeAdjustment": "Remove Adjustment",
+  "@removeAdjustment": {
+    "description": "Label for remove adjustment button"
+  },
+  "editTransaction": "Edit Transaction",
+  "@editTransaction": {
+    "description": "Title for edit transaction screen"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Label for back button"
+  },
+  "notFound": "Not Found",
+  "@notFound": {
+    "description": "Label for not found state"
+  },
+  "backToTransactions": "Back to Transactions",
+  "@backToTransactions": {
+    "description": "Label for back to transactions button"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Label for profile option"
+  },
+  "profileComingSoon": "Profile - Coming soon!",
+  "@profileComingSoon": {
+    "description": "Message for profile feature coming soon"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Label for logout option"
+  },
+  "confirmLogout": "Confirm Logout",
+  "@confirmLogout": {
+    "description": "Title for logout confirmation dialog"
+  },
+  "confirmLogoutMessage": "Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.",
+  "@confirmLogoutMessage": {
+    "description": "Message for logout confirmation dialog"
   }
 }

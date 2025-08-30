@@ -147,13 +147,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Start Month'**
-  String get startMonth;
+  String get startMonthField;
 
   /// Label for end month field
   ///
   /// In en, this message translates to:
   /// **'End Month'**
-  String get endMonth;
+  String get endMonthField;
 
   /// Hint text for start month field
   ///
@@ -177,7 +177,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Yearly Month'**
-  String get yearlyMonth;
+  String get yearlyMonthField;
 
   /// Hint text for yearly month field
   ///
@@ -201,7 +201,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Total Installments'**
-  String get totalInstallments;
+  String get totalInstallmentsField;
 
   /// Hint text for total installments field
   ///
@@ -212,7 +212,7 @@ abstract class AppLocalizations {
   /// Validation message for installments field
   ///
   /// In en, this message translates to:
-  /// **'Number of installments is required'**
+  /// **'Please enter the number of installments'**
   String get installmentsRequired;
 
   /// Validation message for minimum installments
@@ -285,7 +285,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Title'**
-  String get title;
+  String get titleField;
 
   /// Hint text for title field
   ///
@@ -293,10 +293,10 @@ abstract class AppLocalizations {
   /// **'Enter transaction title'**
   String get enterTitle;
 
-  /// Label for required title
+  /// Validation message for title field
   ///
   /// In en, this message translates to:
-  /// **'Title *'**
+  /// **'Please enter a title'**
   String get titleRequired;
 
   /// Label for description field
@@ -315,7 +315,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Amount'**
-  String get amount;
+  String get amountField;
 
   /// Hint text for amount field
   ///
@@ -323,10 +323,10 @@ abstract class AppLocalizations {
   /// **'Enter amount'**
   String get enterAmount;
 
-  /// Label for required amount
+  /// Validation message for amount field
   ///
   /// In en, this message translates to:
-  /// **'Amount *'**
+  /// **'Please enter an amount'**
   String get amountRequired;
 
   /// Validation message for positive amount
@@ -357,7 +357,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Category'**
-  String get category;
+  String get categoryField;
 
   /// Hint text for category field
   ///
@@ -377,13 +377,13 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
-  /// Label for edit action
+  /// Label for edit button
   ///
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit;
 
-  /// Label for delete action
+  /// Label for delete button
   ///
   /// In en, this message translates to:
   /// **'Delete'**
@@ -455,7 +455,7 @@ abstract class AppLocalizations {
   /// **'Error deleting transaction'**
   String get errorDeletingTransaction;
 
-  /// Error message when loading transactions fails
+  /// Message when there's an error loading transactions
   ///
   /// In en, this message translates to:
   /// **'Error loading transactions'**
@@ -533,10 +533,10 @@ abstract class AppLocalizations {
   /// **'Yearly Month'**
   String get yearlyMonthLabel;
 
-  /// Label for adjust monthly value action
+  /// Label for adjust monthly value button
   ///
   /// In en, this message translates to:
-  /// **'Adjust this month\'s value'**
+  /// **'Adjust Monthly Value'**
   String get adjustMonthlyValue;
 
   /// Label for current value
@@ -641,6 +641,12 @@ abstract class AppLocalizations {
   /// **'Enter number of installments'**
   String get enterInstallments;
 
+  /// Validation message for installments field in form
+  ///
+  /// In en, this message translates to:
+  /// **'Number of installments is required'**
+  String get installmentsRequiredForm;
+
   /// Validation message for positive installments
   ///
   /// In en, this message translates to:
@@ -658,6 +664,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Installment value'**
   String get installmentValue;
+
+  /// Label for installment value in form
+  ///
+  /// In en, this message translates to:
+  /// **'Installment value'**
+  String get installmentValueForm;
 
   /// Label for first installment month
   ///
@@ -687,25 +699,37 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Start Month *'**
-  String get startMonthRequired;
+  String get startMonthRequiredLabel;
 
   /// Label for required yearly month
   ///
   /// In en, this message translates to:
   /// **'Yearly Month *'**
-  String get yearlyMonthRequired;
+  String get yearlyMonthRequiredLabel;
 
   /// Label for required total installments
   ///
   /// In en, this message translates to:
   /// **'Total Installments *'**
-  String get totalInstallmentsRequired;
+  String get totalInstallmentsRequiredLabel;
+
+  /// Label for required title
+  ///
+  /// In en, this message translates to:
+  /// **'Title *'**
+  String get titleRequiredLabel;
+
+  /// Label for required amount
+  ///
+  /// In en, this message translates to:
+  /// **'Amount *'**
+  String get amountRequiredLabel;
 
   /// Label for required category
   ///
   /// In en, this message translates to:
   /// **'Category *'**
-  String get categoryRequired;
+  String get categoryRequiredLabel;
 
   /// Title for transactions section in dashboard
   ///
@@ -724,6 +748,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transaction Details'**
   String get transactionDetails;
+
+  /// Label for edit action
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editAction;
+
+  /// Label for adjust monthly value action
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust this month\'s value'**
+  String get adjustMonthlyValueAction;
+
+  /// Label for delete action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteAction;
 
   /// Title for general information section
   ///
@@ -766,6 +808,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deleted transaction'**
   String get deletedTransaction;
+
+  /// Title for settings screen
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// Title for appearance settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// Title for language settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// Title for currency settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// Label for retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Label for dark mode setting
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// Label for light mode setting
+  ///
+  /// In en, this message translates to:
+  /// **'Light Mode'**
+  String get lightMode;
+
+  /// Label for Portuguese language
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get portuguese;
+
+  /// Label for English language
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Label for Brazilian Real currency
+  ///
+  /// In en, this message translates to:
+  /// **'Brazilian Real (R\$)'**
+  String get brazilianReal;
+
+  /// Label for US Dollar currency
+  ///
+  /// In en, this message translates to:
+  /// **'US Dollar (\$)'**
+  String get usDollar;
+
+  /// Label for Euro currency
+  ///
+  /// In en, this message translates to:
+  /// **'Euro (€)'**
+  String get euro;
+
+  /// Title for period selection dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Select Period'**
+  String get selectPeriod;
+
+  /// Label for confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// Success message when transaction is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction deleted successfully!'**
+  String get transactionDeletedSuccess;
+
+  /// Success message when transaction is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction updated successfully!'**
+  String get transactionUpdatedSuccess;
+
+  /// Title for adjust value dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Value - {month}/{year}'**
+  String adjustValue(String month, String year);
+
+  /// Label for remove adjustment button
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Adjustment'**
+  String get removeAdjustment;
+
+  /// Title for edit transaction screen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Transaction'**
+  String get editTransaction;
+
+  /// Label for back button
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// Label for not found state
+  ///
+  /// In en, this message translates to:
+  /// **'Not Found'**
+  String get notFound;
+
+  /// Label for back to transactions button
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Transactions'**
+  String get backToTransactions;
+
+  /// Label for profile option
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// Message for profile feature coming soon
+  ///
+  /// In en, this message translates to:
+  /// **'Profile - Coming soon!'**
+  String get profileComingSoon;
+
+  /// Label for logout option
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// Title for logout confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Logout'**
+  String get confirmLogout;
+
+  /// Message for logout confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.'**
+  String get confirmLogoutMessage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

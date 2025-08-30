@@ -54,44 +54,41 @@ class DashboardHeader extends ConsumerWidget {
                 case 'profile':
                   // TODO: Navegar para perfil
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Perfil - Em breve!')),
+                    SnackBar(content: Text(AppLocalizations.of(context)!.profileComingSoon)),
                   );
                   break;
                 case 'settings':
-                  // TODO: Navegar para configurações
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Configurações - Em breve!')),
-                  );
+                  AppRoutes.goToSettings(context);
                   break;
               }
             },
             itemBuilder:
                 (context) => [
-                  const PopupMenuItem(
-                    value: 'profile',
-                    child: ListTile(
-                      leading: Icon(Icons.person_outline),
-                      title: Text('Perfil'),
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                  ),
-                  const PopupMenuItem(
-                    value: 'settings',
-                    child: ListTile(
-                      leading: Icon(Icons.settings_outlined),
-                      title: Text('Configurações'),
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                  ),
+                                        PopupMenuItem(
+                        value: 'profile',
+                        child: ListTile(
+                          leading: Icon(Icons.person_outline),
+                          title: Text(AppLocalizations.of(context)!.profile),
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                      ),
+                                        PopupMenuItem(
+                        value: 'settings',
+                        child: ListTile(
+                          leading: Icon(Icons.settings_outlined),
+                          title: Text(AppLocalizations.of(context)!.settings),
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                      ),
                   const PopupMenuDivider(),
-                  const PopupMenuItem(
-                    value: 'logout',
-                    child: ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Sair'),
-                      contentPadding: EdgeInsets.zero,
+                                      PopupMenuItem(
+                      value: 'logout',
+                      child: ListTile(
+                        leading: Icon(Icons.logout),
+                        title: Text(AppLocalizations.of(context)!.logout),
+                        contentPadding: EdgeInsets.zero,
+                      ),
                     ),
-                  ),
                 ],
           ),
         ],
@@ -115,15 +112,12 @@ class DashboardHeader extends ConsumerWidget {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Confirmar Saída'),
-            content: const Text(
-              'Tem certeza que deseja sair da sua conta?\n\n'
-              'Você precisará fazer login novamente para acessar o app.',
-            ),
+            title: Text(AppLocalizations.of(context)!.confirmLogout),
+                          content: Text(AppLocalizations.of(context)!.confirmLogoutMessage),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancelar'),
+                child: Text(AppLocalizations.of(context)!.cancel),
               ),
               FilledButton(
                 onPressed: () async {
@@ -134,7 +128,7 @@ class DashboardHeader extends ConsumerWidget {
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
                 ),
-                child: const Text('Sair'),
+                child: Text(AppLocalizations.of(context)!.logout),
               ),
             ],
           ),

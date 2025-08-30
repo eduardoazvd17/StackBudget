@@ -33,7 +33,7 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Selecionar Período'),
+      title: Text(context.strings.selectPeriod),
       content: SizedBox(
         width: 300,
         height: 300,
@@ -134,7 +134,7 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancelar'),
+          child: Text(context.strings.cancel),
         ),
         FilledButton(
           onPressed: () {
@@ -142,7 +142,7 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
             widget.onDateSelected(selectedDate);
             Navigator.of(context).pop();
           },
-          child: const Text('Confirmar'),
+          child: Text(context.strings.confirm),
         ),
       ],
     );

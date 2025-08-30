@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 
+
+
 abstract class AuthDatasource {
   Future<UserModel> signInWithEmailAndPassword({
     required String email,
@@ -61,7 +63,7 @@ class AuthDatasourceImpl implements AuthDatasource {
         throw const Failure(message: 'Dados do usuário não encontrados');
       }
 
-      return UserModel.fromMap(userDoc.data()!);
+            return UserModel.fromMap(userDoc.data()!);
     } on FirebaseAuthException catch (e) {
       throw Failure(message: _getAuthErrorMessage(e.code));
     } catch (e) {
@@ -138,6 +140,8 @@ class AuthDatasourceImpl implements AuthDatasource {
       'lastLogin': Timestamp.now(),
     });
   }
+
+
 
   String _getAuthErrorMessage(String code) {
     switch (code) {

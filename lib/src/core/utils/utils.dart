@@ -2,6 +2,7 @@ export 'app_routes.dart';
 export 'app_routes_config.dart';
 export 'app_theme.dart';
 export 'borders.dart';
+export 'currency_formatter.dart';
 export 'currency_input_formatter.dart';
 export 'custom_scroll_behavior.dart';
 export 'formatters.dart';

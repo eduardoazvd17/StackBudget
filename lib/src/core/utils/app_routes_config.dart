@@ -23,9 +23,9 @@ class AppRoutesConfig {
   static const String authPath = '/$auth';
   static const String transactionsPath = '/$transactions';
   static const String addTransactionPath = '/$transactions/$addTransaction';
+  static const String settingsPath = '/$transactions/$settings';
   static const String budgetPath = '/$budget';
   static const String profilePath = '/$profile';
-  static const String settingsPath = '/$settings';
   static const String reportsPath = '/$reports';
 }
 

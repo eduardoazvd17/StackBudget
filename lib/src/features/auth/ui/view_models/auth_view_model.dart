@@ -5,6 +5,7 @@ import 'package:stackbudget/src/features/auth/data/datasources/datasources.dart'
 import 'package:stackbudget/src/features/auth/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 
+
 class AuthViewModel extends StateNotifier<AuthViewModelState> {
   final AuthRepository _repository;
 

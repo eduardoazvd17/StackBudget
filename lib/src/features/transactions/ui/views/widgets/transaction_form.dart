@@ -116,7 +116,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             TextFormField(
               controller: _titleController,
               decoration: InputDecoration(
-                labelText: context.strings.titleRequired,
+                labelText: context.strings.titleRequiredLabel,
                 hintText: context.strings.titleHint,
                 prefixIcon: const Icon(Icons.title),
               ),
@@ -130,7 +130,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             TextFormField(
               controller: _amountController,
               decoration: InputDecoration(
-                labelText: context.strings.amountRequired,
+                labelText: context.strings.amountRequiredLabel,
                 hintText: context.strings.amountHint,
                 prefixIcon: const Icon(Icons.attach_money),
               ),
@@ -146,12 +146,12 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
               },
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return context.strings.amountRequired;
+                  return context.strings.amountRequiredLabel;
                 }
                 // Extrai apenas os dígitos e converte para double
                 final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
                 if (digitsOnly.isEmpty) {
-                  return context.strings.amountRequired;
+                  return context.strings.amountRequiredLabel;
                 }
                 final numValue = double.parse(digitsOnly) / 100;
                 if (numValue <= 0) {
@@ -394,7 +394,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       // Data de início
       ListTile(
         leading: const Icon(Icons.calendar_today),
-        title: Text(context.strings.startMonthRequired),
+        title: Text(context.strings.startMonthRequiredLabel),
         subtitle: Text(
           _startDate != null
               ? '${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])} de ${_startDate!.year}'
@@ -446,7 +446,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       TextFormField(
         initialValue: _totalInstallments?.toString(),
         decoration: InputDecoration(
-          labelText: context.strings.totalInstallmentsRequired,
+          labelText: context.strings.totalInstallmentsRequiredLabel,
           hintText: context.strings.enterInstallments,
           prefixIcon: const Icon(Icons.format_list_numbered),
         ),
@@ -459,7 +459,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         },
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
-            return context.strings.installmentsRequired;
+            return context.strings.installmentsRequiredForm;
           }
           final num = int.tryParse(value);
           if (num == null || num <= 0) {
@@ -485,7 +485,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 Icon(Icons.calculate, color: Colors.blue.shade700, size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  '${context.strings.installmentValue}: ${_getInstallmentValueText()}',
+                  '${context.strings.installmentValueForm}: ${_getInstallmentValueText()}',
                   style: TextStyle(
                     color: Colors.blue.shade700,
                     fontWeight: FontWeight.w600,
@@ -527,7 +527,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       DropdownButtonFormField<MonthEnum>(
         value: _selectedYearlyMonth,
         decoration: InputDecoration(
-          labelText: context.strings.yearlyMonthRequired,
+          labelText: context.strings.yearlyMonthRequiredLabel,
           prefixIcon: const Icon(Icons.calendar_month),
           hintText: context.strings.selectYearlyMonth,
         ),
@@ -569,7 +569,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     return DropdownButtonFormField<TransactionCategoryEnum>(
       value: _selectedCategory,
       decoration: InputDecoration(
-        labelText: context.strings.category,
+        labelText: context.strings.categoryField,
         hintText: context.strings.selectCategory,
         prefixIcon: const Icon(Icons.category),
       ),

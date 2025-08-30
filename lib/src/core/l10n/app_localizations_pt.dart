@@ -33,10 +33,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get monthlySettings => 'Configurações Mensais';
 
   @override
-  String get startMonth => 'Mês de Início';
+  String get startMonthField => 'Mês de Início';
 
   @override
-  String get endMonth => 'Mês de Fim';
+  String get endMonthField => 'Mês de Fim';
 
   @override
   String get selectStartMonth => 'Selecione o mês de início';
@@ -48,7 +48,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get yearlySettings => 'Configurações Anuais';
 
   @override
-  String get yearlyMonth => 'Mês do Ano';
+  String get yearlyMonthField => 'Mês do Ano';
 
   @override
   String get selectYearlyMonth => 'Em qual mês ocorre anualmente';
@@ -60,13 +60,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get installmentSettings => 'Configurações de Parcelamento';
 
   @override
-  String get totalInstallments => 'Total de Parcelas';
+  String get totalInstallmentsField => 'Total de Parcelas';
 
   @override
   String get enterTotalInstallments => 'Digite o número total de parcelas';
 
   @override
-  String get installmentsRequired => 'Número de parcelas é obrigatório';
+  String get installmentsRequired => 'Digite o número de parcelas';
 
   @override
   String get installmentsMinValue => 'Deve ter pelo menos 2 parcelas';
@@ -104,13 +104,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get newTransaction => 'Nova Transação';
 
   @override
-  String get title => 'Título';
+  String get titleField => 'Título';
 
   @override
   String get enterTitle => 'Digite o título da transação';
 
   @override
-  String get titleRequired => 'Título *';
+  String get titleRequired => 'Digite um título';
 
   @override
   String get description => 'Descrição';
@@ -119,13 +119,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enterDescription => 'Digite a descrição (opcional)';
 
   @override
-  String get amount => 'Valor';
+  String get amountField => 'Valor';
 
   @override
   String get enterAmount => 'Digite o valor';
 
   @override
-  String get amountRequired => 'Valor *';
+  String get amountRequired => 'Digite um valor';
 
   @override
   String get amountPositive => 'O valor deve ser maior que zero';
@@ -140,7 +140,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get expense => 'Despesa';
 
   @override
-  String get category => 'Categoria';
+  String get categoryField => 'Categoria';
 
   @override
   String get selectCategory => 'Selecione categoria (opcional)';
@@ -152,10 +152,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
-  String get edit => 'Editar';
+  String get edit => 'Edit';
 
   @override
-  String get delete => 'Excluir';
+  String get delete => 'Delete';
 
   @override
   String get deleteConfirmation => 'Excluir Transação';
@@ -230,7 +230,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get yearlyMonthLabel => 'Mês do Ano';
 
   @override
-  String get adjustMonthlyValue => 'Ajustar valor deste mês';
+  String get adjustMonthlyValue => 'Ajustar Valor Mensal';
 
   @override
   String get currentValue => 'Valor Atual';
@@ -284,13 +284,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enterInstallments => 'Digite o número de parcelas';
 
   @override
+  String get installmentsRequiredForm => 'Número de parcelas é obrigatório';
+
+  @override
   String get installmentsPositive => 'Deve ser um número maior que zero';
 
   @override
   String get selectFirstInstallmentMonth => 'Selecione o mês da primeira parcela';
 
   @override
-  String get installmentValue => 'Valor da parcela';
+  String get installmentValue => 'Valor por parcela';
+
+  @override
+  String get installmentValueForm => 'Valor por parcela';
 
   @override
   String get firstInstallmentMonth => 'Mês da 1ª Parcela';
@@ -305,16 +311,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get endMonthOptional => 'Mês de Fim (opcional)';
 
   @override
-  String get startMonthRequired => 'Mês de Início *';
+  String get startMonthRequiredLabel => 'Mês de Início *';
 
   @override
-  String get yearlyMonthRequired => 'Mês do Ano *';
+  String get yearlyMonthRequiredLabel => 'Mês do Ano *';
 
   @override
-  String get totalInstallmentsRequired => 'Total de Parcelas *';
+  String get totalInstallmentsRequiredLabel => 'Total de Parcelas *';
 
   @override
-  String get categoryRequired => 'Categoria *';
+  String get titleRequiredLabel => 'Título *';
+
+  @override
+  String get amountRequiredLabel => 'Valor *';
+
+  @override
+  String get categoryRequiredLabel => 'Categoria *';
 
   @override
   String get dashboardTransactions => 'Transações';
@@ -324,6 +336,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get transactionDetails => 'Detalhes da Transação';
+
+  @override
+  String get editAction => 'Editar';
+
+  @override
+  String get adjustMonthlyValueAction => 'Ajustar valor deste mês';
+
+  @override
+  String get deleteAction => 'Excluir';
 
   @override
   String get generalInformation => 'Informações Gerais';
@@ -345,4 +366,87 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deletedTransaction => 'Transação excluída';
+
+  @override
+  String get settings => 'Configurações';
+
+  @override
+  String get appearance => 'Aparência';
+
+  @override
+  String get language => 'Idioma';
+
+  @override
+  String get currency => 'Moeda';
+
+  @override
+  String get retry => 'Tentar Novamente';
+
+  @override
+  String get darkMode => 'Modo Escuro';
+
+  @override
+  String get lightMode => 'Modo Claro';
+
+  @override
+  String get portuguese => 'Português';
+
+  @override
+  String get english => 'Inglês';
+
+  @override
+  String get brazilianReal => 'Real Brasileiro (R\$)';
+
+  @override
+  String get usDollar => 'Dólar Americano (\$)';
+
+  @override
+  String get euro => 'Euro (€)';
+
+  @override
+  String get selectPeriod => 'Selecionar Período';
+
+  @override
+  String get confirm => 'Confirmar';
+
+  @override
+  String get transactionDeletedSuccess => 'Transação excluída com sucesso!';
+
+  @override
+  String get transactionUpdatedSuccess => 'Transação atualizada com sucesso!';
+
+  @override
+  String adjustValue(String month, String year) {
+    return 'Ajustar Valor - $month/$year';
+  }
+
+  @override
+  String get removeAdjustment => 'Remover Ajuste';
+
+  @override
+  String get editTransaction => 'Editar Transação';
+
+  @override
+  String get back => 'Voltar';
+
+  @override
+  String get notFound => 'Não Encontrado';
+
+  @override
+  String get backToTransactions => 'Voltar às Transações';
+
+  @override
+  String get profile => 'Perfil';
+
+  @override
+  String get profileComingSoon => 'Perfil - Em breve!';
+
+  @override
+  String get logout => 'Sair';
+
+  @override
+  String get confirmLogout => 'Confirmar Saída';
+
+  @override
+  String get confirmLogoutMessage => 'Tem certeza que deseja sair da sua conta?\n\nVocê precisará fazer login novamente para acessar o app.';
 }

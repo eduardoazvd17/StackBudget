@@ -118,7 +118,7 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Ajustar Valor - ${_getMonthName(widget.month)}/${widget.year}'),
+          Text(context.strings.adjustValue(_getMonthName(widget.month), widget.year.toString())),
           const SizedBox(height: Spacing.xs),
           Text(
             widget.transaction.title,
@@ -220,11 +220,11 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
             onPressed: _isLoading ? null : () {
               ref.read(monthlyTransactionViewModelProvider.notifier).removeMonthlyOverride();
             },
-            child: const Text('Remover Ajuste'),
+                            child: Text(context.strings.removeAdjustment),
           ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancelar'),
+                      child: Text(context.strings.cancel),
         ),
         ElevatedButton(
           onPressed: _isLoading ? null : _saveValue,
@@ -234,7 +234,7 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
                   height: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Salvar'),
+              : Text(context.strings.save),
         ),
       ],
     );

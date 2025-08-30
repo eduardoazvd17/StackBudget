@@ -33,10 +33,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get monthlySettings => 'Monthly Settings';
 
   @override
-  String get startMonth => 'Start Month';
+  String get startMonthField => 'Start Month';
 
   @override
-  String get endMonth => 'End Month';
+  String get endMonthField => 'End Month';
 
   @override
   String get selectStartMonth => 'Select start month';
@@ -48,7 +48,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yearlySettings => 'Yearly Settings';
 
   @override
-  String get yearlyMonth => 'Yearly Month';
+  String get yearlyMonthField => 'Yearly Month';
 
   @override
   String get selectYearlyMonth => 'Select the month it occurs yearly';
@@ -60,13 +60,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get installmentSettings => 'Installment Settings';
 
   @override
-  String get totalInstallments => 'Total Installments';
+  String get totalInstallmentsField => 'Total Installments';
 
   @override
   String get enterTotalInstallments => 'Enter total number of installments';
 
   @override
-  String get installmentsRequired => 'Number of installments is required';
+  String get installmentsRequired => 'Please enter the number of installments';
 
   @override
   String get installmentsMinValue => 'Must be at least 2 installments';
@@ -104,13 +104,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newTransaction => 'New Transaction';
 
   @override
-  String get title => 'Title';
+  String get titleField => 'Title';
 
   @override
   String get enterTitle => 'Enter transaction title';
 
   @override
-  String get titleRequired => 'Title *';
+  String get titleRequired => 'Please enter a title';
 
   @override
   String get description => 'Description';
@@ -119,13 +119,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterDescription => 'Enter description (optional)';
 
   @override
-  String get amount => 'Amount';
+  String get amountField => 'Amount';
 
   @override
   String get enterAmount => 'Enter amount';
 
   @override
-  String get amountRequired => 'Amount *';
+  String get amountRequired => 'Please enter an amount';
 
   @override
   String get amountPositive => 'Amount must be greater than zero';
@@ -140,7 +140,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expense => 'Expense';
 
   @override
-  String get category => 'Category';
+  String get categoryField => 'Category';
 
   @override
   String get selectCategory => 'Select category (optional)';
@@ -230,7 +230,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yearlyMonthLabel => 'Yearly Month';
 
   @override
-  String get adjustMonthlyValue => 'Adjust this month\'s value';
+  String get adjustMonthlyValue => 'Adjust Monthly Value';
 
   @override
   String get currentValue => 'Current Value';
@@ -284,6 +284,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterInstallments => 'Enter number of installments';
 
   @override
+  String get installmentsRequiredForm => 'Number of installments is required';
+
+  @override
   String get installmentsPositive => 'Must be a number greater than zero';
 
   @override
@@ -291,6 +294,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get installmentValue => 'Installment value';
+
+  @override
+  String get installmentValueForm => 'Installment value';
 
   @override
   String get firstInstallmentMonth => '1st Installment Month';
@@ -305,16 +311,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get endMonthOptional => 'End Month (optional)';
 
   @override
-  String get startMonthRequired => 'Start Month *';
+  String get startMonthRequiredLabel => 'Start Month *';
 
   @override
-  String get yearlyMonthRequired => 'Yearly Month *';
+  String get yearlyMonthRequiredLabel => 'Yearly Month *';
 
   @override
-  String get totalInstallmentsRequired => 'Total Installments *';
+  String get totalInstallmentsRequiredLabel => 'Total Installments *';
 
   @override
-  String get categoryRequired => 'Category *';
+  String get titleRequiredLabel => 'Title *';
+
+  @override
+  String get amountRequiredLabel => 'Amount *';
+
+  @override
+  String get categoryRequiredLabel => 'Category *';
 
   @override
   String get dashboardTransactions => 'Transactions';
@@ -324,6 +336,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transactionDetails => 'Transaction Details';
+
+  @override
+  String get editAction => 'Edit';
+
+  @override
+  String get adjustMonthlyValueAction => 'Adjust this month\'s value';
+
+  @override
+  String get deleteAction => 'Delete';
 
   @override
   String get generalInformation => 'General Information';
@@ -345,4 +366,87 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deletedTransaction => 'Deleted transaction';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get lightMode => 'Light Mode';
+
+  @override
+  String get portuguese => 'Portuguese';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get brazilianReal => 'Brazilian Real (R\$)';
+
+  @override
+  String get usDollar => 'US Dollar (\$)';
+
+  @override
+  String get euro => 'Euro (€)';
+
+  @override
+  String get selectPeriod => 'Select Period';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get transactionDeletedSuccess => 'Transaction deleted successfully!';
+
+  @override
+  String get transactionUpdatedSuccess => 'Transaction updated successfully!';
+
+  @override
+  String adjustValue(String month, String year) {
+    return 'Adjust Value - $month/$year';
+  }
+
+  @override
+  String get removeAdjustment => 'Remove Adjustment';
+
+  @override
+  String get editTransaction => 'Edit Transaction';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get notFound => 'Not Found';
+
+  @override
+  String get backToTransactions => 'Back to Transactions';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get profileComingSoon => 'Profile - Coming soon!';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get confirmLogout => 'Confirm Logout';
+
+  @override
+  String get confirmLogoutMessage => 'Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.';
 }

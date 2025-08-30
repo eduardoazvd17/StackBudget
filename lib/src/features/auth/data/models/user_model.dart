@@ -6,6 +6,7 @@ class UserModel {
   final String name;
   final DateTime registrationDate;
   final DateTime? lastLogin;
+  final String currency;
 
   const UserModel({
     required this.id,
@@ -13,6 +14,7 @@ class UserModel {
     required this.name,
     required this.registrationDate,
     this.lastLogin,
+    this.currency = 'BRL',
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class UserModel {
       'name': name,
       'registrationDate': Timestamp.fromDate(registrationDate),
       'lastLogin': lastLogin != null ? Timestamp.fromDate(lastLogin!) : null,
+      'currency': currency,
     };
   }
 
@@ -35,6 +38,7 @@ class UserModel {
           map['lastLogin'] != null
               ? (map['lastLogin'] as Timestamp).toDate()
               : null,
+      currency: map['currency'] as String? ?? 'BRL',
     );
   }
 
@@ -44,6 +48,7 @@ class UserModel {
     String? name,
     DateTime? registrationDate,
     DateTime? lastLogin,
+    String? currency,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -51,6 +56,7 @@ class UserModel {
       name: name ?? this.name,
       registrationDate: registrationDate ?? this.registrationDate,
       lastLogin: lastLogin ?? this.lastLogin,
+      currency: currency ?? this.currency,
     );
   }
 
@@ -62,7 +68,8 @@ class UserModel {
         other.email == email &&
         other.name == name &&
         other.registrationDate == registrationDate &&
-        other.lastLogin == lastLogin;
+        other.lastLogin == lastLogin &&
+        other.currency == currency;
   }
 
   @override
@@ -71,6 +78,7 @@ class UserModel {
         email.hashCode ^
         name.hashCode ^
         registrationDate.hashCode ^
-        lastLogin.hashCode;
+        lastLogin.hashCode ^
+        currency.hashCode;
   }
 }

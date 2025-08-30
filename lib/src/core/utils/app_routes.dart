@@ -10,6 +10,7 @@ import 'package:stackbudget/src/features/transactions/ui/views/edit_transaction_
 import 'package:stackbudget/src/features/transactions/ui/views/transaction_detail_loader.dart';
 import 'package:stackbudget/src/features/transactions/ui/views/edit_transaction_loader.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
+import 'package:stackbudget/src/features/settings/ui/views/settings_view.dart';
 import 'package:url_strategy/url_strategy.dart' as url;
 
 class AppRoutes {
@@ -59,6 +60,13 @@ class AppRoutes {
             path: AppRoutesConfig.addTransaction,
             name: AppRoutesConfig.addTransaction,
             builder: (context, state) => const AddTransactionView(),
+          ),
+
+          // Rota de Configurações: /transactions/settings
+          GoRoute(
+            path: 'settings',
+            name: AppRoutesConfig.settings,
+            builder: (context, state) => const SettingsView(),
           ),
 
           // Rota para detalhes da transação: /transactions/:id
@@ -167,6 +175,11 @@ class AppRoutes {
       AppRoutesConfig.editTransaction,
       pathParameters: {'id': transactionId},
     );
+  }
+
+  // Métodos de navegação implementados
+  static void goToSettings(BuildContext context) {
+    context.goNamed(AppRoutesConfig.settings);
   }
 
   // Futuros métodos de navegação
