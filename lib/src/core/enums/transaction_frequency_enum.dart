@@ -1,5 +1,5 @@
 enum TransactionFrequencyEnum {
-  oneTime, // Gasto único/variável
+  oneTime, // Gasto único
   monthly, // Recorrente mensal
   yearly, // Recorrente anual
   installment; // Parcelado
@@ -7,7 +7,7 @@ enum TransactionFrequencyEnum {
   String get displayName {
     switch (this) {
       case TransactionFrequencyEnum.oneTime:
-        return 'Único';
+        return 'Única';
       case TransactionFrequencyEnum.monthly:
         return 'Mensal';
       case TransactionFrequencyEnum.yearly:

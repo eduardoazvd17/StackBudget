@@ -325,7 +325,7 @@ class TransactionListItem extends ConsumerWidget {
       case TransactionFrequencyEnum.installment:
         return 'Parcelado';
       case TransactionFrequencyEnum.oneTime:
-        return 'Único';
+        return 'Única';
     }
   }
 

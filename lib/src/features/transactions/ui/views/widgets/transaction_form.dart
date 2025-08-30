@@ -543,9 +543,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   String _getFrequencyDisplayName(TransactionFrequencyEnum frequency) {
     switch (frequency) {
       case TransactionFrequencyEnum.oneTime:
-        return 'Único/Variável';
+        return 'Única';
       case TransactionFrequencyEnum.monthly:
-        return 'Mensal (Recorrente)';
+        return 'Mensal';
       case TransactionFrequencyEnum.installment:
         return 'Parcelado';
       case TransactionFrequencyEnum.yearly:
