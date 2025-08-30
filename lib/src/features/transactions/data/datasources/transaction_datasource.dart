@@ -257,20 +257,29 @@ class TransactionDatasourceImpl implements TransactionDatasource {
         return transaction.yearlyMonth!.value == month;
 
       case TransactionFrequencyEnum.installment:
-        // Transação parcelada: verifica se a parcela se aplica ao mês
+        // Transação parcelada: verifica se alguma parcela se aplica ao mês
         if (transaction.totalInstallments == null ||
             transaction.startDate == null) {
           return false;
         }
 
         final startDate = transaction.startDate!;
-        final installmentMonth = DateTime(
-          startDate.year,
-          startDate.month + (transaction.currentInstallment ?? 0),
-          1,
-        );
+        final totalInstallments = transaction.totalInstallments!;
 
-        return installmentMonth.year == year && installmentMonth.month == month;
+        // Verificar se o mês alvo está dentro do período de parcelas
+        for (int i = 0; i < totalInstallments; i++) {
+          final installmentMonth = DateTime(
+            startDate.year,
+            startDate.month + i,
+            1,
+          );
+          
+          if (installmentMonth.year == year && installmentMonth.month == month) {
+            return true;
+          }
+        }
+
+        return false;
     }
   }
 }

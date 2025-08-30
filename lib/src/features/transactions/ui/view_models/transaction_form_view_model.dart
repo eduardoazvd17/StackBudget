@@ -28,7 +28,7 @@ class TransactionFormViewModel
     DateTime? endDate,
     int? totalInstallments,
     MonthEnum? yearlyMonth,
-    bool isDynamic = false,
+    bool isDynamic = true,
   }) async {
     state = const TransactionFormLoadingState();
 
@@ -147,7 +147,7 @@ class TransactionFormViewModel
     DateTime? endDate,
     int? totalInstallments,
     MonthEnum? yearlyMonth,
-    bool isDynamic = false,
+    bool isDynamic = true,
   }) async {
     state = const TransactionFormLoadingState();
 

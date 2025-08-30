@@ -63,28 +63,33 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       appBar: AppBar(
         title: const Text('Detalhes da Transação'),
         actions: [
-          // Botão para ajustar valor mensal (só para transações mensais dinâmicas)
-          if (_canAdjustMonthlyValue())
-            IconButton(
-              icon: const Icon(Icons.tune),
-              tooltip: 'Ajustar valor deste mês',
-              onPressed:
-                  formState is TransactionFormLoadingState
-                      ? null
-                      : () => _adjustMonthlyValue(context),
-            ),
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed:
-                formState is TransactionFormLoadingState
-                    ? null
-                    : () => _editTransaction(context),
-          ),
-          PopupMenuButton(
+          PopupMenuButton<String>(
             enabled: formState is! TransactionFormLoadingState,
             itemBuilder:
                 (context) => [
-                  const PopupMenuItem(
+                  const PopupMenuItem<String>(
+                    value: 'edit',
+                    child: Row(
+                      children: [
+                        Icon(Icons.edit),
+                        SizedBox(width: 8),
+                        Text('Editar'),
+                      ],
+                    ),
+                  ),
+                  if (_canAdjustMonthlyValue())
+                    const PopupMenuItem<String>(
+                      value: 'adjust',
+                      child: Row(
+                        children: [
+                          Icon(Icons.tune),
+                          SizedBox(width: 8),
+                          Text('Ajustar valor deste mês'),
+                        ],
+                      ),
+                    ),
+                  const PopupMenuDivider(),
+                  const PopupMenuItem<String>(
                     value: 'delete',
                     child: Row(
                       children: [
@@ -96,8 +101,16 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                   ),
                 ],
             onSelected: (value) {
-              if (value == 'delete') {
-                _showDeleteConfirmation(context, ref);
+              switch (value) {
+                case 'edit':
+                  _editTransaction(context);
+                  break;
+                case 'adjust':
+                  _adjustMonthlyValue(context);
+                  break;
+                case 'delete':
+                  _showDeleteConfirmation(context, ref);
+                  break;
               }
             },
           ),
@@ -244,11 +257,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                 _formatMonthYear(widget.transaction.endDate!),
                 Icons.stop,
               ),
-            _buildDetailItem(
-              'Valor Dinâmico',
-              widget.transaction.isDynamic ? 'Sim' : 'Não',
-              Icons.tune,
-            ),
           ]),
         ];
 
@@ -261,10 +269,10 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                 '${widget.transaction.totalInstallments}x',
                 Icons.format_list_numbered,
               ),
-            if (widget.transaction.currentInstallment != null)
+            if (widget.transaction.totalInstallments != null)
               _buildDetailItem(
                 'Parcela Atual',
-                '${widget.transaction.currentInstallment! + 1}/${widget.transaction.totalInstallments}',
+                '${_getCurrentInstallmentNumber()}/${widget.transaction.totalInstallments}',
                 Icons.timeline,
               ),
             if (widget.transaction.startDate != null)
@@ -384,6 +392,9 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
             ? Colors.green
             : Colors.red;
 
+    final isInstallment =
+        widget.transaction.frequency == TransactionFrequencyEnum.installment;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -395,6 +406,27 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
             fontWeight: FontWeight.bold,
           ),
         ),
+
+        // Para transações parceladas, mostrar informação adicional
+        if (isInstallment &&
+            widget.transaction.totalInstallments != null &&
+            widget.transaction.totalInstallments! > 0) ...[
+          const SizedBox(height: Spacing.xs),
+          Text(
+            'Valor da parcela',
+            style: context.textTheme.bodySmall?.copyWith(
+              color: Colors.orange,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: Spacing.xs),
+          Text(
+            'Valor total: ${_formatCurrency(widget.transaction.amount)}',
+            style: context.textTheme.bodySmall?.copyWith(
+              color: context.colorScheme.onSurface.withOpacity(0.6),
+            ),
+          ),
+        ],
 
         // Se há ajuste, mostrar informação adicional
         if (hasAdjustment) ...[
@@ -414,7 +446,9 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           ),
           const SizedBox(height: Spacing.xs),
           Text(
-            'Valor padrão: ${_formatCurrency(widget.transaction.amount)}',
+            isInstallment
+                ? 'Valor padrão da parcela: ${_formatCurrency(widget.transaction.amount / widget.transaction.totalInstallments!)}'
+                : 'Valor padrão: ${_formatCurrency(widget.transaction.amount)}',
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colorScheme.onSurface.withOpacity(0.6),
             ),
@@ -429,9 +463,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     int month,
     DashboardViewModelState dashboardState,
   ) {
-    // Só transações mensais dinâmicas podem ter ajustes
-    if (widget.transaction.frequency != TransactionFrequencyEnum.monthly ||
-        !widget.transaction.isDynamic) {
+    // Só transações mensais podem ter ajustes
+    if (widget.transaction.frequency != TransactionFrequencyEnum.monthly) {
       return false;
     }
 
@@ -452,12 +485,18 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     int month,
     DashboardViewModelState dashboardState,
   ) {
-    // Para transações não dinâmicas, retorna sempre o valor base
-    if (widget.transaction.frequency != TransactionFrequencyEnum.monthly ||
-        !widget.transaction.isDynamic) {
-      return widget.transaction.amount;
+    // Calcular valor padrão baseado no tipo de transação
+    double defaultAmount = widget.transaction.amount;
+
+    // Para transações parceladas, dividir o valor total pelo número de parcelas
+    if (widget.transaction.frequency == TransactionFrequencyEnum.installment &&
+        widget.transaction.totalInstallments != null &&
+        widget.transaction.totalInstallments! > 0) {
+      defaultAmount =
+          widget.transaction.amount / widget.transaction.totalInstallments!;
     }
 
+    // Buscar override mensal no estado do dashboard para o período selecionado
     if (dashboardState is DashboardLoadedState) {
       final monthlyOverride =
           dashboardState.monthlyTransactions
@@ -478,10 +517,31 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                   .first
               : null;
 
-      return monthlyOverride?.amount ?? widget.transaction.amount;
+      return monthlyOverride?.amount ?? defaultAmount;
     }
 
-    return widget.transaction.amount;
+    return defaultAmount;
+  }
+
+  int _getCurrentInstallmentNumber() {
+    if (widget.transaction.startDate == null ||
+        widget.transaction.totalInstallments == null) {
+      return 1;
+    }
+
+    final selectedPeriod = ref.read(selectedPeriodProvider);
+    final startDate = widget.transaction.startDate!;
+
+    // Calcular quantos meses se passaram desde o início
+    final monthsDifference =
+        ((selectedPeriod.year - startDate.year) * 12) +
+        (selectedPeriod.month - startDate.month);
+
+    // A parcela atual é a diferença + 1 (primeira parcela = 1)
+    final installmentNumber = monthsDifference + 1;
+
+    // Garantir que não ultrapasse o total de parcelas
+    return installmentNumber.clamp(1, widget.transaction.totalInstallments!);
   }
 
   String _getMonthName(int month) {
@@ -503,14 +563,13 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
   }
 
   bool _canAdjustMonthlyValue() {
-    return widget.transaction.frequency == TransactionFrequencyEnum.monthly &&
-        widget.transaction.isDynamic;
+    return widget.transaction.frequency == TransactionFrequencyEnum.monthly;
   }
 
   void _adjustMonthlyValue(BuildContext context) async {
     // Usar o período selecionado no dashboard, não o mês atual
     final selectedPeriod = ref.read(selectedPeriodProvider);
-    final result = await showMonthlyValueEditor(
+    await showMonthlyValueEditor(
       context,
       transaction: widget.transaction,
       year: selectedPeriod.year,

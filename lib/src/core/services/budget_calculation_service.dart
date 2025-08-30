@@ -111,58 +111,70 @@ class BudgetCalculationService {
         return transaction.yearlyMonth!.value == month;
 
       case TransactionFrequencyEnum.installment:
-        // Transação parcelada: verifica se a parcela se aplica ao mês
+        // Transação parcelada: verifica se alguma parcela se aplica ao mês
         if (transaction.totalInstallments == null ||
             transaction.startDate == null) {
           return false;
         }
 
         final startDate = transaction.startDate!;
-        final currentInstallment = transaction.currentInstallment ?? 0;
+        final totalInstallments = transaction.totalInstallments!;
 
-        // Calcular em qual mês esta parcela deveria ser paga
-        final installmentDate = DateTime(
-          startDate.year,
-          startDate.month + currentInstallment,
-          1,
-        );
+        // Verificar se o mês alvo está dentro do período de parcelas
+        for (int i = 0; i < totalInstallments; i++) {
+          final installmentMonth = DateTime(
+            startDate.year,
+            startDate.month + i,
+            1,
+          );
+          
+          if (installmentMonth.year == year && installmentMonth.month == month) {
+            return true;
+          }
+        }
 
-        return installmentDate.year == year && installmentDate.month == month;
+        return false;
     }
   }
 
   /// Obtém o valor da transação para um período específico
-  /// Considera alterações mensais para transações dinâmicas
+  /// Considera alterações mensais para transações recorrentes
   double _getTransactionAmount(
     TransactionModel transaction,
     int year,
     int month,
     List<MonthlyTransactionModel> monthlyTransactions,
   ) {
-    // Se a transação permite valores dinâmicos, buscar valor específico do mês
-    if (transaction.isDynamic) {
-      final monthlyTransaction = monthlyTransactions.firstWhere(
-        (mt) =>
-            mt.parentTransactionId == transaction.id &&
-            mt.year == year &&
-            mt.month == month,
-        orElse:
-            () => MonthlyTransactionModel(
-              id: '',
-              userId: transaction.userId,
-              parentTransactionId: transaction.id,
-              year: year,
-              month: month,
-              amount: transaction.amount, // Valor padrão
-              createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
-            ),
-      );
-
-      return monthlyTransaction.amount;
+    // Calcular valor padrão baseado no tipo de transação
+    double defaultAmount = transaction.amount;
+    
+    // Para transações parceladas, dividir o valor total pelo número de parcelas
+    if (transaction.frequency == TransactionFrequencyEnum.installment &&
+        transaction.totalInstallments != null &&
+        transaction.totalInstallments! > 0) {
+      defaultAmount = transaction.amount / transaction.totalInstallments!;
     }
 
-    return transaction.amount;
+    // Buscar valor específico do mês (todas as transações podem ter valores ajustados)
+    final monthlyTransaction = monthlyTransactions.firstWhere(
+      (mt) =>
+          mt.parentTransactionId == transaction.id &&
+          mt.year == year &&
+          mt.month == month,
+      orElse:
+          () => MonthlyTransactionModel(
+            id: '',
+            userId: transaction.userId,
+            parentTransactionId: transaction.id,
+            year: year,
+            month: month,
+            amount: defaultAmount, // Usar valor calculado
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ),
+    );
+
+    return monthlyTransaction.amount;
   }
 
   /// Calcula estatísticas adicionais do orçamento

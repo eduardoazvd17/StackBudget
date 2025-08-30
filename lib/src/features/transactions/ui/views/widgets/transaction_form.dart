@@ -32,7 +32,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   DateTime? _endDate;
   int? _totalInstallments;
   MonthEnum? _selectedYearlyMonth;
-  bool _isDynamic = false;
 
   bool get _isEditing => widget.transaction != null;
 
@@ -74,7 +73,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     _endDate = transaction.endDate;
     _totalInstallments = transaction.totalInstallments;
     _selectedYearlyMonth = transaction.yearlyMonth;
-    _isDynamic = transaction.isDynamic;
   }
 
   @override
@@ -146,6 +144,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 FilteringTextInputFormatter.digitsOnly,
                 CurrencyInputFormatter(currency: 'BRL'),
               ],
+              onChanged: (value) {
+                // Atualizar o estado para recalcular valor da parcela
+                setState(() {});
+              },
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Valor é obrigatório';
@@ -237,44 +239,91 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         Row(
           children: [
             Expanded(
-              child: RadioListTile<TransactionTypeEnum>(
-                title: const Text('Receita'),
-                subtitle: const Text('Dinheiro que entra'),
-                value: TransactionTypeEnum.income,
-                groupValue: _selectedType,
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      _selectedType = value;
-                      // Reset categoria quando o tipo muda
-                      _selectedCategory = null;
-                    });
-                  }
-                },
-                contentPadding: EdgeInsets.zero,
+              child: _buildTypeCard(
+                type: TransactionTypeEnum.income,
+                title: 'Receita',
+                subtitle: 'Dinheiro que entra',
+                icon: Icons.arrow_downward,
+                color: Colors.green,
+                isSelected: _selectedType == TransactionTypeEnum.income,
               ),
             ),
+            const SizedBox(width: Spacing.md),
             Expanded(
-              child: RadioListTile<TransactionTypeEnum>(
-                title: const Text('Despesa'),
-                subtitle: const Text('Dinheiro que sai'),
-                value: TransactionTypeEnum.expense,
-                groupValue: _selectedType,
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      _selectedType = value;
-                      // Reset categoria quando o tipo muda
-                      _selectedCategory = null;
-                    });
-                  }
-                },
-                contentPadding: EdgeInsets.zero,
+              child: _buildTypeCard(
+                type: TransactionTypeEnum.expense,
+                title: 'Despesa',
+                subtitle: 'Dinheiro que sai',
+                icon: Icons.arrow_upward,
+                color: Colors.red,
+                isSelected: _selectedType == TransactionTypeEnum.expense,
               ),
             ),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildTypeCard({
+    required TransactionTypeEnum type,
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color color,
+    required bool isSelected,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedType = type;
+          // Reset categoria quando o tipo muda
+          _selectedCategory = null;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(Spacing.md),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color:
+                isSelected
+                    ? color
+                    : context.colorScheme.outline.withOpacity(0.3),
+            width: isSelected ? 2 : 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          color: isSelected ? color.withOpacity(0.1) : null,
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: color.withOpacity(isSelected ? 0.2 : 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: color, size: 24),
+            ),
+            const SizedBox(height: Spacing.sm),
+            Text(
+              title,
+              style: context.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: isSelected ? color : null,
+              ),
+            ),
+            const SizedBox(height: Spacing.xs),
+            Text(
+              subtitle,
+              style: context.textTheme.bodySmall?.copyWith(
+                color: context.colorScheme.onSurface.withOpacity(0.6),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -356,23 +405,23 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
       // Data de fim (opcional)
       ListTile(
-        leading: const Icon(Icons.event_busy),
-        title: const Text('Mês de Fim (opcional)'),
+        leading: Icon(
+          Icons.event_busy,
+          color: _startDate == null ? Colors.grey : null,
+        ),
+        title: Text(
+          'Mês de Fim (opcional)',
+          style: _startDate == null ? TextStyle(color: Colors.grey) : null,
+        ),
         subtitle: Text(
           _endDate != null
               ? '${_getMonthDisplayName(MonthEnum.values[_endDate!.month - 1])} de ${_endDate!.year}'
-              : 'Deixe vazio para indefinido',
+              : _startDate != null
+              ? 'Deve ser posterior a ${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])}/${_startDate!.year}'
+              : 'Selecione primeiro a data de início',
+          style: _startDate == null ? TextStyle(color: Colors.grey) : null,
         ),
-        onTap: () => _selectEndDate(),
-        contentPadding: EdgeInsets.zero,
-      ),
-
-      // Valor dinâmico
-      SwitchListTile(
-        title: const Text('Valor Dinâmico'),
-        subtitle: const Text('Permite alterar o valor mês a mês'),
-        value: _isDynamic,
-        onChanged: (value) => setState(() => _isDynamic = value),
+        onTap: _startDate != null ? () => _selectEndDate() : null,
         contentPadding: EdgeInsets.zero,
       ),
     ];
@@ -391,6 +440,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
       // Número de parcelas
       TextFormField(
+        initialValue: _totalInstallments?.toString(),
         decoration: const InputDecoration(
           labelText: 'Número de Parcelas *',
           hintText: 'Ex: 12',
@@ -399,7 +449,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         onChanged: (value) {
-          _totalInstallments = int.tryParse(value);
+          setState(() {
+            _totalInstallments = int.tryParse(value);
+          });
         },
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
@@ -412,6 +464,33 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
           return null;
         },
       ),
+
+      // Exibir valor por parcela se ambos os campos estiverem preenchidos
+      if (_canCalculateInstallmentValue())
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.blue.shade200),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.calculate, color: Colors.blue.shade700, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  'Valor por parcela: ${_getInstallmentValueText()}',
+                  style: TextStyle(
+                    color: Colors.blue.shade700,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       const SizedBox(height: Spacing.md),
 
       // Data da primeira parcela
@@ -581,6 +660,31 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     }
   }
 
+  bool _canCalculateInstallmentValue() {
+    if (_totalInstallments == null || _totalInstallments! <= 0) return false;
+    if (_amountController.text.trim().isEmpty) return false;
+
+    final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
+    if (digitsOnly.isEmpty) return false;
+
+    final amount = double.parse(digitsOnly) / 100;
+    return amount > 0;
+  }
+
+  String _getInstallmentValueText() {
+    if (!_canCalculateInstallmentValue()) return 'R\$ 0,00';
+
+    final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
+    final totalAmount = double.parse(digitsOnly) / 100;
+    final installmentValue = totalAmount / _totalInstallments!;
+
+    return NumberFormat.currency(
+      locale: 'pt_BR',
+      symbol: 'R\$ ',
+      decimalDigits: 2,
+    ).format(installmentValue);
+  }
+
   String _getMonthDisplayName(MonthEnum month) {
     const months = [
       'Janeiro',
@@ -609,9 +713,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             ? DateTime(userRegistrationDate.year, 1, 1)
             : DateTime(2020);
 
-    // Define a data máxima como dezembro do ano atual
+    // Define a data máxima como dezembro do ano atual + 2 anos (para recorrências longas)
     final now = DateTime.now();
-    final lastDate = DateTime(now.year, 12, 1);
+    final lastDate = DateTime(now.year + 2, 12, 1);
 
     final selectedDate = await showMonthYearPicker(
       context: context,
@@ -620,10 +724,26 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       lastDate: lastDate,
     );
     if (selectedDate != null) {
-      // Define como primeiro dia do mês selecionado
-      setState(
-        () => _startDate = DateTime(selectedDate.year, selectedDate.month, 1),
-      );
+      final newStartDate = DateTime(selectedDate.year, selectedDate.month, 1);
+
+      setState(() {
+        _startDate = newStartDate;
+
+        // Se a nova data de início é igual ou posterior à data de fim, limpar a data de fim
+        // Para recorrências, a data de fim deve ser posterior (não igual) à data de início
+        if (_endDate != null && !newStartDate.isBefore(_endDate!)) {
+          _endDate = null;
+          // Mostrar aviso informativo
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Data de fim removida - deve ser posterior à data de início',
+              ),
+              backgroundColor: Colors.orange,
+            ),
+          );
+        }
+      });
     }
   }
 
@@ -633,11 +753,20 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     final currentDate = _endDate ?? DateTime(now.year, now.month, 1);
     final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
-    // Define a data mínima como janeiro do ano de cadastro do usuário, ou 2020 como fallback
-    final firstDate =
-        userRegistrationDate != null
-            ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(2020);
+    // Define a data mínima baseada na data de início (se definida) ou na data de cadastro
+    DateTime firstDate;
+    if (_startDate != null) {
+      // Se há data de início, a data de fim deve ser no mês seguinte (posterior)
+      // Para gastos recorrentes, precisa ter pelo menos 2 meses
+      final nextMonth = DateTime(_startDate!.year, _startDate!.month + 1, 1);
+      firstDate = nextMonth;
+    } else {
+      // Se não há data de início, usar a data de cadastro como fallback
+      firstDate =
+          userRegistrationDate != null
+              ? DateTime(userRegistrationDate.year, 1, 1)
+              : DateTime(2020);
+    }
 
     // Define a data máxima como dezembro do ano atual
     final lastDate = DateTime(now.year, 12, 1);
@@ -660,15 +789,22 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   void _resetFrequencyFields() {
-    _startDate = null;
-    _endDate = null;
-    _totalInstallments = null;
-    _selectedYearlyMonth = null;
-    _isDynamic = false;
+    setState(() {
+      _startDate = null;
+      _endDate = null;
+      _totalInstallments = null;
+      _selectedYearlyMonth = null;
+    });
   }
 
   void _submitForm() {
     if (!_formKey.currentState!.validate()) return;
+
+    // Validação mínima para transações mensais
+    if (_selectedFrequency == TransactionFrequencyEnum.monthly &&
+        _startDate == null) {
+      return; // Não deve acontecer na interface, mas mantém a segurança
+    }
 
     // Extrai apenas os dígitos do valor formatado e converte para double
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
@@ -692,7 +828,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         endDate: _endDate,
         totalInstallments: _totalInstallments,
         yearlyMonth: _selectedYearlyMonth,
-        isDynamic: _isDynamic,
+        isDynamic: true,
       );
     } else {
       viewModel.createTransaction(
@@ -709,7 +845,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         endDate: _endDate,
         totalInstallments: _totalInstallments,
         yearlyMonth: _selectedYearlyMonth,
-        isDynamic: _isDynamic,
+        isDynamic: true,
       );
     }
   }

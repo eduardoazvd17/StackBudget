@@ -49,7 +49,7 @@ class DashboardHeader extends ConsumerWidget {
             onSelected: (value) async {
               switch (value) {
                 case 'logout':
-                  await ref.read(authViewModelProvider.notifier).signOut();
+                  _showLogoutConfirmation(context, ref);
                   break;
                 case 'profile':
                   // TODO: Navegar para perfil
@@ -108,5 +108,36 @@ class DashboardHeader extends ConsumerWidget {
     } else {
       return 'Boa noite!';
     }
+  }
+
+  void _showLogoutConfirmation(BuildContext context, WidgetRef ref) {
+    showDialog<void>(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Confirmar Saída'),
+            content: const Text(
+              'Tem certeza que deseja sair da sua conta?\n\n'
+              'Você precisará fazer login novamente para acessar o app.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Cancelar'),
+              ),
+              FilledButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await ref.read(authViewModelProvider.notifier).signOut();
+                },
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('Sair'),
+              ),
+            ],
+          ),
+    );
   }
 }

@@ -198,8 +198,7 @@ Future<DateTime?> showMonthYearPicker({
         (context) => MonthYearPicker(
           initialDate: initialDate,
           firstDate: firstDate ?? DateTime(2020),
-          lastDate:
-              lastDate ?? DateTime.now().add(const Duration(days: 365 * 2)),
+          lastDate: lastDate ?? DateTime(DateTime.now().year + 2, 12, 1),
           onDateSelected: (date) => selectedDate = date,
         ),
   );

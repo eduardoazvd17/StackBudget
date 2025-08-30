@@ -51,9 +51,8 @@ class MonthlyTransactionViewModel
         return;
       }
 
-      // Verificar se é uma transação recorrente
-      if (baseTransaction.frequency != TransactionFrequencyEnum.monthly ||
-          !baseTransaction.isDynamic) {
+      // Verificar se é uma transação recorrente mensal
+      if (baseTransaction.frequency != TransactionFrequencyEnum.monthly) {
         state = const MonthlyTransactionErrorState(
           message: 'Esta transação não permite ajustes mensais',
         );

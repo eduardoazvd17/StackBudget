@@ -90,9 +90,9 @@ class MonthYearFilter extends ConsumerWidget {
     final currentDate = ref.read(selectedPeriodProvider);
     final nextMonth = DateTime(currentDate.year, currentDate.month + 1, 1);
 
-    // Verifica se o próximo mês não é maior que dezembro do ano atual
+    // Verifica se o próximo mês não é maior que dezembro do ano atual + 2 anos
     final now = DateTime.now();
-    final lastAllowedDate = DateTime(now.year, 12, 1);
+    final lastAllowedDate = DateTime(now.year + 2, 12, 1);
 
     if (!nextMonth.isAfter(lastAllowedDate)) {
       ref.read(selectedPeriodProvider.notifier).state = nextMonth;
@@ -109,9 +109,9 @@ class MonthYearFilter extends ConsumerWidget {
             ? DateTime(userRegistrationDate.year, 1, 1)
             : DateTime(2020);
 
-    // Define a data máxima como dezembro do ano atual
+    // Define a data máxima como dezembro do ano atual + 2 anos (para recorrências longas)
     final now = DateTime.now();
-    final lastDate = DateTime(now.year, 12, 1);
+    final lastDate = DateTime(now.year + 2, 12, 1);
 
     final selectedDate = await showMonthYearPicker(
       context: context,
@@ -143,7 +143,7 @@ class MonthYearFilter extends ConsumerWidget {
     final nextMonth = DateTime(currentDate.year, currentDate.month + 1, 1);
 
     final now = DateTime.now();
-    final lastAllowedDate = DateTime(now.year, 12, 1);
+    final lastAllowedDate = DateTime(now.year + 2, 12, 1);
 
     return !nextMonth.isAfter(lastAllowedDate);
   }

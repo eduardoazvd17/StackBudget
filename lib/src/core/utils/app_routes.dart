@@ -22,6 +22,7 @@ class AppRoutes {
 
   static final GoRouter routerConfig = GoRouter(
     initialLocation: AppRoutesConfig.transactionsPath,
+    refreshListenable: _AuthStateNotifier(),
     redirect: (BuildContext context, GoRouterState state) {
       final user = FirebaseAuth.instance.currentUser;
       final isAuthRoute = state.matchedLocation == AppRoutesConfig.authPath;
@@ -176,4 +177,14 @@ class AppRoutes {
   // static void goToReports(BuildContext context) {
   //   context.goNamed(AppRoutesConfig.reports);
   // }
+}
+
+/// Notifier que escuta mudanças no estado de autenticação do Firebase
+/// para atualizar o GoRouter automaticamente
+class _AuthStateNotifier extends ChangeNotifier {
+  _AuthStateNotifier() {
+    FirebaseAuth.instance.authStateChanges().listen((_) {
+      notifyListeners();
+    });
+  }
 }

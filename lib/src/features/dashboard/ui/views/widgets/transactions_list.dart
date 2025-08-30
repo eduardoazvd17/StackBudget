@@ -108,7 +108,11 @@ class TransactionsList extends ConsumerWidget {
     WidgetRef ref,
   ) {
     final isIncome = transaction.type == TransactionTypeEnum.income;
-    final color = isIncome ? Colors.green : Colors.red;
+    final defaultColor = isIncome ? Colors.green : Colors.red;
+
+    // Usar cor padrão (sem cor customizada por categoria no enum)
+    Color iconColor = defaultColor;
+    Color backgroundColor = defaultColor.withOpacity(0.1);
 
     return Card(
       margin: EdgeInsets.zero,
@@ -121,10 +125,10 @@ class TransactionsList extends ConsumerWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: backgroundColor,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(_getTransactionIcon(transaction), color: color),
+          child: Icon(_getTransactionIcon(transaction), color: iconColor),
         ),
 
         title: Text(
@@ -134,39 +138,38 @@ class TransactionsList extends ConsumerWidget {
           ),
         ),
 
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        subtitle: Row(
           children: [
-            if (transaction.category != null) ...[
+            Text(
+              _getFrequencyText(transaction.frequency),
+              style: context.textTheme.bodySmall?.copyWith(
+                color: context.colorScheme.onSurface.withOpacity(0.5),
+              ),
+            ),
+            // Mostrar parcela atual/total para transações parceladas
+            if (transaction.frequency == TransactionFrequencyEnum.installment &&
+                transaction.totalInstallments != null) ...[
+              const SizedBox(width: Spacing.xs),
               Text(
-                transaction.category!.displayName,
+                '${_getCurrentInstallmentNumber(ref, transaction)}/${transaction.totalInstallments}',
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colorScheme.onSurface.withOpacity(0.6),
+                  color: Colors.orange,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
-            Row(
-              children: [
-                Text(
-                  _getFrequencyText(transaction.frequency),
-                  style: context.textTheme.bodySmall?.copyWith(
-                    color: context.colorScheme.onSurface.withOpacity(0.5),
-                  ),
+            if (_hasMonthlyAdjustment(ref, transaction)) ...[
+              const SizedBox(width: Spacing.xs),
+              Icon(Icons.tune, size: 14, color: Colors.orange),
+              const SizedBox(width: 2),
+              Text(
+                'Ajustado',
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: Colors.orange,
+                  fontWeight: FontWeight.w500,
                 ),
-                if (_hasMonthlyAdjustment(ref, transaction)) ...[
-                  const SizedBox(width: Spacing.xs),
-                  Icon(Icons.tune, size: 14, color: Colors.orange),
-                  const SizedBox(width: 2),
-                  Text(
-                    'Ajustado',
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: Colors.orange,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ],
-            ),
+              ),
+            ],
           ],
         ),
 
@@ -178,15 +181,18 @@ class TransactionsList extends ConsumerWidget {
               '${isIncome ? '+' : '-'} ${_formatCurrency(_getCurrentMonthValue(ref, transaction))}',
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: color,
+                color: defaultColor,
               ),
             ),
-            Text(
-              _formatDate(transaction.createdAt),
-              style: context.textTheme.bodySmall?.copyWith(
-                color: context.colorScheme.onSurface.withOpacity(0.5),
+            // Mostrar data apenas para transações únicas
+            if (transaction.frequency == TransactionFrequencyEnum.oneTime) ...[
+              Text(
+                _formatDate(transaction.createdAt),
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: context.colorScheme.onSurface.withOpacity(0.5),
+                ),
               ),
-            ),
+            ],
           ],
         ),
 
@@ -196,19 +202,86 @@ class TransactionsList extends ConsumerWidget {
   }
 
   IconData _getTransactionIcon(TransactionModel transaction) {
-    if (transaction.type == TransactionTypeEnum.income) {
-      return Icons.arrow_downward;
+    // Se tem categoria, usar o ícone da categoria
+    if (transaction.category != null) {
+      return _getIconFromString(transaction.category!.iconName);
     }
 
-    switch (transaction.frequency) {
-      case TransactionFrequencyEnum.monthly:
-        return Icons.repeat;
-      case TransactionFrequencyEnum.yearly:
-        return Icons.event_repeat;
-      case TransactionFrequencyEnum.installment:
-        return Icons.payment;
-      case TransactionFrequencyEnum.oneTime:
-        return Icons.arrow_upward;
+    // Caso contrário, usar ícone baseado no tipo (entrada/saída)
+    if (transaction.type == TransactionTypeEnum.income) {
+      return Icons.arrow_downward; // Seta para baixo (entrada)
+    } else {
+      return Icons.arrow_upward; // Seta para cima (saída)
+    }
+  }
+
+  IconData _getIconFromString(String iconName) {
+    switch (iconName) {
+      case 'work':
+        return Icons.work;
+      case 'laptop':
+        return Icons.laptop;
+      case 'trending_up':
+        return Icons.trending_up;
+      case 'star':
+        return Icons.star;
+      case 'card_giftcard':
+        return Icons.card_giftcard;
+      case 'attach_money':
+        return Icons.attach_money;
+      case 'home':
+        return Icons.home;
+      case 'electrical_services':
+        return Icons.electrical_services;
+      case 'local_grocery_store':
+        return Icons.local_grocery_store;
+      case 'directions_car':
+        return Icons.directions_car;
+      case 'security':
+        return Icons.security;
+      case 'local_hospital':
+        return Icons.local_hospital;
+      case 'restaurant':
+        return Icons.restaurant;
+      case 'movie':
+        return Icons.movie;
+      case 'shopping_bag':
+        return Icons.shopping_bag;
+      case 'flight':
+        return Icons.flight;
+      case 'palette':
+        return Icons.palette;
+      case 'fitness_center':
+        return Icons.fitness_center;
+      case 'face':
+        return Icons.face;
+      case 'account_balance':
+        return Icons.account_balance;
+      case 'credit_card':
+        return Icons.credit_card;
+      case 'receipt':
+        return Icons.receipt;
+      case 'money_off':
+        return Icons.money_off;
+      case 'school':
+        return Icons.school;
+      case 'menu_book':
+        return Icons.menu_book;
+      case 'play_lesson':
+        return Icons.play_lesson;
+      case 'child_care':
+        return Icons.child_care;
+      case 'pets':
+        return Icons.pets;
+      case 'redeem':
+        return Icons.redeem;
+      case 'volunteer_activism':
+        return Icons.volunteer_activism;
+      case 'savings':
+        return Icons.savings;
+      case 'category':
+      default:
+        return Icons.category;
     }
   }
 
@@ -233,10 +306,33 @@ class TransactionsList extends ConsumerWidget {
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}';
   }
 
+  int _getCurrentInstallmentNumber(
+    WidgetRef ref,
+    TransactionModel transaction,
+  ) {
+    if (transaction.startDate == null ||
+        transaction.totalInstallments == null) {
+      return 1;
+    }
+
+    final selectedPeriod = ref.read(selectedPeriodProvider);
+    final startDate = transaction.startDate!;
+
+    // Calcular quantos meses se passaram desde o início
+    final monthsDifference =
+        ((selectedPeriod.year - startDate.year) * 12) +
+        (selectedPeriod.month - startDate.month);
+
+    // A parcela atual é a diferença + 1 (primeira parcela = 1)
+    final installmentNumber = monthsDifference + 1;
+
+    // Garantir que não ultrapasse o total de parcelas
+    return installmentNumber.clamp(1, transaction.totalInstallments!);
+  }
+
   bool _hasMonthlyAdjustment(WidgetRef ref, TransactionModel transaction) {
-    // Só transações mensais dinâmicas podem ter ajustes
-    if (transaction.frequency != TransactionFrequencyEnum.monthly ||
-        !transaction.isDynamic) {
+    // Só transações mensais podem ter ajustes
+    if (transaction.frequency != TransactionFrequencyEnum.monthly) {
       return false;
     }
 
@@ -257,16 +353,20 @@ class TransactionsList extends ConsumerWidget {
   }
 
   double _getCurrentMonthValue(WidgetRef ref, TransactionModel transaction) {
-    // Para transações não dinâmicas, retorna sempre o valor base
-    if (transaction.frequency != TransactionFrequencyEnum.monthly ||
-        !transaction.isDynamic) {
-      return transaction.amount;
-    }
-
-    // Buscar override mensal no estado do dashboard para o período selecionado
     final dashboardState = ref.read(dashboardViewModelProvider);
     final selectedPeriod = ref.read(selectedPeriodProvider);
 
+    // Calcular valor padrão baseado no tipo de transação
+    double defaultAmount = transaction.amount;
+
+    // Para transações parceladas, dividir o valor total pelo número de parcelas
+    if (transaction.frequency == TransactionFrequencyEnum.installment &&
+        transaction.totalInstallments != null &&
+        transaction.totalInstallments! > 0) {
+      defaultAmount = transaction.amount / transaction.totalInstallments!;
+    }
+
+    // Buscar override mensal no estado do dashboard para o período selecionado
     if (dashboardState is DashboardLoadedState) {
       final monthlyOverride =
           dashboardState.monthlyTransactions
@@ -287,9 +387,9 @@ class TransactionsList extends ConsumerWidget {
                   .first
               : null;
 
-      return monthlyOverride?.amount ?? transaction.amount;
+      return monthlyOverride?.amount ?? defaultAmount;
     }
 
-    return transaction.amount;
+    return defaultAmount;
   }
 }
