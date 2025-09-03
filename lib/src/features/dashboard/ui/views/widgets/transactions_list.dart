@@ -46,7 +46,7 @@ class TransactionsList extends ConsumerWidget {
               ),
               const SizedBox(height: Spacing.xs),
               Text(
-                dashboardState.message,
+                dashboardState.exception.getMessage(context),
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodySmall,
               ),

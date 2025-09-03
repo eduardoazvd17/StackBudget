@@ -54,7 +54,9 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
       return TransactionModel.fromMap(doc.data()!);
     } catch (e) {
-      throw Failure(message: 'Erro ao buscar transação: ${e.toString()}');
+      throw AppException.transactionLoadFailed(
+        'Failed to get transaction by id: ${e.toString()}',
+      );
     }
   }
 
@@ -72,7 +74,9 @@ class TransactionDatasourceImpl implements TransactionDatasource {
           .map((doc) => TransactionModel.fromMap(doc.data()))
           .toList();
     } catch (e) {
-      throw Failure(message: 'Erro ao buscar transações: ${e.toString()}');
+      throw AppException.transactionLoadFailed(
+        'Failed to get transactions by user: ${e.toString()}',
+      );
     }
   }
 
@@ -101,8 +105,8 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
       return transactions;
     } catch (e) {
-      throw Failure(
-        message: 'Erro ao buscar transações do mês: ${e.toString()}',
+      throw AppException.transactionLoadFailed(
+        'Failed to get transactions by month: ${e.toString()}',
       );
     }
   }
@@ -119,7 +123,9 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
       return transaction;
     } catch (e) {
-      throw Failure(message: 'Erro ao criar transação: ${e.toString()}');
+      throw AppException.transactionSaveFailed(
+        'Failed to create transaction: ${e.toString()}',
+      );
     }
   }
 
@@ -135,7 +141,9 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
       return transaction;
     } catch (e) {
-      throw Failure(message: 'Erro ao atualizar transação: ${e.toString()}');
+      throw AppException.transactionUpdateFailed(
+        'Failed to update transaction: ${e.toString()}',
+      );
     }
   }
 
@@ -144,7 +152,9 @@ class TransactionDatasourceImpl implements TransactionDatasource {
     try {
       await _firestore.collection('transactions').doc(transactionId).delete();
     } catch (e) {
-      throw Failure(message: 'Erro ao deletar transação: ${e.toString()}');
+      throw AppException.transactionDeleteFailed(
+        'Failed to delete transaction: ${e.toString()}',
+      );
     }
   }
 
@@ -167,8 +177,8 @@ class TransactionDatasourceImpl implements TransactionDatasource {
           .map((doc) => MonthlyTransactionModel.fromMap(doc.data()))
           .toList();
     } catch (e) {
-      throw Failure(
-        message: 'Erro ao buscar transações mensais: ${e.toString()}',
+      throw AppException.transactionLoadFailed(
+        'Failed to get monthly transactions: ${e.toString()}',
       );
     }
   }
@@ -185,7 +195,9 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
       return monthlyTransaction;
     } catch (e) {
-      throw Failure(message: 'Erro ao criar transação mensal: ${e.toString()}');
+      throw AppException.transactionSaveFailed(
+        'Failed to create monthly transaction: ${e.toString()}',
+      );
     }
   }
 
@@ -201,8 +213,8 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
       return monthlyTransaction;
     } catch (e) {
-      throw Failure(
-        message: 'Erro ao atualizar transação mensal: ${e.toString()}',
+      throw AppException.transactionUpdateFailed(
+        'Failed to update monthly transaction: ${e.toString()}',
       );
     }
   }
@@ -215,8 +227,8 @@ class TransactionDatasourceImpl implements TransactionDatasource {
           .doc(monthlyTransactionId)
           .delete();
     } catch (e) {
-      throw Failure(
-        message: 'Erro ao deletar transação mensal: ${e.toString()}',
+      throw AppException.transactionDeleteFailed(
+        'Failed to delete monthly transaction: ${e.toString()}',
       );
     }
   }
@@ -273,8 +285,9 @@ class TransactionDatasourceImpl implements TransactionDatasource {
             startDate.month + i,
             1,
           );
-          
-          if (installmentMonth.year == year && installmentMonth.month == month) {
+
+          if (installmentMonth.year == year &&
+              installmentMonth.month == month) {
             return true;
           }
         }

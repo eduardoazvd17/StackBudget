@@ -599,5 +599,197 @@
   "confirmLogoutMessage": "Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.",
   "@confirmLogoutMessage": {
     "description": "Message for logout confirmation dialog"
+  },
+  "authErrorTitle": "Authentication Error",
+  "@authErrorTitle": {
+    "description": "Title for authentication errors"
+  },
+  "networkErrorTitle": "Connection Error",
+  "@networkErrorTitle": {
+    "description": "Title for network errors"
+  },
+  "databaseErrorTitle": "Database Error",
+  "@databaseErrorTitle": {
+    "description": "Title for database errors"
+  },
+  "transactionErrorTitle": "Transaction Error",
+  "@transactionErrorTitle": {
+    "description": "Title for transaction errors"
+  },
+  "budgetErrorTitle": "Budget Error",
+  "@budgetErrorTitle": {
+    "description": "Title for budget errors"
+  },
+  "settingsErrorTitle": "Settings Error",
+  "@settingsErrorTitle": {
+    "description": "Title for settings errors"
+  },
+  "validationErrorTitle": "Validation Error",
+  "@validationErrorTitle": {
+    "description": "Title for validation errors"
+  },
+  "generalErrorTitle": "Error",
+  "@generalErrorTitle": {
+    "description": "Title for general errors"
+  },
+  "userNotFoundError": "User not found. Please check your email and try again.",
+  "@userNotFoundError": {
+    "description": "Error message when user is not found"
+  },
+  "wrongPasswordError": "Wrong password. Please check your password and try again.",
+  "@wrongPasswordError": {
+    "description": "Error message for wrong password"
+  },
+  "emailAlreadyInUseError": "This email is already being used by another account.",
+  "@emailAlreadyInUseError": {
+    "description": "Error message when email is already in use"
+  },
+  "weakPasswordError": "Password must be at least 6 characters long.",
+  "@weakPasswordError": {
+    "description": "Error message for weak password"
+  },
+  "invalidEmailError": "The email provided is not valid.",
+  "@invalidEmailError": {
+    "description": "Error message for invalid email"
+  },
+  "userDisabledError": "This account has been disabled. Please contact support.",
+  "@userDisabledError": {
+    "description": "Error message for disabled user"
+  },
+  "tooManyRequestsError": "Too many login attempts. Please try again in a few minutes.",
+  "@tooManyRequestsError": {
+    "description": "Error message for too many requests"
+  },
+  "operationNotAllowedError": "Operation not allowed. Please check your settings.",
+  "@operationNotAllowedError": {
+    "description": "Error message for operation not allowed"
+  },
+  "invalidCredentialError": "Invalid credentials. Please check your information and try again.",
+  "@invalidCredentialError": {
+    "description": "Error message for invalid credentials"
+  },
+  "authenticationFailedError": "Authentication failed. Please try again.",
+  "@authenticationFailedError": {
+    "description": "Error message for authentication failure"
+  },
+  "userDataNotFoundError": "User data not found.",
+  "@userDataNotFoundError": {
+    "description": "Error message when user data is not found"
+  },
+  "signUpFailedError": "Failed to create account. Please try again.",
+  "@signUpFailedError": {
+    "description": "Error message for sign up failure"
+  },
+  "signOutFailedError": "Error signing out. Please try again.",
+  "@signOutFailedError": {
+    "description": "Error message for sign out failure"
+  },
+  "getCurrentUserFailedError": "Error retrieving user data.",
+  "@getCurrentUserFailedError": {
+    "description": "Error message for get current user failure"
+  },
+  "networkError": "Connection error. Please check your internet and try again.",
+  "@networkError": {
+    "description": "Error message for network issues"
+  },
+  "connectionTimeoutError": "Connection timeout. Please try again.",
+  "@connectionTimeoutError": {
+    "description": "Error message for connection timeout"
+  },
+  "serverError": "Server error. Please try again in a few minutes.",
+  "@serverError": {
+    "description": "Error message for server errors"
+  },
+  "noInternetConnectionError": "No internet connection. Please check your connection.",
+  "@noInternetConnectionError": {
+    "description": "Error message for no internet connection"
+  },
+  "firebaseError": "Service error. Please try again in a few minutes.",
+  "@firebaseError": {
+    "description": "Error message for Firebase errors"
+  },
+  "firestoreError": "Database error. Please try again.",
+  "@firestoreError": {
+    "description": "Error message for Firestore errors"
+  },
+  "permissionDeniedError": "Access denied. Please check your permissions.",
+  "@permissionDeniedError": {
+    "description": "Error message for permission denied"
+  },
+  "documentNotFoundError": "Document not found.",
+  "@documentNotFoundError": {
+    "description": "Error message for document not found"
+  },
+  "collectionNotFoundError": "Collection not found.",
+  "@collectionNotFoundError": {
+    "description": "Error message for collection not found"
+  },
+  "transactionNotFoundError": "Transaction not found.",
+  "@transactionNotFoundError": {
+    "description": "Error message for transaction not found"
+  },
+  "transactionSaveFailedError": "Error saving transaction. Please try again.",
+  "@transactionSaveFailedError": {
+    "description": "Error message for transaction save failure"
+  },
+  "transactionDeleteFailedError": "Error deleting transaction. Please try again.",
+  "@transactionDeleteFailedError": {
+    "description": "Error message for transaction delete failure"
+  },
+  "transactionUpdateFailedError": "Error updating transaction. Please try again.",
+  "@transactionUpdateFailedError": {
+    "description": "Error message for transaction update failure"
+  },
+  "transactionLoadFailedError": "Error loading transactions. Please try again.",
+  "@transactionLoadFailedError": {
+    "description": "Error message for transaction load failure"
+  },
+  "invalidTransactionDataError": "Invalid transaction data.",
+  "@invalidTransactionDataError": {
+    "description": "Error message for invalid transaction data"
+  },
+  "budgetCalculationFailedError": "Error calculating budget. Please try again.",
+  "@budgetCalculationFailedError": {
+    "description": "Error message for budget calculation failure"
+  },
+  "budgetDataInvalidError": "Invalid budget data.",
+  "@budgetDataInvalidError": {
+    "description": "Error message for invalid budget data"
+  },
+  "settingsSaveFailedError": "Error saving settings. Please try again.",
+  "@settingsSaveFailedError": {
+    "description": "Error message for settings save failure"
+  },
+  "settingsLoadFailedError": "Error loading settings. Please try again.",
+  "@settingsLoadFailedError": {
+    "description": "Error message for settings load failure"
+  },
+  "validationError": "Invalid data. Please check the fields and try again.",
+  "@validationError": {
+    "description": "Error message for validation errors"
+  },
+  "invalidDataError": "Invalid data provided.",
+  "@invalidDataError": {
+    "description": "Error message for invalid data"
+  },
+  "requiredFieldMissingError": "Required field not filled.",
+  "@requiredFieldMissingError": {
+    "description": "Error message for required field missing"
+  },
+  "unknownError": "Unknown error. Please try again or contact support.",
+  "@unknownError": {
+    "description": "Error message for unknown errors"
+  },
+  "dataParsingError": "Error processing data. Please try again.",
+  "@dataParsingError": {
+    "description": "Error message for data parsing errors"
+  },
+  "cacheError": "Cache error. Please try again.",
+  "@cacheError": {
+    "description": "Error message for cache errors"
+  },
+  "storageError": "Storage error. Please try again.",
+  "@storageError": {
+    "description": "Error message for storage errors"
   }
 }

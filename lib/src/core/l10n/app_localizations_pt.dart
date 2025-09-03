@@ -449,4 +449,148 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get confirmLogoutMessage => 'Tem certeza que deseja sair da sua conta?\n\nVocê precisará fazer login novamente para acessar o app.';
+
+  @override
+  String get authErrorTitle => 'Erro de Autenticação';
+
+  @override
+  String get networkErrorTitle => 'Erro de Conexão';
+
+  @override
+  String get databaseErrorTitle => 'Erro de Banco de Dados';
+
+  @override
+  String get transactionErrorTitle => 'Erro de Transação';
+
+  @override
+  String get budgetErrorTitle => 'Erro de Orçamento';
+
+  @override
+  String get settingsErrorTitle => 'Erro de Configurações';
+
+  @override
+  String get validationErrorTitle => 'Erro de Validação';
+
+  @override
+  String get generalErrorTitle => 'Erro';
+
+  @override
+  String get userNotFoundError => 'Usuário não encontrado. Verifique seu email e tente novamente.';
+
+  @override
+  String get wrongPasswordError => 'Senha incorreta. Verifique sua senha e tente novamente.';
+
+  @override
+  String get emailAlreadyInUseError => 'Este email já está sendo usado por outra conta.';
+
+  @override
+  String get weakPasswordError => 'A senha deve ter pelo menos 6 caracteres.';
+
+  @override
+  String get invalidEmailError => 'O email informado não é válido.';
+
+  @override
+  String get userDisabledError => 'Esta conta foi desabilitada. Entre em contato com o suporte.';
+
+  @override
+  String get tooManyRequestsError => 'Muitas tentativas de login. Tente novamente em alguns minutos.';
+
+  @override
+  String get operationNotAllowedError => 'Operação não permitida. Verifique suas configurações.';
+
+  @override
+  String get invalidCredentialError => 'Credenciais inválidas. Verifique seus dados e tente novamente.';
+
+  @override
+  String get authenticationFailedError => 'Falha na autenticação. Tente novamente.';
+
+  @override
+  String get userDataNotFoundError => 'Dados do usuário não encontrados.';
+
+  @override
+  String get signUpFailedError => 'Falha ao criar conta. Tente novamente.';
+
+  @override
+  String get signOutFailedError => 'Erro ao fazer logout. Tente novamente.';
+
+  @override
+  String get getCurrentUserFailedError => 'Erro ao buscar dados do usuário.';
+
+  @override
+  String get networkError => 'Erro de conexão. Verifique sua internet e tente novamente.';
+
+  @override
+  String get connectionTimeoutError => 'Tempo limite de conexão esgotado. Tente novamente.';
+
+  @override
+  String get serverError => 'Erro no servidor. Tente novamente em alguns minutos.';
+
+  @override
+  String get noInternetConnectionError => 'Sem conexão com a internet. Verifique sua conexão.';
+
+  @override
+  String get firebaseError => 'Erro no serviço. Tente novamente em alguns minutos.';
+
+  @override
+  String get firestoreError => 'Erro no banco de dados. Tente novamente.';
+
+  @override
+  String get permissionDeniedError => 'Acesso negado. Verifique suas permissões.';
+
+  @override
+  String get documentNotFoundError => 'Documento não encontrado.';
+
+  @override
+  String get collectionNotFoundError => 'Coleção não encontrada.';
+
+  @override
+  String get transactionNotFoundError => 'Transação não encontrada.';
+
+  @override
+  String get transactionSaveFailedError => 'Erro ao salvar transação. Tente novamente.';
+
+  @override
+  String get transactionDeleteFailedError => 'Erro ao excluir transação. Tente novamente.';
+
+  @override
+  String get transactionUpdateFailedError => 'Erro ao atualizar transação. Tente novamente.';
+
+  @override
+  String get transactionLoadFailedError => 'Erro ao carregar transações. Tente novamente.';
+
+  @override
+  String get invalidTransactionDataError => 'Dados da transação inválidos.';
+
+  @override
+  String get budgetCalculationFailedError => 'Erro ao calcular orçamento. Tente novamente.';
+
+  @override
+  String get budgetDataInvalidError => 'Dados do orçamento inválidos.';
+
+  @override
+  String get settingsSaveFailedError => 'Erro ao salvar configurações. Tente novamente.';
+
+  @override
+  String get settingsLoadFailedError => 'Erro ao carregar configurações. Tente novamente.';
+
+  @override
+  String get validationError => 'Dados inválidos. Verifique os campos e tente novamente.';
+
+  @override
+  String get invalidDataError => 'Dados inválidos fornecidos.';
+
+  @override
+  String get requiredFieldMissingError => 'Campo obrigatório não preenchido.';
+
+  @override
+  String get unknownError => 'Erro desconhecido. Tente novamente ou entre em contato com o suporte.';
+
+  @override
+  String get dataParsingError => 'Erro ao processar dados. Tente novamente.';
+
+  @override
+  String get cacheError => 'Erro no cache. Tente novamente.';
+
+  @override
+  String get storageError => 'Erro no armazenamento. Tente novamente.';
 }

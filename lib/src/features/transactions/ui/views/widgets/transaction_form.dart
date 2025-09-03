@@ -93,8 +93,21 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         } else if (next is TransactionFormErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(next.message),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    next.exception.getTitle(context),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(next.exception.getMessage(context)),
+                ],
+              ),
               backgroundColor: context.colorScheme.error,
+              duration: const Duration(seconds: 5),
+              behavior: SnackBarBehavior.floating,
             ),
           );
         }

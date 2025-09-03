@@ -1,3 +1,4 @@
+import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 abstract class TransactionFormViewModelState {
@@ -29,16 +30,16 @@ class TransactionFormSuccessState extends TransactionFormViewModelState {
 }
 
 class TransactionFormErrorState extends TransactionFormViewModelState {
-  final String message;
+  final AppException exception;
 
-  const TransactionFormErrorState({required this.message});
+  const TransactionFormErrorState({required this.exception});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is TransactionFormErrorState && other.message == message;
+    return other is TransactionFormErrorState && other.exception == exception;
   }
 
   @override
-  int get hashCode => message.hashCode;
+  int get hashCode => exception.hashCode;
 }

@@ -19,7 +19,7 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       if (user != null) {
         final result = await _repository.getCurrentUser();
         result.fold(
-          (failure) => state = AuthErrorState(message: failure.message),
+          (exception) => state = AuthErrorState(exception: exception),
           (userModel) {
             if (userModel != null) {
               state = AuthenticatedState(user: userModel);
@@ -47,7 +47,7 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       password: password,
     );
 
-    result.fold((failure) => state = AuthErrorState(message: failure.message), (
+    result.fold((exception) => state = AuthErrorState(exception: exception), (
       user,
     ) {
       state = AuthenticatedState(user: user);
@@ -69,7 +69,7 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       name: name,
     );
 
-    result.fold((failure) => state = AuthErrorState(message: failure.message), (
+    result.fold((exception) => state = AuthErrorState(exception: exception), (
       user,
     ) {
       state = AuthenticatedState(user: user);
@@ -84,7 +84,7 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
     final result = await _repository.signOut();
 
     result.fold(
-      (failure) => state = AuthErrorState(message: failure.message),
+      (exception) => state = AuthErrorState(exception: exception),
       (_) => state = const UnauthenticatedState(),
     );
   }

@@ -5,38 +5,30 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 abstract class TransactionRepository {
   String generateTransactionId();
-  Future<Either<Failure, TransactionModel?>> getTransactionById(
+  Future<Either<AppException, TransactionModel?>> getTransactionById(
     String transactionId,
   );
-  Future<Either<Failure, List<TransactionModel>>> getTransactionsByUser(
+  Future<Either<AppException, List<TransactionModel>>> getTransactionsByUser(
     String userId,
   );
-  Future<Either<Failure, List<TransactionModel>>> getTransactionsByUserAndMonth(
-    String userId,
-    int year,
-    int month,
-  );
-  Future<Either<Failure, TransactionModel>> createTransaction(
+  Future<Either<AppException, List<TransactionModel>>>
+  getTransactionsByUserAndMonth(String userId, int year, int month);
+  Future<Either<AppException, TransactionModel>> createTransaction(
     TransactionModel transaction,
   );
-  Future<Either<Failure, TransactionModel>> updateTransaction(
+  Future<Either<AppException, TransactionModel>> updateTransaction(
     TransactionModel transaction,
   );
-  Future<Either<Failure, void>> deleteTransaction(String transactionId);
+  Future<Either<AppException, void>> deleteTransaction(String transactionId);
 
   // Monthly transactions
-  Future<Either<Failure, List<MonthlyTransactionModel>>> getMonthlyTransactions(
-    String userId,
-    int year,
-    int month,
-  );
-  Future<Either<Failure, MonthlyTransactionModel>> createMonthlyTransaction(
-    MonthlyTransactionModel monthlyTransaction,
-  );
-  Future<Either<Failure, MonthlyTransactionModel>> updateMonthlyTransaction(
-    MonthlyTransactionModel monthlyTransaction,
-  );
-  Future<Either<Failure, void>> deleteMonthlyTransaction(
+  Future<Either<AppException, List<MonthlyTransactionModel>>>
+  getMonthlyTransactions(String userId, int year, int month);
+  Future<Either<AppException, MonthlyTransactionModel>>
+  createMonthlyTransaction(MonthlyTransactionModel monthlyTransaction);
+  Future<Either<AppException, MonthlyTransactionModel>>
+  updateMonthlyTransaction(MonthlyTransactionModel monthlyTransaction);
+  Future<Either<AppException, void>> deleteMonthlyTransaction(
     String monthlyTransactionId,
   );
 }
@@ -44,8 +36,8 @@ abstract class TransactionRepository {
 class TransactionRepositoryImpl implements TransactionRepository {
   final TransactionDatasource _datasource;
 
-    const TransactionRepositoryImpl({required TransactionDatasource datasource})
-     : _datasource = datasource;
+  const TransactionRepositoryImpl({required TransactionDatasource datasource})
+    : _datasource = datasource;
 
   @override
   String generateTransactionId() {
@@ -53,158 +45,99 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<Failure, TransactionModel?>> getTransactionById(
+  Future<Either<AppException, TransactionModel?>> getTransactionById(
     String transactionId,
   ) async {
-    try {
-      final transaction = await _datasource.getTransactionById(transactionId);
-      return Right(transaction);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: e.toString()));
-    }
+    return ErrorHandler.handle(
+      'TransactionRepository.getTransactionById',
+      onTry: () => _datasource.getTransactionById(transactionId),
+    );
   }
 
   @override
-  Future<Either<Failure, List<TransactionModel>>> getTransactionsByUser(
+  Future<Either<AppException, List<TransactionModel>>> getTransactionsByUser(
     String userId,
   ) async {
-    try {
-      final transactions = await _datasource.getTransactionsByUser(userId);
-      return Right(transactions);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+    return ErrorHandler.handle(
+      'TransactionRepository.getTransactionsByUser',
+      onTry: () => _datasource.getTransactionsByUser(userId),
+    );
   }
 
   @override
-  Future<Either<Failure, List<TransactionModel>>> getTransactionsByUserAndMonth(
-    String userId,
-    int year,
-    int month,
-  ) async {
-    try {
-      final transactions = await _datasource.getTransactionsByUserAndMonth(
-        userId,
-        year,
-        month,
-      );
-      return Right(transactions);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+  Future<Either<AppException, List<TransactionModel>>>
+  getTransactionsByUserAndMonth(String userId, int year, int month) async {
+    return ErrorHandler.handle(
+      'TransactionRepository.getTransactionsByUserAndMonth',
+      onTry:
+          () => _datasource.getTransactionsByUserAndMonth(userId, year, month),
+    );
   }
 
   @override
-  Future<Either<Failure, TransactionModel>> createTransaction(
+  Future<Either<AppException, TransactionModel>> createTransaction(
     TransactionModel transaction,
   ) async {
-    try {
-      final createdTransaction = await _datasource.createTransaction(
-        transaction,
-      );
-      return Right(createdTransaction);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+    return ErrorHandler.handle(
+      'TransactionRepository.createTransaction',
+      onTry: () => _datasource.createTransaction(transaction),
+    );
   }
 
   @override
-  Future<Either<Failure, TransactionModel>> updateTransaction(
+  Future<Either<AppException, TransactionModel>> updateTransaction(
     TransactionModel transaction,
   ) async {
-    try {
-      final updatedTransaction = await _datasource.updateTransaction(
-        transaction,
-      );
-      return Right(updatedTransaction);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+    return ErrorHandler.handle(
+      'TransactionRepository.updateTransaction',
+      onTry: () => _datasource.updateTransaction(transaction),
+    );
   }
 
   @override
-  Future<Either<Failure, void>> deleteTransaction(String transactionId) async {
-    try {
-      await _datasource.deleteTransaction(transactionId);
-      return const Right(null);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<MonthlyTransactionModel>>> getMonthlyTransactions(
-    String userId,
-    int year,
-    int month,
+  Future<Either<AppException, void>> deleteTransaction(
+    String transactionId,
   ) async {
-    try {
-      final monthlyTransactions = await _datasource.getMonthlyTransactions(
-        userId,
-        year,
-        month,
-      );
-      return Right(monthlyTransactions);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+    return ErrorHandler.handle(
+      'TransactionRepository.deleteTransaction',
+      onTry: () => _datasource.deleteTransaction(transactionId),
+    );
   }
 
   @override
-  Future<Either<Failure, MonthlyTransactionModel>> createMonthlyTransaction(
-    MonthlyTransactionModel monthlyTransaction,
-  ) async {
-    try {
-      final createdMonthlyTransaction = await _datasource
-          .createMonthlyTransaction(monthlyTransaction);
-      return Right(createdMonthlyTransaction);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+  Future<Either<AppException, List<MonthlyTransactionModel>>>
+  getMonthlyTransactions(String userId, int year, int month) async {
+    return ErrorHandler.handle(
+      'TransactionRepository.getMonthlyTransactions',
+      onTry: () => _datasource.getMonthlyTransactions(userId, year, month),
+    );
   }
 
   @override
-  Future<Either<Failure, MonthlyTransactionModel>> updateMonthlyTransaction(
-    MonthlyTransactionModel monthlyTransaction,
-  ) async {
-    try {
-      final updatedMonthlyTransaction = await _datasource
-          .updateMonthlyTransaction(monthlyTransaction);
-      return Right(updatedMonthlyTransaction);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+  Future<Either<AppException, MonthlyTransactionModel>>
+  createMonthlyTransaction(MonthlyTransactionModel monthlyTransaction) async {
+    return ErrorHandler.handle(
+      'TransactionRepository.createMonthlyTransaction',
+      onTry: () => _datasource.createMonthlyTransaction(monthlyTransaction),
+    );
   }
 
   @override
-  Future<Either<Failure, void>> deleteMonthlyTransaction(
+  Future<Either<AppException, MonthlyTransactionModel>>
+  updateMonthlyTransaction(MonthlyTransactionModel monthlyTransaction) async {
+    return ErrorHandler.handle(
+      'TransactionRepository.updateMonthlyTransaction',
+      onTry: () => _datasource.updateMonthlyTransaction(monthlyTransaction),
+    );
+  }
+
+  @override
+  Future<Either<AppException, void>> deleteMonthlyTransaction(
     String monthlyTransactionId,
   ) async {
-    try {
-      await _datasource.deleteMonthlyTransaction(monthlyTransactionId);
-      return const Right(null);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+    return ErrorHandler.handle(
+      'TransactionRepository.deleteMonthlyTransaction',
+      onTry: () => _datasource.deleteMonthlyTransaction(monthlyTransactionId),
+    );
   }
 }

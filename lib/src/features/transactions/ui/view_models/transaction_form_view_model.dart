@@ -3,8 +3,8 @@ import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
-import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
+import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
 
 class TransactionFormViewModel
@@ -35,8 +35,10 @@ class TransactionFormViewModel
     try {
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
-        state = const TransactionFormErrorState(
-          message: 'Usuário não autenticado',
+        state = TransactionFormErrorState(
+          exception: AppException.userNotAuthenticated(
+            'User not authenticated',
+          ),
         );
         return;
       }
@@ -53,7 +55,9 @@ class TransactionFormViewModel
       );
 
       if (validationError != null) {
-        state = TransactionFormErrorState(message: validationError);
+        state = TransactionFormErrorState(
+          exception: AppException.validationError(validationError),
+        );
         return;
       }
 
@@ -81,8 +85,7 @@ class TransactionFormViewModel
       final result = await _repository.createTransaction(transaction);
 
       result.fold(
-        (failure) =>
-            state = TransactionFormErrorState(message: failure.message),
+        (exception) => state = TransactionFormErrorState(exception: exception),
         (createdTransaction) {
           state = TransactionFormSuccessState(transaction: createdTransaction);
           // Atualizar dashboard após criar transação
@@ -91,7 +94,9 @@ class TransactionFormViewModel
       );
     } catch (e) {
       state = TransactionFormErrorState(
-        message: 'Erro inesperado: ${e.toString()}',
+        exception: AppException.unexpectedError(
+          'Unexpected error: ${e.toString()}',
+        ),
       );
     }
   }
@@ -154,8 +159,10 @@ class TransactionFormViewModel
     try {
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
-        state = const TransactionFormErrorState(
-          message: 'Usuário não autenticado',
+        state = TransactionFormErrorState(
+          exception: AppException.userNotAuthenticated(
+            'User not authenticated',
+          ),
         );
         return;
       }
@@ -172,7 +179,9 @@ class TransactionFormViewModel
       );
 
       if (validationError != null) {
-        state = TransactionFormErrorState(message: validationError);
+        state = TransactionFormErrorState(
+          exception: AppException.validationError(validationError),
+        );
         return;
       }
 
@@ -200,8 +209,7 @@ class TransactionFormViewModel
       final result = await _repository.updateTransaction(transaction);
 
       result.fold(
-        (failure) =>
-            state = TransactionFormErrorState(message: failure.message),
+        (exception) => state = TransactionFormErrorState(exception: exception),
         (updatedTransaction) {
           state = TransactionFormSuccessState(transaction: updatedTransaction);
           // Atualizar dashboard após editar transação
@@ -210,7 +218,9 @@ class TransactionFormViewModel
       );
     } catch (e) {
       state = TransactionFormErrorState(
-        message: 'Erro inesperado: ${e.toString()}',
+        exception: AppException.unexpectedError(
+          'Unexpected error: ${e.toString()}',
+        ),
       );
     }
   }
@@ -222,8 +232,10 @@ class TransactionFormViewModel
     try {
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
-        state = const TransactionFormErrorState(
-          message: 'Usuário não autenticado',
+        state = TransactionFormErrorState(
+          exception: AppException.userNotAuthenticated(
+            'User not authenticated',
+          ),
         );
         return;
       }
@@ -231,8 +243,7 @@ class TransactionFormViewModel
       final result = await _repository.deleteTransaction(transactionId);
 
       result.fold(
-        (failure) =>
-            state = TransactionFormErrorState(message: failure.message),
+        (exception) => state = TransactionFormErrorState(exception: exception),
         (_) {
           state = TransactionFormSuccessState(
             transaction: TransactionModel(
@@ -252,7 +263,9 @@ class TransactionFormViewModel
       );
     } catch (e) {
       state = TransactionFormErrorState(
-        message: 'Erro inesperado: ${e.toString()}',
+        exception: AppException.unexpectedError(
+          'Unexpected error: ${e.toString()}',
+        ),
       );
     }
   }

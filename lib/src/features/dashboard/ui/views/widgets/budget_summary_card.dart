@@ -65,7 +65,7 @@ class BudgetSummaryCard extends ConsumerWidget {
               ),
               const SizedBox(height: Spacing.xs),
               Text(
-                dashboardState.message,
+                dashboardState.exception.getMessage(context),
                 style: context.textTheme.bodySmall,
                 textAlign: TextAlign.center,
               ),

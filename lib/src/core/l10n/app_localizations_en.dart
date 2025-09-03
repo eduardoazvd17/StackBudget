@@ -449,4 +449,148 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirmLogoutMessage => 'Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.';
+
+  @override
+  String get authErrorTitle => 'Authentication Error';
+
+  @override
+  String get networkErrorTitle => 'Connection Error';
+
+  @override
+  String get databaseErrorTitle => 'Database Error';
+
+  @override
+  String get transactionErrorTitle => 'Transaction Error';
+
+  @override
+  String get budgetErrorTitle => 'Budget Error';
+
+  @override
+  String get settingsErrorTitle => 'Settings Error';
+
+  @override
+  String get validationErrorTitle => 'Validation Error';
+
+  @override
+  String get generalErrorTitle => 'Error';
+
+  @override
+  String get userNotFoundError => 'User not found. Please check your email and try again.';
+
+  @override
+  String get wrongPasswordError => 'Wrong password. Please check your password and try again.';
+
+  @override
+  String get emailAlreadyInUseError => 'This email is already being used by another account.';
+
+  @override
+  String get weakPasswordError => 'Password must be at least 6 characters long.';
+
+  @override
+  String get invalidEmailError => 'The email provided is not valid.';
+
+  @override
+  String get userDisabledError => 'This account has been disabled. Please contact support.';
+
+  @override
+  String get tooManyRequestsError => 'Too many login attempts. Please try again in a few minutes.';
+
+  @override
+  String get operationNotAllowedError => 'Operation not allowed. Please check your settings.';
+
+  @override
+  String get invalidCredentialError => 'Invalid credentials. Please check your information and try again.';
+
+  @override
+  String get authenticationFailedError => 'Authentication failed. Please try again.';
+
+  @override
+  String get userDataNotFoundError => 'User data not found.';
+
+  @override
+  String get signUpFailedError => 'Failed to create account. Please try again.';
+
+  @override
+  String get signOutFailedError => 'Error signing out. Please try again.';
+
+  @override
+  String get getCurrentUserFailedError => 'Error retrieving user data.';
+
+  @override
+  String get networkError => 'Connection error. Please check your internet and try again.';
+
+  @override
+  String get connectionTimeoutError => 'Connection timeout. Please try again.';
+
+  @override
+  String get serverError => 'Server error. Please try again in a few minutes.';
+
+  @override
+  String get noInternetConnectionError => 'No internet connection. Please check your connection.';
+
+  @override
+  String get firebaseError => 'Service error. Please try again in a few minutes.';
+
+  @override
+  String get firestoreError => 'Database error. Please try again.';
+
+  @override
+  String get permissionDeniedError => 'Access denied. Please check your permissions.';
+
+  @override
+  String get documentNotFoundError => 'Document not found.';
+
+  @override
+  String get collectionNotFoundError => 'Collection not found.';
+
+  @override
+  String get transactionNotFoundError => 'Transaction not found.';
+
+  @override
+  String get transactionSaveFailedError => 'Error saving transaction. Please try again.';
+
+  @override
+  String get transactionDeleteFailedError => 'Error deleting transaction. Please try again.';
+
+  @override
+  String get transactionUpdateFailedError => 'Error updating transaction. Please try again.';
+
+  @override
+  String get transactionLoadFailedError => 'Error loading transactions. Please try again.';
+
+  @override
+  String get invalidTransactionDataError => 'Invalid transaction data.';
+
+  @override
+  String get budgetCalculationFailedError => 'Error calculating budget. Please try again.';
+
+  @override
+  String get budgetDataInvalidError => 'Invalid budget data.';
+
+  @override
+  String get settingsSaveFailedError => 'Error saving settings. Please try again.';
+
+  @override
+  String get settingsLoadFailedError => 'Error loading settings. Please try again.';
+
+  @override
+  String get validationError => 'Invalid data. Please check the fields and try again.';
+
+  @override
+  String get invalidDataError => 'Invalid data provided.';
+
+  @override
+  String get requiredFieldMissingError => 'Required field not filled.';
+
+  @override
+  String get unknownError => 'Unknown error. Please try again or contact support.';
+
+  @override
+  String get dataParsingError => 'Error processing data. Please try again.';
+
+  @override
+  String get cacheError => 'Cache error. Please try again.';
+
+  @override
+  String get storageError => 'Storage error. Please try again.';
 }

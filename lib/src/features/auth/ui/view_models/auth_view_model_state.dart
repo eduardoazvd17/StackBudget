@@ -1,3 +1,4 @@
+import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 
 abstract class AuthViewModelState {
@@ -32,16 +33,16 @@ class UnauthenticatedState extends AuthViewModelState {
 }
 
 class AuthErrorState extends AuthViewModelState {
-  final String message;
+  final AppException exception;
 
-  const AuthErrorState({required this.message});
+  const AuthErrorState({required this.exception});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is AuthErrorState && other.message == message;
+    return other is AuthErrorState && other.exception == exception;
   }
 
   @override
-  int get hashCode => message.hashCode;
+  int get hashCode => exception.hashCode;
 }

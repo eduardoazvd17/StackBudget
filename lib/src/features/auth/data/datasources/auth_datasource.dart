@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 
-
-
 abstract class AuthDatasource {
   Future<UserModel> signInWithEmailAndPassword({
     required String email,
@@ -49,7 +47,7 @@ class AuthDatasourceImpl implements AuthDatasource {
       );
 
       if (credential.user == null) {
-        throw const Failure(message: 'Falha na autenticação');
+        throw AppException.authenticationFailed('Firebase returned null user');
       }
 
       // Atualizar último login
@@ -60,14 +58,17 @@ class AuthDatasourceImpl implements AuthDatasource {
           await _firestore.collection('users').doc(credential.user!.uid).get();
 
       if (!userDoc.exists) {
-        throw const Failure(message: 'Dados do usuário não encontrados');
+        throw AppException.userDataNotFound(
+          'User document not found in Firestore',
+        );
       }
 
-            return UserModel.fromMap(userDoc.data()!);
+      return UserModel.fromMap(userDoc.data()!);
     } on FirebaseAuthException catch (e) {
-      throw Failure(message: _getAuthErrorMessage(e.code));
+      throw AppException.fromFirebaseAuthError(e.code, e.message);
     } catch (e) {
-      throw Failure(message: 'Erro inesperado: ${e.toString()}');
+      if (e is AppException) rethrow;
+      throw AppException.unexpectedError('Sign in failed: ${e.toString()}');
     }
   }
 
@@ -84,7 +85,7 @@ class AuthDatasourceImpl implements AuthDatasource {
       );
 
       if (credential.user == null) {
-        throw const Failure(message: 'Falha ao criar usuário');
+        throw AppException.signUpFailed('Firebase returned null user');
       }
 
       final now = DateTime.now();
@@ -104,9 +105,10 @@ class AuthDatasourceImpl implements AuthDatasource {
 
       return userModel;
     } on FirebaseAuthException catch (e) {
-      throw Failure(message: _getAuthErrorMessage(e.code));
+      throw AppException.fromFirebaseAuthError(e.code, e.message);
     } catch (e) {
-      throw Failure(message: 'Erro inesperado: ${e.toString()}');
+      if (e is AppException) rethrow;
+      throw AppException.signUpFailed('Sign up failed: ${e.toString()}');
     }
   }
 
@@ -115,7 +117,7 @@ class AuthDatasourceImpl implements AuthDatasource {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      throw Failure(message: 'Erro ao fazer logout: ${e.toString()}');
+      throw AppException.signOutFailed('Sign out failed: ${e.toString()}');
     }
   }
 
@@ -131,7 +133,9 @@ class AuthDatasourceImpl implements AuthDatasource {
 
       return UserModel.fromMap(userDoc.data()!);
     } catch (e) {
-      throw Failure(message: 'Erro ao buscar usuário: ${e.toString()}');
+      throw AppException.getCurrentUserFailed(
+        'Get current user failed: ${e.toString()}',
+      );
     }
   }
 
@@ -139,32 +143,5 @@ class AuthDatasourceImpl implements AuthDatasource {
     await _firestore.collection('users').doc(userId).update({
       'lastLogin': Timestamp.now(),
     });
-  }
-
-
-
-  String _getAuthErrorMessage(String code) {
-    switch (code) {
-      case 'user-not-found':
-        return 'Usuário não encontrado';
-      case 'wrong-password':
-        return 'Senha incorreta';
-      case 'email-already-in-use':
-        return 'Este email já está em uso';
-      case 'weak-password':
-        return 'A senha deve ter pelo menos 6 caracteres';
-      case 'invalid-email':
-        return 'Email inválido';
-      case 'user-disabled':
-        return 'Conta desabilitada';
-      case 'too-many-requests':
-        return 'Muitas tentativas. Tente novamente mais tarde';
-      case 'operation-not-allowed':
-        return 'Operação não permitida';
-      case 'invalid-credential':
-        return 'Credenciais inválidas';
-      default:
-        return 'Erro de autenticação: $code';
-    }
   }
 }

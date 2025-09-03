@@ -5,20 +5,20 @@ import 'package:stackbudget/src/features/auth/data/datasources/datasources.dart'
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 
 abstract class AuthRepository {
-  Future<Either<Failure, UserModel>> signInWithEmailAndPassword({
+  Future<Either<AppException, UserModel>> signInWithEmailAndPassword({
     required String email,
     required String password,
   });
 
-  Future<Either<Failure, UserModel>> signUpWithEmailAndPassword({
+  Future<Either<AppException, UserModel>> signUpWithEmailAndPassword({
     required String email,
     required String password,
     required String name,
   });
 
-  Future<Either<Failure, void>> signOut();
+  Future<Either<AppException, void>> signOut();
 
-  Future<Either<Failure, UserModel?>> getCurrentUser();
+  Future<Either<AppException, UserModel?>> getCurrentUser();
 
   Stream<User?> get authStateChanges;
 }
@@ -33,64 +33,50 @@ class AuthRepositoryImpl implements AuthRepository {
   Stream<User?> get authStateChanges => _datasource.authStateChanges;
 
   @override
-  Future<Either<Failure, UserModel>> signInWithEmailAndPassword({
+  Future<Either<AppException, UserModel>> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    try {
-      final user = await _datasource.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return Right(user);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+    return ErrorHandler.handle(
+      'AuthRepository.signInWithEmailAndPassword',
+      onTry:
+          () => _datasource.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          ),
+    );
   }
 
   @override
-  Future<Either<Failure, UserModel>> signUpWithEmailAndPassword({
+  Future<Either<AppException, UserModel>> signUpWithEmailAndPassword({
     required String email,
     required String password,
     required String name,
   }) async {
-    try {
-      final user = await _datasource.signUpWithEmailAndPassword(
-        email: email,
-        password: password,
-        name: name,
-      );
-      return Right(user);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+    return ErrorHandler.handle(
+      'AuthRepository.signUpWithEmailAndPassword',
+      onTry:
+          () => _datasource.signUpWithEmailAndPassword(
+            email: email,
+            password: password,
+            name: name,
+          ),
+    );
   }
 
   @override
-  Future<Either<Failure, void>> signOut() async {
-    try {
-      await _datasource.signOut();
-      return const Right(null);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+  Future<Either<AppException, void>> signOut() async {
+    return ErrorHandler.handle(
+      'AuthRepository.signOut',
+      onTry: () => _datasource.signOut(),
+    );
   }
 
   @override
-  Future<Either<Failure, UserModel?>> getCurrentUser() async {
-    try {
-      final user = await _datasource.getCurrentUser();
-      return Right(user);
-    } on Failure catch (failure) {
-      return Left(failure);
-    } catch (e) {
-      return Left(Failure(message: 'Erro inesperado: ${e.toString()}'));
-    }
+  Future<Either<AppException, UserModel?>> getCurrentUser() async {
+    return ErrorHandler.handle(
+      'AuthRepository.getCurrentUser',
+      onTry: () => _datasource.getCurrentUser(),
+    );
   }
 }

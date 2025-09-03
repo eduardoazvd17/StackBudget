@@ -27,7 +27,11 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
     try {
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
-        state = const DashboardErrorState(message: 'Usuário não autenticado');
+        state = DashboardErrorState(
+          exception: AppException.userNotAuthenticated(
+            'User not authenticated',
+          ),
+        );
         return;
       }
 
@@ -43,13 +47,13 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
           .getMonthlyTransactions(userId, year, month);
 
       await transactionsResult.fold(
-        (failure) async {
-          state = DashboardErrorState(message: failure.message);
+        (exception) async {
+          state = DashboardErrorState(exception: exception);
         },
         (transactions) async {
           await monthlyTransactionsResult.fold(
-            (failure) async {
-              state = DashboardErrorState(message: failure.message);
+            (exception) async {
+              state = DashboardErrorState(exception: exception);
             },
             (monthlyTransactions) async {
               // Calcular resumo do orçamento
@@ -72,7 +76,11 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
         },
       );
     } catch (e) {
-      state = DashboardErrorState(message: 'Erro inesperado: ${e.toString()}');
+      state = DashboardErrorState(
+        exception: AppException.unexpectedError(
+          'Unexpected error: ${e.toString()}',
+        ),
+      );
     }
   }
 

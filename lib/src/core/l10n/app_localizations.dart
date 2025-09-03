@@ -970,6 +970,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.'**
   String get confirmLogoutMessage;
+
+  /// Title for authentication errors
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication Error'**
+  String get authErrorTitle;
+
+  /// Title for network errors
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Error'**
+  String get networkErrorTitle;
+
+  /// Title for database errors
+  ///
+  /// In en, this message translates to:
+  /// **'Database Error'**
+  String get databaseErrorTitle;
+
+  /// Title for transaction errors
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Error'**
+  String get transactionErrorTitle;
+
+  /// Title for budget errors
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Error'**
+  String get budgetErrorTitle;
+
+  /// Title for settings errors
+  ///
+  /// In en, this message translates to:
+  /// **'Settings Error'**
+  String get settingsErrorTitle;
+
+  /// Title for validation errors
+  ///
+  /// In en, this message translates to:
+  /// **'Validation Error'**
+  String get validationErrorTitle;
+
+  /// Title for general errors
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get generalErrorTitle;
+
+  /// Error message when user is not found
+  ///
+  /// In en, this message translates to:
+  /// **'User not found. Please check your email and try again.'**
+  String get userNotFoundError;
+
+  /// Error message for wrong password
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password. Please check your password and try again.'**
+  String get wrongPasswordError;
+
+  /// Error message when email is already in use
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already being used by another account.'**
+  String get emailAlreadyInUseError;
+
+  /// Error message for weak password
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters long.'**
+  String get weakPasswordError;
+
+  /// Error message for invalid email
+  ///
+  /// In en, this message translates to:
+  /// **'The email provided is not valid.'**
+  String get invalidEmailError;
+
+  /// Error message for disabled user
+  ///
+  /// In en, this message translates to:
+  /// **'This account has been disabled. Please contact support.'**
+  String get userDisabledError;
+
+  /// Error message for too many requests
+  ///
+  /// In en, this message translates to:
+  /// **'Too many login attempts. Please try again in a few minutes.'**
+  String get tooManyRequestsError;
+
+  /// Error message for operation not allowed
+  ///
+  /// In en, this message translates to:
+  /// **'Operation not allowed. Please check your settings.'**
+  String get operationNotAllowedError;
+
+  /// Error message for invalid credentials
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid credentials. Please check your information and try again.'**
+  String get invalidCredentialError;
+
+  /// Error message for authentication failure
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed. Please try again.'**
+  String get authenticationFailedError;
+
+  /// Error message when user data is not found
+  ///
+  /// In en, this message translates to:
+  /// **'User data not found.'**
+  String get userDataNotFoundError;
+
+  /// Error message for sign up failure
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create account. Please try again.'**
+  String get signUpFailedError;
+
+  /// Error message for sign out failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error signing out. Please try again.'**
+  String get signOutFailedError;
+
+  /// Error message for get current user failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error retrieving user data.'**
+  String get getCurrentUserFailedError;
+
+  /// Error message for network issues
+  ///
+  /// In en, this message translates to:
+  /// **'Connection error. Please check your internet and try again.'**
+  String get networkError;
+
+  /// Error message for connection timeout
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout. Please try again.'**
+  String get connectionTimeoutError;
+
+  /// Error message for server errors
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again in a few minutes.'**
+  String get serverError;
+
+  /// Error message for no internet connection
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please check your connection.'**
+  String get noInternetConnectionError;
+
+  /// Error message for Firebase errors
+  ///
+  /// In en, this message translates to:
+  /// **'Service error. Please try again in a few minutes.'**
+  String get firebaseError;
+
+  /// Error message for Firestore errors
+  ///
+  /// In en, this message translates to:
+  /// **'Database error. Please try again.'**
+  String get firestoreError;
+
+  /// Error message for permission denied
+  ///
+  /// In en, this message translates to:
+  /// **'Access denied. Please check your permissions.'**
+  String get permissionDeniedError;
+
+  /// Error message for document not found
+  ///
+  /// In en, this message translates to:
+  /// **'Document not found.'**
+  String get documentNotFoundError;
+
+  /// Error message for collection not found
+  ///
+  /// In en, this message translates to:
+  /// **'Collection not found.'**
+  String get collectionNotFoundError;
+
+  /// Error message for transaction not found
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction not found.'**
+  String get transactionNotFoundError;
+
+  /// Error message for transaction save failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving transaction. Please try again.'**
+  String get transactionSaveFailedError;
+
+  /// Error message for transaction delete failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting transaction. Please try again.'**
+  String get transactionDeleteFailedError;
+
+  /// Error message for transaction update failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating transaction. Please try again.'**
+  String get transactionUpdateFailedError;
+
+  /// Error message for transaction load failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading transactions. Please try again.'**
+  String get transactionLoadFailedError;
+
+  /// Error message for invalid transaction data
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid transaction data.'**
+  String get invalidTransactionDataError;
+
+  /// Error message for budget calculation failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error calculating budget. Please try again.'**
+  String get budgetCalculationFailedError;
+
+  /// Error message for invalid budget data
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid budget data.'**
+  String get budgetDataInvalidError;
+
+  /// Error message for settings save failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving settings. Please try again.'**
+  String get settingsSaveFailedError;
+
+  /// Error message for settings load failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading settings. Please try again.'**
+  String get settingsLoadFailedError;
+
+  /// Error message for validation errors
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid data. Please check the fields and try again.'**
+  String get validationError;
+
+  /// Error message for invalid data
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid data provided.'**
+  String get invalidDataError;
+
+  /// Error message for required field missing
+  ///
+  /// In en, this message translates to:
+  /// **'Required field not filled.'**
+  String get requiredFieldMissingError;
+
+  /// Error message for unknown errors
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error. Please try again or contact support.'**
+  String get unknownError;
+
+  /// Error message for data parsing errors
+  ///
+  /// In en, this message translates to:
+  /// **'Error processing data. Please try again.'**
+  String get dataParsingError;
+
+  /// Error message for cache errors
+  ///
+  /// In en, this message translates to:
+  /// **'Cache error. Please try again.'**
+  String get cacheError;
+
+  /// Error message for storage errors
+  ///
+  /// In en, this message translates to:
+  /// **'Storage error. Please try again.'**
+  String get storageError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

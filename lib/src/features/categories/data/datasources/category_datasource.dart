@@ -22,17 +22,20 @@ class CategoryDatasourceImpl implements CategoryDatasource {
   @override
   Future<List<CategoryModel>> getCategoriesByUser(String userId) async {
     try {
-      final querySnapshot = await _firestore
-          .collection('categories')
-          .where('userId', isEqualTo: userId)
-          .orderBy('name')
-          .get();
+      final querySnapshot =
+          await _firestore
+              .collection('categories')
+              .where('userId', isEqualTo: userId)
+              .orderBy('name')
+              .get();
 
       return querySnapshot.docs
           .map((doc) => CategoryModel.fromMap(doc.data()))
           .toList();
     } catch (e) {
-      throw Failure(message: 'Erro ao buscar categorias: ${e.toString()}');
+      throw AppException.transactionLoadFailed(
+        'Failed to get categories: ${e.toString()}',
+      );
     }
   }
 
@@ -50,27 +53,30 @@ class CategoryDatasourceImpl implements CategoryDatasource {
       if (type != null) {
         // Buscar categorias que são do tipo específico OU que não têm tipo (genéricas)
         // Como Firestore não suporta OR com where, vamos fazer duas consultas
-        final specificTypeQuery = await query
-            .where('type', isEqualTo: type.name)
-            .orderBy('name')
-            .get();
+        final specificTypeQuery =
+            await query
+                .where('type', isEqualTo: type.name)
+                .orderBy('name')
+                .get();
 
-        final genericQuery = await query
-            .where('type', isNull: true)
-            .orderBy('name')
-            .get();
+        final genericQuery =
+            await query.where('type', isNull: true).orderBy('name').get();
 
         final allDocs = [...specificTypeQuery.docs, ...genericQuery.docs];
-        
+
         // Remover duplicatas por ID
         final uniqueDocs = <String, QueryDocumentSnapshot>{};
         for (final doc in allDocs) {
           uniqueDocs[doc.id] = doc;
         }
 
-        final categories = uniqueDocs.values
-            .map((doc) => CategoryModel.fromMap(doc.data() as Map<String, dynamic>))
-            .toList();
+        final categories =
+            uniqueDocs.values
+                .map(
+                  (doc) =>
+                      CategoryModel.fromMap(doc.data() as Map<String, dynamic>),
+                )
+                .toList();
 
         // Ordenar por nome
         categories.sort((a, b) => a.name.compareTo(b.name));
@@ -78,11 +84,16 @@ class CategoryDatasourceImpl implements CategoryDatasource {
       } else {
         final querySnapshot = await query.orderBy('name').get();
         return querySnapshot.docs
-            .map((doc) => CategoryModel.fromMap(doc.data() as Map<String, dynamic>))
+            .map(
+              (doc) =>
+                  CategoryModel.fromMap(doc.data() as Map<String, dynamic>),
+            )
             .toList();
       }
     } catch (e) {
-      throw Failure(message: 'Erro ao buscar categorias por tipo: ${e.toString()}');
+      throw AppException.transactionLoadFailed(
+        'Failed to get categories by type: ${e.toString()}',
+      );
     }
   }
 
@@ -96,7 +107,9 @@ class CategoryDatasourceImpl implements CategoryDatasource {
 
       return category;
     } catch (e) {
-      throw Failure(message: 'Erro ao criar categoria: ${e.toString()}');
+      throw AppException.transactionSaveFailed(
+        'Failed to create category: ${e.toString()}',
+      );
     }
   }
 
@@ -110,7 +123,9 @@ class CategoryDatasourceImpl implements CategoryDatasource {
 
       return category;
     } catch (e) {
-      throw Failure(message: 'Erro ao atualizar categoria: ${e.toString()}');
+      throw AppException.transactionUpdateFailed(
+        'Failed to update category: ${e.toString()}',
+      );
     }
   }
 
@@ -119,17 +134,17 @@ class CategoryDatasourceImpl implements CategoryDatasource {
     try {
       await _firestore.collection('categories').doc(categoryId).delete();
     } catch (e) {
-      throw Failure(message: 'Erro ao excluir categoria: ${e.toString()}');
+      throw AppException.transactionDeleteFailed(
+        'Failed to delete category: ${e.toString()}',
+      );
     }
   }
 
   @override
   Future<CategoryModel?> getCategoryById(String categoryId) async {
     try {
-      final docSnapshot = await _firestore
-          .collection('categories')
-          .doc(categoryId)
-          .get();
+      final docSnapshot =
+          await _firestore.collection('categories').doc(categoryId).get();
 
       if (!docSnapshot.exists) {
         return null;
@@ -137,7 +152,9 @@ class CategoryDatasourceImpl implements CategoryDatasource {
 
       return CategoryModel.fromMap(docSnapshot.data()!);
     } catch (e) {
-      throw Failure(message: 'Erro ao buscar categoria: ${e.toString()}');
+      throw AppException.transactionLoadFailed(
+        'Failed to get category: ${e.toString()}',
+      );
     }
   }
 
@@ -150,32 +167,36 @@ class CategoryDatasourceImpl implements CategoryDatasource {
   Future<void> createDefaultCategories(String userId) async {
     try {
       final defaultCategories = _getDefaultCategories(userId);
-      
+
       // Verificar se já existem categorias padrão para este usuário
       final existingCategories = await getCategoriesByUser(userId);
-      final hasDefaultCategories = existingCategories.any((cat) => cat.isDefault);
-      
+      final hasDefaultCategories = existingCategories.any(
+        (cat) => cat.isDefault,
+      );
+
       if (hasDefaultCategories) {
         return; // Já existem categorias padrão
       }
 
       // Criar categorias padrão em batch
       final batch = _firestore.batch();
-      
+
       for (final category in defaultCategories) {
         final docRef = _firestore.collection('categories').doc(category.id);
         batch.set(docRef, category.toMap());
       }
-      
+
       await batch.commit();
     } catch (e) {
-      throw Failure(message: 'Erro ao criar categorias padrão: ${e.toString()}');
+      throw AppException.transactionSaveFailed(
+        'Failed to create default categories: ${e.toString()}',
+      );
     }
   }
 
   List<CategoryModel> _getDefaultCategories(String userId) {
     final now = DateTime.now();
-    
+
     return [
       // Categorias de Despesa
       CategoryModel(

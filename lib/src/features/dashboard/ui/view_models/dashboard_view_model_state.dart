@@ -1,3 +1,4 @@
+import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/budget/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
@@ -60,16 +61,16 @@ class DashboardLoadedState extends DashboardViewModelState {
 }
 
 class DashboardErrorState extends DashboardViewModelState {
-  final String message;
+  final AppException exception;
 
-  const DashboardErrorState({required this.message});
+  const DashboardErrorState({required this.exception});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is DashboardErrorState && other.message == message;
+    return other is DashboardErrorState && other.exception == exception;
   }
 
   @override
-  int get hashCode => message.hashCode;
+  int get hashCode => exception.hashCode;
 }
