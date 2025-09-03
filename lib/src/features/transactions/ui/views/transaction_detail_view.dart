@@ -8,6 +8,7 @@ import 'package:stackbudget/src/features/transactions/ui/view_models/transaction
 import 'package:stackbudget/src/features/transactions/ui/views/widgets/monthly_value_editor_dialog.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
+import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 
 class TransactionDetailView extends ConsumerStatefulWidget {
   static const routeName = 'transaction-detail';
@@ -332,11 +333,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
   }
 
   String _formatCurrency(double value) {
-    return NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$ ',
-      decimalDigits: 2,
-    ).format(value);
+    final currency = ref.watch(currencyProvider);
+    return CurrencyFormatter.format(value, currency);
   }
 
   String _formatMonthYear(DateTime date) {

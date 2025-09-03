@@ -4,12 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/features/auth/data/datasources/datasources.dart';
 import 'package:stackbudget/src/features/auth/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
-
+import 'package:stackbudget/src/features/settings/ui/view_models/settings_view_model.dart';
 
 class AuthViewModel extends StateNotifier<AuthViewModelState> {
   final AuthRepository _repository;
+  final Ref _ref;
 
-  AuthViewModel(this._repository) : super(const AuthInitialState()) {
+  AuthViewModel(this._repository, this._ref) : super(const AuthInitialState()) {
     _listenToAuthChanges();
   }
 
@@ -22,6 +23,8 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
           (userModel) {
             if (userModel != null) {
               state = AuthenticatedState(user: userModel);
+              // Sincronizar configurações do Firebase após login bem-sucedido
+              _syncUserSettings();
             } else {
               state = const UnauthenticatedState();
             }
@@ -44,10 +47,13 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       password: password,
     );
 
-    result.fold(
-      (failure) => state = AuthErrorState(message: failure.message),
-      (user) => state = AuthenticatedState(user: user),
-    );
+    result.fold((failure) => state = AuthErrorState(message: failure.message), (
+      user,
+    ) {
+      state = AuthenticatedState(user: user);
+      // Sincronizar configurações do Firebase após login bem-sucedido
+      _syncUserSettings();
+    });
   }
 
   Future<void> signUpWithEmailAndPassword({
@@ -63,10 +69,13 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       name: name,
     );
 
-    result.fold(
-      (failure) => state = AuthErrorState(message: failure.message),
-      (user) => state = AuthenticatedState(user: user),
-    );
+    result.fold((failure) => state = AuthErrorState(message: failure.message), (
+      user,
+    ) {
+      state = AuthenticatedState(user: user);
+      // Sincronizar configurações do Firebase após cadastro bem-sucedido
+      _syncUserSettings();
+    });
   }
 
   Future<void> signOut() async {
@@ -85,6 +94,15 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       state = const UnauthenticatedState();
     }
   }
+
+  /// Sincroniza as configurações do usuário do Firebase
+  void _syncUserSettings() {
+    try {
+      _ref.read(settingsViewModelProvider.notifier).syncSettingsFromFirebase();
+    } catch (e) {
+      // Ignora erros de sincronização para não interromper o fluxo de login
+    }
+  }
 }
 
 // Providers
@@ -101,5 +119,5 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
 
 final authViewModelProvider =
     StateNotifierProvider<AuthViewModel, AuthViewModelState>(
-      (ref) => AuthViewModel(ref.read(authRepositoryProvider)),
+      (ref) => AuthViewModel(ref.read(authRepositoryProvider), ref),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
+import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 
 class BudgetSummaryCard extends ConsumerWidget {
   const BudgetSummaryCard({super.key});
@@ -126,7 +127,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        _formatCurrency(actualBalance),
+                        _formatCurrency(actualBalance, ref),
                         style: context.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: context.colorScheme.onPrimaryContainer,
@@ -164,7 +165,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            _formatCurrency(balanceDifference.abs()),
+                            _formatCurrency(balanceDifference.abs(), ref),
                             style: context.textTheme.bodySmall?.copyWith(
                               color:
                                   balanceDifference > 0
@@ -193,6 +194,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                     budget.plannedIncome,
                     Icons.arrow_downward,
                     Colors.green,
+                    ref,
                   ),
                 ),
                 const SizedBox(width: Spacing.md),
@@ -204,6 +206,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                     budget.plannedExpenses,
                     Icons.arrow_upward,
                     Colors.red,
+                    ref,
                   ),
                 ),
               ],
@@ -221,6 +224,7 @@ class BudgetSummaryCard extends ConsumerWidget {
     double planned,
     IconData icon,
     Color color,
+    WidgetRef ref,
   ) {
     return Container(
       padding: const EdgeInsets.all(Spacing.md),
@@ -245,7 +249,7 @@ class BudgetSummaryCard extends ConsumerWidget {
           ),
           const SizedBox(height: Spacing.xs),
           Text(
-            _formatCurrency(actual),
+            _formatCurrency(actual, ref),
             style: context.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -255,7 +259,8 @@ class BudgetSummaryCard extends ConsumerWidget {
     );
   }
 
-  String _formatCurrency(double value) {
-    return 'R\$ ${value.toStringAsFixed(2).replaceAll('.', ',')}';
+  String _formatCurrency(double value, WidgetRef ref) {
+    final currency = ref.watch(currencyProvider);
+    return CurrencyFormatter.format(value, currency);
   }
 }

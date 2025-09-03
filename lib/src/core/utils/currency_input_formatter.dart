@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'currency_formatter.dart';
 
 class CurrencyInputFormatter extends TextInputFormatter {
   final String currency;
@@ -23,14 +23,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
     // Converte para double (centavos para reais)
     final value = double.parse(digitsOnly) / 100;
 
-    // Formata como moeda brasileira
-    final formatter = NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$ ',
-      decimalDigits: 2,
-    );
-
-    final formattedText = formatter.format(value);
+    // Formata usando o CurrencyFormatter
+    final formattedText = CurrencyFormatter.format(value, currency);
 
     return TextEditingValue(
       text: formattedText,

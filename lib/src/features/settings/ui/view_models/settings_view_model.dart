@@ -44,6 +44,15 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
       state = SettingsErrorState(message: e.toString());
     }
   }
+
+  Future<void> syncSettingsFromFirebase() async {
+    try {
+      await _repository.syncSettingsFromFirebase();
+      await loadSettings(); // Recarrega as configurações após sincronização
+    } catch (e) {
+      // Ignora erros de sincronização para não interromper o fluxo
+    }
+  }
 }
 
 // Providers
@@ -56,6 +65,7 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository(dataSource);
 });
 
-final settingsViewModelProvider = StateNotifierProvider<SettingsViewModel, SettingsViewModelState>(
-  (ref) => SettingsViewModel(ref.watch(settingsRepositoryProvider)),
-);
+final settingsViewModelProvider =
+    StateNotifierProvider<SettingsViewModel, SettingsViewModelState>(
+      (ref) => SettingsViewModel(ref.watch(settingsRepositoryProvider)),
+    );

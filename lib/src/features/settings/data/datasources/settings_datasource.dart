@@ -13,6 +13,30 @@ class SettingsDataSource {
 
   Future<SettingsModel> getSettings() async {
     try {
+      // Primeiro tenta carregar do Firebase se o usuário estiver logado
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final userDoc =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user.uid)
+                .get();
+
+        if (userDoc.exists && userDoc.data() != null) {
+          final userData = userDoc.data()!;
+          final firebaseSettings = SettingsModel(
+            currency: userData['currency'] as String? ?? 'BRL',
+            isDarkMode: userData['isDarkMode'] as bool? ?? false,
+            language: userData['language'] as String? ?? 'pt',
+          );
+
+          // Sincroniza com SharedPreferences
+          await saveSettings(firebaseSettings);
+          return firebaseSettings;
+        }
+      }
+
+      // Se não há usuário logado ou dados no Firebase, usa SharedPreferences
       final settingsJson = _prefs.getString(_settingsKey);
       if (settingsJson != null) {
         final settingsMap = json.decode(settingsJson) as Map<String, dynamic>;
@@ -37,14 +61,13 @@ class SettingsDataSource {
     final currentSettings = await getSettings();
     final updatedSettings = currentSettings.copyWith(currency: currency);
     await saveSettings(updatedSettings);
-    
+
     // Atualizar também no Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .update({'currency': currency});
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
+        {'currency': currency},
+      );
     }
   }
 
@@ -52,11 +75,54 @@ class SettingsDataSource {
     final currentSettings = await getSettings();
     final updatedSettings = currentSettings.copyWith(isDarkMode: isDarkMode);
     await saveSettings(updatedSettings);
+
+    // Atualizar também no Firebase
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
+        {'isDarkMode': isDarkMode},
+      );
+    }
   }
 
   Future<void> updateLanguage(String language) async {
     final currentSettings = await getSettings();
     final updatedSettings = currentSettings.copyWith(language: language);
     await saveSettings(updatedSettings);
+
+    // Atualizar também no Firebase
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
+        {'language': language},
+      );
+    }
+  }
+
+  /// Sincroniza as configurações do Firebase com o SharedPreferences
+  Future<void> syncSettingsFromFirebase() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final userDoc =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user.uid)
+                .get();
+
+        if (userDoc.exists && userDoc.data() != null) {
+          final userData = userDoc.data()!;
+          final firebaseSettings = SettingsModel(
+            currency: userData['currency'] as String? ?? 'BRL',
+            isDarkMode: userData['isDarkMode'] as bool? ?? false,
+            language: userData['language'] as String? ?? 'pt',
+          );
+
+          await saveSettings(firebaseSettings);
+        }
+      } catch (e) {
+        // Ignora erros de sincronização
+      }
+    }
   }
 }

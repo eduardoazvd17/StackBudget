@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
+import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 
 class TransactionForm extends ConsumerStatefulWidget {
   final TransactionModel? transaction; // Para edição
@@ -60,11 +60,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     _selectedCategory = transaction.category;
 
     // Formatar o valor para o campo
-    final formattedAmount = NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$ ',
-      decimalDigits: 2,
-    ).format(transaction.amount);
+    final currency = ref.read(currencyProvider);
+    final formattedAmount = CurrencyFormatter.format(
+      transaction.amount,
+      currency,
+    );
     _amountController.text = formattedAmount;
 
     _selectedType = transaction.type;
@@ -138,7 +138,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
-                CurrencyInputFormatter(currency: 'BRL'),
+                CurrencyInputFormatter(currency: ref.watch(currencyProvider)),
               ],
               onChanged: (value) {
                 // Atualizar o estado para recalcular valor da parcela
@@ -678,17 +678,15 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   String _getInstallmentValueText() {
-    if (!_canCalculateInstallmentValue()) return 'R\$ 0,00';
+    final currency = ref.read(currencyProvider);
+    if (!_canCalculateInstallmentValue())
+      return CurrencyFormatter.format(0, currency);
 
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
     final totalAmount = double.parse(digitsOnly) / 100;
     final installmentValue = totalAmount / _totalInstallments!;
 
-    return NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$ ',
-      decimalDigits: 2,
-    ).format(installmentValue);
+    return CurrencyFormatter.format(installmentValue, currency);
   }
 
   String _getMonthDisplayName(MonthEnum month) {

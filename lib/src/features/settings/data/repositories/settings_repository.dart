@@ -25,4 +25,8 @@ class SettingsRepository {
   Future<void> updateLanguage(String language) async {
     await _dataSource.updateLanguage(language);
   }
+
+  Future<void> syncSettingsFromFirebase() async {
+    await _dataSource.syncSettingsFromFirebase();
+  }
 }

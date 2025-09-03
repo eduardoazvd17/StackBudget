@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/monthly_transaction_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/monthly_transaction_view_model_state.dart';
+import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 
 class MonthlyValueEditorDialog extends ConsumerStatefulWidget {
   final TransactionModel transaction;
@@ -20,10 +20,12 @@ class MonthlyValueEditorDialog extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<MonthlyValueEditorDialog> createState() => _MonthlyValueEditorDialogState();
+  ConsumerState<MonthlyValueEditorDialog> createState() =>
+      _MonthlyValueEditorDialogState();
 }
 
-class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDialog> {
+class _MonthlyValueEditorDialogState
+    extends ConsumerState<MonthlyValueEditorDialog> {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   bool _isLoading = false;
@@ -31,16 +33,18 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
   @override
   void initState() {
     super.initState();
-    // Inicializar com valor base da transação
-    _populateAmount(widget.transaction.amount);
-    
+    // Inicializar com valor base da transação será feito no addPostFrameCallback
+
     // Carregar dados para verificar se há override
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(monthlyTransactionViewModelProvider.notifier).loadMonthlyTransaction(
-        transactionId: widget.transaction.id,
-        year: widget.year,
-        month: widget.month,
-      );
+      _populateAmount(widget.transaction.amount, ref);
+      ref
+          .read(monthlyTransactionViewModelProvider.notifier)
+          .loadMonthlyTransaction(
+            transactionId: widget.transaction.id,
+            year: widget.year,
+            month: widget.month,
+          );
     });
   }
 
@@ -52,26 +56,30 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
 
   String _getMonthName(int month) {
     const months = [
-      'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
     ];
     return months[month - 1];
   }
 
-  String _formatCurrency(double value) {
-    return NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$ ',
-      decimalDigits: 2,
-    ).format(value);
+  String _formatCurrency(double value, WidgetRef ref) {
+    final currency = ref.watch(currencyProvider);
+    return CurrencyFormatter.format(value, currency);
   }
 
-  void _populateAmount(double amount) {
-    final formattedAmount = NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$ ',
-      decimalDigits: 2,
-    ).format(amount);
+  void _populateAmount(double amount, WidgetRef ref) {
+    final currency = ref.read(currencyProvider);
+    final formattedAmount = CurrencyFormatter.format(amount, currency);
     _amountController.text = formattedAmount;
   }
 
@@ -85,7 +93,7 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
         if (next is MonthlyTransactionLoadedState) {
           // Só atualizar o campo se o valor for diferente do base
           if (next.currentValue != widget.transaction.amount) {
-            _populateAmount(next.currentValue);
+            _populateAmount(next.currentValue, ref);
           }
         } else if (next is MonthlyTransactionSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -103,7 +111,7 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
             ),
           );
         }
-        
+
         // Controlar loading local
         setState(() {
           _isLoading = next is MonthlyTransactionLoadingState;
@@ -111,14 +119,21 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
       },
     );
 
-    final hasOverride = monthlyState is MonthlyTransactionLoadedState && monthlyState.hasOverride;
+    final hasOverride =
+        monthlyState is MonthlyTransactionLoadedState &&
+        monthlyState.hasOverride;
 
     return AlertDialog(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(context.strings.adjustValue(_getMonthName(widget.month), widget.year.toString())),
+          Text(
+            context.strings.adjustValue(
+              _getMonthName(widget.month),
+              widget.year.toString(),
+            ),
+          ),
           const SizedBox(height: Spacing.xs),
           Text(
             widget.transaction.title,
@@ -149,7 +164,7 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
                   ),
                   const SizedBox(width: Spacing.xs),
                   Text(
-                    'Valor padrão: ${_formatCurrency(widget.transaction.amount)}',
+                    'Valor padrão: ${_formatCurrency(widget.transaction.amount, ref)}',
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),
@@ -163,20 +178,23 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
               controller: _amountController,
               decoration: InputDecoration(
                 labelText: 'Valor para este mês',
-                hintText: 'R\$ 0,00',
+                hintText: CurrencyFormatter.format(
+                  0,
+                  ref.watch(currencyProvider),
+                ),
                 prefixIcon: const Icon(Icons.attach_money),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.restore),
                   tooltip: 'Restaurar valor padrão',
                   onPressed: () {
-                    _populateAmount(widget.transaction.amount);
+                    _populateAmount(widget.transaction.amount, ref);
                   },
                 ),
               ),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
-                CurrencyInputFormatter(currency: 'BRL'),
+                CurrencyInputFormatter(currency: ref.watch(currencyProvider)),
               ],
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -217,24 +235,30 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
       actions: [
         if (hasOverride)
           TextButton(
-            onPressed: _isLoading ? null : () {
-              ref.read(monthlyTransactionViewModelProvider.notifier).removeMonthlyOverride();
-            },
-                            child: Text(context.strings.removeAdjustment),
+            onPressed:
+                _isLoading
+                    ? null
+                    : () {
+                      ref
+                          .read(monthlyTransactionViewModelProvider.notifier)
+                          .removeMonthlyOverride();
+                    },
+            child: Text(context.strings.removeAdjustment),
           ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-                      child: Text(context.strings.cancel),
+          child: Text(context.strings.cancel),
         ),
         ElevatedButton(
           onPressed: _isLoading ? null : _saveValue,
-          child: _isLoading
-              ? const SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : Text(context.strings.save),
+          child:
+              _isLoading
+                  ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                  : Text(context.strings.save),
         ),
       ],
     );
@@ -246,12 +270,14 @@ class _MonthlyValueEditorDialogState extends ConsumerState<MonthlyValueEditorDia
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
     final amount = digitsOnly.isEmpty ? 0.0 : double.parse(digitsOnly) / 100;
 
-    ref.read(monthlyTransactionViewModelProvider.notifier).updateMonthlyValue(
-      transactionId: widget.transaction.id,
-      year: widget.year,
-      month: widget.month,
-      newAmount: amount,
-    );
+    ref
+        .read(monthlyTransactionViewModelProvider.notifier)
+        .updateMonthlyValue(
+          transactionId: widget.transaction.id,
+          year: widget.year,
+          month: widget.month,
+          newAmount: amount,
+        );
   }
 }
 
@@ -264,10 +290,11 @@ Future<bool?> showMonthlyValueEditor(
 }) {
   return showDialog<bool>(
     context: context,
-    builder: (context) => MonthlyValueEditorDialog(
-      transaction: transaction,
-      year: year,
-      month: month,
-    ),
+    builder:
+        (context) => MonthlyValueEditorDialog(
+          transaction: transaction,
+          year: year,
+          month: month,
+        ),
   );
 }
