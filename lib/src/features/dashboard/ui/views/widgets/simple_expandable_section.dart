@@ -26,6 +26,34 @@ class SimpleExpandableSection extends ConsumerWidget {
     final dashboardState = ref.watch(dashboardViewModelProvider);
     final expansionState = ref.watch(expansionStateProvider);
 
+    // Se estiver carregando, mostrar indicador de loading
+    if (dashboardState is DashboardLoadingState) {
+      return Card(
+        margin: const EdgeInsets.symmetric(horizontal: Spacing.lg),
+        child: Padding(
+          padding: const EdgeInsets.all(Spacing.lg),
+          child: Row(
+            children: [
+              Icon(icon, size: 20),
+              const SizedBox(width: Spacing.sm),
+              Text(
+                title,
+                style: context.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Spacer(),
+              const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     if (dashboardState is! DashboardLoadedState || expansionState == null) {
       return const SizedBox.shrink();
     }

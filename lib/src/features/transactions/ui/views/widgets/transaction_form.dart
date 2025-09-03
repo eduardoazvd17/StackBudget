@@ -679,8 +679,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
   String _getInstallmentValueText() {
     final currency = ref.read(currencyProvider);
-    if (!_canCalculateInstallmentValue())
+    if (!_canCalculateInstallmentValue()) {
       return CurrencyFormatter.format(0, currency);
+    }
 
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
     final totalAmount = double.parse(digitsOnly) / 100;

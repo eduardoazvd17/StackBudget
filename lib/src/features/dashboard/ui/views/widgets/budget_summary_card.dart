@@ -4,6 +4,8 @@ import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
+import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dart';
+import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 
 class BudgetSummaryCard extends ConsumerWidget {
   const BudgetSummaryCard({super.key});
@@ -14,6 +16,20 @@ class BudgetSummaryCard extends ConsumerWidget {
     ref.watch(dashboardInitializerProvider);
 
     final dashboardState = ref.watch(dashboardViewModelProvider);
+
+    // Verificar se há necessidade de recarregar dados
+    final authState = ref.watch(authViewModelProvider);
+    if (authState is AuthenticatedState &&
+        dashboardState is DashboardLoadedState &&
+        dashboardState.budgetSummary == null) {
+      // Se há usuário autenticado mas budgetSummary é null, mostrar loading ao invés de "nenhum dado"
+      return const Card(
+        child: Padding(
+          padding: EdgeInsets.all(Spacing.lg),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
 
     // Escutar mudanças no período e recarregar dados
     ref.listen<DateTime>(selectedPeriodProvider, (previous, next) {
@@ -59,8 +75,29 @@ class BudgetSummaryCard extends ConsumerWidget {
       );
     }
 
-    if (dashboardState is! DashboardLoadedState ||
-        dashboardState.budgetSummary == null) {
+    // Se não é DashboardLoadedState, mostrar loading (exceto se for erro)
+    if (dashboardState is! DashboardLoadedState) {
+      return const Card(
+        child: Padding(
+          padding: EdgeInsets.all(Spacing.lg),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+
+    // Se é DashboardLoadedState mas budgetSummary é null, pode ser estado inconsistente
+    if (dashboardState.budgetSummary == null) {
+      // Se há usuário autenticado, mostrar loading pois dados deveriam existir
+      if (authState is AuthenticatedState) {
+        return const Card(
+          child: Padding(
+            padding: EdgeInsets.all(Spacing.lg),
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        );
+      }
+
+      // Se não há usuário autenticado, mostrar mensagem de dados vazios
       return Card(
         child: Padding(
           padding: const EdgeInsets.all(Spacing.lg),

@@ -150,8 +150,15 @@ final dashboardInitializerProvider = Provider<void>((ref) {
     final dashboardNotifier = ref.read(dashboardViewModelProvider.notifier);
     final currentDashboardState = ref.read(dashboardViewModelProvider);
 
-    // Só carregar se estiver no estado inicial
-    if (currentDashboardState is DashboardInitialState) {
+    // Carregar se estiver no estado inicial, se não há dados para o período atual,
+    // ou se estiver em estado de erro
+    if (currentDashboardState is DashboardInitialState ||
+        currentDashboardState is DashboardErrorState ||
+        (currentDashboardState is DashboardLoadedState &&
+            currentDashboardState.selectedPeriod != selectedPeriod)) {
+      // Definir estado de loading imediatamente para evitar mostrar dados antigos
+      // (isso será feito dentro do loadDashboardData)
+
       Future.microtask(
         () => dashboardNotifier.loadDashboardData(selectedPeriod),
       );
