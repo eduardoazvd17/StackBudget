@@ -22,4 +22,6 @@ alwaysApply: true
 ## Boas práticas
 - Evitar criar métodos dentro de `StatefulWidget`/`StatelessWidget` que retornem widgets.  
   → Prefira sempre criar um **novo widget** em um arquivo separado.  
-- Widgets reutilizáveis que pertencem a uma feature devem ficar dentro de:
+- Widgets reutilizáveis que pertencem a uma feature devem ficar dentro de core
+- Sempre internacionalize as strings nos arquivos app_pt.arb e app_en.arb e rode o pub get para gerar os arquivos gerados.
+- Nunca deixe erros nao tratados, utilize o padrao do app no app_exception.
