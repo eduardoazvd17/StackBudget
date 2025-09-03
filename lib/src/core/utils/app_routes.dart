@@ -11,6 +11,7 @@ import 'package:stackbudget/src/features/transactions/ui/views/transaction_detai
 import 'package:stackbudget/src/features/transactions/ui/views/edit_transaction_loader.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/settings/ui/views/settings_view.dart';
+import 'package:stackbudget/src/features/profile/ui/views/profile_view.dart';
 import 'package:url_strategy/url_strategy.dart' as url;
 
 class AppRoutes {
@@ -67,6 +68,13 @@ class AppRoutes {
             path: 'settings',
             name: AppRoutesConfig.settings,
             builder: (context, state) => const SettingsView(),
+          ),
+
+          // Rota de Perfil: /transactions/profile
+          GoRoute(
+            path: 'profile',
+            name: AppRoutesConfig.profile,
+            builder: (context, state) => const ProfileView(),
           ),
 
           // Rota para detalhes da transação: /transactions/:id
@@ -180,6 +188,10 @@ class AppRoutes {
   // Métodos de navegação implementados
   static void goToSettings(BuildContext context) {
     context.goNamed(AppRoutesConfig.settings);
+  }
+
+  static void goToProfile(BuildContext context) {
+    context.goNamed(AppRoutesConfig.profile);
   }
 
   // Futuros métodos de navegação

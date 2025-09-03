@@ -791,5 +791,129 @@
   "storageError": "Storage error. Please try again.",
   "@storageError": {
     "description": "Error message for storage errors"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Label for profile screen"
+  },
+  "editProfile": "Edit Profile",
+  "@editProfile": {
+    "description": "Title for edit profile screen"
+  },
+  "changeName": "Change Name",
+  "@changeName": {
+    "description": "Label for change name option"
+  },
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "Label for change password option"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Label for delete account option"
+  },
+  "currentName": "Current Name",
+  "@currentName": {
+    "description": "Label for current name field"
+  },
+  "newName": "New Name",
+  "@newName": {
+    "description": "Label for new name field"
+  },
+  "nameUpdatedSuccess": "Name updated successfully!",
+  "@nameUpdatedSuccess": {
+    "description": "Success message when name is updated"
+  },
+  "currentPassword": "Current Password",
+  "@currentPassword": {
+    "description": "Label for current password field"
+  },
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "Label for new password field"
+  },
+  "confirmNewPassword": "Confirm New Password",
+  "@confirmNewPassword": {
+    "description": "Label for confirm new password field"
+  },
+  "passwordUpdatedSuccess": "Password changed successfully!",
+  "@passwordUpdatedSuccess": {
+    "description": "Success message when password is updated"
+  },
+  "deleteAccountConfirmation": "Delete Account Permanently",
+  "@deleteAccountConfirmation": {
+    "description": "Title for delete account confirmation dialog"
+  },
+  "deleteAccountWarning": "This action is irreversible!\n\nAll your data will be permanently deleted:\n• Transactions\n• Settings\n• Financial history\n\nAre you sure you want to continue?",
+  "@deleteAccountWarning": {
+    "description": "Warning message for delete account dialog"
+  },
+  "enterCurrentPasswordToDelete": "Enter your current password to confirm deletion:",
+  "@enterCurrentPasswordToDelete": {
+    "description": "Prompt for password confirmation in delete account dialog"
+  },
+  "accountDeletedSuccess": "Account deleted successfully!",
+  "@accountDeletedSuccess": {
+    "description": "Success message when account is deleted"
+  },
+  "incorrectPassword": "Current password is incorrect",
+  "@incorrectPassword": {
+    "description": "Error message for incorrect password"
+  },
+  "passwordTooWeak": "Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character",
+  "@passwordTooWeak": {
+    "description": "Error message for weak password"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Error message when passwords don't match"
+  },
+  "nameRequired": "Name is required",
+  "@nameRequired": {
+    "description": "Validation message for required name"
+  },
+  "nameMinLength": "Name must have at least 2 characters",
+  "@nameMinLength": {
+    "description": "Validation message for name minimum length"
+  },
+  "currentPasswordRequired": "Current password is required",
+  "@currentPasswordRequired": {
+    "description": "Validation message for required current password"
+  },
+  "newPasswordRequired": "New password is required",
+  "@newPasswordRequired": {
+    "description": "Validation message for required new password"
+  },
+  "confirmPasswordRequired": "Password confirmation is required",
+  "@confirmPasswordRequired": {
+    "description": "Validation message for required password confirmation"
+  },
+  "updateName": "Update Name",
+  "@updateName": {
+    "description": "Label for update name button"
+  },
+  "updatePassword": "Update Password",
+  "@updatePassword": {
+    "description": "Label for update password button"
+  },
+  "deleteAccountAction": "Delete Account",
+  "@deleteAccountAction": {
+    "description": "Label for delete account button"
+  },
+  "profileUpdatedError": "Error updating profile",
+  "@profileUpdatedError": {
+    "description": "Error message when profile update fails"
+  },
+  "passwordUpdateError": "Error changing password",
+  "@passwordUpdateError": {
+    "description": "Error message when password update fails"
+  },
+  "accountDeleteError": "Error deleting account",
+  "@accountDeleteError": {
+    "description": "Error message when account deletion fails"
+  },
+  "reauthenticationRequired": "Identity confirmation is required for this action",
+  "@reauthenticationRequired": {
+    "description": "Error message when reauthentication is required"
   }
 }

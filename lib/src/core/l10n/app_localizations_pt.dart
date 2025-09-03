@@ -593,4 +593,94 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get storageError => 'Erro no armazenamento. Tente novamente.';
+
+  @override
+  String get editProfile => 'Editar Perfil';
+
+  @override
+  String get changeName => 'Alterar Nome';
+
+  @override
+  String get changePassword => 'Alterar Senha';
+
+  @override
+  String get deleteAccount => 'Excluir Conta';
+
+  @override
+  String get currentName => 'Nome Atual';
+
+  @override
+  String get newName => 'Novo Nome';
+
+  @override
+  String get nameUpdatedSuccess => 'Nome atualizado com sucesso!';
+
+  @override
+  String get currentPassword => 'Senha Atual';
+
+  @override
+  String get newPassword => 'Nova Senha';
+
+  @override
+  String get confirmNewPassword => 'Confirmar Nova Senha';
+
+  @override
+  String get passwordUpdatedSuccess => 'Senha alterada com sucesso!';
+
+  @override
+  String get deleteAccountConfirmation => 'Excluir Conta Permanentemente';
+
+  @override
+  String get deleteAccountWarning => 'Esta ação é irreversível!\n\nTodos os seus dados serão permanentemente excluídos:\n• Transações\n• Configurações\n• Histórico financeiro\n\nTem certeza que deseja continuar?';
+
+  @override
+  String get enterCurrentPasswordToDelete => 'Digite sua senha atual para confirmar a exclusão:';
+
+  @override
+  String get accountDeletedSuccess => 'Conta excluída com sucesso!';
+
+  @override
+  String get incorrectPassword => 'Senha atual incorreta';
+
+  @override
+  String get passwordTooWeak => 'A senha deve conter pelo menos 8 caracteres, incluindo: 1 letra maiúscula, 1 letra minúscula e 1 caractere especial';
+
+  @override
+  String get passwordsDoNotMatch => 'As senhas não coincidem';
+
+  @override
+  String get nameRequired => 'Nome é obrigatório';
+
+  @override
+  String get nameMinLength => 'Nome deve ter pelo menos 2 caracteres';
+
+  @override
+  String get currentPasswordRequired => 'Senha atual é obrigatória';
+
+  @override
+  String get newPasswordRequired => 'Nova senha é obrigatória';
+
+  @override
+  String get confirmPasswordRequired => 'Confirmação de senha é obrigatória';
+
+  @override
+  String get updateName => 'Atualizar Nome';
+
+  @override
+  String get updatePassword => 'Atualizar Senha';
+
+  @override
+  String get deleteAccountAction => 'Excluir Conta';
+
+  @override
+  String get profileUpdatedError => 'Erro ao atualizar perfil';
+
+  @override
+  String get passwordUpdateError => 'Erro ao alterar senha';
+
+  @override
+  String get accountDeleteError => 'Erro ao excluir conta';
+
+  @override
+  String get reauthenticationRequired => 'É necessário confirmar sua identidade para esta ação';
 }

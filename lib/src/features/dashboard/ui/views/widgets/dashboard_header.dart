@@ -52,10 +52,7 @@ class DashboardHeader extends ConsumerWidget {
                   _showLogoutConfirmation(context, ref);
                   break;
                 case 'profile':
-                  // TODO: Navegar para perfil
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(AppLocalizations.of(context)!.profileComingSoon)),
-                  );
+                  AppRoutes.goToProfile(context);
                   break;
                 case 'settings':
                   AppRoutes.goToSettings(context);
@@ -64,31 +61,31 @@ class DashboardHeader extends ConsumerWidget {
             },
             itemBuilder:
                 (context) => [
-                                        PopupMenuItem(
-                        value: 'profile',
-                        child: ListTile(
-                          leading: Icon(Icons.person_outline),
-                          title: Text(AppLocalizations.of(context)!.profile),
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                      ),
-                                        PopupMenuItem(
-                        value: 'settings',
-                        child: ListTile(
-                          leading: Icon(Icons.settings_outlined),
-                          title: Text(AppLocalizations.of(context)!.settings),
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                      ),
-                  const PopupMenuDivider(),
-                                      PopupMenuItem(
-                      value: 'logout',
-                      child: ListTile(
-                        leading: Icon(Icons.logout),
-                        title: Text(AppLocalizations.of(context)!.logout),
-                        contentPadding: EdgeInsets.zero,
-                      ),
+                  PopupMenuItem(
+                    value: 'profile',
+                    child: ListTile(
+                      leading: Icon(Icons.person_outline),
+                      title: Text(AppLocalizations.of(context)!.profile),
+                      contentPadding: EdgeInsets.zero,
                     ),
+                  ),
+                  PopupMenuItem(
+                    value: 'settings',
+                    child: ListTile(
+                      leading: Icon(Icons.settings_outlined),
+                      title: Text(AppLocalizations.of(context)!.settings),
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ),
+                  const PopupMenuDivider(),
+                  PopupMenuItem(
+                    value: 'logout',
+                    child: ListTile(
+                      leading: Icon(Icons.logout),
+                      title: Text(AppLocalizations.of(context)!.logout),
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ),
                 ],
           ),
         ],
@@ -113,7 +110,7 @@ class DashboardHeader extends ConsumerWidget {
       builder:
           (context) => AlertDialog(
             title: Text(AppLocalizations.of(context)!.confirmLogout),
-                          content: Text(AppLocalizations.of(context)!.confirmLogoutMessage),
+            content: Text(AppLocalizations.of(context)!.confirmLogoutMessage),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),

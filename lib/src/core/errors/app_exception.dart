@@ -96,6 +96,12 @@ class AppException implements Exception {
         debugMessage: debugMessage,
       );
 
+  factory AppException.reauthenticationRequired([String? debugMessage]) =>
+      AppException(
+        type: AppExceptionType.authenticationFailed,
+        debugMessage: debugMessage,
+      );
+
   factory AppException.networkError([String? debugMessage]) => AppException(
     type: AppExceptionType.networkError,
     debugMessage: debugMessage,

@@ -941,7 +941,7 @@ abstract class AppLocalizations {
   /// **'Back to Transactions'**
   String get backToTransactions;
 
-  /// Label for profile option
+  /// Label for profile screen
   ///
   /// In en, this message translates to:
   /// **'Profile'**
@@ -1258,6 +1258,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Storage error. Please try again.'**
   String get storageError;
+
+  /// Title for edit profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// Label for change name option
+  ///
+  /// In en, this message translates to:
+  /// **'Change Name'**
+  String get changeName;
+
+  /// Label for change password option
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// Label for delete account option
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// Label for current name field
+  ///
+  /// In en, this message translates to:
+  /// **'Current Name'**
+  String get currentName;
+
+  /// Label for new name field
+  ///
+  /// In en, this message translates to:
+  /// **'New Name'**
+  String get newName;
+
+  /// Success message when name is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Name updated successfully!'**
+  String get nameUpdatedSuccess;
+
+  /// Label for current password field
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get currentPassword;
+
+  /// Label for new password field
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// Label for confirm new password field
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get confirmNewPassword;
+
+  /// Success message when password is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully!'**
+  String get passwordUpdatedSuccess;
+
+  /// Title for delete account confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account Permanently'**
+  String get deleteAccountConfirmation;
+
+  /// Warning message for delete account dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This action is irreversible!\n\nAll your data will be permanently deleted:\n• Transactions\n• Settings\n• Financial history\n\nAre you sure you want to continue?'**
+  String get deleteAccountWarning;
+
+  /// Prompt for password confirmation in delete account dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current password to confirm deletion:'**
+  String get enterCurrentPasswordToDelete;
+
+  /// Success message when account is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Account deleted successfully!'**
+  String get accountDeletedSuccess;
+
+  /// Error message for incorrect password
+  ///
+  /// In en, this message translates to:
+  /// **'Current password is incorrect'**
+  String get incorrectPassword;
+
+  /// Error message for weak password
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character'**
+  String get passwordTooWeak;
+
+  /// Error message when passwords don't match
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Validation message for required name
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get nameRequired;
+
+  /// Validation message for name minimum length
+  ///
+  /// In en, this message translates to:
+  /// **'Name must have at least 2 characters'**
+  String get nameMinLength;
+
+  /// Validation message for required current password
+  ///
+  /// In en, this message translates to:
+  /// **'Current password is required'**
+  String get currentPasswordRequired;
+
+  /// Validation message for required new password
+  ///
+  /// In en, this message translates to:
+  /// **'New password is required'**
+  String get newPasswordRequired;
+
+  /// Validation message for required password confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Password confirmation is required'**
+  String get confirmPasswordRequired;
+
+  /// Label for update name button
+  ///
+  /// In en, this message translates to:
+  /// **'Update Name'**
+  String get updateName;
+
+  /// Label for update password button
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get updatePassword;
+
+  /// Label for delete account button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountAction;
+
+  /// Error message when profile update fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating profile'**
+  String get profileUpdatedError;
+
+  /// Error message when password update fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error changing password'**
+  String get passwordUpdateError;
+
+  /// Error message when account deletion fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting account'**
+  String get accountDeleteError;
+
+  /// Error message when reauthentication is required
+  ///
+  /// In en, this message translates to:
+  /// **'Identity confirmation is required for this action'**
+  String get reauthenticationRequired;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

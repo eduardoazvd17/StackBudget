@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/features/auth/data/datasources/datasources.dart';
+import 'package:stackbudget/src/features/auth/data/models/models.dart';
 import 'package:stackbudget/src/features/auth/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/settings_view_model.dart';
@@ -92,6 +93,12 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
   void clearError() {
     if (state is AuthErrorState) {
       state = const UnauthenticatedState();
+    }
+  }
+
+  void updateUserData(UserModel updatedUser) {
+    if (state is AuthenticatedState) {
+      state = AuthenticatedState(user: updatedUser);
     }
   }
 

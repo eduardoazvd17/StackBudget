@@ -34,6 +34,60 @@ class Validators {
     return null;
   }
 
+  /// Validador para senha segura (8+ chars, 1 maiúscula, 1 minúscula, 1 especial)
+  static String? securePassword(
+    String? value,
+    String? Function(String) errorMessage,
+  ) {
+    if (value == null || value.isEmpty) {
+      return 'Nova senha é obrigatória';
+    }
+    if (!isPasswordStrong(value)) {
+      return errorMessage('passwordTooWeak');
+    }
+    return null;
+  }
+
+  /// Validador para nome de perfil
+  static String? profileName(
+    String? value,
+    String? Function(String) errorMessage,
+  ) {
+    if (value == null || value.trim().isEmpty) {
+      return errorMessage('nameRequired');
+    }
+    if (value.trim().length < 2) {
+      return errorMessage('nameMinLength');
+    }
+    return null;
+  }
+
+  /// Validador para senha atual
+  static String? currentPassword(
+    String? value,
+    String? Function(String) errorMessage,
+  ) {
+    if (value == null || value.isEmpty) {
+      return errorMessage('currentPasswordRequired');
+    }
+    return null;
+  }
+
+  /// Validador para confirmação de senha segura
+  static String? confirmSecurePassword(
+    String? value,
+    String originalPassword,
+    String? Function(String) errorMessage,
+  ) {
+    if (value == null || value.isEmpty) {
+      return errorMessage('confirmPasswordRequired');
+    }
+    if (value != originalPassword) {
+      return errorMessage('passwordsDoNotMatch');
+    }
+    return null;
+  }
+
   /// Validador para confirmação de senha
   static String? confirmPassword(String? value, String originalPassword) {
     if (value == null || value.isEmpty) {

@@ -593,4 +593,94 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storageError => 'Storage error. Please try again.';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get changeName => 'Change Name';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get currentName => 'Current Name';
+
+  @override
+  String get newName => 'New Name';
+
+  @override
+  String get nameUpdatedSuccess => 'Name updated successfully!';
+
+  @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get confirmNewPassword => 'Confirm New Password';
+
+  @override
+  String get passwordUpdatedSuccess => 'Password changed successfully!';
+
+  @override
+  String get deleteAccountConfirmation => 'Delete Account Permanently';
+
+  @override
+  String get deleteAccountWarning => 'This action is irreversible!\n\nAll your data will be permanently deleted:\n• Transactions\n• Settings\n• Financial history\n\nAre you sure you want to continue?';
+
+  @override
+  String get enterCurrentPasswordToDelete => 'Enter your current password to confirm deletion:';
+
+  @override
+  String get accountDeletedSuccess => 'Account deleted successfully!';
+
+  @override
+  String get incorrectPassword => 'Current password is incorrect';
+
+  @override
+  String get passwordTooWeak => 'Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get nameRequired => 'Name is required';
+
+  @override
+  String get nameMinLength => 'Name must have at least 2 characters';
+
+  @override
+  String get currentPasswordRequired => 'Current password is required';
+
+  @override
+  String get newPasswordRequired => 'New password is required';
+
+  @override
+  String get confirmPasswordRequired => 'Password confirmation is required';
+
+  @override
+  String get updateName => 'Update Name';
+
+  @override
+  String get updatePassword => 'Update Password';
+
+  @override
+  String get deleteAccountAction => 'Delete Account';
+
+  @override
+  String get profileUpdatedError => 'Error updating profile';
+
+  @override
+  String get passwordUpdateError => 'Error changing password';
+
+  @override
+  String get accountDeleteError => 'Error deleting account';
+
+  @override
+  String get reauthenticationRequired => 'Identity confirmation is required for this action';
 }

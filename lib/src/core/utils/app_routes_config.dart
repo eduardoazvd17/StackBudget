@@ -24,8 +24,8 @@ class AppRoutesConfig {
   static const String transactionsPath = '/$transactions';
   static const String addTransactionPath = '/$transactions/$addTransaction';
   static const String settingsPath = '/$transactions/$settings';
+  static const String profilePath = '/$transactions/$profile';
   static const String budgetPath = '/$budget';
-  static const String profilePath = '/$profile';
   static const String reportsPath = '/$reports';
 }
 
@@ -36,7 +36,7 @@ class AppRoutesConfig {
 ///   - /transactions/:id - Detalhes de uma transação específica
 ///   - /transactions/add - Adicionar nova transação
 ///   - /transactions/:id/edit - Editar transação específica
+///   - /transactions/settings - Configurações do aplicativo
+///   - /transactions/profile - Perfil do usuário
 /// - /budget - Visualização do orçamento (futuro)
-/// - /profile - Perfil do usuário (futuro)
-/// - /settings - Configurações (futuro)
 /// - /reports - Relatórios (futuro)
