@@ -47,6 +47,7 @@ class AppTheme {
       bottomSheetTheme: _bottomSheetTheme(colorScheme),
       dialogTheme: _dialogTheme(colorScheme),
       popupMenuTheme: _popupMenuTheme(colorScheme),
+      switchTheme: _switchTheme(colorScheme),
     );
   }
 
@@ -174,6 +175,35 @@ class AppTheme {
       labelSmall: bodyTextTheme.labelSmall,
     );
     return textTheme;
+  }
+
+  SwitchThemeData _switchTheme(ColorScheme colorScheme) {
+    return SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return _disabledColor;
+        }
+        if (states.contains(WidgetState.selected)) {
+          return colorScheme.primary;
+        }
+        return colorScheme.outline;
+      }),
+      trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return _disabledColor.withValues(alpha: 0.3);
+        }
+        if (states.contains(WidgetState.selected)) {
+          return colorScheme.primary.withValues(alpha: 0.3);
+        }
+        return colorScheme.outline.withValues(alpha: 0.3);
+      }),
+      overlayColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return colorScheme.primary.withValues(alpha: 0.1);
+        }
+        return colorScheme.onSurface.withValues(alpha: 0.1);
+      }),
+    );
   }
 
   PopupMenuThemeData _popupMenuTheme(ColorScheme colorScheme) {
