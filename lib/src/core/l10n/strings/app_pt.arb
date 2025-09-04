@@ -47,6 +47,8 @@
   "cancel": "Cancelar",
   "editAction": "Editar",
   "deleteAction": "Excluir",
+  "edit": "Editar",
+  "delete": "Excluir",
   "deleteConfirmation": "Excluir Transação",
   "deleteConfirmationMessage": "Tem certeza que deseja excluir esta transação? Esta ação não pode ser desfeita.",
   "yes": "Sim",
@@ -223,5 +225,7 @@
   "profileUpdatedError": "Erro ao atualizar perfil",
   "passwordUpdateError": "Erro ao alterar senha",
   "accountDeleteError": "Erro ao excluir conta",
-  "reauthenticationRequired": "É necessário confirmar sua identidade para esta ação"
+  "reauthenticationRequired": "É necessário confirmar sua identidade para esta ação",
+  "dashboard": "Dashboard",
+  "appSubtitle": "Planejamento Financeiro Inteligente"
 }

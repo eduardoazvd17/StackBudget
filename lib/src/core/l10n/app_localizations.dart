@@ -1438,6 +1438,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Identity confirmation is required for this action'**
   String get reauthenticationRequired;
+
+  /// Label for dashboard screen
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboard;
+
+  /// App subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Financial Planning'**
+  String get appSubtitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

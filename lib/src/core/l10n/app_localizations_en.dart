@@ -683,4 +683,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reauthenticationRequired => 'Identity confirmation is required for this action';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get appSubtitle => 'Smart Financial Planning';
 }

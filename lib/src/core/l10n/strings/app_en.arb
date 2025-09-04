@@ -915,5 +915,13 @@
   "reauthenticationRequired": "Identity confirmation is required for this action",
   "@reauthenticationRequired": {
     "description": "Error message when reauthentication is required"
+  },
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Label for dashboard screen"
+  },
+  "appSubtitle": "Smart Financial Planning",
+  "@appSubtitle": {
+    "description": "App subtitle"
   }
 }

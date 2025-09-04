@@ -152,10 +152,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Editar';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Excluir';
 
   @override
   String get deleteConfirmation => 'Excluir Transação';
@@ -683,4 +683,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get reauthenticationRequired => 'É necessário confirmar sua identidade para esta ação';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get appSubtitle => 'Planejamento Financeiro Inteligente';
 }
