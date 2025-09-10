@@ -1,5 +1,5 @@
 import 'package:stackbudget/src/core/core.dart';
-import 'package:stackbudget/src/features/budget/data/models/models.dart';
+import 'package:stackbudget/src/features/dashboard/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 abstract class DashboardViewModelState {

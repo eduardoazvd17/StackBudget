@@ -1,5 +1,5 @@
 import 'package:stackbudget/src/core/enums/enums.dart';
-import 'package:stackbudget/src/features/budget/data/models/models.dart';
+import 'package:stackbudget/src/features/dashboard/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 class BudgetCalculationService {
@@ -127,8 +127,9 @@ class BudgetCalculationService {
             startDate.month + i,
             1,
           );
-          
-          if (installmentMonth.year == year && installmentMonth.month == month) {
+
+          if (installmentMonth.year == year &&
+              installmentMonth.month == month) {
             return true;
           }
         }
@@ -147,7 +148,7 @@ class BudgetCalculationService {
   ) {
     // Calcular valor padrão baseado no tipo de transação
     double defaultAmount = transaction.amount;
-    
+
     // Para transações parceladas, dividir o valor total pelo número de parcelas
     if (transaction.frequency == TransactionFrequencyEnum.installment &&
         transaction.totalInstallments != null &&
