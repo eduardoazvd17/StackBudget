@@ -11,7 +11,8 @@ class DashboardHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authViewModelProvider);
 
-    String userName = 'Usuário';
+    String userName = context.strings.defaultUserName;
+    String greetingMessage = _getGreetingMessage(context);
     if (authState is AuthenticatedState) {
       userName = authState.user.name;
     }
@@ -26,7 +27,7 @@ class DashboardHeader extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _getGreeting(),
+                  greetingMessage,
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: context.colorScheme.onSurface.withOpacity(0.7),
                   ),
@@ -65,7 +66,7 @@ class DashboardHeader extends ConsumerWidget {
                     value: 'profile',
                     child: ListTile(
                       leading: Icon(Icons.person_outline),
-                      title: Text(AppLocalizations.of(context)!.profile),
+                      title: Text(context.strings.profile),
                       contentPadding: EdgeInsets.zero,
                     ),
                   ),
@@ -73,7 +74,7 @@ class DashboardHeader extends ConsumerWidget {
                     value: 'settings',
                     child: ListTile(
                       leading: Icon(Icons.settings_outlined),
-                      title: Text(AppLocalizations.of(context)!.settings),
+                      title: Text(context.strings.settings),
                       contentPadding: EdgeInsets.zero,
                     ),
                   ),
@@ -82,7 +83,7 @@ class DashboardHeader extends ConsumerWidget {
                     value: 'logout',
                     child: ListTile(
                       leading: Icon(Icons.logout),
-                      title: Text(AppLocalizations.of(context)!.logout),
+                      title: Text(context.strings.logout),
                       contentPadding: EdgeInsets.zero,
                     ),
                   ),
@@ -93,14 +94,14 @@ class DashboardHeader extends ConsumerWidget {
     );
   }
 
-  String _getGreeting() {
+  String _getGreetingMessage(BuildContext context) {
     final hour = DateTime.now().hour;
     if (hour < 12) {
-      return 'Bom dia!';
+      return context.strings.goodMorning;
     } else if (hour < 18) {
-      return 'Boa tarde!';
+      return context.strings.goodAfternoon;
     } else {
-      return 'Boa noite!';
+      return context.strings.goodEvening;
     }
   }
 
@@ -109,12 +110,12 @@ class DashboardHeader extends ConsumerWidget {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text(AppLocalizations.of(context)!.confirmLogout),
-            content: Text(AppLocalizations.of(context)!.confirmLogoutMessage),
+            title: Text(context.strings.confirmLogout),
+            content: Text(context.strings.confirmLogoutMessage),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(AppLocalizations.of(context)!.cancel),
+                child: Text(context.strings.cancel),
               ),
               FilledButton(
                 onPressed: () async {
@@ -125,7 +126,7 @@ class DashboardHeader extends ConsumerWidget {
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
                 ),
-                child: Text(AppLocalizations.of(context)!.logout),
+                child: Text(context.strings.logout),
               ),
             ],
           ),

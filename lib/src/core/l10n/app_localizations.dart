@@ -1450,6 +1450,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Smart Financial Planning'**
   String get appSubtitle;
+
+  /// Default user name when no user is logged in
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get defaultUserName;
+
+  /// Morning greeting message
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning!'**
+  String get goodMorning;
+
+  /// Afternoon greeting message
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon!'**
+  String get goodAfternoon;
+
+  /// Evening greeting message
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening!'**
+  String get goodEvening;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

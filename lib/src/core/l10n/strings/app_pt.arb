@@ -227,5 +227,9 @@
   "accountDeleteError": "Erro ao excluir conta",
   "reauthenticationRequired": "É necessário confirmar sua identidade para esta ação",
   "dashboard": "Dashboard",
-  "appSubtitle": "Planejamento Financeiro Inteligente"
+  "appSubtitle": "Planejamento Financeiro Inteligente",
+  "defaultUserName": "Usuário",
+  "goodMorning": "Bom dia!",
+  "goodAfternoon": "Boa tarde!",
+  "goodEvening": "Boa noite!"
 }

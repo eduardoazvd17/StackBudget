@@ -689,4 +689,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get appSubtitle => 'Planejamento Financeiro Inteligente';
+
+  @override
+  String get defaultUserName => 'Usuário';
+
+  @override
+  String get goodMorning => 'Bom dia!';
+
+  @override
+  String get goodAfternoon => 'Boa tarde!';
+
+  @override
+  String get goodEvening => 'Boa noite!';
 }

@@ -923,5 +923,21 @@
   "appSubtitle": "Smart Financial Planning",
   "@appSubtitle": {
     "description": "App subtitle"
+  },
+  "defaultUserName": "User",
+  "@defaultUserName": {
+    "description": "Default user name when no user is logged in"
+  },
+  "goodMorning": "Good morning!",
+  "@goodMorning": {
+    "description": "Morning greeting message"
+  },
+  "goodAfternoon": "Good afternoon!",
+  "@goodAfternoon": {
+    "description": "Afternoon greeting message"
+  },
+  "goodEvening": "Good evening!",
+  "@goodEvening": {
+    "description": "Evening greeting message"
   }
 }
