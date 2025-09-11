@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stackbudget/src/core/l10n/app_localizations.dart';
+import 'package:stackbudget/src/core/core.dart';
 import '../../view_models/settings_view_model.dart';
 
 class ThemeSelector extends ConsumerWidget {
@@ -9,7 +9,6 @@ class ThemeSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider);
-    final l10n = AppLocalizations.of(context)!;
 
     final isDarkMode = themeMode == ThemeMode.dark;
     final isSystemMode = themeMode == ThemeMode.system;
@@ -20,13 +19,13 @@ class ThemeSelector extends ConsumerWidget {
         isDarkMode ? Icons.dark_mode : Icons.light_mode,
         color: Theme.of(context).colorScheme.primary,
       ),
-      title: Text(l10n.appearance),
+      title: Text(context.strings.appearance),
       subtitle: Text(
         isSystemMode
             ? 'Sistema'
             : isDarkMode
-            ? l10n.darkMode
-            : l10n.lightMode,
+            ? context.strings.darkMode
+            : context.strings.lightMode,
       ),
       trailing: Switch(
         value: isDarkMode,

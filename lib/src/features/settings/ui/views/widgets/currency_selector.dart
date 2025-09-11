@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stackbudget/src/core/l10n/app_localizations.dart';
+import 'package:stackbudget/src/core/core.dart';
 
 class CurrencySelector extends StatelessWidget {
   final String currentCurrency;
@@ -13,45 +13,43 @@ class CurrencySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       leading: Icon(
         Icons.attach_money,
         color: Theme.of(context).colorScheme.primary,
       ),
-      title: Text(l10n.currency),
-      subtitle: Text(_getCurrencyDisplayName(currentCurrency, l10n)),
+      title: Text(context.strings.currency),
+      subtitle: Text(_getCurrencyDisplayName(currentCurrency)),
       trailing: const Icon(Icons.arrow_forward_ios),
-      onTap: () => _showCurrencyDialog(context, l10n),
+      onTap: () => _showCurrencyDialog(context),
     );
   }
 
-  String _getCurrencyDisplayName(String currency, AppLocalizations l10n) {
+  String _getCurrencyDisplayName(String currency) {
     switch (currency) {
       case 'BRL':
-        return l10n.brazilianReal;
+        return 'Real Brasileiro';
       case 'USD':
-        return l10n.usDollar;
+        return 'Dolar Americano';
       case 'EUR':
-        return l10n.euro;
+        return 'Euro';
       default:
-        return l10n.brazilianReal;
+        return 'Real Brasileiro';
     }
   }
 
-  void _showCurrencyDialog(BuildContext context, AppLocalizations l10n) {
+  void _showCurrencyDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(l10n.currency),
+          title: Text('Moeda'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile<String>(
-                title: Text(l10n.brazilianReal),
+                title: Text('Real Brasileiro'),
                 value: 'BRL',
                 groupValue: currentCurrency,
                 onChanged: (value) {
@@ -62,7 +60,7 @@ class CurrencySelector extends StatelessWidget {
                 },
               ),
               RadioListTile<String>(
-                title: Text(l10n.usDollar),
+                title: Text('Dolar Americano'),
                 value: 'USD',
                 groupValue: currentCurrency,
                 onChanged: (value) {
@@ -73,7 +71,7 @@ class CurrencySelector extends StatelessWidget {
                 },
               ),
               RadioListTile<String>(
-                title: Text(l10n.euro),
+                title: Text('Euro'),
                 value: 'EUR',
                 groupValue: currentCurrency,
                 onChanged: (value) {
@@ -88,7 +86,7 @@ class CurrencySelector extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(l10n.cancel),
+              child: Text(context.strings.cancel),
             ),
           ],
         );

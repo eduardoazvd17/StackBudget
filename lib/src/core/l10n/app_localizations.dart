@@ -1474,6 +1474,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Good evening!'**
   String get goodEvening;
+
+  /// System theme option label
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get systemTheme;
+
+  /// Error message when loading transaction fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading transaction'**
+  String get errorLoadingTransaction;
+
+  /// Message when transaction is not found
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction not found'**
+  String get transactionNotFound;
+
+  /// Description explaining why transaction was not found
+  ///
+  /// In en, this message translates to:
+  /// **'The transaction may have been deleted or the ID is incorrect.'**
+  String get transactionNotFoundDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

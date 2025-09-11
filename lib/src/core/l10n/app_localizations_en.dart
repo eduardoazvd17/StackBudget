@@ -701,4 +701,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goodEvening => 'Good evening!';
+
+  @override
+  String get systemTheme => 'System';
+
+  @override
+  String get errorLoadingTransaction => 'Error loading transaction';
+
+  @override
+  String get transactionNotFound => 'Transaction not found';
+
+  @override
+  String get transactionNotFoundDescription => 'The transaction may have been deleted or the ID is incorrect.';
 }

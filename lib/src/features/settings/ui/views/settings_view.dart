@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stackbudget/src/core/l10n/app_localizations.dart';
+import 'package:stackbudget/src/core/core.dart';
 import '../view_models/settings_view_model.dart';
 import '../view_models/settings_view_model_state.dart';
 import 'widgets/currency_selector.dart';
@@ -26,25 +26,24 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(settingsViewModelProvider);
-    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.settings),
+        title: Text(context.strings.settings),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: _buildBody(state, l10n),
+      body: _buildBody(state),
     );
   }
 
-  Widget _buildBody(SettingsViewModelState state, AppLocalizations l10n) {
+  Widget _buildBody(SettingsViewModelState state) {
     if (state is SettingsInitialState || state is SettingsLoadingState) {
       return const Center(child: CircularProgressIndicator());
     } else if (state is SettingsLoadedState) {
-      return _buildSettingsList(state, l10n);
+      return _buildSettingsList(state);
     } else if (state is SettingsErrorState) {
       return Center(
         child: Column(
@@ -66,7 +65,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
               onPressed: () {
                 ref.read(settingsViewModelProvider.notifier).loadSettings();
               },
-              child: Text(l10n.retry),
+              child: Text(context.strings.retry),
             ),
           ],
         ),
@@ -76,17 +75,17 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
     return const SizedBox.shrink();
   }
 
-  Widget _buildSettingsList(SettingsLoadedState state, AppLocalizations l10n) {
+  Widget _buildSettingsList(SettingsLoadedState state) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _buildSection(
-          title: l10n.appearance,
+          title: context.strings.appearance,
           children: [const ThemeSelector()],
         ),
         const SizedBox(height: 24),
         _buildSection(
-          title: l10n.language,
+          title: context.strings.language,
           children: [
             LanguageSelector(
               currentLanguage: state.settings.language,
@@ -100,7 +99,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
         ),
         const SizedBox(height: 24),
         _buildSection(
-          title: l10n.currency,
+          title: context.strings.currency,
           children: [
             CurrencySelector(
               currentCurrency: state.settings.currency,

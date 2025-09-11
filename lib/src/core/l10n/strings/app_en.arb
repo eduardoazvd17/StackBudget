@@ -939,5 +939,21 @@
   "goodEvening": "Good evening!",
   "@goodEvening": {
     "description": "Evening greeting message"
+  },
+  "systemTheme": "System",
+  "@systemTheme": {
+    "description": "System theme option label"
+  },
+  "errorLoadingTransaction": "Error loading transaction",
+  "@errorLoadingTransaction": {
+    "description": "Error message when loading transaction fails"
+  },
+  "transactionNotFound": "Transaction not found",
+  "@transactionNotFound": {
+    "description": "Message when transaction is not found"
+  },
+  "transactionNotFoundDescription": "The transaction may have been deleted or the ID is incorrect.",
+  "@transactionNotFoundDescription": {
+    "description": "Description explaining why transaction was not found"
   }
 }

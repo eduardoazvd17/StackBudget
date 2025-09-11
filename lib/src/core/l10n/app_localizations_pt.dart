@@ -701,4 +701,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get goodEvening => 'Boa noite!';
+
+  @override
+  String get systemTheme => 'Sistema';
+
+  @override
+  String get errorLoadingTransaction => 'Erro ao carregar transação';
+
+  @override
+  String get transactionNotFound => 'Transação não encontrada';
+
+  @override
+  String get transactionNotFoundDescription => 'A transação pode ter sido excluída ou o ID está incorreto.';
 }

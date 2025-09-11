@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stackbudget/src/core/l10n/l10n.dart';
+import 'package:stackbudget/src/core/core.dart';
 
 enum AppExceptionType {
   // Auth Errors
@@ -61,7 +61,6 @@ enum AppExceptionType {
   storageError;
 
   String getTitle(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     switch (this) {
       // Auth Errors
       case AppExceptionType.userNotFound:
@@ -79,14 +78,14 @@ enum AppExceptionType {
       case AppExceptionType.signUpFailed:
       case AppExceptionType.signOutFailed:
       case AppExceptionType.getCurrentUserFailed:
-        return l10n.authErrorTitle;
+        return context.strings.authErrorTitle;
 
       // Network Errors
       case AppExceptionType.networkError:
       case AppExceptionType.connectionTimeout:
       case AppExceptionType.serverError:
       case AppExceptionType.noInternetConnection:
-        return l10n.networkErrorTitle;
+        return context.strings.networkErrorTitle;
 
       // Firebase Errors
       case AppExceptionType.firebaseError:
@@ -94,7 +93,7 @@ enum AppExceptionType {
       case AppExceptionType.permissionDenied:
       case AppExceptionType.documentNotFound:
       case AppExceptionType.collectionNotFound:
-        return l10n.databaseErrorTitle;
+        return context.strings.databaseErrorTitle;
 
       // Transaction Errors
       case AppExceptionType.transactionNotFound:
@@ -103,23 +102,23 @@ enum AppExceptionType {
       case AppExceptionType.transactionUpdateFailed:
       case AppExceptionType.transactionLoadFailed:
       case AppExceptionType.invalidTransactionData:
-        return l10n.transactionErrorTitle;
+        return context.strings.transactionErrorTitle;
 
       // Budget Errors
       case AppExceptionType.budgetCalculationFailed:
       case AppExceptionType.budgetDataInvalid:
-        return l10n.budgetErrorTitle;
+        return context.strings.budgetErrorTitle;
 
       // Settings Errors
       case AppExceptionType.settingsSaveFailed:
       case AppExceptionType.settingsLoadFailed:
-        return l10n.settingsErrorTitle;
+        return context.strings.settingsErrorTitle;
 
       // Validation Errors
       case AppExceptionType.validationError:
       case AppExceptionType.invalidData:
       case AppExceptionType.requiredFieldMissing:
-        return l10n.validationErrorTitle;
+        return context.strings.validationErrorTitle;
 
       // General Errors
       case AppExceptionType.unexpectedError:
@@ -127,112 +126,111 @@ enum AppExceptionType {
       case AppExceptionType.dataParsingError:
       case AppExceptionType.cacheError:
       case AppExceptionType.storageError:
-        return l10n.generalErrorTitle;
+        return context.strings.generalErrorTitle;
     }
   }
 
   String getMessage(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     switch (this) {
       // Auth Errors
       case AppExceptionType.userNotFound:
-        return l10n.userNotFoundError;
+        return context.strings.userNotFoundError;
       case AppExceptionType.wrongPassword:
-        return l10n.wrongPasswordError;
+        return context.strings.wrongPasswordError;
       case AppExceptionType.emailAlreadyInUse:
-        return l10n.emailAlreadyInUseError;
+        return context.strings.emailAlreadyInUseError;
       case AppExceptionType.weakPassword:
-        return l10n.weakPasswordError;
+        return context.strings.weakPasswordError;
       case AppExceptionType.invalidEmail:
-        return l10n.invalidEmailError;
+        return context.strings.invalidEmailError;
       case AppExceptionType.userDisabled:
-        return l10n.userDisabledError;
+        return context.strings.userDisabledError;
       case AppExceptionType.tooManyRequests:
-        return l10n.tooManyRequestsError;
+        return context.strings.tooManyRequestsError;
       case AppExceptionType.operationNotAllowed:
-        return l10n.operationNotAllowedError;
+        return context.strings.operationNotAllowedError;
       case AppExceptionType.invalidCredential:
-        return l10n.invalidCredentialError;
+        return context.strings.invalidCredentialError;
       case AppExceptionType.authenticationFailed:
-        return l10n.authenticationFailedError;
+        return context.strings.authenticationFailedError;
       case AppExceptionType.userDataNotFound:
-        return l10n.userDataNotFoundError;
+        return context.strings.userDataNotFoundError;
       case AppExceptionType.userNotAuthenticated:
-        return l10n.userNotAuthenticated;
+        return context.strings.userNotAuthenticated;
       case AppExceptionType.signUpFailed:
-        return l10n.signUpFailedError;
+        return context.strings.signUpFailedError;
       case AppExceptionType.signOutFailed:
-        return l10n.signOutFailedError;
+        return context.strings.signOutFailedError;
       case AppExceptionType.getCurrentUserFailed:
-        return l10n.getCurrentUserFailedError;
+        return context.strings.getCurrentUserFailedError;
 
       // Network Errors
       case AppExceptionType.networkError:
-        return l10n.networkError;
+        return context.strings.networkError;
       case AppExceptionType.connectionTimeout:
-        return l10n.connectionTimeoutError;
+        return context.strings.connectionTimeoutError;
       case AppExceptionType.serverError:
-        return l10n.serverError;
+        return context.strings.serverError;
       case AppExceptionType.noInternetConnection:
-        return l10n.noInternetConnectionError;
+        return context.strings.noInternetConnectionError;
 
       // Firebase Errors
       case AppExceptionType.firebaseError:
-        return l10n.firebaseError;
+        return context.strings.firebaseError;
       case AppExceptionType.firestoreError:
-        return l10n.firestoreError;
+        return context.strings.firestoreError;
       case AppExceptionType.permissionDenied:
-        return l10n.permissionDeniedError;
+        return context.strings.permissionDeniedError;
       case AppExceptionType.documentNotFound:
-        return l10n.documentNotFoundError;
+        return context.strings.documentNotFoundError;
       case AppExceptionType.collectionNotFound:
-        return l10n.collectionNotFoundError;
+        return context.strings.collectionNotFoundError;
 
       // Transaction Errors
       case AppExceptionType.transactionNotFound:
-        return l10n.transactionNotFoundError;
+        return context.strings.transactionNotFoundError;
       case AppExceptionType.transactionSaveFailed:
-        return l10n.transactionSaveFailedError;
+        return context.strings.transactionSaveFailedError;
       case AppExceptionType.transactionDeleteFailed:
-        return l10n.transactionDeleteFailedError;
+        return context.strings.transactionDeleteFailedError;
       case AppExceptionType.transactionUpdateFailed:
-        return l10n.transactionUpdateFailedError;
+        return context.strings.transactionUpdateFailedError;
       case AppExceptionType.transactionLoadFailed:
-        return l10n.transactionLoadFailedError;
+        return context.strings.transactionLoadFailedError;
       case AppExceptionType.invalidTransactionData:
-        return l10n.invalidTransactionDataError;
+        return context.strings.invalidTransactionDataError;
 
       // Budget Errors
       case AppExceptionType.budgetCalculationFailed:
-        return l10n.budgetCalculationFailedError;
+        return context.strings.budgetCalculationFailedError;
       case AppExceptionType.budgetDataInvalid:
-        return l10n.budgetDataInvalidError;
+        return context.strings.budgetDataInvalidError;
 
       // Settings Errors
       case AppExceptionType.settingsSaveFailed:
-        return l10n.settingsSaveFailedError;
+        return context.strings.settingsSaveFailedError;
       case AppExceptionType.settingsLoadFailed:
-        return l10n.settingsLoadFailedError;
+        return context.strings.settingsLoadFailedError;
 
       // Validation Errors
       case AppExceptionType.validationError:
-        return l10n.validationError;
+        return context.strings.validationError;
       case AppExceptionType.invalidData:
-        return l10n.invalidDataError;
+        return context.strings.invalidDataError;
       case AppExceptionType.requiredFieldMissing:
-        return l10n.requiredFieldMissingError;
+        return context.strings.requiredFieldMissingError;
 
       // General Errors
       case AppExceptionType.unexpectedError:
-        return l10n.unexpectedError;
+        return context.strings.unexpectedError;
       case AppExceptionType.unknownError:
-        return l10n.unknownError;
+        return context.strings.unknownError;
       case AppExceptionType.dataParsingError:
-        return l10n.dataParsingError;
+        return context.strings.dataParsingError;
       case AppExceptionType.cacheError:
-        return l10n.cacheError;
+        return context.strings.cacheError;
       case AppExceptionType.storageError:
-        return l10n.storageError;
+        return context.strings.storageError;
     }
   }
 }

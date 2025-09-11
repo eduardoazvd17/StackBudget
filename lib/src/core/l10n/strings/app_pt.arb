@@ -231,5 +231,9 @@
   "defaultUserName": "Usuário",
   "goodMorning": "Bom dia!",
   "goodAfternoon": "Boa tarde!",
-  "goodEvening": "Boa noite!"
+  "goodEvening": "Boa noite!",
+  "systemTheme": "Sistema",
+  "errorLoadingTransaction": "Erro ao carregar transação",
+  "transactionNotFound": "Transação não encontrada",
+  "transactionNotFoundDescription": "A transação pode ter sido excluída ou o ID está incorreto."
 }

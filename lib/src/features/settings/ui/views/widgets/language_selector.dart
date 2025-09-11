@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stackbudget/src/core/l10n/app_localizations.dart';
+import 'package:stackbudget/src/core/core.dart';
 
 class LanguageSelector extends StatelessWidget {
   final String currentLanguage;
@@ -13,34 +13,30 @@ class LanguageSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       leading: Icon(
         Icons.language,
         color: Theme.of(context).colorScheme.primary,
       ),
-      title: Text(l10n.language),
-      subtitle: Text(
-        currentLanguage == 'pt' ? l10n.portuguese : l10n.english,
-      ),
+      title: Text(context.strings.language),
+      subtitle: Text(currentLanguage == 'pt' ? 'Português' : 'English'),
       trailing: const Icon(Icons.arrow_forward_ios),
-      onTap: () => _showLanguageDialog(context, l10n),
+      onTap: () => _showLanguageDialog(context),
     );
   }
 
-  void _showLanguageDialog(BuildContext context, AppLocalizations l10n) {
+  void _showLanguageDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(l10n.language),
+          title: Text('Idioma'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile<String>(
-                title: Text(l10n.portuguese),
+                title: Text('Português'),
                 value: 'pt',
                 groupValue: currentLanguage,
                 onChanged: (value) {
@@ -51,7 +47,7 @@ class LanguageSelector extends StatelessWidget {
                 },
               ),
               RadioListTile<String>(
-                title: Text(l10n.english),
+                title: Text('English'),
                 value: 'en',
                 groupValue: currentLanguage,
                 onChanged: (value) {
@@ -66,7 +62,7 @@ class LanguageSelector extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(l10n.cancel),
+              child: Text(context.strings.cancel),
             ),
           ],
         );

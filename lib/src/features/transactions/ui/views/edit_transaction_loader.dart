@@ -19,14 +19,14 @@ class EditTransactionLoader extends ConsumerWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
-            appBar: AppBar(title: Text(AppLocalizations.of(context)!.loading)),
+            appBar: AppBar(title: Text(context.strings.loading)),
             body: const Center(child: CircularProgressIndicator()),
           );
         }
 
         if (snapshot.hasError) {
           return Scaffold(
-            appBar: AppBar(title: Text(AppLocalizations.of(context)!.error)),
+            appBar: AppBar(title: Text(context.strings.error)),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +50,7 @@ class EditTransactionLoader extends ConsumerWidget {
                   const SizedBox(height: Spacing.lg),
                   ElevatedButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(AppLocalizations.of(context)!.back),
+                    child: Text(context.strings.back),
                   ),
                 ],
               ),
@@ -61,7 +61,7 @@ class EditTransactionLoader extends ConsumerWidget {
         final transaction = snapshot.data;
         if (transaction == null) {
           return Scaffold(
-            appBar: AppBar(title: Text(AppLocalizations.of(context)!.notFound)),
+            appBar: AppBar(title: Text(context.strings.notFound)),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +85,7 @@ class EditTransactionLoader extends ConsumerWidget {
                   const SizedBox(height: Spacing.lg),
                   ElevatedButton(
                     onPressed: () => AppRoutes.goToTransactions(context),
-                    child: Text(AppLocalizations.of(context)!.backToTransactions),
+                    child: Text(context.strings.backToTransactions),
                   ),
                 ],
               ),
