@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/datasources/datasources.dart';
 import '../../data/repositories/repositories.dart';
@@ -69,3 +70,52 @@ final settingsViewModelProvider =
     StateNotifierProvider<SettingsViewModel, SettingsViewModelState>(
       (ref) => SettingsViewModel(ref.watch(settingsRepositoryProvider)),
     );
+
+// Provider dedicado para o tema
+final themeModeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((
+  ref,
+) {
+  final notifier = ThemeNotifier(ref);
+  // Carregar configurações iniciais
+  ref.listen(settingsViewModelProvider, (previous, next) {
+    if (next is SettingsLoadedState) {
+      notifier.updateThemeMode(next.settings.isDarkMode);
+    }
+  });
+  return notifier;
+});
+
+class ThemeNotifier extends StateNotifier<ThemeMode> {
+  final Ref _ref;
+
+  ThemeNotifier(this._ref) : super(ThemeMode.system) {
+    _loadInitialTheme();
+  }
+
+  Future<void> _loadInitialTheme() async {
+    try {
+      final settings =
+          await _ref.read(settingsRepositoryProvider).getSettings();
+      updateThemeMode(settings.isDarkMode);
+    } catch (e) {
+      // Mantém o tema padrão em caso de erro
+      state = ThemeMode.system;
+    }
+  }
+
+  void updateThemeMode(bool isDarkMode) {
+    state = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  }
+
+  void toggleTheme() {
+    if (state == ThemeMode.light) {
+      state = ThemeMode.dark;
+    } else if (state == ThemeMode.dark) {
+      state = ThemeMode.light;
+    }
+    // Se estiver no modo system, alterna para dark
+    else {
+      state = ThemeMode.dark;
+    }
+  }
+}

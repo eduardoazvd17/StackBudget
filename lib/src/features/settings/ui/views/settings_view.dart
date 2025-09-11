@@ -42,9 +42,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
 
   Widget _buildBody(SettingsViewModelState state, AppLocalizations l10n) {
     if (state is SettingsInitialState || state is SettingsLoadingState) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const Center(child: CircularProgressIndicator());
     } else if (state is SettingsLoadedState) {
       return _buildSettingsList(state, l10n);
     } else if (state is SettingsErrorState) {
@@ -74,7 +72,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
         ),
       );
     }
-    
+
     return const SizedBox.shrink();
   }
 
@@ -84,14 +82,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
       children: [
         _buildSection(
           title: l10n.appearance,
-          children: [
-            ThemeSelector(
-              isDarkMode: state.settings.isDarkMode,
-              onChanged: (isDarkMode) {
-                ref.read(settingsViewModelProvider.notifier).updateTheme(isDarkMode);
-              },
-            ),
-          ],
+          children: [const ThemeSelector()],
         ),
         const SizedBox(height: 24),
         _buildSection(
@@ -100,7 +91,9 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
             LanguageSelector(
               currentLanguage: state.settings.language,
               onChanged: (language) {
-                ref.read(settingsViewModelProvider.notifier).updateLanguage(language);
+                ref
+                    .read(settingsViewModelProvider.notifier)
+                    .updateLanguage(language);
               },
             ),
           ],
@@ -112,7 +105,9 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
             CurrencySelector(
               currentCurrency: state.settings.currency,
               onChanged: (currency) {
-                ref.read(settingsViewModelProvider.notifier).updateCurrency(currency);
+                ref
+                    .read(settingsViewModelProvider.notifier)
+                    .updateCurrency(currency);
               },
             ),
           ],
@@ -131,16 +126,12 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
         Text(
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-        ),
-        const SizedBox(height: 12),
-        Card(
-          child: Column(
-            children: children,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
+        const SizedBox(height: 12),
+        Card(child: Column(children: children)),
       ],
     );
   }

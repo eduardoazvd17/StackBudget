@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../extensions/context_extension.dart';
 
 import '../utils/borders.dart';
 import '../utils/spacing.dart';
@@ -11,14 +10,21 @@ class AppTheme {
   late final EdgeInsets _buttonsPadding;
   late final Color _disabledColor;
 
-  AppTheme(BuildContext context) {
+  AppTheme({required bool isDarkMode}) {
     materialAppColor =
-        context.isDarkMode
+        isDarkMode
             ? AppTheme.darkScheme().surface
             : AppTheme.lightScheme().surface;
-    _textTheme = _buildTextTheme(context);
+    _textTheme = _buildTextTheme(isDarkMode);
     _buttonsPadding = const EdgeInsets.symmetric(vertical: 17, horizontal: 20);
     _disabledColor = Colors.grey;
+  }
+
+  // Método factory para compatibilidade com código existente
+  factory AppTheme.fromContext(BuildContext context) {
+    final isDarkMode =
+        MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    return AppTheme(isDarkMode: isDarkMode);
   }
 
   ThemeData light() => theme(lightScheme());
@@ -153,11 +159,14 @@ class AppTheme {
     );
   }
 
-  static TextTheme _buildTextTheme(BuildContext context) {
+  static TextTheme _buildTextTheme(bool isDarkMode) {
     const String displayFontString = 'Alatsi';
     const String bodyFontString = 'Lato';
 
-    final TextTheme baseTextTheme = context.textTheme;
+    // Criar um tema base baseado no modo
+    final baseTextTheme =
+        isDarkMode ? ThemeData.dark().textTheme : ThemeData.light().textTheme;
+
     final TextTheme bodyTextTheme = GoogleFonts.getTextTheme(
       bodyFontString,
       baseTextTheme,

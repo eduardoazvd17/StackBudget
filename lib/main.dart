@@ -10,20 +10,27 @@ import 'package:stackbudget/src/features/settings/ui/view_models/locale_provider
 
 import 'package:stackbudget/src/features/settings/data/datasources/datasources.dart';
 
+// Providers globais para os temas
+final lightThemeProvider = Provider<ThemeData>((ref) {
+  return AppTheme(isDarkMode: false).light();
+});
+
+final darkThemeProvider = Provider<ThemeData>((ref) {
+  return AppTheme(isDarkMode: true).dark();
+});
+
 void main() async {
   AppRoutes.setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  
+
   // Inicializar SharedPreferences
   final prefs = await SharedPreferences.getInstance();
-  
+
   runApp(
     ProviderScope(
       overrides: [
-        settingsDataSourceProvider.overrideWithValue(
-          SettingsDataSource(prefs),
-        ),
+        settingsDataSourceProvider.overrideWithValue(SettingsDataSource(prefs)),
       ],
       child: const MyApp(),
     ),
@@ -36,7 +43,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingsState = ref.watch(settingsViewModelProvider);
-    
+
     // Carregar configurações na inicialização
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (settingsState is SettingsInitialState) {
@@ -44,18 +51,16 @@ class MyApp extends ConsumerWidget {
       }
     });
 
-    // Determinar o tema baseado nas configurações
-    ThemeMode themeMode = ThemeMode.system;
-    if (settingsState is SettingsLoadedState) {
-      themeMode = settingsState.settings.isDarkMode ? ThemeMode.dark : ThemeMode.light;
-    }
-
+    // Usar o provider dedicado para o tema
+    final themeMode = ref.watch(themeModeProvider);
+    final lightTheme = ref.watch(lightThemeProvider);
+    final darkTheme = ref.watch(darkThemeProvider);
     final currentLocale = ref.watch(localeProvider);
-    
+
     return MaterialApp.router(
       title: 'StackBudget',
-      theme: AppTheme(context).light(),
-      darkTheme: AppTheme(context).dark(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       themeMode: themeMode,
       locale: currentLocale,
       scrollBehavior: CustomScrollBehavior(),
