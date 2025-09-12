@@ -233,7 +233,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get currentValue => 'Valor Atual';
 
   @override
-  String get defaultValue => 'Valor Padrão';
+  String get defaultValue => 'Valor padrão';
 
   @override
   String get notes => 'Observações';
@@ -290,7 +290,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get selectFirstInstallmentMonth => 'Selecione o mês da primeira parcela';
 
   @override
-  String get installmentValue => 'Valor por parcela';
+  String get installmentValue => 'Valor da parcela';
 
   @override
   String get installmentValueForm => 'Valor por parcela';
@@ -856,7 +856,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get monthApril => 'Abril';
 
   @override
-  String get monthMay => 'Maio';
+  String get monthMay => 'Mai';
 
   @override
   String get monthJune => 'Junho';
@@ -908,4 +908,76 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get actionCannotBeUndone => 'Esta ação não pode ser desfeita';
+
+  @override
+  String get startMonth => 'Mês de Início';
+
+  @override
+  String get endMonth => 'Mês de Fim';
+
+  @override
+  String get totalInstallments => 'Total de Parcelas';
+
+  @override
+  String get yearlyMonth => 'Mês do Ano';
+
+  @override
+  String get totalValue => 'Valor total';
+
+  @override
+  String get adjustedValue => 'Valor ajustado para';
+
+  @override
+  String get defaultInstallmentValue => 'Valor padrão da parcela';
+
+  @override
+  String get period => 'Período';
+
+  @override
+  String get previousMonth => 'Mês anterior';
+
+  @override
+  String get nextMonth => 'Próximo mês';
+
+  @override
+  String get selectDate => 'Selecionar data';
+
+  @override
+  String get monthJan => 'Jan';
+
+  @override
+  String get monthFeb => 'Fev';
+
+  @override
+  String get monthMar => 'Mar';
+
+  @override
+  String get monthApr => 'Abr';
+
+  @override
+  String get monthJun => 'Jun';
+
+  @override
+  String get monthJul => 'Jul';
+
+  @override
+  String get monthAug => 'Ago';
+
+  @override
+  String get monthSep => 'Set';
+
+  @override
+  String get monthOct => 'Out';
+
+  @override
+  String get monthNov => 'Nov';
+
+  @override
+  String get monthDec => 'Dez';
+
+  @override
+  String get appName => 'StackBudget';
+
+  @override
+  String get appDescription => 'Seu planejamento financeiro inteligente';
 }

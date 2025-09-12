@@ -23,7 +23,7 @@ class MonthYearFilter extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Período',
+                    context.strings.period,
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colorScheme.onSurface.withValues(
                         alpha: 0.7,
@@ -32,7 +32,7 @@ class MonthYearFilter extends ConsumerWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    _formatMonthYear(selectedDate),
+                    _formatMonthYear(selectedDate, context),
                     style: context.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -49,18 +49,18 @@ class MonthYearFilter extends ConsumerWidget {
                           ? () => _previousMonth(ref)
                           : null,
                   icon: const Icon(Icons.chevron_left),
-                  tooltip: 'Mês anterior',
+                  tooltip: context.strings.previousMonth,
                 ),
                 IconButton(
                   onPressed:
                       _canNavigateToNext(ref) ? () => _nextMonth(ref) : null,
                   icon: const Icon(Icons.chevron_right),
-                  tooltip: 'Próximo mês',
+                  tooltip: context.strings.nextMonth,
                 ),
                 IconButton(
                   onPressed: () => _showDatePicker(context, ref),
                   icon: const Icon(Icons.date_range),
-                  tooltip: 'Selecionar data',
+                  tooltip: context.strings.selectDate,
                 ),
               ],
             ),
@@ -145,21 +145,39 @@ class MonthYearFilter extends ConsumerWidget {
     return !nextMonth.isAfter(lastAllowedDate);
   }
 
-  String _formatMonthYear(DateTime date) {
-    const months = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-    return '${months[date.month - 1]} ${date.year}';
+  String _formatMonthYear(DateTime date, BuildContext context) {
+    final monthName = _getMonthName(date.month, context);
+    return '$monthName ${date.year}';
+  }
+
+  String _getMonthName(int month, BuildContext context) {
+    switch (month) {
+      case 1:
+        return context.strings.monthJanuary;
+      case 2:
+        return context.strings.monthFebruary;
+      case 3:
+        return context.strings.monthMarch;
+      case 4:
+        return context.strings.monthApril;
+      case 5:
+        return context.strings.monthMay;
+      case 6:
+        return context.strings.monthJune;
+      case 7:
+        return context.strings.monthJuly;
+      case 8:
+        return context.strings.monthAugust;
+      case 9:
+        return context.strings.monthSeptember;
+      case 10:
+        return context.strings.monthOctober;
+      case 11:
+        return context.strings.monthNovember;
+      case 12:
+        return context.strings.monthDecember;
+      default:
+        return '';
+    }
   }
 }

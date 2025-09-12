@@ -34,7 +34,7 @@ class AuthView extends ConsumerWidget {
                   ),
                   const SizedBox(height: Spacing.md),
                   Text(
-                    'StackBudget',
+                    context.strings.appName,
                     style: context.textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: context.colorScheme.primary,
@@ -42,7 +42,7 @@ class AuthView extends ConsumerWidget {
                   ),
                   const SizedBox(height: Spacing.xs),
                   Text(
-                    'Seu planejamento financeiro inteligente',
+                    context.strings.appDescription,
                     style: context.textTheme.bodyMedium?.copyWith(
                       color: context.colorScheme.onSurface.withValues(
                         alpha: 0.7,

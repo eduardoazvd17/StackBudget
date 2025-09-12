@@ -542,7 +542,7 @@ abstract class AppLocalizations {
   /// No description provided for @defaultValue.
   ///
   /// In en, this message translates to:
-  /// **'Default Value'**
+  /// **'Default value'**
   String get defaultValue;
 
   /// No description provided for @notes.
@@ -1888,6 +1888,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This action cannot be undone'**
   String get actionCannotBeUndone;
+
+  /// No description provided for @startMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Month'**
+  String get startMonth;
+
+  /// No description provided for @endMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'End Month'**
+  String get endMonth;
+
+  /// No description provided for @totalInstallments.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Installments'**
+  String get totalInstallments;
+
+  /// No description provided for @yearlyMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly Month'**
+  String get yearlyMonth;
+
+  /// No description provided for @totalValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Total value'**
+  String get totalValue;
+
+  /// No description provided for @adjustedValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjusted value for'**
+  String get adjustedValue;
+
+  /// No description provided for @defaultInstallmentValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Default installment value'**
+  String get defaultInstallmentValue;
+
+  /// No description provided for @period.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get period;
+
+  /// No description provided for @previousMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get previousMonth;
+
+  /// No description provided for @nextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get nextMonth;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get selectDate;
+
+  /// No description provided for @monthJan.
+  ///
+  /// In en, this message translates to:
+  /// **'Jan'**
+  String get monthJan;
+
+  /// No description provided for @monthFeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Feb'**
+  String get monthFeb;
+
+  /// No description provided for @monthMar.
+  ///
+  /// In en, this message translates to:
+  /// **'Mar'**
+  String get monthMar;
+
+  /// No description provided for @monthApr.
+  ///
+  /// In en, this message translates to:
+  /// **'Apr'**
+  String get monthApr;
+
+  /// No description provided for @monthJun.
+  ///
+  /// In en, this message translates to:
+  /// **'Jun'**
+  String get monthJun;
+
+  /// No description provided for @monthJul.
+  ///
+  /// In en, this message translates to:
+  /// **'Jul'**
+  String get monthJul;
+
+  /// No description provided for @monthAug.
+  ///
+  /// In en, this message translates to:
+  /// **'Aug'**
+  String get monthAug;
+
+  /// No description provided for @monthSep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sep'**
+  String get monthSep;
+
+  /// No description provided for @monthOct.
+  ///
+  /// In en, this message translates to:
+  /// **'Oct'**
+  String get monthOct;
+
+  /// No description provided for @monthNov.
+  ///
+  /// In en, this message translates to:
+  /// **'Nov'**
+  String get monthNov;
+
+  /// No description provided for @monthDec.
+  ///
+  /// In en, this message translates to:
+  /// **'Dec'**
+  String get monthDec;
+
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'StackBudget'**
+  String get appName;
+
+  /// No description provided for @appDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your smart financial planning'**
+  String get appDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

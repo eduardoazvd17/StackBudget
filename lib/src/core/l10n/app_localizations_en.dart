@@ -233,7 +233,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get currentValue => 'Current Value';
 
   @override
-  String get defaultValue => 'Default Value';
+  String get defaultValue => 'Default value';
 
   @override
   String get notes => 'Notes';
@@ -908,4 +908,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionCannotBeUndone => 'This action cannot be undone';
+
+  @override
+  String get startMonth => 'Start Month';
+
+  @override
+  String get endMonth => 'End Month';
+
+  @override
+  String get totalInstallments => 'Total Installments';
+
+  @override
+  String get yearlyMonth => 'Yearly Month';
+
+  @override
+  String get totalValue => 'Total value';
+
+  @override
+  String get adjustedValue => 'Adjusted value for';
+
+  @override
+  String get defaultInstallmentValue => 'Default installment value';
+
+  @override
+  String get period => 'Period';
+
+  @override
+  String get previousMonth => 'Previous month';
+
+  @override
+  String get nextMonth => 'Next month';
+
+  @override
+  String get selectDate => 'Select date';
+
+  @override
+  String get monthJan => 'Jan';
+
+  @override
+  String get monthFeb => 'Feb';
+
+  @override
+  String get monthMar => 'Mar';
+
+  @override
+  String get monthApr => 'Apr';
+
+  @override
+  String get monthJun => 'Jun';
+
+  @override
+  String get monthJul => 'Jul';
+
+  @override
+  String get monthAug => 'Aug';
+
+  @override
+  String get monthSep => 'Sep';
+
+  @override
+  String get monthOct => 'Oct';
+
+  @override
+  String get monthNov => 'Nov';
+
+  @override
+  String get monthDec => 'Dec';
+
+  @override
+  String get appName => 'StackBudget';
+
+  @override
+  String get appDescription => 'Your smart financial planning';
 }

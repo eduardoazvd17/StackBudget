@@ -184,7 +184,7 @@ class _ExpandableTransactionsSectionState
                   Padding(
                     padding: const EdgeInsets.all(Spacing.lg),
                     child: Text(
-                      'Nenhuma transação encontrada',
+                      context.strings.noTransactionsFound,
                       style: context.textTheme.bodyMedium?.copyWith(
                         color: context.colorScheme.onSurface.withValues(
                           alpha: 0.5,

@@ -266,16 +266,16 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     switch (widget.transaction.frequency) {
       case TransactionFrequencyEnum.monthly:
         return [
-          _buildDetailSection('Informações Mensais', [
+          _buildDetailSection(context.strings.monthlyInformation, [
             if (widget.transaction.startDate != null)
               _buildDetailItem(
-                'Mês de Início',
+                context.strings.startMonth,
                 _formatMonthYear(widget.transaction.startDate!),
                 Icons.play_arrow,
               ),
             if (widget.transaction.endDate != null)
               _buildDetailItem(
-                'Mês de Fim',
+                context.strings.endMonth,
                 _formatMonthYear(widget.transaction.endDate!),
                 Icons.stop,
               ),
@@ -284,22 +284,22 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
 
       case TransactionFrequencyEnum.installment:
         return [
-          _buildDetailSection('Informações de Parcelamento', [
+          _buildDetailSection(context.strings.installmentInformation, [
             if (widget.transaction.totalInstallments != null)
               _buildDetailItem(
-                'Total de Parcelas',
+                context.strings.totalInstallments,
                 '${widget.transaction.totalInstallments}x',
                 Icons.format_list_numbered,
               ),
             if (widget.transaction.totalInstallments != null)
               _buildDetailItem(
-                'Parcela Atual',
+                context.strings.currentInstallment,
                 '${_getCurrentInstallmentNumber()}/${widget.transaction.totalInstallments}',
                 Icons.timeline,
               ),
             if (widget.transaction.startDate != null)
               _buildDetailItem(
-                'Mês da 1ª Parcela',
+                context.strings.firstInstallmentMonth,
                 _formatMonthYear(widget.transaction.startDate!),
                 Icons.calendar_today,
               ),
@@ -308,10 +308,10 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
 
       case TransactionFrequencyEnum.yearly:
         return [
-          _buildDetailSection('Informações Anuais', [
+          _buildDetailSection(context.strings.yearlyInformation, [
             if (widget.transaction.yearlyMonth != null)
               _buildDetailItem(
-                'Mês do Ano',
+                context.strings.yearlyMonth,
                 _getMonthDisplayName(widget.transaction.yearlyMonth!),
                 Icons.calendar_month,
               ),
@@ -327,8 +327,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Tags',
+        Text(
+          context.strings.tags,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: Spacing.sm),
@@ -377,21 +377,32 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
   }
 
   String _getMonthDisplayName(MonthEnum month) {
-    const months = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-    return months[month.index];
+    switch (month) {
+      case MonthEnum.january:
+        return context.strings.monthJanuary;
+      case MonthEnum.february:
+        return context.strings.monthFebruary;
+      case MonthEnum.march:
+        return context.strings.monthMarch;
+      case MonthEnum.april:
+        return context.strings.monthApril;
+      case MonthEnum.may:
+        return context.strings.monthMay;
+      case MonthEnum.june:
+        return context.strings.monthJune;
+      case MonthEnum.july:
+        return context.strings.monthJuly;
+      case MonthEnum.august:
+        return context.strings.monthAugust;
+      case MonthEnum.september:
+        return context.strings.monthSeptember;
+      case MonthEnum.october:
+        return context.strings.monthOctober;
+      case MonthEnum.november:
+        return context.strings.monthNovember;
+      case MonthEnum.december:
+        return context.strings.monthDecember;
+    }
   }
 
   Widget _buildValueSection() {
@@ -433,7 +444,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
             widget.transaction.totalInstallments! > 0) ...[
           const SizedBox(height: Spacing.xs),
           Text(
-            'Valor da parcela',
+            context.strings.installmentValue,
             style: context.textTheme.bodySmall?.copyWith(
               color: Colors.orange,
               fontWeight: FontWeight.w500,
@@ -441,7 +452,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           ),
           const SizedBox(height: Spacing.xs),
           Text(
-            'Valor total: ${_formatCurrency(widget.transaction.amount)}',
+            '${context.strings.totalValue}: ${_formatCurrency(widget.transaction.amount)}',
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colorScheme.onSurface.withValues(alpha: 0.6),
             ),
@@ -455,7 +466,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
               Icon(Icons.tune, size: 16, color: Colors.orange),
               const SizedBox(width: Spacing.xs),
               Text(
-                'Valor ajustado para ${_getMonthName(selectedPeriod.month)}/${selectedPeriod.year}',
+                '${context.strings.adjustedValue} ${_getMonthName(selectedPeriod.month)}/${selectedPeriod.year}',
                 style: context.textTheme.bodySmall?.copyWith(
                   color: Colors.orange,
                   fontWeight: FontWeight.w500,
@@ -466,8 +477,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           const SizedBox(height: Spacing.xs),
           Text(
             isInstallment
-                ? 'Valor padrão da parcela: ${_formatCurrency(widget.transaction.amount / widget.transaction.totalInstallments!)}'
-                : 'Valor padrão: ${_formatCurrency(widget.transaction.amount)}',
+                ? '${context.strings.defaultInstallmentValue}: ${_formatCurrency(widget.transaction.amount / widget.transaction.totalInstallments!)}'
+                : '${context.strings.defaultValue}: ${_formatCurrency(widget.transaction.amount)}',
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colorScheme.onSurface.withValues(alpha: 0.6),
             ),
@@ -557,21 +568,34 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
   }
 
   String _getMonthName(int month) {
-    const months = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-    return months[month - 1];
+    switch (month) {
+      case 1:
+        return context.strings.monthJanuary;
+      case 2:
+        return context.strings.monthFebruary;
+      case 3:
+        return context.strings.monthMarch;
+      case 4:
+        return context.strings.monthApril;
+      case 5:
+        return context.strings.monthMay;
+      case 6:
+        return context.strings.monthJune;
+      case 7:
+        return context.strings.monthJuly;
+      case 8:
+        return context.strings.monthAugust;
+      case 9:
+        return context.strings.monthSeptember;
+      case 10:
+        return context.strings.monthOctober;
+      case 11:
+        return context.strings.monthNovember;
+      case 12:
+        return context.strings.monthDecember;
+      default:
+        return '';
+    }
   }
 
   bool _canAdjustMonthlyValue() {
