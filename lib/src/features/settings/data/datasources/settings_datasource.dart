@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../data/models/models.dart';
+import '../models/settings_model.dart';
 
 class SettingsDataSource {
   static const String _settingsKey = 'app_settings';
@@ -26,7 +26,9 @@ class SettingsDataSource {
           final userData = userDoc.data()!;
           final firebaseSettings = SettingsModel(
             currency: userData['currency'] as String? ?? 'BRL',
-            isDarkMode: userData['isDarkMode'] as bool? ?? false,
+            themeMode: ThemeModeType.fromString(
+              userData['themeMode'] as String? ?? 'system',
+            ),
             language: userData['language'] as String? ?? 'pt',
           );
 
@@ -72,15 +74,25 @@ class SettingsDataSource {
   }
 
   Future<void> updateTheme(bool isDarkMode) async {
+    // Mantém compatibilidade com código existente
+    final themeMode = isDarkMode ? ThemeModeType.dark : ThemeModeType.light;
+    await updateThemeMode(themeMode);
+  }
+
+  Future<void> updateThemeMode(ThemeModeType themeMode) async {
     final currentSettings = await getSettings();
-    final updatedSettings = currentSettings.copyWith(isDarkMode: isDarkMode);
+    final updatedSettings = currentSettings.copyWith(themeMode: themeMode);
     await saveSettings(updatedSettings);
 
     // Atualizar também no Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
-        {'isDarkMode': isDarkMode},
+        {
+          'themeMode': themeMode.name,
+          'isDarkMode':
+              themeMode == ThemeModeType.dark, // Mantém compatibilidade
+        },
       );
     }
   }
@@ -114,7 +126,9 @@ class SettingsDataSource {
           final userData = userDoc.data()!;
           final firebaseSettings = SettingsModel(
             currency: userData['currency'] as String? ?? 'BRL',
-            isDarkMode: userData['isDarkMode'] as bool? ?? false,
+            themeMode: ThemeModeType.fromString(
+              userData['themeMode'] as String? ?? 'system',
+            ),
             language: userData['language'] as String? ?? 'pt',
           );
 

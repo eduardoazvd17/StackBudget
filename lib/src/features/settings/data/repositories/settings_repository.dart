@@ -22,6 +22,10 @@ class SettingsRepository {
     await _dataSource.updateTheme(isDarkMode);
   }
 
+  Future<void> updateThemeMode(ThemeModeType themeMode) async {
+    await _dataSource.updateThemeMode(themeMode);
+  }
+
   Future<void> updateLanguage(String language) async {
     await _dataSource.updateLanguage(language);
   }
