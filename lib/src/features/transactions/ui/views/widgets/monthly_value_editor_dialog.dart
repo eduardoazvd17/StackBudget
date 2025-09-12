@@ -103,7 +103,7 @@ class _MonthlyValueEditorDialogState
         } else if (next is MonthlyTransactionErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(next.message),
+              content: Text(next.exception.getMessage(context)),
               backgroundColor: context.colorScheme.error,
             ),
           );

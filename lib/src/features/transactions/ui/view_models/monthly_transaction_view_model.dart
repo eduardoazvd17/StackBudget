@@ -33,8 +33,8 @@ class MonthlyTransactionViewModel
     try {
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
-        state = const MonthlyTransactionErrorState(
-          message: 'User not authenticated', // TODO: Internationalize
+        state = MonthlyTransactionErrorState(
+          exception: AppException.userNotAuthenticated(),
         );
         return;
       }
@@ -51,15 +51,15 @@ class MonthlyTransactionViewModel
       );
 
       if (baseTransaction == null) {
-        state = const MonthlyTransactionErrorState(
-          message: 'Transação não encontrada',
+        state = MonthlyTransactionErrorState(
+          exception: AppException.transactionNotFound(),
         );
         return;
       }
 
       if (baseTransaction.frequency != TransactionFrequencyEnum.monthly) {
-        state = const MonthlyTransactionErrorState(
-          message: 'Esta transação não permite ajustes mensais',
+        state = MonthlyTransactionErrorState(
+          exception: AppException.invalidTransactionData(),
         );
         return;
       }
@@ -92,7 +92,7 @@ class MonthlyTransactionViewModel
       );
     } catch (e) {
       state = MonthlyTransactionErrorState(
-        message: 'Erro ao carregar dados: ${e.toString()}',
+        exception: AppException.transactionLoadFailed(e.toString()),
       );
     }
   }
@@ -104,8 +104,8 @@ class MonthlyTransactionViewModel
     required double newAmount,
   }) async {
     if (state is! MonthlyTransactionLoadedState) {
-      state = const MonthlyTransactionErrorState(
-        message: 'Dados não carregados. Recarregue a tela.',
+      state = MonthlyTransactionErrorState(
+        exception: AppException.unexpectedError(),
       );
       return;
     }
@@ -116,8 +116,8 @@ class MonthlyTransactionViewModel
     try {
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
-        state = const MonthlyTransactionErrorState(
-          message: 'User not authenticated', // TODO: Internationalize
+        state = MonthlyTransactionErrorState(
+          exception: AppException.userNotAuthenticated(),
         );
         return;
       }
@@ -185,15 +185,15 @@ class MonthlyTransactionViewModel
       _ref.read(dashboardViewModelProvider.notifier).refresh();
     } catch (e) {
       state = MonthlyTransactionErrorState(
-        message: 'Erro ao atualizar valor: ${e.toString()}',
+        exception: AppException.transactionUpdateFailed(e.toString()),
       );
     }
   }
 
   Future<void> removeMonthlyOverride() async {
     if (state is! MonthlyTransactionLoadedState) {
-      state = const MonthlyTransactionErrorState(
-        message: 'Dados não carregados. Recarregue a tela.',
+      state = MonthlyTransactionErrorState(
+        exception: AppException.unexpectedError(),
       );
       return;
     }
@@ -219,7 +219,7 @@ class MonthlyTransactionViewModel
       _ref.read(dashboardViewModelProvider.notifier).refresh();
     } catch (e) {
       state = MonthlyTransactionErrorState(
-        message: 'Erro ao remover ajuste: ${e.toString()}',
+        exception: AppException.transactionDeleteFailed(e.toString()),
       );
     }
   }

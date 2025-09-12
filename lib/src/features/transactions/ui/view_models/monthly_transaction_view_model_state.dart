@@ -1,3 +1,4 @@
+import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
 abstract class MonthlyTransactionViewModelState {
@@ -63,16 +64,17 @@ class MonthlyTransactionSuccessState extends MonthlyTransactionViewModelState {
 }
 
 class MonthlyTransactionErrorState extends MonthlyTransactionViewModelState {
-  final String message;
+  final AppException exception;
 
-  const MonthlyTransactionErrorState({required this.message});
+  const MonthlyTransactionErrorState({required this.exception});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is MonthlyTransactionErrorState && other.message == message;
+    return other is MonthlyTransactionErrorState &&
+        other.exception == exception;
   }
 
   @override
-  int get hashCode => message.hashCode;
+  int get hashCode => exception.hashCode;
 }
