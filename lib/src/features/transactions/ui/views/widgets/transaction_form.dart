@@ -172,6 +172,7 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
       if (query.isEmpty) {
         filteredCategories = widget.categories;
       } else {
+        // Quando há pesquisa, só mostrar categorias que correspondem
         filteredCategories =
             widget.categories
                 .where(
@@ -299,9 +300,86 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
           SizedBox(
             height: 300,
             child: ListView.builder(
-              itemCount: filteredCategories.length,
+              itemCount:
+                  filteredCategories.length + 1, // +1 para a opção "Nenhum"
               itemBuilder: (context, index) {
-                final category = filteredCategories[index];
+                // Opção "Nenhum" no índice 0
+                if (index == 0) {
+                  final isSelected = selectedCategory == null;
+                  return InkWell(
+                    onTap: () {
+                      setState(() => selectedCategory = null);
+                      Navigator.of(context).pop(null);
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      decoration: BoxDecoration(
+                        color:
+                            isSelected
+                                ? Theme.of(context).colorScheme.primaryContainer
+                                : Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color:
+                              isSelected
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(
+                                    context,
+                                  ).colorScheme.outline.withValues(alpha: 0.3),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.clear,
+                            size: 20,
+                            color:
+                                isSelected
+                                    ? Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimaryContainer
+                                    : Theme.of(context).colorScheme.onSurface
+                                        .withValues(alpha: 0.6),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Nenhum',
+                              style: TextStyle(
+                                color:
+                                    isSelected
+                                        ? Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimaryContainer
+                                        : Theme.of(
+                                          context,
+                                        ).colorScheme.onSurface,
+                                fontWeight:
+                                    isSelected
+                                        ? FontWeight.w600
+                                        : FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          if (isSelected)
+                            Icon(
+                              Icons.check,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 20,
+                            ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                // Categorias normais (ajustar índice)
+                final category = filteredCategories[index - 1];
                 final isSelected = selectedCategory == category;
 
                 return InkWell(
@@ -1279,9 +1357,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
           ),
     );
 
-    if (selectedCategory != null) {
-      setState(() => _selectedCategory = selectedCategory);
-    }
+    // Atualizar estado sempre, incluindo quando null (opção "Nenhum")
+    setState(() => _selectedCategory = selectedCategory);
   }
 
   void _resetFrequencyFields() {
