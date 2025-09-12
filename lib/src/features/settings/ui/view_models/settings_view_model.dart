@@ -39,7 +39,14 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
   Future<void> updateCurrency(String currency) async {
     try {
       await _repository.updateCurrency(currency);
-      await loadSettings(); // Recarrega as configurações
+      // Atualiza o estado localmente em vez de recarregar tudo
+      if (state is SettingsLoadedState) {
+        final currentState = state as SettingsLoadedState;
+        final updatedSettings = currentState.settings.copyWith(
+          currency: currency,
+        );
+        state = SettingsLoadedState(updatedSettings);
+      }
     } catch (e) {
       state = SettingsErrorState(message: e.toString());
     }
@@ -49,7 +56,14 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
     try {
       final themeMode = isDarkMode ? ThemeModeType.dark : ThemeModeType.light;
       await _repository.updateThemeMode(themeMode);
-      await loadSettings(); // Recarrega as configurações
+      // Atualiza o estado localmente em vez de recarregar tudo
+      if (state is SettingsLoadedState) {
+        final currentState = state as SettingsLoadedState;
+        final updatedSettings = currentState.settings.copyWith(
+          themeMode: themeMode,
+        );
+        state = SettingsLoadedState(updatedSettings);
+      }
     } catch (e) {
       state = SettingsErrorState(message: e.toString());
     }
@@ -58,7 +72,14 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
   Future<void> updateThemeMode(ThemeModeType themeMode) async {
     try {
       await _repository.updateThemeMode(themeMode);
-      await loadSettings(); // Recarrega as configurações
+      // Atualiza o estado localmente em vez de recarregar tudo
+      if (state is SettingsLoadedState) {
+        final currentState = state as SettingsLoadedState;
+        final updatedSettings = currentState.settings.copyWith(
+          themeMode: themeMode,
+        );
+        state = SettingsLoadedState(updatedSettings);
+      }
     } catch (e) {
       state = SettingsErrorState(message: e.toString());
     }
@@ -67,7 +88,14 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
   Future<void> updateLanguage(String language) async {
     try {
       await _repository.updateLanguage(language);
-      await loadSettings(); // Recarrega as configurações
+      // Atualiza o estado localmente em vez de recarregar tudo
+      if (state is SettingsLoadedState) {
+        final currentState = state as SettingsLoadedState;
+        final updatedSettings = currentState.settings.copyWith(
+          language: language,
+        );
+        state = SettingsLoadedState(updatedSettings);
+      }
     } catch (e) {
       state = SettingsErrorState(message: e.toString());
     }
