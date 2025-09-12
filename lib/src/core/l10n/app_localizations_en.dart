@@ -983,4 +983,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appDescription => 'Your smart financial planning';
+
+  @override
+  String get none => 'None';
 }

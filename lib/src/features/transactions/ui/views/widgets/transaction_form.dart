@@ -710,60 +710,83 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         ),
         const SizedBox(height: Spacing.sm),
         DropdownButtonHideUnderline(
-          child: DropdownButton2<CategoryEnum>(
+          child: DropdownButton2<CategoryEnum?>(
             isExpanded: true,
-            hint: Row(
-              children: [
-                Icon(
-                  _selectedCategory != null
-                      ? _getCategoryIcon(_selectedCategory!)
-                      : Icons.category,
-                  color:
-                      _selectedCategory != null
-                          ? Theme.of(context).colorScheme.onSurface
-                          : Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: 0.6),
+            selectedItemBuilder: (context) {
+              return [
+                DropdownMenuItem<CategoryEnum?>(
+                  value: null,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.category,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Selecione a categoria (opcional)',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    _selectedCategory != null
-                        ? _selectedCategory!.getDisplayName(context)
-                        : context.strings.selectCategory,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                ...categories.map(
+                  (CategoryEnum item) => DropdownMenuItem<CategoryEnum?>(
+                    value: item,
+                    child: Row(
+                      children: [
+                        Icon(
+                          _getCategoryIcon(item),
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(child: Text(item.getDisplayName(context))),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
-            items:
-                categories
-                    .map(
-                      (CategoryEnum item) => DropdownMenuItem<CategoryEnum>(
-                        value: item,
-                        child: Row(
-                          children: [
-                            Icon(
-                              _getCategoryIcon(item),
-                              size: 20,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurface.withValues(alpha: 0.6),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                item.getDisplayName(context),
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          ],
-                        ),
+              ];
+            },
+            items: [
+              DropdownMenuItem<CategoryEnum?>(
+                value: null,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.close,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                    const SizedBox(width: 12),
+                    Text('Nenhum'),
+                  ],
+                ),
+              ),
+              ...categories.map(
+                (CategoryEnum item) => DropdownMenuItem<CategoryEnum?>(
+                  value: item,
+                  child: Row(
+                    children: [
+                      Icon(
+                        _getCategoryIcon(item),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
-                    )
-                    .toList(),
+                      const SizedBox(width: 12),
+                      Expanded(child: Text(item.getDisplayName(context))),
+                    ],
+                  ),
+                ),
+              ),
+            ],
             value: _selectedCategory,
             onChanged: (CategoryEnum? value) {
               setState(() => _selectedCategory = value);
@@ -821,6 +844,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 ),
               ),
               searchMatchFn: (item, searchValue) {
+                if (item.value == null) return true;
+
                 return item.value!
                     .getDisplayName(context)
                     .toLowerCase()

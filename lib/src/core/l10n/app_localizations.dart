@@ -2038,6 +2038,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your smart financial planning'**
   String get appDescription;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

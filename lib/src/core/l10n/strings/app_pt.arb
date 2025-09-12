@@ -324,5 +324,6 @@
   "monthNov": "Nov",
   "monthDec": "Dez",
   "appName": "StackBudget",
-  "appDescription": "Seu planejamento financeiro inteligente"
+  "appDescription": "Seu planejamento financeiro inteligente",
+  "none": "Nenhum(a)"
 }
