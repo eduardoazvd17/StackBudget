@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../enums/enums.dart';
 
 extension DateTimeExtension on DateTime {
   String formatDateTime() {
-    final hourStr = hour.toString().padLeft(2, '0');
-    final minuteStr = minute.toString().padLeft(2, '0');
-    final secondStr = second.toString().padLeft(2, '0');
-    return '${formatDate()} - $hourStr:$minuteStr:$secondStr';
+    return DateFormat.yMd().add_Hm().format(this);
   }
 
   String formatDate() {
-    final dayStr = day.toString().padLeft(2, '0');
-    final monthStr = month.toString().padLeft(2, '0');
-    final yearStr = year.toString().padLeft(2, '0');
-    return '$dayStr/$monthStr/$yearStr';
+    return DateFormat.yMd().format(this);
   }
 
   String formatToMonthYear(BuildContext context) {
-    return '${MonthEnum.values[month - 1].getDisplayName(context)} de $year';
+    // Para formato americano: "January 2024"
+    // Para formato brasileiro: "janeiro de 2024"
+    final locale = Localizations.localeOf(context);
+    if (locale.languageCode == 'en') {
+      return DateFormat.yMMMM().format(this);
+    } else {
+      return '${MonthEnum.values[month - 1].getDisplayName(context)} de $year';
+    }
   }
 
   String formatToSimpleDate() {
-    final dayStr = day.toString().padLeft(2, '0');
-    final monthStr = month.toString().padLeft(2, '0');
-    return '$dayStr/$monthStr';
+    return DateFormat.Md().format(this);
   }
 
   DateTime getFirstDayOfMonth() {
