@@ -82,8 +82,11 @@ class DashboardHeader extends ConsumerWidget {
                   PopupMenuItem(
                     value: 'logout',
                     child: ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text(context.strings.logout),
+                      leading: Icon(Icons.logout, color: Colors.red),
+                      title: Text(
+                        context.strings.logout,
+                        style: TextStyle(color: Colors.red),
+                      ),
                       contentPadding: EdgeInsets.zero,
                     ),
                   ),
