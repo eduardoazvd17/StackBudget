@@ -16,6 +16,7 @@
   "yearlyMonthField": "Yearly Month",
   "selectYearlyMonth": "Select the month it occurs yearly",
   "selectMonthRequired": "Please select a month",
+  "selectMonth": "Select Month",
   "installmentSettings": "Installment Settings",
   "totalInstallmentsField": "Total Installments",
   "enterTotalInstallments": "Enter total number of installments",

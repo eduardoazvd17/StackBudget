@@ -79,7 +79,8 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
                 itemCount: 12,
                 itemBuilder: (context, index) {
                   final month = index + 1;
-                  final isSelected = month == selectedMonth;
+                  final isSelected =
+                      selectedMonth != -1 && month == selectedMonth;
                   final isEnabled = _isMonthEnabled(month);
 
                   return InkWell(
@@ -199,6 +200,145 @@ Future<DateTime?> showMonthYearPicker({
   return selectedDate;
 }
 
+Future<MonthEnum?> showMonthPicker({
+  required BuildContext context,
+  required MonthEnum initialMonth,
+}) async {
+  MonthEnum? selectedMonth;
+
+  await showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    builder:
+        (context) => MonthPickerBottomSheet(
+          initialMonth: initialMonth,
+          onMonthSelected: (month) => selectedMonth = month,
+        ),
+  );
+
+  return selectedMonth;
+}
+
+class MonthPickerBottomSheet extends StatefulWidget {
+  final MonthEnum initialMonth;
+  final void Function(MonthEnum selectedMonth) onMonthSelected;
+
+  const MonthPickerBottomSheet({
+    super.key,
+    required this.initialMonth,
+    required this.onMonthSelected,
+  });
+
+  @override
+  State<MonthPickerBottomSheet> createState() => _MonthPickerBottomSheetState();
+}
+
+class _MonthPickerBottomSheetState extends State<MonthPickerBottomSheet> {
+  late MonthEnum selectedMonth;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedMonth = widget.initialMonth;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Row(
+            children: [
+              Icon(
+                Icons.calendar_month,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                context.strings.selectMonth,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+
+          // Month grid
+          SizedBox(
+            height: 200,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 2.5,
+                crossAxisSpacing: Spacing.sm,
+                mainAxisSpacing: Spacing.sm,
+              ),
+              itemCount: 12,
+              itemBuilder: (context, index) {
+                final month = MonthEnum.values[index];
+
+                return InkWell(
+                  onTap: () {
+                    widget.onMonthSelected(month);
+                    Navigator.of(context).pop();
+                  },
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color:
+                          selectedMonth == month
+                              ? context.colorScheme.primary
+                              : context.colorScheme.surface,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color:
+                            selectedMonth == month
+                                ? context.colorScheme.primary
+                                : context.colorScheme.outline.withValues(
+                                  alpha: 0.3,
+                                ),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        month.getDisplayName(context),
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color:
+                              selectedMonth == month
+                                  ? context.colorScheme.onPrimary
+                                  : context.colorScheme.onSurface,
+                          fontWeight:
+                              selectedMonth == month ? FontWeight.bold : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          const SizedBox(height: 24),
+        ],
+      ),
+    );
+  }
+}
+
 class MonthYearPickerBottomSheet extends StatefulWidget {
   final DateTime initialDate;
   final DateTime firstDate;
@@ -222,23 +362,21 @@ class _MonthYearPickerBottomSheetState
     extends State<MonthYearPickerBottomSheet> {
   late int selectedYear;
   late int selectedMonth;
-  late int currentMonth;
-  late int currentYear;
 
   @override
   void initState() {
     super.initState();
     selectedYear = widget.initialDate.year;
     selectedMonth = widget.initialDate.month;
-
-    // Get current month and year
-    final now = DateTime.now();
-    currentMonth = now.month;
-    currentYear = now.year;
   }
 
   @override
   Widget build(BuildContext context) {
+    // Get current month and year dynamically
+    final now = DateTime.now();
+    final currentMonth = now.month;
+    final currentYear = now.year;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -275,7 +413,11 @@ class _MonthYearPickerBottomSheetState
               IconButton(
                 onPressed:
                     selectedYear > widget.firstDate.year
-                        ? () => setState(() => selectedYear--)
+                        ? () => setState(() {
+                          selectedYear--;
+                          selectedMonth =
+                              -1; // Reset selection when year changes
+                        })
                         : null,
                 icon: const Icon(Icons.chevron_left),
               ),
@@ -288,7 +430,11 @@ class _MonthYearPickerBottomSheetState
               IconButton(
                 onPressed:
                     selectedYear < widget.lastDate.year
-                        ? () => setState(() => selectedYear++)
+                        ? () => setState(() {
+                          selectedYear++;
+                          selectedMonth =
+                              -1; // Reset selection when year changes
+                        })
                         : null,
                 icon: const Icon(Icons.chevron_right),
               ),

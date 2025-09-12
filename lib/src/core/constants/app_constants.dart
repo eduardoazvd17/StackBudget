@@ -3,10 +3,10 @@ class AppConstants {
   AppConstants._();
 
   /// Ano mínimo para seleção de datas
-  static const int minYear = 2020;
+  static const int minYear = 2000;
 
   /// Quantidade de anos no futuro para limite de datas
-  static const int futureYearsLimit = 2;
+  static const int futureYearsLimit = 10;
 
   /// Valor para conversão de centavos para reais
   static const int centsToRealDivider = 100;

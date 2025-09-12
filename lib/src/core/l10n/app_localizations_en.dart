@@ -57,6 +57,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectMonthRequired => 'Please select a month';
 
   @override
+  String get selectMonth => 'Select Month';
+
+  @override
   String get installmentSettings => 'Installment Settings';
 
   @override

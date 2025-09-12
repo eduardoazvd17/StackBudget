@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/core/constants/app_constants.dart';
-import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
@@ -550,24 +549,31 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       ),
       const SizedBox(height: Spacing.sm),
 
-      DropdownButtonFormField<MonthEnum>(
-        value: _selectedYearlyMonth,
+      TextFormField(
+        controller: TextEditingController(
+          text: _selectedYearlyMonth?.getDisplayName(context),
+        ),
+        readOnly: true,
         decoration: InputDecoration(
           labelText: context.strings.yearlyMonthRequiredLabel,
           prefixIcon: const Icon(Icons.calendar_month),
           hintText: context.strings.selectYearlyMonth,
+          suffixIcon: const Icon(Icons.arrow_drop_down),
         ),
-        items:
-            MonthEnum.values.map((month) {
-              return DropdownMenuItem(
-                value: month,
-                child: Text(month.getDisplayName(context)),
-              );
-            }).toList(),
-        onChanged: (value) => setState(() => _selectedYearlyMonth = value),
+        onTap: () async {
+          final selectedMonth = await showMonthPicker(
+            context: context,
+            initialMonth: _selectedYearlyMonth ?? MonthEnum.january,
+          );
+          if (selectedMonth != null) {
+            setState(() => _selectedYearlyMonth = selectedMonth);
+          }
+        },
         validator:
             (value) =>
-                value == null ? context.strings.selectMonthRequired : null,
+                _selectedYearlyMonth == null
+                    ? context.strings.selectMonthRequired
+                    : null,
       ),
     ];
   }
@@ -722,15 +728,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
   Future<void> _selectStartDate() async {
     final currentDate = _startDate ?? DateTime.now();
-    final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
-    final firstDate =
-        userRegistrationDate != null
-            ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(AppConstants.minYear);
+    final firstDate = DateTime(AppConstants.minYear);
 
     final now = DateTime.now();
-    final lastDate = DateTime(now.year + 2, 12, 1);
+    final lastDate = DateTime(now.year + AppConstants.futureYearsLimit, 12, 1);
 
     final selectedDate = await showMonthYearPicker(
       context: context,
@@ -760,20 +762,16 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   Future<void> _selectEndDate() async {
     final now = DateTime.now();
     final currentDate = _endDate ?? DateTime(now.year, now.month, 1);
-    final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
     DateTime firstDate;
     if (_startDate != null) {
       final nextMonth = DateTime(_startDate!.year, _startDate!.month + 1, 1);
       firstDate = nextMonth;
     } else {
-      firstDate =
-          userRegistrationDate != null
-              ? DateTime(userRegistrationDate.year, 1, 1)
-              : DateTime(AppConstants.minYear);
+      firstDate = DateTime(AppConstants.minYear);
     }
 
-    final lastDate = DateTime(now.year, 12, 1);
+    final lastDate = DateTime(now.year + AppConstants.futureYearsLimit, 12, 1);
 
     final selectedDate = await showMonthYearPicker(
       context: context,

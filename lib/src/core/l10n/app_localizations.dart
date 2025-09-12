@@ -191,6 +191,12 @@ abstract class AppLocalizations {
   /// **'Please select a month'**
   String get selectMonthRequired;
 
+  /// No description provided for @selectMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Month'**
+  String get selectMonth;
+
   /// No description provided for @installmentSettings.
   ///
   /// In en, this message translates to:

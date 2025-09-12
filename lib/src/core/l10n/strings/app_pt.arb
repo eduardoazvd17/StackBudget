@@ -16,6 +16,7 @@
   "yearlyMonthField": "Mês do Ano",
   "selectYearlyMonth": "Em qual mês ocorre anualmente",
   "selectMonthRequired": "Selecione o mês",
+  "selectMonth": "Selecionar Mês",
   "installmentSettings": "Configurações de Parcelamento",
   "totalInstallmentsField": "Total de Parcelas",
   "enterTotalInstallments": "Digite o número total de parcelas",

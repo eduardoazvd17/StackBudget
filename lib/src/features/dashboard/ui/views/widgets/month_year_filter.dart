@@ -73,14 +73,10 @@ class MonthYearFilter extends ConsumerWidget {
 
   void _previousMonth(WidgetRef ref) {
     final currentDate = ref.read(selectedPeriodProvider);
-    final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
     final previousMonth = DateTime(currentDate.year, currentDate.month - 1, 1);
 
-    final firstAllowedDate =
-        userRegistrationDate != null
-            ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(AppConstants.minYear);
+    final firstAllowedDate = DateTime(AppConstants.minYear);
 
     if (!previousMonth.isBefore(firstAllowedDate)) {
       ref.read(selectedPeriodProvider.notifier).state = previousMonth;
@@ -105,12 +101,8 @@ class MonthYearFilter extends ConsumerWidget {
 
   Future<void> _showDatePicker(BuildContext context, WidgetRef ref) async {
     final currentDate = ref.read(selectedPeriodProvider);
-    final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
-    final firstDate =
-        userRegistrationDate != null
-            ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(AppConstants.minYear);
+    final firstDate = DateTime(AppConstants.minYear);
 
     final now = DateTime.now();
     final lastDate = DateTime(
@@ -133,13 +125,9 @@ class MonthYearFilter extends ConsumerWidget {
 
   bool _canNavigateToPrevious(WidgetRef ref) {
     final currentDate = ref.read(selectedPeriodProvider);
-    final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
     final previousMonth = DateTime(currentDate.year, currentDate.month - 1, 1);
-    final firstAllowedDate =
-        userRegistrationDate != null
-            ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(AppConstants.minYear);
+    final firstAllowedDate = DateTime(AppConstants.minYear);
 
     return !previousMonth.isBefore(firstAllowedDate);
   }

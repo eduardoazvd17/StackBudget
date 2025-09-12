@@ -57,6 +57,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get selectMonthRequired => 'Selecione o mês';
 
   @override
+  String get selectMonth => 'Selecionar Mês';
+
+  @override
   String get installmentSettings => 'Configurações de Parcelamento';
 
   @override
