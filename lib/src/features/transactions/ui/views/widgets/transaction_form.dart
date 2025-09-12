@@ -90,6 +90,27 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
           );
           Navigator.of(context).pop();
         } else if (next is TransactionFormErrorState) {
+          String errorMessage = next.exception.getMessage(context);
+
+          // Handle specific validation error codes that need translation
+          if (next.exception.debugMessage != null) {
+            switch (next.exception.debugMessage) {
+              case 'startDateRequiredForMonthly':
+                errorMessage = context.strings.startDateRequiredForMonthly;
+                break;
+              case 'installmentsMustBeGreaterThanZero':
+                errorMessage =
+                    context.strings.installmentsMustBeGreaterThanZero;
+                break;
+              case 'startDateRequiredForInstallments':
+                errorMessage = context.strings.startDateRequiredForInstallments;
+                break;
+              case 'yearlyMonthRequiredForYearly':
+                errorMessage = context.strings.yearlyMonthRequiredForYearly;
+                break;
+            }
+          }
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Column(
@@ -101,7 +122,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
-                  Text(next.exception.getMessage(context)),
+                  Text(errorMessage),
                 ],
               ),
               backgroundColor: context.colorScheme.error,
@@ -131,7 +152,15 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 prefixIcon: const Icon(Icons.title),
               ),
               textInputAction: TextInputAction.next,
-              validator: Validators.required,
+              validator:
+                  (value) => Validators.required(value, (key) {
+                    switch (key) {
+                      case 'fieldRequired':
+                        return context.strings.titleRequired;
+                      default:
+                        return key;
+                    }
+                  }),
               enabled: formState is! TransactionFormLoadingState,
             ),
             const SizedBox(height: Spacing.md),
@@ -689,21 +718,32 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   String _getMonthDisplayName(MonthEnum month) {
-    const months = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-    return months[month.index];
+    switch (month) {
+      case MonthEnum.january:
+        return context.strings.monthJanuary;
+      case MonthEnum.february:
+        return context.strings.monthFebruary;
+      case MonthEnum.march:
+        return context.strings.monthMarch;
+      case MonthEnum.april:
+        return context.strings.monthApril;
+      case MonthEnum.may:
+        return context.strings.monthMay;
+      case MonthEnum.june:
+        return context.strings.monthJune;
+      case MonthEnum.july:
+        return context.strings.monthJuly;
+      case MonthEnum.august:
+        return context.strings.monthAugust;
+      case MonthEnum.september:
+        return context.strings.monthSeptember;
+      case MonthEnum.october:
+        return context.strings.monthOctober;
+      case MonthEnum.november:
+        return context.strings.monthNovember;
+      case MonthEnum.december:
+        return context.strings.monthDecember;
+    }
   }
 
   Future<void> _selectStartDate() async {
@@ -733,10 +773,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         if (_endDate != null && !newStartDate.isBefore(_endDate!)) {
           _endDate = null;
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Data de fim removida - deve ser posterior à data de início',
-              ),
+            SnackBar(
+              content: Text(context.strings.endDateRemoved),
               backgroundColor: Colors.orange,
             ),
           );

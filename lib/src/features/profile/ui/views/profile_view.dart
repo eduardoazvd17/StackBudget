@@ -254,7 +254,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                   ),
                 ),
                 subtitle: Text(
-                  'Esta ação não pode ser desfeita',
+                  l10n.actionCannotBeUndone,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onErrorContainer,
                   ),

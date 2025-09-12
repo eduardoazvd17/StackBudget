@@ -1,32 +1,38 @@
 class Validators {
   Validators._();
 
-  static String? required(String? value) {
+  static String? required(
+    String? value,
+    String? Function(String) errorMessage,
+  ) {
     if (value == null || value.trim().isEmpty) {
-      return 'Este campo é obrigatório';
+      return errorMessage('fieldRequired');
     }
     return null;
   }
 
-  static String? email(String? value) {
+  static String? email(String? value, String? Function(String) errorMessage) {
     if (value == null || value.trim().isEmpty) {
-      return 'Email é obrigatório';
+      return errorMessage('emailRequired');
     }
     final emailRegex = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$',
     );
     if (!emailRegex.hasMatch(value.trim())) {
-      return 'Email inválido';
+      return errorMessage('emailInvalid');
     }
     return null;
   }
 
-  static String? password(String? value) {
+  static String? password(
+    String? value,
+    String? Function(String) errorMessage,
+  ) {
     if (value == null || value.isEmpty) {
-      return 'Senha é obrigatória';
+      return errorMessage('passwordRequired');
     }
     if (value.length < 6) {
-      return 'Senha deve ter pelo menos 6 caracteres';
+      return errorMessage('passwordMinLength');
     }
     return null;
   }
@@ -36,7 +42,7 @@ class Validators {
     String? Function(String) errorMessage,
   ) {
     if (value == null || value.isEmpty) {
-      return 'Nova senha é obrigatória';
+      return errorMessage('newPasswordRequired');
     }
     if (!isPasswordStrong(value)) {
       return errorMessage('passwordTooWeak');
@@ -81,12 +87,16 @@ class Validators {
     return null;
   }
 
-  static String? confirmPassword(String? value, String originalPassword) {
+  static String? confirmPassword(
+    String? value,
+    String originalPassword,
+    String? Function(String) errorMessage,
+  ) {
     if (value == null || value.isEmpty) {
-      return 'Confirmação de senha é obrigatória';
+      return errorMessage('confirmPasswordRequired');
     }
     if (value != originalPassword) {
-      return 'Senhas não coincidem';
+      return errorMessage('passwordsDoNotMatch');
     }
     return null;
   }

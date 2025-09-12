@@ -599,8 +599,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           (context) => AlertDialog(
             title: Text(context.strings.confirmDelete),
             content: Text(
-              'Tem certeza que deseja excluir a transação "${widget.transaction.title}"?\n\n'
-              'Esta ação não pode ser desfeita.',
+              '${context.strings.deleteConfirmationMessage}\n\n'
+              '${context.strings.actionCannotBeUndone}.',
             ),
             actions: [
               TextButton(

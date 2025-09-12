@@ -122,7 +122,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enterAmount => 'Digite o valor';
 
   @override
-  String get amountRequired => 'Digite um valor';
+  String get amountRequired => 'Valor é obrigatório';
 
   @override
   String get amountPositive => 'O valor deve ser maior que zero';
@@ -643,7 +643,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get passwordTooWeak => 'A senha deve conter pelo menos 8 caracteres, incluindo: 1 letra maiúscula, 1 letra minúscula e 1 caractere especial';
 
   @override
-  String get passwordsDoNotMatch => 'As senhas não coincidem';
+  String get passwordsDoNotMatch => 'Senhas não coincidem';
 
   @override
   String get nameRequired => 'Nome é obrigatório';
@@ -824,4 +824,88 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get expenses => 'Despesas';
+
+  @override
+  String get endDateRemoved => 'Data de fim removida - deve ser posterior à data de início';
+
+  @override
+  String get defaultAmount => 'Valor padrão';
+
+  @override
+  String get amountMustBePositive => 'Valor deve ser maior que zero';
+
+  @override
+  String get customAmountThisMonth => 'Este mês tem valor personalizado';
+
+  @override
+  String get valueForThisMonth => 'Valor para este mês';
+
+  @override
+  String get restoreDefaultValue => 'Restaurar valor padrão';
+
+  @override
+  String get monthJanuary => 'Janeiro';
+
+  @override
+  String get monthFebruary => 'Fevereiro';
+
+  @override
+  String get monthMarch => 'Março';
+
+  @override
+  String get monthApril => 'Abril';
+
+  @override
+  String get monthMay => 'Maio';
+
+  @override
+  String get monthJune => 'Junho';
+
+  @override
+  String get monthJuly => 'Julho';
+
+  @override
+  String get monthAugust => 'Agosto';
+
+  @override
+  String get monthSeptember => 'Setembro';
+
+  @override
+  String get monthOctober => 'Outubro';
+
+  @override
+  String get monthNovember => 'Novembro';
+
+  @override
+  String get monthDecember => 'Dezembro';
+
+  @override
+  String get installmentsMustBeGreaterThanZero => 'Número de parcelas deve ser maior que zero';
+
+  @override
+  String get startDateRequiredForInstallments => 'Data de início é obrigatória para transações parceladas';
+
+  @override
+  String get startDateRequiredForMonthly => 'Data de início é obrigatória para transações mensais';
+
+  @override
+  String get yearlyMonthRequiredForYearly => 'Mês do ano é obrigatório para transações anuais';
+
+  @override
+  String get fieldRequired => 'Este campo é obrigatório';
+
+  @override
+  String get emailRequired => 'Email é obrigatório';
+
+  @override
+  String get emailInvalid => 'Email inválido';
+
+  @override
+  String get passwordRequired => 'Senha é obrigatória';
+
+  @override
+  String get passwordMinLength => 'Senha deve ter pelo menos 6 caracteres';
+
+  @override
+  String get actionCannotBeUndone => 'Esta ação não pode ser desfeita';
 }

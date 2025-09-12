@@ -320,7 +320,7 @@ abstract class AppLocalizations {
   /// No description provided for @amountRequired.
   ///
   /// In en, this message translates to:
-  /// **'Please enter an amount'**
+  /// **'Amount is required'**
   String get amountRequired;
 
   /// No description provided for @amountPositive.
@@ -1720,6 +1720,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expenses'**
   String get expenses;
+
+  /// No description provided for @endDateRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'End date removed - must be after start date'**
+  String get endDateRemoved;
+
+  /// No description provided for @defaultAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Default amount'**
+  String get defaultAmount;
+
+  /// No description provided for @amountMustBePositive.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount must be greater than zero'**
+  String get amountMustBePositive;
+
+  /// No description provided for @customAmountThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month has custom amount'**
+  String get customAmountThisMonth;
+
+  /// No description provided for @valueForThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Value for this month'**
+  String get valueForThisMonth;
+
+  /// No description provided for @restoreDefaultValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore default value'**
+  String get restoreDefaultValue;
+
+  /// No description provided for @monthJanuary.
+  ///
+  /// In en, this message translates to:
+  /// **'January'**
+  String get monthJanuary;
+
+  /// No description provided for @monthFebruary.
+  ///
+  /// In en, this message translates to:
+  /// **'February'**
+  String get monthFebruary;
+
+  /// No description provided for @monthMarch.
+  ///
+  /// In en, this message translates to:
+  /// **'March'**
+  String get monthMarch;
+
+  /// No description provided for @monthApril.
+  ///
+  /// In en, this message translates to:
+  /// **'April'**
+  String get monthApril;
+
+  /// No description provided for @monthMay.
+  ///
+  /// In en, this message translates to:
+  /// **'May'**
+  String get monthMay;
+
+  /// No description provided for @monthJune.
+  ///
+  /// In en, this message translates to:
+  /// **'June'**
+  String get monthJune;
+
+  /// No description provided for @monthJuly.
+  ///
+  /// In en, this message translates to:
+  /// **'July'**
+  String get monthJuly;
+
+  /// No description provided for @monthAugust.
+  ///
+  /// In en, this message translates to:
+  /// **'August'**
+  String get monthAugust;
+
+  /// No description provided for @monthSeptember.
+  ///
+  /// In en, this message translates to:
+  /// **'September'**
+  String get monthSeptember;
+
+  /// No description provided for @monthOctober.
+  ///
+  /// In en, this message translates to:
+  /// **'October'**
+  String get monthOctober;
+
+  /// No description provided for @monthNovember.
+  ///
+  /// In en, this message translates to:
+  /// **'November'**
+  String get monthNovember;
+
+  /// No description provided for @monthDecember.
+  ///
+  /// In en, this message translates to:
+  /// **'December'**
+  String get monthDecember;
+
+  /// No description provided for @installmentsMustBeGreaterThanZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of installments must be greater than zero'**
+  String get installmentsMustBeGreaterThanZero;
+
+  /// No description provided for @startDateRequiredForInstallments.
+  ///
+  /// In en, this message translates to:
+  /// **'Start date is required for installment transactions'**
+  String get startDateRequiredForInstallments;
+
+  /// No description provided for @startDateRequiredForMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Start date is required for monthly transactions'**
+  String get startDateRequiredForMonthly;
+
+  /// No description provided for @yearlyMonthRequiredForYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly month is required for yearly transactions'**
+  String get yearlyMonthRequiredForYearly;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldRequired;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// No description provided for @emailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email'**
+  String get emailInvalid;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// No description provided for @passwordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters long'**
+  String get passwordMinLength;
+
+  /// No description provided for @actionCannotBeUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone'**
+  String get actionCannotBeUndone;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

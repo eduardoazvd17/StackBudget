@@ -53,21 +53,34 @@ class _MonthlyValueEditorDialogState
   }
 
   String _getMonthName(int month) {
-    const months = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-    return months[month - 1];
+    switch (month) {
+      case 1:
+        return context.strings.monthJanuary;
+      case 2:
+        return context.strings.monthFebruary;
+      case 3:
+        return context.strings.monthMarch;
+      case 4:
+        return context.strings.monthApril;
+      case 5:
+        return context.strings.monthMay;
+      case 6:
+        return context.strings.monthJune;
+      case 7:
+        return context.strings.monthJuly;
+      case 8:
+        return context.strings.monthAugust;
+      case 9:
+        return context.strings.monthSeptember;
+      case 10:
+        return context.strings.monthOctober;
+      case 11:
+        return context.strings.monthNovember;
+      case 12:
+        return context.strings.monthDecember;
+      default:
+        return '';
+    }
   }
 
   String _formatCurrency(double value, WidgetRef ref) {
@@ -160,7 +173,7 @@ class _MonthlyValueEditorDialogState
                   ),
                   const SizedBox(width: Spacing.xs),
                   Text(
-                    'Valor padrão: ${_formatCurrency(widget.transaction.amount, ref)}',
+                    '${context.strings.defaultAmount}: ${_formatCurrency(widget.transaction.amount, ref)}',
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),
@@ -173,7 +186,7 @@ class _MonthlyValueEditorDialogState
             TextFormField(
               controller: _amountController,
               decoration: InputDecoration(
-                labelText: 'Valor para este mês',
+                labelText: context.strings.valueForThisMonth,
                 hintText: CurrencyFormatter.format(
                   0,
                   ref.watch(currencyProvider),
@@ -181,7 +194,7 @@ class _MonthlyValueEditorDialogState
                 prefixIcon: const Icon(Icons.attach_money),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.restore),
-                  tooltip: 'Restaurar valor padrão',
+                  tooltip: context.strings.restoreDefaultValue,
                   onPressed: () {
                     _populateAmount(widget.transaction.amount, ref);
                   },
@@ -194,15 +207,15 @@ class _MonthlyValueEditorDialogState
               ],
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Valor é obrigatório';
+                  return context.strings.amountRequired;
                 }
                 final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
                 if (digitsOnly.isEmpty) {
-                  return 'Valor é obrigatório';
+                  return context.strings.amountRequired;
                 }
                 final numValue = double.parse(digitsOnly) / 100;
                 if (numValue <= 0) {
-                  return 'Valor deve ser maior que zero';
+                  return context.strings.amountMustBePositive;
                 }
                 return null;
               },
@@ -216,7 +229,7 @@ class _MonthlyValueEditorDialogState
                   Icon(Icons.edit, size: 14, color: Colors.orange),
                   const SizedBox(width: Spacing.xs),
                   Text(
-                    'Este mês tem valor personalizado',
+                    context.strings.customAmountThisMonth,
                     style: context.textTheme.bodySmall?.copyWith(
                       color: Colors.orange,
                       fontWeight: FontWeight.w500,

@@ -122,7 +122,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterAmount => 'Enter amount';
 
   @override
-  String get amountRequired => 'Please enter an amount';
+  String get amountRequired => 'Amount is required';
 
   @override
   String get amountPositive => 'Amount must be greater than zero';
@@ -824,4 +824,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expenses => 'Expenses';
+
+  @override
+  String get endDateRemoved => 'End date removed - must be after start date';
+
+  @override
+  String get defaultAmount => 'Default amount';
+
+  @override
+  String get amountMustBePositive => 'Amount must be greater than zero';
+
+  @override
+  String get customAmountThisMonth => 'This month has custom amount';
+
+  @override
+  String get valueForThisMonth => 'Value for this month';
+
+  @override
+  String get restoreDefaultValue => 'Restore default value';
+
+  @override
+  String get monthJanuary => 'January';
+
+  @override
+  String get monthFebruary => 'February';
+
+  @override
+  String get monthMarch => 'March';
+
+  @override
+  String get monthApril => 'April';
+
+  @override
+  String get monthMay => 'May';
+
+  @override
+  String get monthJune => 'June';
+
+  @override
+  String get monthJuly => 'July';
+
+  @override
+  String get monthAugust => 'August';
+
+  @override
+  String get monthSeptember => 'September';
+
+  @override
+  String get monthOctober => 'October';
+
+  @override
+  String get monthNovember => 'November';
+
+  @override
+  String get monthDecember => 'December';
+
+  @override
+  String get installmentsMustBeGreaterThanZero => 'Number of installments must be greater than zero';
+
+  @override
+  String get startDateRequiredForInstallments => 'Start date is required for installment transactions';
+
+  @override
+  String get startDateRequiredForMonthly => 'Start date is required for monthly transactions';
+
+  @override
+  String get yearlyMonthRequiredForYearly => 'Yearly month is required for yearly transactions';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get emailRequired => 'Email is required';
+
+  @override
+  String get emailInvalid => 'Invalid email';
+
+  @override
+  String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 6 characters long';
+
+  @override
+  String get actionCannotBeUndone => 'This action cannot be undone';
 }

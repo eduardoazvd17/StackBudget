@@ -113,22 +113,22 @@ class TransactionFormViewModel
     switch (frequency) {
       case TransactionFrequencyEnum.monthly:
         if (startDate == null) {
-          return 'Data de início é obrigatória para transações mensais';
+          return 'startDateRequiredForMonthly';
         }
         break;
 
       case TransactionFrequencyEnum.installment:
         if (totalInstallments == null || totalInstallments <= 0) {
-          return 'Número de parcelas deve ser maior que zero';
+          return 'installmentsMustBeGreaterThanZero';
         }
         if (startDate == null) {
-          return 'Data de início é obrigatória para transações parceladas';
+          return 'startDateRequiredForInstallments';
         }
         break;
 
       case TransactionFrequencyEnum.yearly:
         if (yearlyMonth == null) {
-          return 'Mês do ano é obrigatório para transações anuais';
+          return 'yearlyMonthRequiredForYearly';
         }
         break;
 

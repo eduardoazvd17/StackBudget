@@ -112,7 +112,15 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                 prefixIcon: Icon(Icons.person_outline),
               ),
               textInputAction: TextInputAction.next,
-              validator: Validators.required,
+              validator:
+                  (value) => Validators.required(value, (key) {
+                    switch (key) {
+                      case 'fieldRequired':
+                        return 'Nome é obrigatório';
+                      default:
+                        return key;
+                    }
+                  }),
               enabled: authState is! AuthLoadingState,
             ),
             const SizedBox(height: Spacing.md),
@@ -126,7 +134,17 @@ class _AuthFormState extends ConsumerState<AuthForm> {
             ),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            validator: Validators.email,
+            validator:
+                (value) => Validators.email(value, (key) {
+                  switch (key) {
+                    case 'emailRequired':
+                      return 'Email é obrigatório';
+                    case 'emailInvalid':
+                      return 'Email inválido';
+                    default:
+                      return key;
+                  }
+                }),
             enabled: authState is! AuthLoadingState,
           ),
           const SizedBox(height: Spacing.md),
@@ -150,7 +168,27 @@ class _AuthFormState extends ConsumerState<AuthForm> {
             obscureText: !_isPasswordVisible,
             textInputAction:
                 _isSignUp ? TextInputAction.next : TextInputAction.done,
-            validator: _isSignUp ? Validators.password : Validators.required,
+            validator:
+                (value) =>
+                    _isSignUp
+                        ? Validators.password(value, (key) {
+                          switch (key) {
+                            case 'passwordRequired':
+                              return 'Senha é obrigatória';
+                            case 'passwordMinLength':
+                              return 'Senha deve ter pelo menos 6 caracteres';
+                            default:
+                              return key;
+                          }
+                        })
+                        : Validators.required(value, (key) {
+                          switch (key) {
+                            case 'fieldRequired':
+                              return 'Senha é obrigatória';
+                            default:
+                              return key;
+                          }
+                        }),
             enabled: authState is! AuthLoadingState,
             onFieldSubmitted: _isSignUp ? null : (_) => _submit(),
           ),
@@ -181,6 +219,16 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                   (value) => Validators.confirmPassword(
                     value,
                     _passwordController.text,
+                    (key) {
+                      switch (key) {
+                        case 'confirmPasswordRequired':
+                          return 'Confirmação de senha é obrigatória';
+                        case 'passwordsDoNotMatch':
+                          return 'Senhas não coincidem';
+                        default:
+                          return key;
+                      }
+                    },
                   ),
               enabled: authState is! AuthLoadingState,
               onFieldSubmitted: (_) => _submit(),
