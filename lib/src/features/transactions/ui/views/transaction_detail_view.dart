@@ -77,59 +77,66 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       appBar: AppBar(
         title: Text(context.strings.transactionDetails),
         actions: [
-          PopupMenuButton<String>(
-            enabled: formState is! TransactionFormLoadingState,
-            itemBuilder:
-                (context) => [
-                  PopupMenuItem<String>(
-                    value: 'edit',
-                    child: Row(
-                      children: [
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 8),
-                        Text(context.strings.edit),
-                      ],
-                    ),
-                  ),
-                  if (_canAdjustMonthlyValue())
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: PopupMenuButton<String>(
+              icon: Icon(Icons.more_horiz),
+              enabled: formState is! TransactionFormLoadingState,
+              itemBuilder:
+                  (context) => [
                     PopupMenuItem<String>(
-                      value: 'adjust',
+                      value: 'edit',
                       child: Row(
                         children: [
-                          const Icon(Icons.tune),
+                          const Icon(Icons.edit),
                           const SizedBox(width: 8),
-                          Text(context.strings.adjustMonthlyValueAction),
+                          Text(context.strings.edit),
                         ],
                       ),
                     ),
-                  const PopupMenuDivider(),
-                  PopupMenuItem<String>(
-                    value: 'delete',
-                    child: Row(
-                      children: [
-                        const Icon(Icons.delete, color: Colors.red),
-                        const SizedBox(width: 8),
-                        Text(
-                          context.strings.delete,
-                          style: const TextStyle(color: Colors.red),
+                    if (_canAdjustMonthlyValue())
+                      PopupMenuItem<String>(
+                        value: 'adjust',
+                        child: Row(
+                          children: [
+                            const Icon(Icons.tune, color: Colors.orange),
+                            const SizedBox(width: 8),
+                            Text(
+                              context.strings.adjustMonthlyValueAction,
+                              style: const TextStyle(color: Colors.orange),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
+                    const PopupMenuDivider(),
+                    PopupMenuItem<String>(
+                      value: 'delete',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.delete, color: Colors.red),
+                          const SizedBox(width: 8),
+                          Text(
+                            context.strings.delete,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-            onSelected: (value) {
-              switch (value) {
-                case 'edit':
-                  _editTransaction(context);
-                  break;
-                case 'adjust':
-                  _adjustMonthlyValue(context);
-                  break;
-                case 'delete':
-                  _showDeleteConfirmation(context, ref);
-                  break;
-              }
-            },
+                  ],
+              onSelected: (value) {
+                switch (value) {
+                  case 'edit':
+                    _editTransaction(context);
+                    break;
+                  case 'adjust':
+                    _adjustMonthlyValue(context);
+                    break;
+                  case 'delete':
+                    _showDeleteConfirmation(context, ref);
+                    break;
+                }
+              },
+            ),
           ),
         ],
       ),

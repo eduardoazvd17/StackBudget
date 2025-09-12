@@ -46,7 +46,7 @@ class DashboardHeader extends ConsumerWidget {
 
           // Menu de opções
           PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert, color: context.colorScheme.onSurface),
+            icon: Icon(Icons.more_horiz, color: context.colorScheme.onSurface),
             onSelected: (value) async {
               switch (value) {
                 case 'logout':
