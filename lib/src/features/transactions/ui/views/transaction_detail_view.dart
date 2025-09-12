@@ -213,12 +213,16 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                     _buildDetailSection(context.strings.dates, [
                       _buildDetailItem(
                         context.strings.createdAt,
-                        transaction.createdAt.formatToDateTime(),
+                        transaction.createdAt.formatDateTime(
+                          Localizations.localeOf(context).toString(),
+                        ),
                         Icons.calendar_today,
                       ),
                       _buildDetailItem(
                         context.strings.updatedAt,
-                        transaction.updatedAt.formatToDateTime(),
+                        transaction.updatedAt.formatDateTime(
+                          Localizations.localeOf(context).toString(),
+                        ),
                         Icons.update,
                       ),
                     ]),

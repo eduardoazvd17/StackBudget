@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../enums/enums.dart';
 
 extension DateTimeExtension on DateTime {
-  String formatDateTime() {
-    return DateFormat.yMd().add_Hm().format(this);
+  String formatDateTime([String? locale]) {
+    return DateFormat.yMd(locale).add_Hm().format(this);
   }
 
-  String formatDate() {
-    return DateFormat.yMd().format(this);
+  String formatDate([String? locale]) {
+    return DateFormat.yMd(locale).format(this);
   }
 
   String formatToMonthYear(BuildContext context) {
@@ -16,14 +15,14 @@ extension DateTimeExtension on DateTime {
     // Para formato brasileiro: "janeiro de 2024"
     final locale = Localizations.localeOf(context);
     if (locale.languageCode == 'en') {
-      return DateFormat.yMMMM().format(this);
+      return DateFormat.yMMMM('en_US').format(this);
     } else {
-      return '${MonthEnum.values[month - 1].getDisplayName(context)} de $year';
+      return DateFormat.yMMMM('pt_BR').format(this);
     }
   }
 
-  String formatToSimpleDate() {
-    return DateFormat.Md().format(this);
+  String formatToSimpleDate([String? locale]) {
+    return DateFormat.Md(locale).format(this);
   }
 
   DateTime getFirstDayOfMonth() {
@@ -32,9 +31,5 @@ extension DateTimeExtension on DateTime {
 
   DateTime getLastDayOfMonth() {
     return DateTime(year, month + 1, 0);
-  }
-
-  String formatToDateTime() {
-    return '${formatDate()} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
   }
 }

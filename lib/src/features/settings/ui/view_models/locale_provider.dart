@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import '../../data/repositories/repositories.dart';
 import '../view_models/settings_view_model.dart';
 import '../view_models/settings_view_model_state.dart';
@@ -20,6 +21,7 @@ class LocaleNotifier extends StateNotifier<Locale> {
         final locale =
             language == 'pt' ? const Locale('pt') : const Locale('en');
         state = locale;
+        Intl.defaultLocale = locale.toString();
       }
     });
   }
@@ -31,6 +33,7 @@ class LocaleNotifier extends StateNotifier<Locale> {
       final language = settings.language;
       final locale = language == 'pt' ? const Locale('pt') : const Locale('en');
       state = locale;
+      Intl.defaultLocale = locale.toString();
     } catch (e) {
       state = const Locale('pt');
     }
