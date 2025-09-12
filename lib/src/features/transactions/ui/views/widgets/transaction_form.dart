@@ -45,91 +45,98 @@ class _FrequencyBottomSheetState extends State<FrequencyBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.only(left: 24, right: 24, top: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerLow,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.repeat,
-                color: Theme.of(context).colorScheme.primary,
-                size: 24,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                context.strings.frequency,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: 24 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.repeat,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 24,
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          ...TransactionFrequencyEnum.values.map((frequency) {
-            final isSelected = selectedFrequency == frequency;
-            return InkWell(
-              onTap: () {
-                setState(() => selectedFrequency = frequency);
-                Navigator.of(context).pop(frequency);
-              },
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 16,
-                ),
-                margin: const EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  color:
-                      isSelected
-                          ? Theme.of(context).colorScheme.primaryContainer
-                          : Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color:
-                        isSelected
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(
-                              context,
-                            ).colorScheme.outline.withValues(alpha: 0.3),
+                const SizedBox(width: 12),
+                Text(
+                  context.strings.frequency,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        _getFrequencyDisplayName(frequency, context),
-                        style: TextStyle(
-                          color:
-                              isSelected
-                                  ? Theme.of(
-                                    context,
-                                  ).colorScheme.onPrimaryContainer
-                                  : Theme.of(context).colorScheme.onSurface,
-                          fontWeight:
-                              isSelected ? FontWeight.w600 : FontWeight.normal,
+              ],
+            ),
+            const SizedBox(height: 24),
+            ...TransactionFrequencyEnum.values.map((frequency) {
+              final isSelected = selectedFrequency == frequency;
+              return InkWell(
+                onTap: () {
+                  setState(() => selectedFrequency = frequency);
+                  Navigator.of(context).pop(frequency);
+                },
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 16,
+                  ),
+                  margin: const EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    color:
+                        isSelected
+                            ? Theme.of(context).colorScheme.primaryContainer
+                            : Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color:
+                          isSelected
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(
+                                context,
+                              ).colorScheme.outline.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _getFrequencyDisplayName(frequency, context),
+                          style: TextStyle(
+                            color:
+                                isSelected
+                                    ? Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimaryContainer
+                                    : Theme.of(context).colorScheme.onSurface,
+                            fontWeight:
+                                isSelected
+                                    ? FontWeight.w600
+                                    : FontWeight.normal,
+                          ),
                         ),
                       ),
-                    ),
-                    if (isSelected)
-                      Icon(
-                        Icons.check,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 20,
-                      ),
-                  ],
+                      if (isSelected)
+                        Icon(
+                          Icons.check,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 20,
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
-          const SizedBox(height: 16),
-        ],
+              );
+            }),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }
@@ -258,58 +265,139 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.only(left: 24, right: 24, top: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerLow,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.category,
-                color: Theme.of(context).colorScheme.primary,
-                size: 24,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                context.strings.categoryField,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: 24 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.category,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 24,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  context.strings.categoryField,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Buscar categoria...',
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              hintText: 'Buscar categoria...',
-              prefixIcon: const Icon(Icons.search),
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
+              onChanged: _filterCategories,
             ),
-            onChanged: _filterCategories,
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 300,
-            child: ListView.builder(
-              itemCount:
-                  filteredCategories.length + 1, // +1 para a opção "Nenhum"
-              itemBuilder: (context, index) {
-                // Opção "Nenhum" no índice 0
-                if (index == 0) {
-                  final isSelected = selectedCategory == null;
+            const SizedBox(height: 16),
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                itemCount:
+                    filteredCategories.length + 1, // +1 para a opção "Nenhum"
+                itemBuilder: (context, index) {
+                  // Opção "Nenhum" no índice 0
+                  if (index == 0) {
+                    final isSelected = selectedCategory == null;
+                    return InkWell(
+                      onTap: () {
+                        setState(() => selectedCategory = null);
+                        Navigator.of(context).pop(null);
+                      },
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
+                        margin: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(
+                          color:
+                              isSelected
+                                  ? Theme.of(
+                                    context,
+                                  ).colorScheme.primaryContainer
+                                  : Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color:
+                                isSelected
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.outline
+                                        .withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.clear,
+                              size: 20,
+                              color:
+                                  isSelected
+                                      ? Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimaryContainer
+                                      : Theme.of(context).colorScheme.onSurface
+                                          .withValues(alpha: 0.6),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                'Nenhum',
+                                style: TextStyle(
+                                  color:
+                                      isSelected
+                                          ? Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimaryContainer
+                                          : Theme.of(
+                                            context,
+                                          ).colorScheme.onSurface,
+                                  fontWeight:
+                                      isSelected
+                                          ? FontWeight.w600
+                                          : FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            if (isSelected)
+                              Icon(
+                                Icons.check,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 20,
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  // Categorias normais (ajustar índice)
+                  final category = filteredCategories[index - 1];
+                  final isSelected = selectedCategory == category;
+
                   return InkWell(
                     onTap: () {
-                      setState(() => selectedCategory = null);
-                      Navigator.of(context).pop(null);
+                      setState(() => selectedCategory = category);
+                      Navigator.of(context).pop(category);
                     },
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
@@ -336,7 +424,7 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.clear,
+                            _getCategoryIcon(category),
                             size: 20,
                             color:
                                 isSelected
@@ -349,7 +437,7 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Nenhum',
+                              category.getDisplayName(context),
                               style: TextStyle(
                                 color:
                                     isSelected
@@ -376,85 +464,11 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
                       ),
                     ),
                   );
-                }
-
-                // Categorias normais (ajustar índice)
-                final category = filteredCategories[index - 1];
-                final isSelected = selectedCategory == category;
-
-                return InkWell(
-                  onTap: () {
-                    setState(() => selectedCategory = category);
-                    Navigator.of(context).pop(category);
-                  },
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
-                    ),
-                    margin: const EdgeInsets.only(bottom: 8),
-                    decoration: BoxDecoration(
-                      color:
-                          isSelected
-                              ? Theme.of(context).colorScheme.primaryContainer
-                              : Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color:
-                            isSelected
-                                ? Theme.of(context).colorScheme.primary
-                                : Theme.of(
-                                  context,
-                                ).colorScheme.outline.withValues(alpha: 0.3),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          _getCategoryIcon(category),
-                          size: 20,
-                          color:
-                              isSelected
-                                  ? Theme.of(
-                                    context,
-                                  ).colorScheme.onPrimaryContainer
-                                  : Theme.of(context).colorScheme.onSurface
-                                      .withValues(alpha: 0.6),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            category.getDisplayName(context),
-                            style: TextStyle(
-                              color:
-                                  isSelected
-                                      ? Theme.of(
-                                        context,
-                                      ).colorScheme.onPrimaryContainer
-                                      : Theme.of(context).colorScheme.onSurface,
-                              fontWeight:
-                                  isSelected
-                                      ? FontWeight.w600
-                                      : FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                        if (isSelected)
-                          Icon(
-                            Icons.check,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 20,
-                          ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+                },
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-        ],
+          ],
+        ),
       ),
     );
   }
