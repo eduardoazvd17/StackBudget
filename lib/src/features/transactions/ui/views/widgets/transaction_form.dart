@@ -378,6 +378,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         DropdownButtonHideUnderline(
           child: DropdownButton2<TransactionFrequencyEnum>(
             isExpanded: true,
+            barrierDismissible: true,
+            barrierColor: Colors.black87,
             hint: Row(
               children: [
                 const Icon(Icons.repeat),
@@ -403,10 +405,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                                 const Icon(Icons.repeat, size: 20),
                                 const SizedBox(width: 12),
                                 Expanded(
-                                  child: Text(
-                                    _getFrequencyDisplayName(item),
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
+                                  child: Text(_getFrequencyDisplayName(item)),
                                 ),
                               ],
                             ),
@@ -505,7 +504,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                     style: TextStyle(
                       color:
                           labelColor ?? Theme.of(context).colorScheme.onSurface,
-                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -518,7 +516,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                           Theme.of(
                             context,
                           ).colorScheme.onSurface.withValues(alpha: 0.7),
-                      fontSize: 12,
                     ),
                   ),
                 ],
@@ -712,6 +709,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         DropdownButtonHideUnderline(
           child: DropdownButton2<CategoryEnum?>(
             isExpanded: true,
+            barrierDismissible: true,
+            barrierColor: Colors.black87,
             selectedItemBuilder: (context) {
               return [
                 DropdownMenuItem<CategoryEnum?>(
@@ -836,7 +835,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                       vertical: 8,
                     ),
                     hintText: 'Buscar categoria...',
-                    hintStyle: const TextStyle(fontSize: 12),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
