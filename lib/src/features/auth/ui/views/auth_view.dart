@@ -30,7 +30,7 @@ class AuthView extends ConsumerWidget {
                 children: [
                   // Logo ou título do app
                   Icon(
-                    Icons.account_balance_wallet_outlined,
+                    Icons.area_chart,
                     size: 80,
                     color: context.colorScheme.primary,
                   ),
