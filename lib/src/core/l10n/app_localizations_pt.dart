@@ -110,7 +110,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enterTitle => 'Digite o título da transação';
 
   @override
-  String get titleRequired => 'Please enter a title';
+  String get titleRequired => 'Digite um título';
 
   @override
   String get enterDescription => 'Digite descrição (opcional)';

@@ -32,6 +32,7 @@
   "addFirstTransaction": "Adicione sua primeira transação para começar",
   "titleField": "Título",
   "enterTitle": "Digite o título da transação",
+  "titleRequired": "Digite um título",
   "amountField": "Valor",
   "enterAmount": "Digite o valor",
   "amountRequired": "Digite um valor",
