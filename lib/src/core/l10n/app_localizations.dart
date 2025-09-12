@@ -263,12 +263,6 @@ abstract class AppLocalizations {
   /// **'Monthly Transactions'**
   String get monthlyTransactions;
 
-  /// No description provided for @noTransactionsFound.
-  ///
-  /// In en, this message translates to:
-  /// **'No transactions found'**
-  String get noTransactionsFound;
-
   /// No description provided for @addFirstTransaction.
   ///
   /// In en, this message translates to:
@@ -320,7 +314,7 @@ abstract class AppLocalizations {
   /// No description provided for @amountRequired.
   ///
   /// In en, this message translates to:
-  /// **'Amount is required'**
+  /// **'Please enter an amount'**
   String get amountRequired;
 
   /// No description provided for @amountPositive.
@@ -467,35 +461,11 @@ abstract class AppLocalizations {
   /// **'User not authenticated'**
   String get userNotAuthenticated;
 
-  /// No description provided for @currentInstallment.
-  ///
-  /// In en, this message translates to:
-  /// **'Current Installment'**
-  String get currentInstallment;
-
   /// No description provided for @ofPreposition.
   ///
   /// In en, this message translates to:
   /// **'of'**
   String get ofPreposition;
-
-  /// No description provided for @monthlyInformation.
-  ///
-  /// In en, this message translates to:
-  /// **'Monthly Information'**
-  String get monthlyInformation;
-
-  /// No description provided for @installmentInformation.
-  ///
-  /// In en, this message translates to:
-  /// **'Installment Information'**
-  String get installmentInformation;
-
-  /// No description provided for @yearlyInformation.
-  ///
-  /// In en, this message translates to:
-  /// **'Yearly Information'**
-  String get yearlyInformation;
 
   /// No description provided for @startMonthLabel.
   ///
@@ -538,12 +508,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Current Value'**
   String get currentValue;
-
-  /// No description provided for @defaultValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Default value'**
-  String get defaultValue;
 
   /// No description provided for @notes.
   ///
@@ -653,23 +617,11 @@ abstract class AppLocalizations {
   /// **'Select the month of the first installment'**
   String get selectFirstInstallmentMonth;
 
-  /// No description provided for @installmentValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Installment value'**
-  String get installmentValue;
-
   /// No description provided for @installmentValueForm.
   ///
   /// In en, this message translates to:
   /// **'Installment value'**
   String get installmentValueForm;
-
-  /// No description provided for @firstInstallmentMonth.
-  ///
-  /// In en, this message translates to:
-  /// **'1st Installment Month'**
-  String get firstInstallmentMonth;
 
   /// No description provided for @titleHint.
   ///
@@ -784,12 +736,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Updated at'**
   String get updatedAt;
-
-  /// No description provided for @tags.
-  ///
-  /// In en, this message translates to:
-  /// **'Tags'**
-  String get tags;
 
   /// No description provided for @confirmDelete.
   ///
@@ -1355,12 +1301,6 @@ abstract class AppLocalizations {
   /// **'Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character'**
   String get passwordTooWeak;
 
-  /// No description provided for @passwordsDoNotMatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Passwords do not match'**
-  String get passwordsDoNotMatch;
-
   /// No description provided for @nameRequired.
   ///
   /// In en, this message translates to:
@@ -1378,18 +1318,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Current password is required'**
   String get currentPasswordRequired;
-
-  /// No description provided for @newPasswordRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'New password is required'**
-  String get newPasswordRequired;
-
-  /// No description provided for @confirmPasswordRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Password confirmation is required'**
-  String get confirmPasswordRequired;
 
   /// No description provided for @updateName.
   ///
@@ -1781,11 +1709,11 @@ abstract class AppLocalizations {
   /// **'April'**
   String get monthApril;
 
-  /// No description provided for @monthMay.
+  /// No description provided for @monthMayExt.
   ///
   /// In en, this message translates to:
   /// **'May'**
-  String get monthMay;
+  String get monthMayExt;
 
   /// No description provided for @monthJune.
   ///
@@ -1883,11 +1811,47 @@ abstract class AppLocalizations {
   /// **'Password must be at least 6 characters long'**
   String get passwordMinLength;
 
+  /// No description provided for @newPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'New password is required'**
+  String get newPasswordRequired;
+
+  /// No description provided for @confirmPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password confirmation is required'**
+  String get confirmPasswordRequired;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
   /// No description provided for @actionCannotBeUndone.
   ///
   /// In en, this message translates to:
   /// **'This action cannot be undone'**
   String get actionCannotBeUndone;
+
+  /// No description provided for @monthlyInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Information'**
+  String get monthlyInformation;
+
+  /// No description provided for @installmentInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment Information'**
+  String get installmentInformation;
+
+  /// No description provided for @yearlyInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly Information'**
+  String get yearlyInformation;
 
   /// No description provided for @startMonth.
   ///
@@ -1907,11 +1871,35 @@ abstract class AppLocalizations {
   /// **'Total Installments'**
   String get totalInstallments;
 
+  /// No description provided for @currentInstallment.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Installment'**
+  String get currentInstallment;
+
+  /// No description provided for @firstInstallmentMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'1st Installment Month'**
+  String get firstInstallmentMonth;
+
   /// No description provided for @yearlyMonth.
   ///
   /// In en, this message translates to:
   /// **'Yearly Month'**
   String get yearlyMonth;
+
+  /// No description provided for @tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get tags;
+
+  /// No description provided for @installmentValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment value'**
+  String get installmentValue;
 
   /// No description provided for @totalValue.
   ///
@@ -1930,6 +1918,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default installment value'**
   String get defaultInstallmentValue;
+
+  /// No description provided for @defaultValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Default value'**
+  String get defaultValue;
+
+  /// No description provided for @noTransactionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions found'**
+  String get noTransactionsFound;
 
   /// No description provided for @period.
   ///
@@ -1978,6 +1978,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apr'**
   String get monthApr;
+
+  /// No description provided for @monthMay.
+  ///
+  /// In en, this message translates to:
+  /// **'May'**
+  String get monthMay;
 
   /// No description provided for @monthJun.
   ///

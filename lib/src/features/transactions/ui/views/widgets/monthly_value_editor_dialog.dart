@@ -63,7 +63,7 @@ class _MonthlyValueEditorDialogState
       case 4:
         return context.strings.monthApril;
       case 5:
-        return context.strings.monthMay;
+        return context.strings.monthMayExt;
       case 6:
         return context.strings.monthJune;
       case 7:

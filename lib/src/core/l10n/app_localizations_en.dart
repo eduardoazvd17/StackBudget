@@ -95,9 +95,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get monthlyTransactions => 'Monthly Transactions';
 
   @override
-  String get noTransactionsFound => 'No transactions found';
-
-  @override
   String get addFirstTransaction => 'Add your first transaction to get started';
 
   @override
@@ -122,7 +119,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterAmount => 'Enter amount';
 
   @override
-  String get amountRequired => 'Amount is required';
+  String get amountRequired => 'Please enter an amount';
 
   @override
   String get amountPositive => 'Amount must be greater than zero';
@@ -197,19 +194,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get userNotAuthenticated => 'User not authenticated';
 
   @override
-  String get currentInstallment => 'Current Installment';
-
-  @override
   String get ofPreposition => 'of';
-
-  @override
-  String get monthlyInformation => 'Monthly Information';
-
-  @override
-  String get installmentInformation => 'Installment Information';
-
-  @override
-  String get yearlyInformation => 'Yearly Information';
 
   @override
   String get startMonthLabel => 'Start Month';
@@ -231,9 +216,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get currentValue => 'Current Value';
-
-  @override
-  String get defaultValue => 'Default value';
 
   @override
   String get notes => 'Notes';
@@ -290,13 +272,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectFirstInstallmentMonth => 'Select the month of the first installment';
 
   @override
-  String get installmentValue => 'Installment value';
-
-  @override
   String get installmentValueForm => 'Installment value';
-
-  @override
-  String get firstInstallmentMonth => '1st Installment Month';
 
   @override
   String get titleHint => 'Ex: Salary, Rent, Groceries...';
@@ -354,9 +330,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updatedAt => 'Updated at';
-
-  @override
-  String get tags => 'Tags';
 
   @override
   String get confirmDelete => 'Confirm Delete';
@@ -643,9 +616,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordTooWeak => 'Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character';
 
   @override
-  String get passwordsDoNotMatch => 'Passwords do not match';
-
-  @override
   String get nameRequired => 'Name is required';
 
   @override
@@ -653,12 +623,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get currentPasswordRequired => 'Current password is required';
-
-  @override
-  String get newPasswordRequired => 'New password is required';
-
-  @override
-  String get confirmPasswordRequired => 'Password confirmation is required';
 
   @override
   String get updateName => 'Update Name';
@@ -856,7 +820,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get monthApril => 'April';
 
   @override
-  String get monthMay => 'May';
+  String get monthMayExt => 'May';
 
   @override
   String get monthJune => 'June';
@@ -907,7 +871,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordMinLength => 'Password must be at least 6 characters long';
 
   @override
+  String get newPasswordRequired => 'New password is required';
+
+  @override
+  String get confirmPasswordRequired => 'Password confirmation is required';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
   String get actionCannotBeUndone => 'This action cannot be undone';
+
+  @override
+  String get monthlyInformation => 'Monthly Information';
+
+  @override
+  String get installmentInformation => 'Installment Information';
+
+  @override
+  String get yearlyInformation => 'Yearly Information';
 
   @override
   String get startMonth => 'Start Month';
@@ -919,7 +901,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get totalInstallments => 'Total Installments';
 
   @override
+  String get currentInstallment => 'Current Installment';
+
+  @override
+  String get firstInstallmentMonth => '1st Installment Month';
+
+  @override
   String get yearlyMonth => 'Yearly Month';
+
+  @override
+  String get tags => 'Tags';
+
+  @override
+  String get installmentValue => 'Installment value';
 
   @override
   String get totalValue => 'Total value';
@@ -929,6 +923,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get defaultInstallmentValue => 'Default installment value';
+
+  @override
+  String get defaultValue => 'Default value';
+
+  @override
+  String get noTransactionsFound => 'No transactions found';
 
   @override
   String get period => 'Period';
@@ -953,6 +953,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get monthApr => 'Apr';
+
+  @override
+  String get monthMay => 'May';
 
   @override
   String get monthJun => 'Jun';

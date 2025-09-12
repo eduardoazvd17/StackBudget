@@ -95,9 +95,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get monthlyTransactions => 'Transações do Mês';
 
   @override
-  String get noTransactionsFound => 'Nenhuma transação encontrada';
-
-  @override
   String get addFirstTransaction => 'Adicione sua primeira transação para começar';
 
   @override
@@ -197,19 +194,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get userNotAuthenticated => 'Usuário não autenticado';
 
   @override
-  String get currentInstallment => 'Parcela Atual';
-
-  @override
   String get ofPreposition => 'de';
-
-  @override
-  String get monthlyInformation => 'Informações Mensais';
-
-  @override
-  String get installmentInformation => 'Informações de Parcelamento';
-
-  @override
-  String get yearlyInformation => 'Informações Anuais';
 
   @override
   String get startMonthLabel => 'Mês de Início';
@@ -231,9 +216,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get currentValue => 'Valor Atual';
-
-  @override
-  String get defaultValue => 'Valor padrão';
 
   @override
   String get notes => 'Observações';
@@ -290,13 +272,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get selectFirstInstallmentMonth => 'Selecione o mês da primeira parcela';
 
   @override
-  String get installmentValue => 'Valor da parcela';
-
-  @override
   String get installmentValueForm => 'Valor por parcela';
-
-  @override
-  String get firstInstallmentMonth => 'Mês da 1ª Parcela';
 
   @override
   String get titleHint => 'Ex: Salário, Aluguel, Supermercado...';
@@ -354,9 +330,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get updatedAt => 'Atualizado em';
-
-  @override
-  String get tags => 'Tags';
 
   @override
   String get confirmDelete => 'Confirmar Exclusão';
@@ -643,9 +616,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get passwordTooWeak => 'A senha deve conter pelo menos 8 caracteres, incluindo: 1 letra maiúscula, 1 letra minúscula e 1 caractere especial';
 
   @override
-  String get passwordsDoNotMatch => 'Senhas não coincidem';
-
-  @override
   String get nameRequired => 'Nome é obrigatório';
 
   @override
@@ -653,12 +623,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get currentPasswordRequired => 'Senha atual é obrigatória';
-
-  @override
-  String get newPasswordRequired => 'Nova senha é obrigatória';
-
-  @override
-  String get confirmPasswordRequired => 'Confirmação de senha é obrigatória';
 
   @override
   String get updateName => 'Atualizar Nome';
@@ -856,7 +820,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get monthApril => 'Abril';
 
   @override
-  String get monthMay => 'Mai';
+  String get monthMayExt => 'Maio';
 
   @override
   String get monthJune => 'Junho';
@@ -907,7 +871,25 @@ class AppLocalizationsPt extends AppLocalizations {
   String get passwordMinLength => 'Senha deve ter pelo menos 6 caracteres';
 
   @override
+  String get newPasswordRequired => 'Nova senha é obrigatória';
+
+  @override
+  String get confirmPasswordRequired => 'Confirmação de senha é obrigatória';
+
+  @override
+  String get passwordsDoNotMatch => 'Senhas não coincidem';
+
+  @override
   String get actionCannotBeUndone => 'Esta ação não pode ser desfeita';
+
+  @override
+  String get monthlyInformation => 'Informações Mensais';
+
+  @override
+  String get installmentInformation => 'Informações de Parcelamento';
+
+  @override
+  String get yearlyInformation => 'Informações Anuais';
 
   @override
   String get startMonth => 'Mês de Início';
@@ -919,7 +901,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get totalInstallments => 'Total de Parcelas';
 
   @override
+  String get currentInstallment => 'Parcela Atual';
+
+  @override
+  String get firstInstallmentMonth => 'Mês da 1ª Parcela';
+
+  @override
   String get yearlyMonth => 'Mês do Ano';
+
+  @override
+  String get tags => 'Tags';
+
+  @override
+  String get installmentValue => 'Valor da parcela';
 
   @override
   String get totalValue => 'Valor total';
@@ -929,6 +923,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get defaultInstallmentValue => 'Valor padrão da parcela';
+
+  @override
+  String get defaultValue => 'Valor padrão';
+
+  @override
+  String get noTransactionsFound => 'Nenhuma transação encontrada';
 
   @override
   String get period => 'Período';
@@ -953,6 +953,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get monthApr => 'Abr';
+
+  @override
+  String get monthMay => 'Mai';
 
   @override
   String get monthJun => 'Jun';

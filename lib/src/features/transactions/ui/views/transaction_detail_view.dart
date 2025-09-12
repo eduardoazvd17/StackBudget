@@ -387,7 +387,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       case MonthEnum.april:
         return context.strings.monthApril;
       case MonthEnum.may:
-        return context.strings.monthMay;
+        return context.strings.monthMayExt;
       case MonthEnum.june:
         return context.strings.monthJune;
       case MonthEnum.july:
@@ -578,7 +578,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       case 4:
         return context.strings.monthApril;
       case 5:
-        return context.strings.monthMay;
+        return context.strings.monthMayExt;
       case 6:
         return context.strings.monthJune;
       case 7:

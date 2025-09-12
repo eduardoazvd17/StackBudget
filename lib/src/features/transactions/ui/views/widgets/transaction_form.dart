@@ -728,7 +728,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       case MonthEnum.april:
         return context.strings.monthApril;
       case MonthEnum.may:
-        return context.strings.monthMay;
+        return context.strings.monthMayExt;
       case MonthEnum.june:
         return context.strings.monthJune;
       case MonthEnum.july:
