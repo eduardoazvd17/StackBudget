@@ -10,7 +10,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    // Remove tudo exceto dígitos
     final digitsOnly = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
 
     if (digitsOnly.isEmpty) {
@@ -20,10 +19,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
       );
     }
 
-    // Converte para double (centavos para reais)
     final value = double.parse(digitsOnly) / 100;
 
-    // Formata usando o CurrencyFormatter
     final formattedText = CurrencyFormatter.format(value, currency);
 
     return TextEditingValue(

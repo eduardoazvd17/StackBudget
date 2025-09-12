@@ -1,5 +1,4 @@
 enum TransactionCategoryEnum {
-  // Receitas
   salary,
   freelance,
   investment,
@@ -7,7 +6,6 @@ enum TransactionCategoryEnum {
   gift,
   otherIncome,
 
-  // Despesas - Essenciais
   housing,
   utilities,
   groceries,
@@ -15,7 +13,6 @@ enum TransactionCategoryEnum {
   insurance,
   healthcare,
 
-  // Despesas - Lifestyle
   dining,
   entertainment,
   shopping,
@@ -24,30 +21,25 @@ enum TransactionCategoryEnum {
   fitness,
   beauty,
 
-  // Despesas - Financeiras
   loans,
   creditCard,
   taxes,
   fees,
 
-  // Despesas - Educação e Desenvolvimento
   education,
   books,
   courses,
 
-  // Despesas - Família
   childcare,
   pets,
   gifts,
 
-  // Outros
   charity,
   emergencyFund,
   other;
 
   String get displayName {
     switch (this) {
-      // Receitas
       case TransactionCategoryEnum.salary:
         return 'Salário';
       case TransactionCategoryEnum.freelance:
@@ -61,7 +53,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.otherIncome:
         return 'Outras Receitas';
 
-      // Despesas - Essenciais
       case TransactionCategoryEnum.housing:
         return 'Moradia';
       case TransactionCategoryEnum.utilities:
@@ -75,7 +66,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.healthcare:
         return 'Saúde';
 
-      // Despesas - Lifestyle
       case TransactionCategoryEnum.dining:
         return 'Restaurantes';
       case TransactionCategoryEnum.entertainment:
@@ -91,7 +81,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.beauty:
         return 'Beleza';
 
-      // Despesas - Financeiras
       case TransactionCategoryEnum.loans:
         return 'Empréstimos';
       case TransactionCategoryEnum.creditCard:
@@ -101,7 +90,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.fees:
         return 'Taxas';
 
-      // Despesas - Educação e Desenvolvimento
       case TransactionCategoryEnum.education:
         return 'Educação';
       case TransactionCategoryEnum.books:
@@ -109,7 +97,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.courses:
         return 'Cursos';
 
-      // Despesas - Família
       case TransactionCategoryEnum.childcare:
         return 'Cuidados Infantis';
       case TransactionCategoryEnum.pets:
@@ -117,7 +104,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.gifts:
         return 'Presentes';
 
-      // Outros
       case TransactionCategoryEnum.charity:
         return 'Caridade';
       case TransactionCategoryEnum.emergencyFund:
@@ -127,7 +113,6 @@ enum TransactionCategoryEnum {
     }
   }
 
-  /// Retorna as categorias mais apropriadas para receitas
   static List<TransactionCategoryEnum> get incomeCategories => [
     salary,
     freelance,
@@ -137,9 +122,7 @@ enum TransactionCategoryEnum {
     otherIncome,
   ];
 
-  /// Retorna as categorias mais apropriadas para despesas
   static List<TransactionCategoryEnum> get expenseCategories => [
-    // Essenciais
     housing,
     utilities,
     groceries,
@@ -147,7 +130,6 @@ enum TransactionCategoryEnum {
     insurance,
     healthcare,
 
-    // Lifestyle
     dining,
     entertainment,
     shopping,
@@ -156,32 +138,26 @@ enum TransactionCategoryEnum {
     fitness,
     beauty,
 
-    // Financeiras
     loans,
     creditCard,
     taxes,
     fees,
 
-    // Educação
     education,
     books,
     courses,
 
-    // Família
     childcare,
     pets,
     gifts,
 
-    // Outros
     charity,
     emergencyFund,
     other,
   ];
 
-  /// Retorna ícone sugerido para a categoria
   String get iconName {
     switch (this) {
-      // Receitas
       case TransactionCategoryEnum.salary:
         return 'work';
       case TransactionCategoryEnum.freelance:
@@ -195,7 +171,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.otherIncome:
         return 'attach_money';
 
-      // Despesas - Essenciais
       case TransactionCategoryEnum.housing:
         return 'home';
       case TransactionCategoryEnum.utilities:
@@ -209,7 +184,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.healthcare:
         return 'local_hospital';
 
-      // Despesas - Lifestyle
       case TransactionCategoryEnum.dining:
         return 'restaurant';
       case TransactionCategoryEnum.entertainment:
@@ -225,7 +199,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.beauty:
         return 'face';
 
-      // Despesas - Financeiras
       case TransactionCategoryEnum.loans:
         return 'account_balance';
       case TransactionCategoryEnum.creditCard:
@@ -235,7 +208,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.fees:
         return 'money_off';
 
-      // Despesas - Educação
       case TransactionCategoryEnum.education:
         return 'school';
       case TransactionCategoryEnum.books:
@@ -243,7 +215,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.courses:
         return 'play_lesson';
 
-      // Despesas - Família
       case TransactionCategoryEnum.childcare:
         return 'child_care';
       case TransactionCategoryEnum.pets:
@@ -251,7 +222,6 @@ enum TransactionCategoryEnum {
       case TransactionCategoryEnum.gifts:
         return 'redeem';
 
-      // Outros
       case TransactionCategoryEnum.charity:
         return 'volunteer_activism';
       case TransactionCategoryEnum.emergencyFund:

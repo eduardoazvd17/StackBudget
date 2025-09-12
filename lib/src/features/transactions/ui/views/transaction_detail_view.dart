@@ -148,14 +148,12 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Card principal
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(Spacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Título e valor
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -184,7 +182,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
 
                     const SizedBox(height: Spacing.lg),
 
-                    // Informações detalhadas
                     _buildDetailSection(context.strings.generalInformation, [
                       _buildDetailItem(
                         context.strings.type,
@@ -211,12 +208,10 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
 
                     const SizedBox(height: Spacing.lg),
 
-                    // Informações de frequência específicas
                     ..._buildFrequencySpecificInfo(),
 
                     const SizedBox(height: Spacing.lg),
 
-                    // Informações de data
                     _buildDetailSection(context.strings.dates, [
                       _buildDetailItem(
                         context.strings.createdAt,
@@ -425,7 +420,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Valor principal (do período selecionado)
         Text(
           _formatCurrency(currentPeriodValue),
           style: context.textTheme.headlineSmall?.copyWith(
@@ -434,7 +428,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           ),
         ),
 
-        // Para transações parceladas, mostrar informação adicional
         if (isInstallment &&
             widget.transaction.totalInstallments != null &&
             widget.transaction.totalInstallments! > 0) ...[
@@ -455,7 +448,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           ),
         ],
 
-        // Se há ajuste, mostrar informação adicional
         if (hasAdjustment) ...[
           const SizedBox(height: Spacing.xs),
           Row(
@@ -490,7 +482,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     int month,
     DashboardViewModelState dashboardState,
   ) {
-    // Só transações mensais podem ter ajustes
     if (widget.transaction.frequency != TransactionFrequencyEnum.monthly) {
       return false;
     }
@@ -512,10 +503,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     int month,
     DashboardViewModelState dashboardState,
   ) {
-    // Calcular valor padrão baseado no tipo de transação
     double defaultAmount = widget.transaction.amount;
 
-    // Para transações parceladas, dividir o valor total pelo número de parcelas
     if (widget.transaction.frequency == TransactionFrequencyEnum.installment &&
         widget.transaction.totalInstallments != null &&
         widget.transaction.totalInstallments! > 0) {
@@ -523,7 +512,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           widget.transaction.amount / widget.transaction.totalInstallments!;
     }
 
-    // Buscar override mensal no estado do dashboard para o período selecionado
     if (dashboardState is DashboardLoadedState) {
       final monthlyOverride =
           dashboardState.monthlyTransactions
@@ -559,15 +547,12 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     final selectedPeriod = ref.read(selectedPeriodProvider);
     final startDate = widget.transaction.startDate!;
 
-    // Calcular quantos meses se passaram desde o início
     final monthsDifference =
         ((selectedPeriod.year - startDate.year) * 12) +
         (selectedPeriod.month - startDate.month);
 
-    // A parcela atual é a diferença + 1 (primeira parcela = 1)
     final installmentNumber = monthsDifference + 1;
 
-    // Garantir que não ultrapasse o total de parcelas
     return installmentNumber.clamp(1, widget.transaction.totalInstallments!);
   }
 
@@ -594,7 +579,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
   }
 
   void _adjustMonthlyValue(BuildContext context) async {
-    // Usar o período selecionado no dashboard, não o mês atual
     final selectedPeriod = ref.read(selectedPeriodProvider);
     await showMonthlyValueEditor(
       context,
@@ -603,7 +587,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       month: selectedPeriod.month,
     );
 
-    // A atualização será automática via ref.watch no _buildValueSection
   }
 
   void _editTransaction(BuildContext context) {

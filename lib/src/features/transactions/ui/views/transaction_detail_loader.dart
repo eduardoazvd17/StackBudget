@@ -5,8 +5,6 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/transactions/ui/views/transaction_detail_view.dart';
 
-/// Loader que busca uma transação pelo ID e exibe os detalhes
-/// Usado quando acessamos a rota diretamente via URL (F5 na web)
 class TransactionDetailLoader extends ConsumerWidget {
   final String transactionId;
 

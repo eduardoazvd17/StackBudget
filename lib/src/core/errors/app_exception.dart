@@ -14,7 +14,6 @@ class AppException implements Exception {
     this.stackTrace,
   });
 
-  /// Factory constructors for common exception types
   factory AppException.userNotFound([String? debugMessage]) => AppException(
     type: AppExceptionType.userNotFound,
     debugMessage: debugMessage,
@@ -245,13 +244,10 @@ class AppException implements Exception {
     debugMessage: debugMessage,
   );
 
-  /// Get user-friendly title for this exception
   String getTitle(BuildContext context) => type.getTitle(context);
 
-  /// Get user-friendly message for this exception
   String getMessage(BuildContext context) => type.getMessage(context);
 
-  /// Create AppException from Firebase Auth error code
   factory AppException.fromFirebaseAuthError(
     String code, [
     String? debugMessage,
@@ -280,7 +276,6 @@ class AppException implements Exception {
     }
   }
 
-  /// Create AppException from any other exception
   factory AppException.fromException(
     Object exception, [
     StackTrace? stackTrace,

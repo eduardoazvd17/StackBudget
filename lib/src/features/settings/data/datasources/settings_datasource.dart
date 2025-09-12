@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/settings_model.dart';
 
-// Provider
 final settingsDataSourceProvider = Provider<SettingsDataSource>((ref) {
   throw UnimplementedError('Should be overridden in main.dart');
 });
@@ -19,7 +18,6 @@ class SettingsDataSource {
 
   Future<SettingsModel> getSettings() async {
     try {
-      // Primeiro tenta carregar do Firebase se o usuário estiver logado
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         final userDoc =
@@ -38,13 +36,11 @@ class SettingsDataSource {
             language: userData['language'] as String? ?? 'pt',
           );
 
-          // Sincroniza com SharedPreferences
           await saveSettings(firebaseSettings);
           return firebaseSettings;
         }
       }
 
-      // Se não há usuário logado ou dados no Firebase, usa SharedPreferences
       final settingsJson = _prefs.getString(_settingsKey);
       if (settingsJson != null) {
         final settingsMap = json.decode(settingsJson) as Map<String, dynamic>;
@@ -70,7 +66,6 @@ class SettingsDataSource {
     final updatedSettings = currentSettings.copyWith(currency: currency);
     await saveSettings(updatedSettings);
 
-    // Atualizar também no Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
@@ -80,7 +75,6 @@ class SettingsDataSource {
   }
 
   Future<void> updateTheme(bool isDarkMode) async {
-    // Mantém compatibilidade com código existente
     final themeMode = isDarkMode ? ThemeModeType.dark : ThemeModeType.light;
     await updateThemeMode(themeMode);
   }
@@ -90,7 +84,6 @@ class SettingsDataSource {
     final updatedSettings = currentSettings.copyWith(themeMode: themeMode);
     await saveSettings(updatedSettings);
 
-    // Atualizar também no Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
@@ -108,7 +101,6 @@ class SettingsDataSource {
     final updatedSettings = currentSettings.copyWith(language: language);
     await saveSettings(updatedSettings);
 
-    // Atualizar também no Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
@@ -117,7 +109,6 @@ class SettingsDataSource {
     }
   }
 
-  /// Sincroniza as configurações do Firebase com o SharedPreferences
   Future<void> syncSettingsFromFirebase() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -141,7 +132,6 @@ class SettingsDataSource {
           await saveSettings(firebaseSettings);
         }
       } catch (e) {
-        // Ignora erros de sincronização
       }
     }
   }

@@ -1,100 +1,30 @@
 {
   "@@locale": "en",
   "frequencyOneTime": "One-time",
-  "@frequencyOneTime": {
-    "description": "Label for one-time transaction frequency"
-  },
   "frequencyMonthly": "Monthly",
-  "@frequencyMonthly": {
-    "description": "Label for monthly transaction frequency"
-  },
   "frequencyYearly": "Yearly",
-  "@frequencyYearly": {
-    "description": "Label for yearly transaction frequency"
-  },
   "frequencyInstallment": "Installment",
-  "@frequencyInstallment": {
-    "description": "Label for installment transaction frequency"
-  },
   "frequency": "Frequency",
-  "@frequency": {
-    "description": "Label for frequency field"
-  },
   "selectFrequency": "Select frequency",
-  "@selectFrequency": {
-    "description": "Hint text for frequency dropdown"
-  },
   "selectFrequencyRequired": "Please select a frequency",
-  "@selectFrequencyRequired": {
-    "description": "Validation message for frequency field"
-  },
   "monthlySettings": "Monthly Settings",
-  "@monthlySettings": {
-    "description": "Title for monthly transaction settings"
-  },
   "startMonthField": "Start Month",
-  "@startMonthField": {
-    "description": "Label for start month field"
-  },
   "endMonthField": "End Month",
-  "@endMonthField": {
-    "description": "Label for end month field"
-  },
   "selectStartMonth": "Select start month",
-  "@selectStartMonth": {
-    "description": "Hint text for start month field"
-  },
   "selectEndMonth": "Select end month",
-  "@selectEndMonth": {
-    "description": "Hint text for end month field"
-  },
   "yearlySettings": "Yearly Settings",
-  "@yearlySettings": {
-    "description": "Title for yearly transaction settings"
-  },
   "yearlyMonthField": "Yearly Month",
-  "@yearlyMonthField": {
-    "description": "Label for yearly month field"
-  },
   "selectYearlyMonth": "Select the month it occurs yearly",
-  "@selectYearlyMonth": {
-    "description": "Hint text for yearly month field"
-  },
   "selectMonthRequired": "Please select a month",
-  "@selectMonthRequired": {
-    "description": "Validation message for month selection"
-  },
   "installmentSettings": "Installment Settings",
-  "@installmentSettings": {
-    "description": "Title for installment transaction settings"
-  },
   "totalInstallmentsField": "Total Installments",
-  "@totalInstallmentsField": {
-    "description": "Label for total installments field"
-  },
   "enterTotalInstallments": "Enter total number of installments",
-  "@enterTotalInstallments": {
-    "description": "Hint text for total installments field"
-  },
   "installmentsRequired": "Please enter the number of installments",
-  "@installmentsRequired": {
-    "description": "Validation message for installments field"
-  },
   "installmentsMinValue": "Must be at least 2 installments",
-  "@installmentsMinValue": {
-    "description": "Validation message for minimum installments"
-  },
   "startDateRequired": "Please select a start date",
-  "@startDateRequired": {
-    "description": "Validation message for start date"
-  },
   "endDateAfterStart": "End date must be after start date",
-  "@endDateAfterStart": {
-    "description": "Validation message for end date validation"
-  },
   "endDateAfterStartSpecific": "Must be after {startMonth}/{startYear}",
   "@endDateAfterStartSpecific": {
-    "description": "Validation message for end date with specific start date",
     "placeholders": {
       "startMonth": {
         "type": "String"
@@ -102,455 +32,119 @@
       "startYear": {
         "type": "String"
       }
-    }
-  },
+    },
   "transactions": "Transactions",
-  "@transactions": {
-    "description": "Title for transactions section"
-  },
   "recurringTransactions": "Recurring Transactions",
-  "@recurringTransactions": {
-    "description": "Title for recurring transactions section"
-  },
   "installments": "Installments",
-  "@installments": {
-    "description": "Title for installments section"
-  },
   "monthlyTransactions": "Monthly Transactions",
-  "@monthlyTransactions": {
-    "description": "Title for monthly transactions section"
-  },
   "noTransactionsFound": "No transactions found",
-  "@noTransactionsFound": {
-    "description": "Message when no transactions are found"
-  },
   "addFirstTransaction": "Add your first transaction to get started",
-  "@addFirstTransaction": {
-    "description": "Message encouraging user to add first transaction"
-  },
   "newTransaction": "New Transaction",
-  "@newTransaction": {
-    "description": "Label for new transaction button"
-  },
   "titleField": "Title",
-  "@titleField": {
-    "description": "Label for title field"
-  },
   "enterTitle": "Enter transaction title",
-  "@enterTitle": {
-    "description": "Hint text for title field"
-  },
   "titleRequired": "Please enter a title",
-  "@titleRequired": {
-    "description": "Validation message for title field"
-  },
-  "description": "Description",
-  "@description": {
-    "description": "Label for description field"
-  },
   "enterDescription": "Enter description (optional)",
-  "@enterDescription": {
-    "description": "Hint text for description field"
-  },
   "amountField": "Amount",
-  "@amountField": {
-    "description": "Label for amount field"
-  },
   "enterAmount": "Enter amount",
-  "@enterAmount": {
-    "description": "Hint text for amount field"
-  },
   "amountRequired": "Please enter an amount",
-  "@amountRequired": {
-    "description": "Validation message for amount field"
-  },
   "amountPositive": "Amount must be greater than zero",
-  "@amountPositive": {
-    "description": "Validation message for positive amount"
-  },
   "type": "Type",
-  "@type": {
-    "description": "Label for transaction type"
-  },
   "income": "Income",
-  "@income": {
-    "description": "Label for income transaction type"
-  },
   "expense": "Expense",
-  "@expense": {
-    "description": "Label for expense transaction type"
-  },
   "categoryField": "Category",
-  "@categoryField": {
-    "description": "Label for category field"
-  },
   "selectCategory": "Select category (optional)",
-  "@selectCategory": {
-    "description": "Hint text for category field"
-  },
   "save": "Save",
-  "@save": {
-    "description": "Label for save button"
-  },
   "cancel": "Cancel",
-  "@cancel": {
-    "description": "Label for cancel button"
-  },
   "edit": "Edit",
-  "@edit": {
-    "description": "Label for edit button"
-  },
   "delete": "Delete",
-  "@delete": {
-    "description": "Label for delete button"
-  },
   "deleteConfirmation": "Delete Transaction",
-  "@deleteConfirmation": {
-    "description": "Title for delete confirmation dialog"
-  },
   "deleteConfirmationMessage": "Are you sure you want to delete this transaction? This action cannot be undone.",
-  "@deleteConfirmationMessage": {
-    "description": "Message for delete confirmation dialog"
-  },
   "yes": "Yes",
-  "@yes": {
-    "description": "Label for yes button"
-  },
   "no": "No",
-  "@no": {
-    "description": "Label for no button"
-  },
   "error": "Error",
-  "@error": {
-    "description": "Label for error"
-  },
   "loading": "Loading...",
-  "@loading": {
-    "description": "Label for loading state"
-  },
   "success": "Success",
-  "@success": {
-    "description": "Label for success state"
-  },
   "transactionSaved": "Transaction saved successfully",
-  "@transactionSaved": {
-    "description": "Message when transaction is saved successfully"
-  },
   "transactionDeleted": "Transaction deleted successfully",
-  "@transactionDeleted": {
-    "description": "Message when transaction is deleted successfully"
-  },
   "errorSavingTransaction": "Error saving transaction",
-  "@errorSavingTransaction": {
-    "description": "Message when there's an error saving transaction"
-  },
   "errorDeletingTransaction": "Error deleting transaction",
-  "@errorDeletingTransaction": {
-    "description": "Message when there's an error deleting transaction"
-  },
   "errorLoadingTransactions": "Error loading transactions",
-  "@errorLoadingTransactions": {
-    "description": "Message when there's an error loading transactions"
-  },
   "unexpectedError": "Unexpected error",
-  "@unexpectedError": {
-    "description": "Message for unexpected errors"
-  },
   "userNotAuthenticated": "User not authenticated",
-  "@userNotAuthenticated": {
-    "description": "Message when user is not authenticated"
-  },
   "currentInstallment": "Current Installment",
-  "@currentInstallment": {
-    "description": "Label for current installment"
-  },
   "ofPreposition": "of",
-  "@ofPreposition": {
-    "description": "Preposition used in installment display"
-  },
   "monthlyInformation": "Monthly Information",
-  "@monthlyInformation": {
-    "description": "Title for monthly information section"
-  },
   "installmentInformation": "Installment Information",
-  "@installmentInformation": {
-    "description": "Title for installment information section"
-  },
   "yearlyInformation": "Yearly Information",
-  "@yearlyInformation": {
-    "description": "Title for yearly information section"
-  },
   "startMonthLabel": "Start Month",
-  "@startMonthLabel": {
-    "description": "Label for start month in details"
-  },
   "endMonthLabel": "End Month",
-  "@endMonthLabel": {
-    "description": "Label for end month in details"
-  },
   "totalAmount": "Total Amount",
-  "@totalAmount": {
-    "description": "Label for total amount"
-  },
   "installmentAmount": "Installment Amount",
-  "@installmentAmount": {
-    "description": "Label for installment amount"
-  },
   "yearlyMonthLabel": "Yearly Month",
-  "@yearlyMonthLabel": {
-    "description": "Label for yearly month in details"
-  },
   "adjustMonthlyValue": "Adjust Monthly Value",
-  "@adjustMonthlyValue": {
-    "description": "Label for adjust monthly value button"
-  },
   "currentValue": "Current Value",
-  "@currentValue": {
-    "description": "Label for current value"
-  },
   "defaultValue": "Default Value",
-  "@defaultValue": {
-    "description": "Label for default value"
-  },
   "notes": "Notes",
-  "@notes": {
-    "description": "Label for notes field"
-  },
   "enterNotes": "Enter notes (optional)",
-  "@enterNotes": {
-    "description": "Hint text for notes field"
-  },
   "customAmount": "Custom Amount",
-  "@customAmount": {
-    "description": "Label for custom amount"
-  },
   "hasAdjustment": "Has adjustment",
-  "@hasAdjustment": {
-    "description": "Label indicating transaction has monthly adjustment"
-  },
   "transactionType": "Transaction Type",
-  "@transactionType": {
-    "description": "Label for transaction type selector"
-  },
   "moneyIn": "Money coming in",
-  "@moneyIn": {
-    "description": "Subtitle for income type"
-  },
   "moneyOut": "Money going out",
-  "@moneyOut": {
-    "description": "Subtitle for expense type"
-  },
   "saving": "Saving...",
-  "@saving": {
-    "description": "Text for saving state"
-  },
   "updateTransaction": "Update Transaction",
-  "@updateTransaction": {
-    "description": "Label for update transaction button"
-  },
   "saveTransaction": "Save Transaction",
-  "@saveTransaction": {
-    "description": "Label for save transaction button"
-  },
   "additionalDetails": "Additional details (optional)",
-  "@additionalDetails": {
-    "description": "Hint text for description field"
-  },
   "selectStartDate": "Select when to start",
-  "@selectStartDate": {
-    "description": "Hint text for start date selection"
-  },
   "selectEndDate": "Select end date",
-  "@selectEndDate": {
-    "description": "Hint text for end date selection"
-  },
   "selectStartDateFirst": "Select start date first",
-  "@selectStartDateFirst": {
-    "description": "Message when trying to select end date without start date"
-  },
   "enterInstallments": "Enter number of installments",
-  "@enterInstallments": {
-    "description": "Hint text for installments field"
-  },
   "installmentsRequiredForm": "Number of installments is required",
-  "@installmentsRequiredForm": {
-    "description": "Validation message for installments field in form"
-  },
   "installmentsPositive": "Must be a number greater than zero",
-  "@installmentsPositive": {
-    "description": "Validation message for positive installments"
-  },
   "selectFirstInstallmentMonth": "Select the month of the first installment",
-  "@selectFirstInstallmentMonth": {
-    "description": "Hint text for first installment month selection"
-  },
   "installmentValue": "Installment value",
-  "@installmentValue": {
-    "description": "Label for installment value"
-  },
   "installmentValueForm": "Installment value",
-  "@installmentValueForm": {
-    "description": "Label for installment value in form"
-  },
   "firstInstallmentMonth": "1st Installment Month",
-  "@firstInstallmentMonth": {
-    "description": "Label for first installment month"
-  },
   "titleHint": "Ex: Salary, Rent, Groceries...",
-  "@titleHint": {
-    "description": "Hint text for title field"
-  },
   "amountHint": "R$ 0.00",
-  "@amountHint": {
-    "description": "Hint text for amount field"
-  },
   "endMonthOptional": "End Month (optional)",
-  "@endMonthOptional": {
-    "description": "Label for optional end month"
-  },
   "startMonthRequiredLabel": "Start Month *",
-  "@startMonthRequiredLabel": {
-    "description": "Label for required start month"
-  },
   "yearlyMonthRequiredLabel": "Yearly Month *",
-  "@yearlyMonthRequiredLabel": {
-    "description": "Label for required yearly month"
-  },
   "totalInstallmentsRequiredLabel": "Total Installments *",
-  "@totalInstallmentsRequiredLabel": {
-    "description": "Label for required total installments"
-  },
   "titleRequiredLabel": "Title *",
-  "@titleRequiredLabel": {
-    "description": "Label for required title"
-  },
   "amountRequiredLabel": "Amount *",
-  "@amountRequiredLabel": {
-    "description": "Label for required amount"
-  },
   "categoryRequiredLabel": "Category *",
-  "@categoryRequiredLabel": {
-    "description": "Label for required category"
-  },
   "dashboardTransactions": "Transactions",
-  "@dashboardTransactions": {
-    "description": "Title for transactions section in dashboard"
-  },
   "adjusted": "Adjusted",
-  "@adjusted": {
-    "description": "Label indicating transaction has been adjusted"
-  },
   "transactionDetails": "Transaction Details",
-  "@transactionDetails": {
-    "description": "Title for transaction details screen"
-  },
   "editAction": "Edit",
-  "@editAction": {
-    "description": "Label for edit action"
-  },
   "adjustMonthlyValueAction": "Adjust this month's value",
-  "@adjustMonthlyValueAction": {
-    "description": "Label for adjust monthly value action"
-  },
   "deleteAction": "Delete",
-  "@deleteAction": {
-    "description": "Label for delete action"
-  },
   "generalInformation": "General Information",
-  "@generalInformation": {
-    "description": "Title for general information section"
-  },
   "dates": "Dates",
-  "@dates": {
-    "description": "Title for dates section"
-  },
   "createdAt": "Created at",
-  "@createdAt": {
-    "description": "Label for creation date"
-  },
   "updatedAt": "Updated at",
-  "@updatedAt": {
-    "description": "Label for update date"
-  },
   "tags": "Tags",
-  "@tags": {
-    "description": "Label for tags"
-  },
   "confirmDelete": "Confirm Delete",
-  "@confirmDelete": {
-    "description": "Title for delete confirmation dialog"
-  },
   "deletedTransaction": "Deleted transaction",
-  "@deletedTransaction": {
-    "description": "Label for deleted transaction"
-  },
   "settings": "Settings",
-  "@settings": {
-    "description": "Title for settings screen"
-  },
   "appearance": "Appearance",
-  "@appearance": {
-    "description": "Title for appearance settings section"
-  },
   "language": "Language",
-  "@language": {
-    "description": "Title for language settings section"
-  },
   "currency": "Currency",
-  "@currency": {
-    "description": "Title for currency settings section"
-  },
   "retry": "Retry",
-  "@retry": {
-    "description": "Label for retry button"
-  },
   "darkMode": "Dark Mode",
-  "@darkMode": {
-    "description": "Label for dark mode setting"
-  },
   "lightMode": "Light Mode",
-  "@lightMode": {
-    "description": "Label for light mode setting"
-  },
   "portuguese": "Portuguese",
-  "@portuguese": {
-    "description": "Label for Portuguese language"
-  },
   "english": "English",
-  "@english": {
-    "description": "Label for English language"
-  },
   "brazilianReal": "Brazilian Real (R$)",
-  "@brazilianReal": {
-    "description": "Label for Brazilian Real currency"
-  },
   "usDollar": "US Dollar ($)",
-  "@usDollar": {
-    "description": "Label for US Dollar currency"
-  },
   "euro": "Euro (€)",
-  "@euro": {
-    "description": "Label for Euro currency"
-  },
   "selectPeriod": "Select Period",
-  "@selectPeriod": {
-    "description": "Title for period selection dialog"
-  },
   "confirm": "Confirm",
-  "@confirm": {
-    "description": "Label for confirm button"
-  },
   "transactionDeletedSuccess": "Transaction deleted successfully!",
-  "@transactionDeletedSuccess": {
-    "description": "Success message when transaction is deleted"
-  },
   "transactionUpdatedSuccess": "Transaction updated successfully!",
-  "@transactionUpdatedSuccess": {
-    "description": "Success message when transaction is updated"
-  },
   "adjustValue": "Adjust Value - {month}/{year}",
   "@adjustValue": {
-    "description": "Title for adjust value dialog",
     "placeholders": {
       "month": {
         "type": "String"
@@ -561,527 +155,141 @@
     }
   },
   "removeAdjustment": "Remove Adjustment",
-  "@removeAdjustment": {
-    "description": "Label for remove adjustment button"
-  },
   "editTransaction": "Edit Transaction",
-  "@editTransaction": {
-    "description": "Title for edit transaction screen"
-  },
   "back": "Back",
-  "@back": {
-    "description": "Label for back button"
-  },
   "notFound": "Not Found",
-  "@notFound": {
-    "description": "Label for not found state"
-  },
   "backToTransactions": "Back to Transactions",
-  "@backToTransactions": {
-    "description": "Label for back to transactions button"
-  },
   "profile": "Profile",
-  "@profile": {
-    "description": "Label for profile option"
-  },
   "profileComingSoon": "Profile - Coming soon!",
-  "@profileComingSoon": {
-    "description": "Message for profile feature coming soon"
-  },
   "logout": "Logout",
-  "@logout": {
-    "description": "Label for logout option"
-  },
   "confirmLogout": "Confirm Logout",
-  "@confirmLogout": {
-    "description": "Title for logout confirmation dialog"
-  },
   "confirmLogoutMessage": "Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.",
-  "@confirmLogoutMessage": {
-    "description": "Message for logout confirmation dialog"
-  },
   "authErrorTitle": "Authentication Error",
-  "@authErrorTitle": {
-    "description": "Title for authentication errors"
-  },
   "networkErrorTitle": "Connection Error",
-  "@networkErrorTitle": {
-    "description": "Title for network errors"
-  },
   "databaseErrorTitle": "Database Error",
-  "@databaseErrorTitle": {
-    "description": "Title for database errors"
-  },
   "transactionErrorTitle": "Transaction Error",
-  "@transactionErrorTitle": {
-    "description": "Title for transaction errors"
-  },
   "budgetErrorTitle": "Budget Error",
-  "@budgetErrorTitle": {
-    "description": "Title for budget errors"
-  },
   "settingsErrorTitle": "Settings Error",
-  "@settingsErrorTitle": {
-    "description": "Title for settings errors"
-  },
   "validationErrorTitle": "Validation Error",
-  "@validationErrorTitle": {
-    "description": "Title for validation errors"
-  },
   "generalErrorTitle": "Error",
-  "@generalErrorTitle": {
-    "description": "Title for general errors"
-  },
   "userNotFoundError": "User not found. Please check your email and try again.",
-  "@userNotFoundError": {
-    "description": "Error message when user is not found"
-  },
   "wrongPasswordError": "Wrong password. Please check your password and try again.",
-  "@wrongPasswordError": {
-    "description": "Error message for wrong password"
-  },
   "emailAlreadyInUseError": "This email is already being used by another account.",
-  "@emailAlreadyInUseError": {
-    "description": "Error message when email is already in use"
-  },
   "weakPasswordError": "Password must be at least 6 characters long.",
-  "@weakPasswordError": {
-    "description": "Error message for weak password"
-  },
   "invalidEmailError": "The email provided is not valid.",
-  "@invalidEmailError": {
-    "description": "Error message for invalid email"
-  },
   "userDisabledError": "This account has been disabled. Please contact support.",
-  "@userDisabledError": {
-    "description": "Error message for disabled user"
-  },
   "tooManyRequestsError": "Too many login attempts. Please try again in a few minutes.",
-  "@tooManyRequestsError": {
-    "description": "Error message for too many requests"
-  },
   "operationNotAllowedError": "Operation not allowed. Please check your settings.",
-  "@operationNotAllowedError": {
-    "description": "Error message for operation not allowed"
-  },
   "invalidCredentialError": "Invalid credentials. Please check your information and try again.",
-  "@invalidCredentialError": {
-    "description": "Error message for invalid credentials"
-  },
   "authenticationFailedError": "Authentication failed. Please try again.",
-  "@authenticationFailedError": {
-    "description": "Error message for authentication failure"
-  },
   "userDataNotFoundError": "User data not found.",
-  "@userDataNotFoundError": {
-    "description": "Error message when user data is not found"
-  },
   "signUpFailedError": "Failed to create account. Please try again.",
-  "@signUpFailedError": {
-    "description": "Error message for sign up failure"
-  },
   "signOutFailedError": "Error signing out. Please try again.",
-  "@signOutFailedError": {
-    "description": "Error message for sign out failure"
-  },
   "getCurrentUserFailedError": "Error retrieving user data.",
-  "@getCurrentUserFailedError": {
-    "description": "Error message for get current user failure"
-  },
   "networkError": "Connection error. Please check your internet and try again.",
-  "@networkError": {
-    "description": "Error message for network issues"
-  },
   "connectionTimeoutError": "Connection timeout. Please try again.",
-  "@connectionTimeoutError": {
-    "description": "Error message for connection timeout"
-  },
   "serverError": "Server error. Please try again in a few minutes.",
-  "@serverError": {
-    "description": "Error message for server errors"
-  },
   "noInternetConnectionError": "No internet connection. Please check your connection.",
-  "@noInternetConnectionError": {
-    "description": "Error message for no internet connection"
-  },
   "firebaseError": "Service error. Please try again in a few minutes.",
-  "@firebaseError": {
-    "description": "Error message for Firebase errors"
-  },
   "firestoreError": "Database error. Please try again.",
-  "@firestoreError": {
-    "description": "Error message for Firestore errors"
-  },
   "permissionDeniedError": "Access denied. Please check your permissions.",
-  "@permissionDeniedError": {
-    "description": "Error message for permission denied"
-  },
   "documentNotFoundError": "Document not found.",
-  "@documentNotFoundError": {
-    "description": "Error message for document not found"
-  },
   "collectionNotFoundError": "Collection not found.",
-  "@collectionNotFoundError": {
-    "description": "Error message for collection not found"
-  },
   "transactionNotFoundError": "Transaction not found.",
-  "@transactionNotFoundError": {
-    "description": "Error message for transaction not found"
-  },
   "transactionSaveFailedError": "Error saving transaction. Please try again.",
-  "@transactionSaveFailedError": {
-    "description": "Error message for transaction save failure"
-  },
   "transactionDeleteFailedError": "Error deleting transaction. Please try again.",
-  "@transactionDeleteFailedError": {
-    "description": "Error message for transaction delete failure"
-  },
   "transactionUpdateFailedError": "Error updating transaction. Please try again.",
-  "@transactionUpdateFailedError": {
-    "description": "Error message for transaction update failure"
-  },
   "transactionLoadFailedError": "Error loading transactions. Please try again.",
-  "@transactionLoadFailedError": {
-    "description": "Error message for transaction load failure"
-  },
   "invalidTransactionDataError": "Invalid transaction data.",
-  "@invalidTransactionDataError": {
-    "description": "Error message for invalid transaction data"
-  },
   "budgetCalculationFailedError": "Error calculating budget. Please try again.",
-  "@budgetCalculationFailedError": {
-    "description": "Error message for budget calculation failure"
-  },
   "budgetDataInvalidError": "Invalid budget data.",
-  "@budgetDataInvalidError": {
-    "description": "Error message for invalid budget data"
-  },
   "settingsSaveFailedError": "Error saving settings. Please try again.",
-  "@settingsSaveFailedError": {
-    "description": "Error message for settings save failure"
-  },
   "settingsLoadFailedError": "Error loading settings. Please try again.",
-  "@settingsLoadFailedError": {
-    "description": "Error message for settings load failure"
-  },
   "validationError": "Invalid data. Please check the fields and try again.",
-  "@validationError": {
-    "description": "Error message for validation errors"
-  },
   "invalidDataError": "Invalid data provided.",
-  "@invalidDataError": {
-    "description": "Error message for invalid data"
-  },
   "requiredFieldMissingError": "Required field not filled.",
-  "@requiredFieldMissingError": {
-    "description": "Error message for required field missing"
-  },
   "unknownError": "Unknown error. Please try again or contact support.",
-  "@unknownError": {
-    "description": "Error message for unknown errors"
-  },
   "dataParsingError": "Error processing data. Please try again.",
-  "@dataParsingError": {
-    "description": "Error message for data parsing errors"
-  },
   "cacheError": "Cache error. Please try again.",
-  "@cacheError": {
-    "description": "Error message for cache errors"
-  },
   "storageError": "Storage error. Please try again.",
-  "@storageError": {
-    "description": "Error message for storage errors"
-  },
   "profile": "Profile",
-  "@profile": {
-    "description": "Label for profile screen"
-  },
   "editProfile": "Edit Profile",
-  "@editProfile": {
-    "description": "Title for edit profile screen"
-  },
   "changeName": "Change Name",
-  "@changeName": {
-    "description": "Label for change name option"
-  },
   "changePassword": "Change Password",
-  "@changePassword": {
-    "description": "Label for change password option"
-  },
   "deleteAccount": "Delete Account",
-  "@deleteAccount": {
-    "description": "Label for delete account option"
-  },
   "currentName": "Current Name",
-  "@currentName": {
-    "description": "Label for current name field"
-  },
   "newName": "New Name",
-  "@newName": {
-    "description": "Label for new name field"
-  },
   "nameUpdatedSuccess": "Name updated successfully!",
-  "@nameUpdatedSuccess": {
-    "description": "Success message when name is updated"
-  },
   "currentPassword": "Current Password",
-  "@currentPassword": {
-    "description": "Label for current password field"
-  },
   "newPassword": "New Password",
-  "@newPassword": {
-    "description": "Label for new password field"
-  },
   "confirmNewPassword": "Confirm New Password",
-  "@confirmNewPassword": {
-    "description": "Label for confirm new password field"
-  },
   "passwordUpdatedSuccess": "Password changed successfully!",
-  "@passwordUpdatedSuccess": {
-    "description": "Success message when password is updated"
-  },
   "deleteAccountConfirmation": "Delete Account Permanently",
-  "@deleteAccountConfirmation": {
-    "description": "Title for delete account confirmation dialog"
-  },
   "deleteAccountWarning": "This action is irreversible!\n\nAll your data will be permanently deleted:\n• Transactions\n• Settings\n• Financial history\n\nAre you sure you want to continue?",
-  "@deleteAccountWarning": {
-    "description": "Warning message for delete account dialog"
-  },
   "enterCurrentPasswordToDelete": "Enter your current password to confirm deletion:",
-  "@enterCurrentPasswordToDelete": {
-    "description": "Prompt for password confirmation in delete account dialog"
-  },
   "accountDeletedSuccess": "Account deleted successfully!",
-  "@accountDeletedSuccess": {
-    "description": "Success message when account is deleted"
-  },
   "incorrectPassword": "Current password is incorrect",
-  "@incorrectPassword": {
-    "description": "Error message for incorrect password"
-  },
   "passwordTooWeak": "Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character",
-  "@passwordTooWeak": {
-    "description": "Error message for weak password"
-  },
   "passwordsDoNotMatch": "Passwords do not match",
-  "@passwordsDoNotMatch": {
-    "description": "Error message when passwords don't match"
-  },
   "nameRequired": "Name is required",
-  "@nameRequired": {
-    "description": "Validation message for required name"
-  },
   "nameMinLength": "Name must have at least 2 characters",
-  "@nameMinLength": {
-    "description": "Validation message for name minimum length"
-  },
   "currentPasswordRequired": "Current password is required",
-  "@currentPasswordRequired": {
-    "description": "Validation message for required current password"
-  },
   "newPasswordRequired": "New password is required",
-  "@newPasswordRequired": {
-    "description": "Validation message for required new password"
-  },
   "confirmPasswordRequired": "Password confirmation is required",
-  "@confirmPasswordRequired": {
-    "description": "Validation message for required password confirmation"
-  },
   "updateName": "Update Name",
-  "@updateName": {
-    "description": "Label for update name button"
-  },
   "updatePassword": "Update Password",
-  "@updatePassword": {
-    "description": "Label for update password button"
-  },
   "deleteAccountAction": "Delete Account",
-  "@deleteAccountAction": {
-    "description": "Label for delete account button"
-  },
   "profileUpdatedError": "Error updating profile",
-  "@profileUpdatedError": {
-    "description": "Error message when profile update fails"
-  },
   "passwordUpdateError": "Error changing password",
-  "@passwordUpdateError": {
-    "description": "Error message when password update fails"
-  },
   "accountDeleteError": "Error deleting account",
-  "@accountDeleteError": {
-    "description": "Error message when account deletion fails"
-  },
   "reauthenticationRequired": "Identity confirmation is required for this action",
-  "@reauthenticationRequired": {
-    "description": "Error message when reauthentication is required"
-  },
   "dashboard": "Dashboard",
-  "@dashboard": {
-    "description": "Label for dashboard screen"
-  },
   "appSubtitle": "Smart Financial Planning",
-  "@appSubtitle": {
-    "description": "App subtitle"
-  },
   "defaultUserName": "User",
-  "@defaultUserName": {
-    "description": "Default user name when no user is logged in"
-  },
   "goodMorning": "Good morning!",
-  "@goodMorning": {
-    "description": "Morning greeting message"
-  },
   "goodAfternoon": "Good afternoon!",
-  "@goodAfternoon": {
-    "description": "Afternoon greeting message"
-  },
   "goodEvening": "Good evening!",
-  "@goodEvening": {
-    "description": "Evening greeting message"
-  },
   "systemTheme": "System",
-  "@systemTheme": {
-    "description": "System theme option label"
-  },
   "errorLoadingTransaction": "Error loading transaction",
-  "@errorLoadingTransaction": {
-    "description": "Error message when loading transaction fails"
-  },
   "transactionNotFound": "Transaction not found",
-  "@transactionNotFound": {
-    "description": "Message when transaction is not found"
-  },
   "transactionNotFoundDescription": "The transaction may have been deleted or the ID is incorrect.",
-  "@transactionNotFoundDescription": {
-    "description": "Description explaining why transaction was not found"
-  },
   "categorySalary": "Salary",
-  "@categorySalary": {
-    "description": "Category name for Salary"
-  },
   "categoryFreelance": "Freelance",
-  "@categoryFreelance": {
-    "description": "Category name for Freelance"
-  },
   "categoryInvestment": "Investments",
-  "@categoryInvestment": {
-    "description": "Category name for Investments"
-  },
   "categoryBonus": "Bonus",
-  "@categoryBonus": {
-    "description": "Category name for Bonus"
-  },
   "categoryGiftIncome": "Gift Received",
-  "@categoryGiftIncome": {
-    "description": "Category name for Gift Received"
-  },
   "categoryOtherIncome": "Other Income",
-  "@categoryOtherIncome": {
-    "description": "Category name for Other Income"
-  },
   "categoryHousing": "Housing",
-  "@categoryHousing": {
-    "description": "Category name for Housing"
-  },
   "categoryUtilities": "Utilities",
-  "@categoryUtilities": {
-    "description": "Category name for Utilities"
-  },
   "categoryGroceries": "Groceries",
-  "@categoryGroceries": {
-    "description": "Category name for Groceries"
-  },
   "categoryTransportation": "Transportation",
-  "@categoryTransportation": {
-    "description": "Category name for Transportation"
-  },
   "categoryInsurance": "Insurance",
-  "@categoryInsurance": {
-    "description": "Category name for Insurance"
-  },
   "categoryHealthcare": "Healthcare",
-  "@categoryHealthcare": {
-    "description": "Category name for Healthcare"
-  },
   "categoryDining": "Dining",
-  "@categoryDining": {
-    "description": "Category name for Dining"
-  },
   "categoryEntertainment": "Entertainment",
-  "@categoryEntertainment": {
-    "description": "Category name for Entertainment"
-  },
   "categoryShopping": "Shopping",
-  "@categoryShopping": {
-    "description": "Category name for Shopping"
-  },
   "categoryTravel": "Travel",
-  "@categoryTravel": {
-    "description": "Category name for Travel"
-  },
   "categoryHobbies": "Hobbies",
-  "@categoryHobbies": {
-    "description": "Category name for Hobbies"
-  },
   "categoryFitness": "Gym/Sports",
-  "@categoryFitness": {
-    "description": "Category name for Gym/Sports"
-  },
   "categoryBeauty": "Beauty",
-  "@categoryBeauty": {
-    "description": "Category name for Beauty"
-  },
   "categoryLoans": "Loans",
-  "@categoryLoans": {
-    "description": "Category name for Loans"
-  },
   "categoryCreditCard": "Credit Card",
-  "@categoryCreditCard": {
-    "description": "Category name for Credit Card"
-  },
   "categoryTaxes": "Taxes",
-  "@categoryTaxes": {
-    "description": "Category name for Taxes"
-  },
   "categoryFees": "Fees",
-  "@categoryFees": {
-    "description": "Category name for Fees"
-  },
   "categoryEducation": "Education",
-  "@categoryEducation": {
-    "description": "Category name for Education"
-  },
   "categoryBooks": "Books",
-  "@categoryBooks": {
-    "description": "Category name for Books"
-  },
   "categoryCourses": "Courses",
-  "@categoryCourses": {
-    "description": "Category name for Courses"
-  },
   "categoryChildcare": "Childcare",
-  "@categoryChildcare": {
-    "description": "Category name for Childcare"
-  },
   "categoryPets": "Pets",
-  "@categoryPets": {
-    "description": "Category name for Pets"
-  },
   "categoryGifts": "Gifts",
-  "@categoryGifts": {
-    "description": "Category name for Gifts"
-  },
   "categoryCharity": "Charity",
-  "@categoryCharity": {
-    "description": "Category name for Charity"
-  },
   "categoryEmergencyFund": "Emergency Fund",
-  "@categoryEmergencyFund": {
-    "description": "Category name for Emergency Fund"
-  },
   "categoryOther": "Other",
-  "@categoryOther": {
-    "description": "Category name for Other"
-  }
+  "errorLoadingData": "Error loading data",
+  "noDataFound": "No data found",
+  "addTransactionsToSeeSummary": "Add transactions to see the summary",
+  "budgetSummary": "Budget Summary",
+  "currentBalance": "Current Balance",
+  "income": "Income",
+  "expenses": "Expenses",
 }

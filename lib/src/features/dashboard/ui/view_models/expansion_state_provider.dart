@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/services/services.dart';
 
-// Provider para gerenciar o estado de expansão
 class ExpansionState {
   final bool recurringExpanded;
   final bool installmentExpanded;
@@ -26,7 +25,6 @@ class ExpansionState {
   }
 }
 
-// StateNotifier para gerenciar o estado
 class ExpansionStateNotifier extends StateNotifier<ExpansionState?> {
   ExpansionStateNotifier() : super(null) {
     _loadInitialState();
@@ -46,7 +44,6 @@ class ExpansionStateNotifier extends StateNotifier<ExpansionState?> {
         oneTimeExpanded: oneTime,
       );
     } catch (e) {
-      // Estado padrão em caso de erro
       state = ExpansionState(
         recurringExpanded: true,
         installmentExpanded: true,
@@ -83,7 +80,6 @@ class ExpansionStateNotifier extends StateNotifier<ExpansionState?> {
   }
 }
 
-// Provider global
 final expansionStateProvider =
     StateNotifierProvider<ExpansionStateNotifier, ExpansionState?>((ref) {
       return ExpansionStateNotifier();

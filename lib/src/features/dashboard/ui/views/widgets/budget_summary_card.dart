@@ -12,17 +12,14 @@ class BudgetSummaryCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Inicializar dashboard quando usuário estiver autenticado
     ref.watch(dashboardInitializerProvider);
 
     final dashboardState = ref.watch(dashboardViewModelProvider);
 
-    // Verificar se há necessidade de recarregar dados
     final authState = ref.watch(authViewModelProvider);
     if (authState is AuthenticatedState &&
         dashboardState is DashboardLoadedState &&
         dashboardState.budgetSummary == null) {
-      // Se há usuário autenticado mas budgetSummary é null, mostrar loading ao invés de "nenhum dado"
       return const Card(
         child: Padding(
           padding: EdgeInsets.all(Spacing.lg),
@@ -31,7 +28,6 @@ class BudgetSummaryCard extends ConsumerWidget {
       );
     }
 
-    // Escutar mudanças no período e recarregar dados
     ref.listen<DateTime>(selectedPeriodProvider, (previous, next) {
       if (previous != next) {
         ref.read(dashboardViewModelProvider.notifier).loadDashboardData(next);
@@ -60,7 +56,7 @@ class BudgetSummaryCard extends ConsumerWidget {
               ),
               const SizedBox(height: Spacing.md),
               Text(
-                'Erro ao carregar dados',
+                context.strings.errorLoadingData,
                 style: context.textTheme.titleMedium,
               ),
               const SizedBox(height: Spacing.xs),
@@ -75,7 +71,6 @@ class BudgetSummaryCard extends ConsumerWidget {
       );
     }
 
-    // Se não é DashboardLoadedState, mostrar loading (exceto se for erro)
     if (dashboardState is! DashboardLoadedState) {
       return const Card(
         child: Padding(
@@ -85,9 +80,7 @@ class BudgetSummaryCard extends ConsumerWidget {
       );
     }
 
-    // Se é DashboardLoadedState mas budgetSummary é null, pode ser estado inconsistente
     if (dashboardState.budgetSummary == null) {
-      // Se há usuário autenticado, mostrar loading pois dados deveriam existir
       if (authState is AuthenticatedState) {
         return const Card(
           child: Padding(
@@ -97,7 +90,6 @@ class BudgetSummaryCard extends ConsumerWidget {
         );
       }
 
-      // Se não há usuário autenticado, mostrar mensagem de dados vazios
       return Card(
         child: Padding(
           padding: const EdgeInsets.all(Spacing.lg),
@@ -110,12 +102,12 @@ class BudgetSummaryCard extends ConsumerWidget {
               ),
               const SizedBox(height: Spacing.md),
               Text(
-                'Nenhum dado encontrado',
+                context.strings.noDataFound,
                 style: context.textTheme.titleMedium,
               ),
               const SizedBox(height: Spacing.xs),
               Text(
-                'Adicione transações para ver o resumo',
+                context.strings.addTransactionsToSeeSummary,
                 style: context.textTheme.bodySmall,
                 textAlign: TextAlign.center,
               ),
@@ -136,14 +128,13 @@ class BudgetSummaryCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Resumo do Orçamento',
+              context.strings.budgetSummary,
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: Spacing.md),
 
-            // Saldo principal
             Container(
               padding: const EdgeInsets.all(Spacing.md),
               decoration: BoxDecoration(
@@ -157,7 +148,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Saldo Atual',
+                        context.strings.currentBalance,
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: context.colorScheme.onPrimaryContainer,
                         ),
@@ -173,7 +164,6 @@ class BudgetSummaryCard extends ConsumerWidget {
                     ],
                   ),
 
-                  // Indicador de diferença
                   if (balanceDifference != 0)
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -220,13 +210,12 @@ class BudgetSummaryCard extends ConsumerWidget {
 
             const SizedBox(height: Spacing.md),
 
-            // Receitas e despesas
             Row(
               children: [
                 Expanded(
                   child: _buildSummaryItem(
                     context,
-                    'Receitas',
+                    context.strings.income,
                     budget.actualIncome,
                     budget.plannedIncome,
                     Icons.arrow_downward,
@@ -238,7 +227,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                 Expanded(
                   child: _buildSummaryItem(
                     context,
-                    'Despesas',
+                    context.strings.expenses,
                     budget.actualExpenses,
                     budget.plannedExpenses,
                     Icons.arrow_upward,

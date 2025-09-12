@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stackbudget/src/core/core.dart';
 
 enum AppExceptionType {
-  // Auth Errors
   userNotFound,
   wrongPassword,
   emailAlreadyInUse,
@@ -19,20 +18,17 @@ enum AppExceptionType {
   signOutFailed,
   getCurrentUserFailed,
 
-  // Network Errors
   networkError,
   connectionTimeout,
   serverError,
   noInternetConnection,
 
-  // Firebase Errors
   firebaseError,
   firestoreError,
   permissionDenied,
   documentNotFound,
   collectionNotFound,
 
-  // Transaction Errors
   transactionNotFound,
   transactionSaveFailed,
   transactionDeleteFailed,
@@ -40,20 +36,16 @@ enum AppExceptionType {
   transactionLoadFailed,
   invalidTransactionData,
 
-  // Budget Errors
   budgetCalculationFailed,
   budgetDataInvalid,
 
-  // Settings Errors
   settingsSaveFailed,
   settingsLoadFailed,
 
-  // Validation Errors
   validationError,
   invalidData,
   requiredFieldMissing,
 
-  // General Errors
   unexpectedError,
   unknownError,
   dataParsingError,
@@ -62,7 +54,6 @@ enum AppExceptionType {
 
   String getTitle(BuildContext context) {
     switch (this) {
-      // Auth Errors
       case AppExceptionType.userNotFound:
       case AppExceptionType.wrongPassword:
       case AppExceptionType.emailAlreadyInUse:
@@ -80,14 +71,12 @@ enum AppExceptionType {
       case AppExceptionType.getCurrentUserFailed:
         return context.strings.authErrorTitle;
 
-      // Network Errors
       case AppExceptionType.networkError:
       case AppExceptionType.connectionTimeout:
       case AppExceptionType.serverError:
       case AppExceptionType.noInternetConnection:
         return context.strings.networkErrorTitle;
 
-      // Firebase Errors
       case AppExceptionType.firebaseError:
       case AppExceptionType.firestoreError:
       case AppExceptionType.permissionDenied:
@@ -95,7 +84,6 @@ enum AppExceptionType {
       case AppExceptionType.collectionNotFound:
         return context.strings.databaseErrorTitle;
 
-      // Transaction Errors
       case AppExceptionType.transactionNotFound:
       case AppExceptionType.transactionSaveFailed:
       case AppExceptionType.transactionDeleteFailed:
@@ -104,23 +92,19 @@ enum AppExceptionType {
       case AppExceptionType.invalidTransactionData:
         return context.strings.transactionErrorTitle;
 
-      // Budget Errors
       case AppExceptionType.budgetCalculationFailed:
       case AppExceptionType.budgetDataInvalid:
         return context.strings.budgetErrorTitle;
 
-      // Settings Errors
       case AppExceptionType.settingsSaveFailed:
       case AppExceptionType.settingsLoadFailed:
         return context.strings.settingsErrorTitle;
 
-      // Validation Errors
       case AppExceptionType.validationError:
       case AppExceptionType.invalidData:
       case AppExceptionType.requiredFieldMissing:
         return context.strings.validationErrorTitle;
 
-      // General Errors
       case AppExceptionType.unexpectedError:
       case AppExceptionType.unknownError:
       case AppExceptionType.dataParsingError:
@@ -132,7 +116,6 @@ enum AppExceptionType {
 
   String getMessage(BuildContext context) {
     switch (this) {
-      // Auth Errors
       case AppExceptionType.userNotFound:
         return context.strings.userNotFoundError;
       case AppExceptionType.wrongPassword:
@@ -164,7 +147,6 @@ enum AppExceptionType {
       case AppExceptionType.getCurrentUserFailed:
         return context.strings.getCurrentUserFailedError;
 
-      // Network Errors
       case AppExceptionType.networkError:
         return context.strings.networkError;
       case AppExceptionType.connectionTimeout:
@@ -174,7 +156,6 @@ enum AppExceptionType {
       case AppExceptionType.noInternetConnection:
         return context.strings.noInternetConnectionError;
 
-      // Firebase Errors
       case AppExceptionType.firebaseError:
         return context.strings.firebaseError;
       case AppExceptionType.firestoreError:
@@ -186,7 +167,6 @@ enum AppExceptionType {
       case AppExceptionType.collectionNotFound:
         return context.strings.collectionNotFoundError;
 
-      // Transaction Errors
       case AppExceptionType.transactionNotFound:
         return context.strings.transactionNotFoundError;
       case AppExceptionType.transactionSaveFailed:
@@ -200,19 +180,16 @@ enum AppExceptionType {
       case AppExceptionType.invalidTransactionData:
         return context.strings.invalidTransactionDataError;
 
-      // Budget Errors
       case AppExceptionType.budgetCalculationFailed:
         return context.strings.budgetCalculationFailedError;
       case AppExceptionType.budgetDataInvalid:
         return context.strings.budgetDataInvalidError;
 
-      // Settings Errors
       case AppExceptionType.settingsSaveFailed:
         return context.strings.settingsSaveFailedError;
       case AppExceptionType.settingsLoadFailed:
         return context.strings.settingsLoadFailedError;
 
-      // Validation Errors
       case AppExceptionType.validationError:
         return context.strings.validationError;
       case AppExceptionType.invalidData:
@@ -220,7 +197,6 @@ enum AppExceptionType {
       case AppExceptionType.requiredFieldMissing:
         return context.strings.requiredFieldMissingError;
 
-      // General Errors
       case AppExceptionType.unexpectedError:
         return context.strings.unexpectedError;
       case AppExceptionType.unknownError:

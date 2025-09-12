@@ -5,7 +5,6 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 class BudgetCalculationService {
   const BudgetCalculationService();
 
-  /// Calcula o resumo do orçamento para um período específico
   MonthlyBudgetModel calculateMonthlyBudget({
     required String userId,
     required int year,
@@ -13,7 +12,6 @@ class BudgetCalculationService {
     required List<TransactionModel> transactions,
     required List<MonthlyTransactionModel> monthlyTransactions,
   }) {
-    // Filtrar transações que se aplicam ao período
     final applicableTransactions =
         transactions
             .where(
@@ -29,7 +27,6 @@ class BudgetCalculationService {
     final Map<CategoryEnum, double> plannedExpensesByCategory = {};
     final Map<CategoryEnum, double> actualExpensesByCategory = {};
 
-    // Processar transações base
     for (final transaction in applicableTransactions) {
       final amount = _getTransactionAmount(
         transaction,
@@ -45,7 +42,6 @@ class BudgetCalculationService {
         plannedExpenses += transaction.amount;
         actualExpenses += amount;
 
-        // Agrupar por categoria
         final category = transaction.category ?? CategoryEnum.other;
         plannedExpensesByCategory[category] =
             (plannedExpensesByCategory[category] ?? 0) + transaction.amount;
@@ -75,7 +71,6 @@ class BudgetCalculationService {
     );
   }
 
-  /// Verifica se uma transação se aplica ao mês/ano especificado
   bool _transactionAppliesTo(
     TransactionModel transaction,
     int year,
@@ -85,12 +80,10 @@ class BudgetCalculationService {
 
     switch (transaction.frequency) {
       case TransactionFrequencyEnum.oneTime:
-        // Transação única: verifica se a data de criação está no mês
         final createdDate = transaction.createdAt;
         return createdDate.year == year && createdDate.month == month;
 
       case TransactionFrequencyEnum.monthly:
-        // Transação mensal: verifica se está no período ativo
         final startDate = transaction.startDate ?? transaction.createdAt;
         final endDate = transaction.endDate;
 
@@ -106,12 +99,10 @@ class BudgetCalculationService {
         return true;
 
       case TransactionFrequencyEnum.yearly:
-        // Transação anual: verifica se é o mês correto
         if (transaction.yearlyMonth == null) return false;
         return transaction.yearlyMonth!.value == month;
 
       case TransactionFrequencyEnum.installment:
-        // Transação parcelada: verifica se alguma parcela se aplica ao mês
         if (transaction.totalInstallments == null ||
             transaction.startDate == null) {
           return false;
@@ -120,7 +111,6 @@ class BudgetCalculationService {
         final startDate = transaction.startDate!;
         final totalInstallments = transaction.totalInstallments!;
 
-        // Verificar se o mês alvo está dentro do período de parcelas
         for (int i = 0; i < totalInstallments; i++) {
           final installmentMonth = DateTime(
             startDate.year,
@@ -138,25 +128,20 @@ class BudgetCalculationService {
     }
   }
 
-  /// Obtém o valor da transação para um período específico
-  /// Considera alterações mensais para transações recorrentes
   double _getTransactionAmount(
     TransactionModel transaction,
     int year,
     int month,
     List<MonthlyTransactionModel> monthlyTransactions,
   ) {
-    // Calcular valor padrão baseado no tipo de transação
     double defaultAmount = transaction.amount;
 
-    // Para transações parceladas, dividir o valor total pelo número de parcelas
     if (transaction.frequency == TransactionFrequencyEnum.installment &&
         transaction.totalInstallments != null &&
         transaction.totalInstallments! > 0) {
       defaultAmount = transaction.amount / transaction.totalInstallments!;
     }
 
-    // Buscar valor específico do mês (todas as transações podem ter valores ajustados)
     final monthlyTransaction = monthlyTransactions.firstWhere(
       (mt) =>
           mt.parentTransactionId == transaction.id &&
@@ -178,7 +163,6 @@ class BudgetCalculationService {
     return monthlyTransaction.amount;
   }
 
-  /// Calcula estatísticas adicionais do orçamento
   Map<String, dynamic> calculateBudgetStats(MonthlyBudgetModel budget) {
     final plannedBalance = budget.plannedBalance;
     final actualBalance = budget.actualBalance;

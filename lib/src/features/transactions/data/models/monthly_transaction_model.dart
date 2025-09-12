@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// Modelo para representar uma transação específica de um mês
-/// Usado para gastos recorrentes com valores dinâmicos ou alterações pontuais
 class MonthlyTransactionModel {
   final String id;
   final String userId;
@@ -83,10 +81,8 @@ class MonthlyTransactionModel {
     );
   }
 
-  /// Retorna a chave única para este mês/ano
   String get monthYearKey => '${year}_${month.toString().padLeft(2, '0')}';
 
-  /// Retorna a data do primeiro dia do mês
   DateTime get monthDate => DateTime(year, month, 1);
 
   @override

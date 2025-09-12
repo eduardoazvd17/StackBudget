@@ -1,12 +1,8 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
-// ignore_for_file: type=lint
 
-/// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([String locale = 'en']) : super(locale);
+  AppLocalizationsEn([super.locale = 'en']);
 
   @override
   String get frequencyOneTime => 'One-time';
@@ -809,4 +805,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categoryOther => 'Other';
+
+  @override
+  String get errorLoadingData => 'Error loading data';
+
+  @override
+  String get noDataFound => 'No data found';
+
+  @override
+  String get addTransactionsToSeeSummary => 'Add transactions to see the summary';
+
+  @override
+  String get budgetSummary => 'Budget Summary';
+
+  @override
+  String get currentBalance => 'Current Balance';
+
+  @override
+  String get expenses => 'Expenses';
 }

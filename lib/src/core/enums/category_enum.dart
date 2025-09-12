@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stackbudget/src/core/core.dart';
 
 enum CategoryEnum {
-  // Receitas
   salary('work', '#4CAF50', TransactionTypeEnum.income),
   freelance('laptop', '#2196F3', TransactionTypeEnum.income),
   investment('trending_up', '#FF9800', TransactionTypeEnum.income),
@@ -10,7 +9,6 @@ enum CategoryEnum {
   giftIncome('card_giftcard', '#E91E63', TransactionTypeEnum.income),
   otherIncome('attach_money', '#607D8B', TransactionTypeEnum.income),
 
-  // Despesas - Essenciais
   housing('home', '#4CAF50', TransactionTypeEnum.expense),
   utilities('electrical_services', '#FF9800', TransactionTypeEnum.expense),
   groceries('local_grocery_store', '#8BC34A', TransactionTypeEnum.expense),
@@ -18,7 +16,6 @@ enum CategoryEnum {
   insurance('security', '#9C27B0', TransactionTypeEnum.expense),
   healthcare('local_hospital', '#E91E63', TransactionTypeEnum.expense),
 
-  // Despesas - Lifestyle
   dining('restaurant', '#FF5722', TransactionTypeEnum.expense),
   entertainment('movie', '#00BCD4', TransactionTypeEnum.expense),
   shopping('shopping_bag', '#795548', TransactionTypeEnum.expense),
@@ -27,39 +24,31 @@ enum CategoryEnum {
   fitness('fitness_center', '#4CAF50', TransactionTypeEnum.expense),
   beauty('face', '#E91E63', TransactionTypeEnum.expense),
 
-  // Despesas - Financeiras
   loans('account_balance', '#607D8B', TransactionTypeEnum.expense),
   creditCard('credit_card', '#2196F3', TransactionTypeEnum.expense),
   taxes('receipt', '#FF5722', TransactionTypeEnum.expense),
   fees('money_off', '#795548', TransactionTypeEnum.expense),
 
-  // Despesas - Educação e Desenvolvimento
   education('school', '#9C27B0', TransactionTypeEnum.expense),
   books('menu_book', '#3F51B5', TransactionTypeEnum.expense),
   courses('play_lesson', '#00BCD4', TransactionTypeEnum.expense),
 
-  // Despesas - Família
   childcare('child_care', '#E91E63', TransactionTypeEnum.expense),
   pets('pets', '#8BC34A', TransactionTypeEnum.expense),
   gifts('redeem', '#FF9800', TransactionTypeEnum.expense),
 
-  // Outros
   charity('volunteer_activism', '#4CAF50', TransactionTypeEnum.expense),
   emergencyFund('savings', '#FF5722', TransactionTypeEnum.expense),
-  other('category', '#9E9E9E', null); // Pode ser usado para ambos
+  other('category', '#9E9E9E', null);
 
   const CategoryEnum(this.iconName, this.color, this.type);
 
-  /// Nome do ícone do Material Design
   final String iconName;
 
-  /// Cor em formato hex
   final String color;
 
-  /// Tipo de transação (income, expense ou null para ambos)
   final TransactionTypeEnum? type;
 
-  /// Retorna o nome de exibição internacionalizado
   String getDisplayName(BuildContext context) {
     switch (this) {
       case CategoryEnum.salary:

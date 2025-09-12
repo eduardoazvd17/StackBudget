@@ -52,7 +52,6 @@ class ProfileViewModel extends StateNotifier<ProfileViewModelState> {
       (exception) => state = ProfileErrorState(exception: exception),
       (updatedUser) {
         state = ProfileNameUpdatedState(updatedUser: updatedUser);
-        // Atualizar o estado de autenticação também
         _ref.read(authViewModelProvider.notifier).updateUserData(updatedUser);
       },
     );

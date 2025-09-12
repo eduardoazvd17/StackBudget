@@ -7,7 +7,6 @@ import 'package:stackbudget/src/features/auth/data/repositories/repositories.dar
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/settings_view_model.dart';
 
-// Providers
 final authDatasourceProvider = Provider<AuthDatasource>((ref) {
   return AuthDatasourceImpl(
     firebaseAuth: FirebaseAuth.instance,
@@ -41,7 +40,6 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
           (userModel) {
             if (userModel != null) {
               state = AuthenticatedState(user: userModel);
-              // Sincronizar configurações do Firebase após login bem-sucedido
               _syncUserSettings();
             } else {
               state = const UnauthenticatedState();
@@ -69,7 +67,6 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       user,
     ) {
       state = AuthenticatedState(user: user);
-      // Sincronizar configurações do Firebase após login bem-sucedido
       _syncUserSettings();
     });
   }
@@ -91,7 +88,6 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
       user,
     ) {
       state = AuthenticatedState(user: user);
-      // Sincronizar configurações do Firebase após cadastro bem-sucedido
       _syncUserSettings();
     });
   }
@@ -119,12 +115,10 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
     }
   }
 
-  /// Sincroniza as configurações do usuário do Firebase
   void _syncUserSettings() {
     try {
       _ref.read(settingsViewModelProvider.notifier).syncSettingsFromFirebase();
     } catch (e) {
-      // Ignora erros de sincronização para não interromper o fluxo de login
     }
   }
 }

@@ -60,11 +60,9 @@ class TransactionsList extends ConsumerWidget {
       return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
-    // Filtrar transações baseado no parâmetro
     var transactions = dashboardState.transactions;
 
     if (onlyOneTimeTransactions) {
-      // Filtrar apenas transações únicas e ordenar da mais recente para mais antiga
       transactions =
           transactions
               .where(
@@ -141,7 +139,6 @@ class TransactionListItem extends ConsumerWidget {
     final isIncome = transaction.type == TransactionTypeEnum.income;
     final defaultColor = isIncome ? Colors.green : Colors.red;
 
-    // Usar cor padrão (sem cor customizada por categoria no enum)
     Color iconColor = defaultColor;
     Color backgroundColor = defaultColor.withOpacity(0.1);
 
@@ -177,7 +174,6 @@ class TransactionListItem extends ConsumerWidget {
                 color: context.colorScheme.onSurface.withOpacity(0.5),
               ),
             ),
-            // Mostrar parcela atual/total para transações parceladas
             if (transaction.frequency == TransactionFrequencyEnum.installment &&
                 transaction.totalInstallments != null) ...[
               const SizedBox(width: Spacing.xs),
@@ -215,7 +211,6 @@ class TransactionListItem extends ConsumerWidget {
                 color: defaultColor,
               ),
             ),
-            // Mostrar data apenas para transações únicas ou quando mostrando todos os tipos
             if (transaction.frequency == TransactionFrequencyEnum.oneTime ||
                 showAllTypes) ...[
               Text(
@@ -234,12 +229,10 @@ class TransactionListItem extends ConsumerWidget {
   }
 
   IconData _getTransactionIcon(TransactionModel transaction) {
-    // Se tem categoria, usar o ícone da categoria
     if (transaction.category != null) {
       return _getIconFromString(transaction.category!.iconName);
     }
 
-    // Caso contrário, usar ícone baseado no tipo (entrada/saída)
     if (transaction.type == TransactionTypeEnum.income) {
       return Icons.arrow_downward; // Seta para baixo (entrada)
     } else {
@@ -354,25 +347,20 @@ class TransactionListItem extends ConsumerWidget {
     final selectedPeriod = ref.read(selectedPeriodProvider);
     final startDate = transaction.startDate!;
 
-    // Calcular quantos meses se passaram desde o início
     final monthsDifference =
         ((selectedPeriod.year - startDate.year) * 12) +
         (selectedPeriod.month - startDate.month);
 
-    // A parcela atual é a diferença + 1 (primeira parcela = 1)
     final installmentNumber = monthsDifference + 1;
 
-    // Garantir que não ultrapasse o total de parcelas
     return installmentNumber.clamp(1, transaction.totalInstallments!);
   }
 
   bool _hasMonthlyAdjustment(WidgetRef ref, TransactionModel transaction) {
-    // Só transações mensais podem ter ajustes
     if (transaction.frequency != TransactionFrequencyEnum.monthly) {
       return false;
     }
 
-    // Buscar no estado do dashboard se há override para esta transação no período selecionado
     final dashboardState = ref.read(dashboardViewModelProvider);
     final selectedPeriod = ref.read(selectedPeriodProvider);
 
@@ -392,17 +380,14 @@ class TransactionListItem extends ConsumerWidget {
     final dashboardState = ref.read(dashboardViewModelProvider);
     final selectedPeriod = ref.read(selectedPeriodProvider);
 
-    // Calcular valor padrão baseado no tipo de transação
     double defaultAmount = transaction.amount;
 
-    // Para transações parceladas, dividir o valor total pelo número de parcelas
     if (transaction.frequency == TransactionFrequencyEnum.installment &&
         transaction.totalInstallments != null &&
         transaction.totalInstallments! > 0) {
       defaultAmount = transaction.amount / transaction.totalInstallments!;
     }
 
-    // Buscar override mensal no estado do dashboard para o período selecionado
     if (dashboardState is DashboardLoadedState) {
       final monthlyOverride =
           dashboardState.monthlyTransactions

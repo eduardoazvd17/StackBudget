@@ -4,7 +4,6 @@ import 'package:stackbudget/src/core/enums/enums.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
-// Provider
 final transactionDatasourceProvider = Provider<TransactionDatasource>((ref) {
   return TransactionDatasourceImpl(firestore: FirebaseFirestore.instance);
 });
@@ -22,7 +21,6 @@ abstract class TransactionDatasource {
   Future<TransactionModel> updateTransaction(TransactionModel transaction);
   Future<void> deleteTransaction(String transactionId);
 
-  // Monthly transactions
   Future<List<MonthlyTransactionModel>> getMonthlyTransactions(
     String userId,
     int year,
@@ -93,7 +91,6 @@ class TransactionDatasourceImpl implements TransactionDatasource {
     int month,
   ) async {
     try {
-      // Buscar transações que se aplicam ao mês especificado
       final querySnapshot =
           await _firestore
               .collection('transactions')
@@ -239,7 +236,6 @@ class TransactionDatasourceImpl implements TransactionDatasource {
     }
   }
 
-  /// Verifica se uma transação se aplica ao mês/ano especificado
   bool _transactionAppliesTo(
     TransactionModel transaction,
     int year,
@@ -249,12 +245,10 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
     switch (transaction.frequency) {
       case TransactionFrequencyEnum.oneTime:
-        // Transação única: verifica se a data de criação está no mês
         final createdDate = transaction.createdAt;
         return createdDate.year == year && createdDate.month == month;
 
       case TransactionFrequencyEnum.monthly:
-        // Transação mensal: verifica se está no período ativo
         final startDate = transaction.startDate ?? transaction.createdAt;
         final endDate = transaction.endDate;
 
@@ -270,12 +264,10 @@ class TransactionDatasourceImpl implements TransactionDatasource {
         return true;
 
       case TransactionFrequencyEnum.yearly:
-        // Transação anual: verifica se é o mês correto
         if (transaction.yearlyMonth == null) return false;
         return transaction.yearlyMonth!.value == month;
 
       case TransactionFrequencyEnum.installment:
-        // Transação parcelada: verifica se alguma parcela se aplica ao mês
         if (transaction.totalInstallments == null ||
             transaction.startDate == null) {
           return false;
@@ -284,7 +276,6 @@ class TransactionDatasourceImpl implements TransactionDatasource {
         final startDate = transaction.startDate!;
         final totalInstallments = transaction.totalInstallments!;
 
-        // Verificar se o mês alvo está dentro do período de parcelas
         for (int i = 0; i < totalInstallments; i++) {
           final installmentMonth = DateTime(
             startDate.year,

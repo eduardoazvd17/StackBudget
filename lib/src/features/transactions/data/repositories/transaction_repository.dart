@@ -4,7 +4,6 @@ import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/transactions/data/datasources/datasources.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 
-// Provider
 final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
   return TransactionRepositoryImpl(
     datasource: ref.read(transactionDatasourceProvider),
@@ -29,7 +28,6 @@ abstract class TransactionRepository {
   );
   Future<Either<AppException, void>> deleteTransaction(String transactionId);
 
-  // Monthly transactions
   Future<Either<AppException, List<MonthlyTransactionModel>>>
   getMonthlyTransactions(String userId, int year, int month);
   Future<Either<AppException, MonthlyTransactionModel>>

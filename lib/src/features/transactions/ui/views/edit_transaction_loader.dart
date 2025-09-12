@@ -5,8 +5,6 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/transactions/ui/views/edit_transaction_view.dart';
 
-/// Loader que busca uma transação pelo ID e exibe o formulário de edição
-/// Usado quando acessamos a rota diretamente via URL (F5 na web)
 class EditTransactionLoader extends ConsumerWidget {
   final String transactionId;
 

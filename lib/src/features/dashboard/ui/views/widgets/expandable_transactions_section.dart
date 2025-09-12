@@ -83,13 +83,11 @@ class _ExpandableTransactionsSectionState
 
     final isExpanded = _isExpanded ?? true;
 
-    // Filtrar transações baseado no tipo
     List<TransactionModel> filteredTransactions;
 
     switch (widget.filterType) {
       case TransactionFrequencyEnum.monthly:
       case TransactionFrequencyEnum.yearly:
-        // Gastos recorrentes (mensais e anuais)
         filteredTransactions =
             dashboardState.transactions
                 .where(
@@ -100,7 +98,6 @@ class _ExpandableTransactionsSectionState
                 .toList();
         break;
       case TransactionFrequencyEnum.installment:
-        // Parcelas
         filteredTransactions =
             dashboardState.transactions
                 .where(
@@ -109,7 +106,6 @@ class _ExpandableTransactionsSectionState
                 .toList();
         break;
       case TransactionFrequencyEnum.oneTime:
-        // Transações únicas (ordenadas da mais recente para mais antiga)
         filteredTransactions =
             dashboardState.transactions
                 .where((t) => t.frequency == TransactionFrequencyEnum.oneTime)
@@ -118,13 +114,11 @@ class _ExpandableTransactionsSectionState
         break;
     }
 
-    // Sempre mostrar a seção, mesmo sem dados
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
       child: Column(
         children: [
-          // Header da seção
           InkWell(
             onTap: () async {
               final newExpanded = !isExpanded;
@@ -173,7 +167,6 @@ class _ExpandableTransactionsSectionState
             ),
           ),
 
-          // Lista de transações (expansível)
           AnimatedCrossFade(
             duration: const Duration(milliseconds: 300),
             alignment: Alignment.topLeft, // Alinhar ao topo à esquerda

@@ -1,12 +1,8 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
-// ignore_for_file: type=lint
 
-/// The translations for Portuguese (`pt`).
 class AppLocalizationsPt extends AppLocalizations {
-  AppLocalizationsPt([String locale = 'pt']) : super(locale);
+  AppLocalizationsPt([super.locale = 'pt']);
 
   @override
   String get frequencyOneTime => 'Única';
@@ -134,7 +130,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get type => 'Tipo';
 
   @override
-  String get income => 'Receita';
+  String get income => 'Receitas';
 
   @override
   String get expense => 'Despesa';
@@ -809,4 +805,22 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get categoryOther => 'Outros';
+
+  @override
+  String get errorLoadingData => 'Erro ao carregar dados';
+
+  @override
+  String get noDataFound => 'Nenhum dado encontrado';
+
+  @override
+  String get addTransactionsToSeeSummary => 'Adicione transações para ver o resumo';
+
+  @override
+  String get budgetSummary => 'Resumo do Orçamento';
+
+  @override
+  String get currentBalance => 'Saldo Atual';
+
+  @override
+  String get expenses => 'Despesas';
 }

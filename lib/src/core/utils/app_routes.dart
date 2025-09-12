@@ -29,55 +29,46 @@ class AppRoutes {
       final user = FirebaseAuth.instance.currentUser;
       final isAuthRoute = state.matchedLocation == AppRoutesConfig.authPath;
 
-      // Se não está autenticado e não está na tela de auth, redireciona para auth
       if (user == null && !isAuthRoute) {
         return AppRoutesConfig.authPath;
       }
 
-      // Se está autenticado e está na tela de auth, redireciona para transactions
       if (user != null && isAuthRoute) {
         return AppRoutesConfig.transactionsPath;
       }
 
-      // Caso contrário, mantém na rota atual
       return null;
     },
     routes: [
-      // Rota de Autenticação
       GoRoute(
         path: AppRoutesConfig.authPath,
         name: AppRoutesConfig.auth,
         builder: (context, state) => const AuthView(),
       ),
 
-      // Rota Principal (Transactions/Dashboard)
       GoRoute(
         path: AppRoutesConfig.transactionsPath,
         name: AppRoutesConfig.transactions,
         builder: (context, state) => const DashboardView(),
         routes: [
-          // Rota para adicionar transação: /transactions/add
           GoRoute(
             path: AppRoutesConfig.addTransaction,
             name: AppRoutesConfig.addTransaction,
             builder: (context, state) => const AddTransactionView(),
           ),
 
-          // Rota de Configurações: /transactions/settings
           GoRoute(
             path: 'settings',
             name: AppRoutesConfig.settings,
             builder: (context, state) => const SettingsView(),
           ),
 
-          // Rota de Perfil: /transactions/profile
           GoRoute(
             path: 'profile',
             name: AppRoutesConfig.profile,
             builder: (context, state) => const ProfileView(),
           ),
 
-          // Rota para detalhes da transação: /transactions/:id
           GoRoute(
             path: ':id',
             name: AppRoutesConfig.transactionDetail,
@@ -88,12 +79,10 @@ class AppRoutes {
               if (transaction != null) {
                 return TransactionDetailView(transaction: transaction);
               } else {
-                // Se não tem o objeto, precisa buscar pelo ID
                 return TransactionDetailLoader(transactionId: transactionId);
               }
             },
             routes: [
-              // Rota para editar transação: /transactions/:id/edit
               GoRoute(
                 path: AppRoutesConfig.editTransaction,
                 name: AppRoutesConfig.editTransaction,
@@ -104,7 +93,6 @@ class AppRoutes {
                   if (transaction != null) {
                     return EditTransactionView(transaction: transaction);
                   } else {
-                    // Se não tem o objeto, precisa buscar pelo ID
                     return EditTransactionLoader(transactionId: transactionId);
                   }
                 },
@@ -114,22 +102,9 @@ class AppRoutes {
         ],
       ),
 
-      // Futuras rotas principais
-      // GoRoute(
-      //   path: AppRoutesConfig.budgetPath,
-      //   name: AppRoutesConfig.budget,
-      //   builder: (context, state) => const BudgetView(),
-      // ),
-      //
-      // GoRoute(
-      //   path: AppRoutesConfig.profilePath,
-      //   name: AppRoutesConfig.profile,
-      //   builder: (context, state) => const ProfileView(),
-      // ),
     ],
   );
 
-  // Métodos auxiliares para navegação
   static void goToAuth(BuildContext context) {
     context.goNamed(AppRoutesConfig.auth);
   }
@@ -138,7 +113,6 @@ class AppRoutes {
     context.goNamed(AppRoutesConfig.transactions);
   }
 
-  // Métodos de navegação implementados
   static void goToAddTransaction(BuildContext context) {
     context.goNamed(AppRoutesConfig.addTransaction);
   }
@@ -185,7 +159,6 @@ class AppRoutes {
     );
   }
 
-  // Métodos de navegação implementados
   static void goToSettings(BuildContext context) {
     context.goNamed(AppRoutesConfig.settings);
   }
@@ -194,18 +167,8 @@ class AppRoutes {
     context.goNamed(AppRoutesConfig.profile);
   }
 
-  // Futuros métodos de navegação
-  // static void goToBudget(BuildContext context) {
-  //   context.goNamed(AppRoutesConfig.budget);
-  // }
-  //
-  // static void goToReports(BuildContext context) {
-  //   context.goNamed(AppRoutesConfig.reports);
-  // }
 }
 
-/// Notifier que escuta mudanças no estado de autenticação do Firebase
-/// para atualizar o GoRouter automaticamente
 class _AuthStateNotifier extends ChangeNotifier {
   _AuthStateNotifier() {
     FirebaseAuth.instance.authStateChanges().listen((_) {

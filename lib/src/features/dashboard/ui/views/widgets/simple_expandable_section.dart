@@ -26,7 +26,6 @@ class SimpleExpandableSection extends ConsumerWidget {
     final dashboardState = ref.watch(dashboardViewModelProvider);
     final expansionState = ref.watch(expansionStateProvider);
 
-    // Se estiver carregando, mostrar indicador de loading
     if (dashboardState is DashboardLoadingState) {
       return Card(
         margin: const EdgeInsets.symmetric(horizontal: Spacing.lg),
@@ -58,7 +57,6 @@ class SimpleExpandableSection extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    // Obter estado de expansão baseado na seção
     bool isExpanded;
     switch (sectionKey) {
       case 'recurring':
@@ -74,13 +72,11 @@ class SimpleExpandableSection extends ConsumerWidget {
         isExpanded = true;
     }
 
-    // Filtrar transações baseado no tipo
     List<TransactionModel> filteredTransactions;
 
     switch (filterType) {
       case TransactionFrequencyEnum.monthly:
       case TransactionFrequencyEnum.yearly:
-        // Gastos recorrentes (mensais e anuais)
         filteredTransactions =
             dashboardState.transactions
                 .where(
@@ -91,7 +87,6 @@ class SimpleExpandableSection extends ConsumerWidget {
                 .toList();
         break;
       case TransactionFrequencyEnum.installment:
-        // Parcelas
         filteredTransactions =
             dashboardState.transactions
                 .where(
@@ -100,7 +95,6 @@ class SimpleExpandableSection extends ConsumerWidget {
                 .toList();
         break;
       case TransactionFrequencyEnum.oneTime:
-        // Transações únicas (ordenadas da mais recente para mais antiga)
         filteredTransactions =
             dashboardState.transactions
                 .where((t) => t.frequency == TransactionFrequencyEnum.oneTime)
@@ -113,7 +107,6 @@ class SimpleExpandableSection extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
       child: Column(
         children: [
-          // Header da seção
           InkWell(
             onTap: () async {
               final notifier = ref.read(expansionStateProvider.notifier);
@@ -171,7 +164,6 @@ class SimpleExpandableSection extends ConsumerWidget {
             ),
           ),
 
-          // Lista de transações (expansível)
           AnimatedCrossFade(
             duration: const Duration(milliseconds: 300),
             alignment: Alignment.topLeft,

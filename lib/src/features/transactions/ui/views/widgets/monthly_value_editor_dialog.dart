@@ -33,9 +33,7 @@ class _MonthlyValueEditorDialogState
   @override
   void initState() {
     super.initState();
-    // Inicializar com valor base da transação será feito no addPostFrameCallback
 
-    // Carregar dados para verificar se há override
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _populateAmount(widget.transaction.amount, ref);
       ref
@@ -91,7 +89,6 @@ class _MonthlyValueEditorDialogState
       monthlyTransactionViewModelProvider,
       (previous, next) {
         if (next is MonthlyTransactionLoadedState) {
-          // Só atualizar o campo se o valor for diferente do base
           if (next.currentValue != widget.transaction.amount) {
             _populateAmount(next.currentValue, ref);
           }
@@ -112,7 +109,6 @@ class _MonthlyValueEditorDialogState
           );
         }
 
-        // Controlar loading local
         setState(() {
           _isLoading = next is MonthlyTransactionLoadingState;
         });
@@ -152,7 +148,7 @@ class _MonthlyValueEditorDialogState
             Container(
               padding: const EdgeInsets.all(Spacing.sm),
               decoration: BoxDecoration(
-                color: context.colorScheme.surfaceVariant,
+                color: context.colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
@@ -281,7 +277,6 @@ class _MonthlyValueEditorDialogState
   }
 }
 
-/// Função helper para mostrar o dialog
 Future<bool?> showMonthlyValueEditor(
   BuildContext context, {
   required TransactionModel transaction,

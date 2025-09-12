@@ -11,10 +11,8 @@ class CurrencyNotifier extends StateNotifier<String> {
   final Ref _ref;
 
   CurrencyNotifier(this._ref) : super('BRL') {
-    // Carregar configurações iniciais
     _loadInitialSettings();
 
-    // Escuta mudanças nas configurações
     _ref.listen(settingsViewModelProvider, (previous, next) {
       if (next is SettingsLoadedState) {
         state = next.settings.currency;
@@ -28,7 +26,6 @@ class CurrencyNotifier extends StateNotifier<String> {
           await _ref.read(settingsRepositoryProvider).getSettings();
       state = settings.currency;
     } catch (e) {
-      // Mantém a moeda padrão em caso de erro
       state = 'BRL';
     }
   }

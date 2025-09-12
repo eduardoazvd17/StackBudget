@@ -37,7 +37,6 @@ class SettingsModel {
     required this.language,
   });
 
-  // Mantém compatibilidade com o código existente
   bool get isDarkMode => themeMode == ThemeModeType.dark;
 
   SettingsModel copyWith({
@@ -62,14 +61,12 @@ class SettingsModel {
   }
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) {
-    // Verifica se tem o novo formato (themeMode) ou o antigo (isDarkMode)
     ThemeModeType themeMode;
     if (json.containsKey('themeMode')) {
       themeMode = ThemeModeType.fromString(
         json['themeMode'] as String? ?? 'system',
       );
     } else {
-      // Migração do formato antigo
       final isDarkMode = json['isDarkMode'] as bool? ?? false;
       themeMode = isDarkMode ? ThemeModeType.dark : ThemeModeType.light;
     }

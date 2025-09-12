@@ -11,7 +11,6 @@ class AuthView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Redirecionar para home se autenticado
     ref.listen<AuthViewModelState>(authViewModelProvider, (previous, next) {
       if (next is AuthenticatedState) {
         AppRoutes.goToTransactions(context);
@@ -28,7 +27,6 @@ class AuthView extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo ou título do app
                   Icon(
                     Icons.area_chart,
                     size: 80,
@@ -52,7 +50,6 @@ class AuthView extends ConsumerWidget {
                   ),
                   const SizedBox(height: Spacing.xxl),
 
-                  // Formulário de autenticação
                   const AuthForm(),
                 ],
               ),

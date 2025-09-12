@@ -7,7 +7,6 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
 
-// Provider para o ViewModel do formulário
 final transactionFormViewModelProvider = StateNotifierProvider<
   TransactionFormViewModel,
   TransactionFormViewModelState
@@ -24,7 +23,6 @@ class TransactionFormViewModel
   TransactionFormViewModel(this._repository, this._ref)
     : super(const TransactionFormInitialState());
 
-  /// Cria uma nova transação
   Future<void> createTransaction({
     required String title,
     String? description,
@@ -45,9 +43,7 @@ class TransactionFormViewModel
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
         state = TransactionFormErrorState(
-          exception: AppException.userNotAuthenticated(
-            // TODO: Passar context para internacionalização
-          ),
+          exception: AppException.userNotAuthenticated(),
         );
         return;
       }
@@ -55,7 +51,6 @@ class TransactionFormViewModel
       final userId = authState.user.id;
       final now = DateTime.now();
 
-      // Validações específicas por tipo
       final validationError = _validateTransaction(
         frequency: frequency,
         startDate: startDate,
@@ -97,7 +92,6 @@ class TransactionFormViewModel
         (exception) => state = TransactionFormErrorState(exception: exception),
         (createdTransaction) {
           state = TransactionFormSuccessState(transaction: createdTransaction);
-          // Atualizar dashboard após criar transação
           _ref.read(dashboardViewModelProvider.notifier).refresh();
         },
       );
@@ -110,7 +104,6 @@ class TransactionFormViewModel
     }
   }
 
-  /// Valida os dados da transação baseado no tipo
   String? _validateTransaction({
     required TransactionFrequencyEnum frequency,
     DateTime? startDate,
@@ -140,14 +133,12 @@ class TransactionFormViewModel
         break;
 
       case TransactionFrequencyEnum.oneTime:
-        // Sem validações específicas
         break;
     }
 
     return null;
   }
 
-  /// Atualiza uma transação existente
   Future<void> updateTransaction({
     required String transactionId,
     required String title,
@@ -169,9 +160,7 @@ class TransactionFormViewModel
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
         state = TransactionFormErrorState(
-          exception: AppException.userNotAuthenticated(
-            // TODO: Passar context para internacionalização
-          ),
+          exception: AppException.userNotAuthenticated(),
         );
         return;
       }
@@ -179,7 +168,6 @@ class TransactionFormViewModel
       final userId = authState.user.id;
       final now = DateTime.now();
 
-      // Validações específicas por tipo
       final validationError = _validateTransaction(
         frequency: frequency,
         startDate: startDate,
@@ -202,7 +190,7 @@ class TransactionFormViewModel
         amount: amount,
         type: type,
         frequency: frequency,
-        createdAt: DateTime.now(), // Será preservado no update
+        createdAt: DateTime.now(),
         updatedAt: now,
         startDate: startDate,
         endDate: endDate,
@@ -221,7 +209,6 @@ class TransactionFormViewModel
         (exception) => state = TransactionFormErrorState(exception: exception),
         (updatedTransaction) {
           state = TransactionFormSuccessState(transaction: updatedTransaction);
-          // Atualizar dashboard após editar transação
           _ref.read(dashboardViewModelProvider.notifier).refresh();
         },
       );
@@ -234,7 +221,6 @@ class TransactionFormViewModel
     }
   }
 
-  /// Exclui uma transação
   Future<void> deleteTransaction(String transactionId) async {
     state = const TransactionFormLoadingState();
 
@@ -242,9 +228,7 @@ class TransactionFormViewModel
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
         state = TransactionFormErrorState(
-          exception: AppException.userNotAuthenticated(
-            // TODO: Passar context para internacionalização
-          ),
+          exception: AppException.userNotAuthenticated(),
         );
         return;
       }
@@ -266,7 +250,6 @@ class TransactionFormViewModel
               updatedAt: DateTime.now(),
             ),
           );
-          // Atualizar dashboard após excluir transação
           _ref.read(dashboardViewModelProvider.notifier).refresh();
         },
       );
@@ -279,7 +262,6 @@ class TransactionFormViewModel
     }
   }
 
-  /// Reseta o estado do formulário
   void resetForm() {
     state = const TransactionFormInitialState();
   }

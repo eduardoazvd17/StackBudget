@@ -6,7 +6,6 @@ import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_sta
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
 import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 
-// Providers
 final budgetCalculationServiceProvider = Provider<BudgetCalculationService>((
   ref,
 ) {
@@ -22,10 +21,8 @@ final dashboardViewModelProvider =
       ),
     );
 
-// Provider para o período selecionado (substitui o antigo selectedDateProvider)
 final selectedPeriodProvider = StateProvider<DateTime>((ref) => DateTime.now());
 
-// Provider para obter a data de cadastro do usuário atual
 final userRegistrationDateProvider = Provider<DateTime?>((ref) {
   final authState = ref.watch(authViewModelProvider);
   if (authState is AuthenticatedState) {
@@ -34,7 +31,6 @@ final userRegistrationDateProvider = Provider<DateTime?>((ref) {
   return null;
 });
 
-// Provider que inicializa o dashboard quando o usuário está autenticado
 final dashboardInitializerProvider = Provider<void>((ref) {
   final authState = ref.watch(authViewModelProvider);
   final selectedPeriod = ref.watch(selectedPeriodProvider);
@@ -43,15 +39,10 @@ final dashboardInitializerProvider = Provider<void>((ref) {
     final dashboardNotifier = ref.read(dashboardViewModelProvider.notifier);
     final currentDashboardState = ref.read(dashboardViewModelProvider);
 
-    // Carregar se estiver no estado inicial, se não há dados para o período atual,
-    // ou se estiver em estado de erro
     if (currentDashboardState is DashboardInitialState ||
         currentDashboardState is DashboardErrorState ||
         (currentDashboardState is DashboardLoadedState &&
             currentDashboardState.selectedPeriod != selectedPeriod)) {
-      // Definir estado de loading imediatamente para evitar mostrar dados antigos
-      // (isso será feito dentro do loadDashboardData)
-
       Future.microtask(
         () => dashboardNotifier.loadDashboardData(selectedPeriod),
       );
@@ -68,11 +59,8 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
     this._transactionRepository,
     this._budgetService,
     this._ref,
-  ) : super(const DashboardInitialState()) {
-    // Não carregar dados automaticamente - esperar o usuário estar autenticado
-  }
+  ) : super(const DashboardInitialState());
 
-  /// Carrega os dados do dashboard para um período específico
   Future<void> loadDashboardData(
     DateTime period, {
     BuildContext? context,
@@ -92,7 +80,6 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
       final year = period.year;
       final month = period.month;
 
-      // Buscar transações do período
       final transactionsResult = await _transactionRepository
           .getTransactionsByUserAndMonth(userId, year, month);
 
@@ -109,7 +96,6 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
               state = DashboardErrorState(exception: exception);
             },
             (monthlyTransactions) async {
-              // Calcular resumo do orçamento
               final budgetSummary = _budgetService.calculateMonthlyBudget(
                 userId: userId,
                 year: year,
@@ -137,12 +123,10 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
     }
   }
 
-  /// Atualiza o período selecionado e recarrega os dados
   Future<void> changePeriod(DateTime newPeriod) async {
     await loadDashboardData(newPeriod);
   }
 
-  /// Recarrega os dados do período atual
   Future<void> refresh() async {
     if (state is DashboardLoadedState) {
       final currentState = state as DashboardLoadedState;
@@ -152,7 +136,6 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
     }
   }
 
-  /// Obtém estatísticas do orçamento atual
   Map<String, dynamic>? getBudgetStats() {
     if (state is DashboardLoadedState) {
       final currentState = state as DashboardLoadedState;

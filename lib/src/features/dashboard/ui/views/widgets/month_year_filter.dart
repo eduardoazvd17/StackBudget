@@ -39,7 +39,6 @@ class MonthYearFilter extends ConsumerWidget {
               ),
             ),
 
-            // Botões de navegação
             Row(
               children: [
                 IconButton(
@@ -75,7 +74,6 @@ class MonthYearFilter extends ConsumerWidget {
 
     final previousMonth = DateTime(currentDate.year, currentDate.month - 1, 1);
 
-    // Verifica se o mês anterior não é menor que janeiro do ano de cadastro
     final firstAllowedDate =
         userRegistrationDate != null
             ? DateTime(userRegistrationDate.year, 1, 1)
@@ -90,7 +88,6 @@ class MonthYearFilter extends ConsumerWidget {
     final currentDate = ref.read(selectedPeriodProvider);
     final nextMonth = DateTime(currentDate.year, currentDate.month + 1, 1);
 
-    // Verifica se o próximo mês não é maior que dezembro do ano atual + 2 anos
     final now = DateTime.now();
     final lastAllowedDate = DateTime(now.year + 2, 12, 1);
 
@@ -103,13 +100,11 @@ class MonthYearFilter extends ConsumerWidget {
     final currentDate = ref.read(selectedPeriodProvider);
     final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
-    // Define a data mínima como janeiro do ano de cadastro do usuário, ou 2020 como fallback
     final firstDate =
         userRegistrationDate != null
             ? DateTime(userRegistrationDate.year, 1, 1)
             : DateTime(2020);
 
-    // Define a data máxima como dezembro do ano atual + 2 anos (para recorrências longas)
     final now = DateTime.now();
     final lastDate = DateTime(now.year + 2, 12, 1);
 

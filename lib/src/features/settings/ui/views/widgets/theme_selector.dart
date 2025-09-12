@@ -86,12 +86,10 @@ class ThemeSelector extends ConsumerWidget {
     );
 
     if (selectedTheme != null && selectedTheme != currentTheme) {
-      // Atualizar o ThemeNotifier
       ref
           .read(themeModeProvider.notifier)
           .updateThemeModeFromType(selectedTheme);
 
-      // Atualizar as configurações persistidas
       await ref
           .read(settingsViewModelProvider.notifier)
           .updateThemeMode(selectedTheme);

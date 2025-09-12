@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 
-// Provider
 final authDatasourceProvider = Provider<AuthDatasource>((ref) {
   return AuthDatasourceImpl(
     firebaseAuth: FirebaseAuth.instance,
@@ -59,10 +58,8 @@ class AuthDatasourceImpl implements AuthDatasource {
         throw AppException.authenticationFailed('Firebase returned null user');
       }
 
-      // Atualizar último login
       await _updateLastLogin(credential.user!.uid);
 
-      // Buscar dados do usuário no Firestore
       final userDoc =
           await _firestore.collection('users').doc(credential.user!.uid).get();
 
@@ -106,7 +103,6 @@ class AuthDatasourceImpl implements AuthDatasource {
         lastLogin: now,
       );
 
-      // Salvar dados do usuário no Firestore
       await _firestore
           .collection('users')
           .doc(credential.user!.uid)

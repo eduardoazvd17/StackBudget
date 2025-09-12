@@ -39,7 +39,6 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
         height: 300,
         child: Column(
           children: [
-            // Seletor de Ano
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -68,7 +67,6 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
 
             const SizedBox(height: Spacing.lg),
 
-            // Grid de Meses
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -183,7 +181,6 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
   }
 }
 
-/// Função utilitária para mostrar o seletor de mês/ano
 Future<DateTime?> showMonthYearPicker({
   required BuildContext context,
   required DateTime initialDate,

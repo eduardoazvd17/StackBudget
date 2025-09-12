@@ -10,7 +10,6 @@ import 'package:stackbudget/src/features/settings/ui/view_models/locale_provider
 
 import 'package:stackbudget/src/features/settings/data/datasources/datasources.dart';
 
-// Providers globais para os temas
 final lightThemeProvider = Provider<ThemeData>((ref) {
   return AppTheme(isDarkMode: false).light();
 });
@@ -24,7 +23,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Inicializar SharedPreferences
   final prefs = await SharedPreferences.getInstance();
 
   runApp(
@@ -44,14 +42,12 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settingsState = ref.watch(settingsViewModelProvider);
 
-    // Carregar configurações na inicialização
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (settingsState is SettingsInitialState) {
         ref.read(settingsViewModelProvider.notifier).loadSettings();
       }
     });
 
-    // Usar o provider dedicado para o tema
     final themeMode = ref.watch(themeModeProvider);
     final lightTheme = ref.watch(lightThemeProvider);
     final darkTheme = ref.watch(darkThemeProvider);

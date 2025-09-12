@@ -4,19 +4,16 @@ import '../../data/repositories/repositories.dart';
 import '../../data/models/models.dart';
 import 'settings_view_model_state.dart';
 
-// Providers
 
 final settingsViewModelProvider =
     StateNotifierProvider<SettingsViewModel, SettingsViewModelState>(
       (ref) => SettingsViewModel(ref.watch(settingsRepositoryProvider)),
     );
 
-// Provider dedicado para o tema
 final themeModeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((
   ref,
 ) {
   final notifier = ThemeNotifier(ref);
-  // Carregar configurações iniciais
   ref.listen(settingsViewModelProvider, (previous, next) {
     if (next is SettingsLoadedState) {
       notifier.updateThemeModeFromType(next.settings.themeMode);
@@ -51,7 +48,6 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
 
   Future<void> updateTheme(bool isDarkMode) async {
     try {
-      // Mantém compatibilidade com código existente
       final themeMode = isDarkMode ? ThemeModeType.dark : ThemeModeType.light;
       await _repository.updateThemeMode(themeMode);
       await loadSettings(); // Recarrega as configurações
@@ -83,7 +79,6 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
       await _repository.syncSettingsFromFirebase();
       await loadSettings(); // Recarrega as configurações após sincronização
     } catch (e) {
-      // Ignora erros de sincronização para não interromper o fluxo
     }
   }
 }
@@ -101,7 +96,6 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
           await _ref.read(settingsRepositoryProvider).getSettings();
       updateThemeModeFromType(settings.themeMode);
     } catch (e) {
-      // Mantém o tema padrão em caso de erro
       state = ThemeMode.system;
     }
   }
@@ -120,7 +114,6 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
     }
   }
 
-  // Mantém compatibilidade com código existente
   void updateThemeMode(bool isDarkMode) {
     state = isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
@@ -131,7 +124,6 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
     } else if (state == ThemeMode.dark) {
       state = ThemeMode.light;
     }
-    // Se estiver no modo system, alterna para dark
     else {
       state = ThemeMode.dark;
     }

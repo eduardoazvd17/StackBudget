@@ -363,5 +363,33 @@
   "categoryOther": "Outros",
   "@categoryOther": {
     "description": "Nome da categoria Outros"
+  },
+  "errorLoadingData": "Erro ao carregar dados",
+  "@errorLoadingData": {
+    "description": "Mensagem de erro quando falha ao carregar dados"
+  },
+  "noDataFound": "Nenhum dado encontrado",
+  "@noDataFound": {
+    "description": "Mensagem quando nenhum dado é encontrado"
+  },
+  "addTransactionsToSeeSummary": "Adicione transações para ver o resumo",
+  "@addTransactionsToSeeSummary": {
+    "description": "Mensagem incentivando o usuário a adicionar transações para ver o resumo"
+  },
+  "budgetSummary": "Resumo do Orçamento",
+  "@budgetSummary": {
+    "description": "Título da seção de resumo do orçamento"
+  },
+  "currentBalance": "Saldo Atual",
+  "@currentBalance": {
+    "description": "Label para o saldo atual no resumo do orçamento"
+  },
+  "income": "Receitas",
+  "@income": {
+    "description": "Label para receitas no resumo do orçamento"
+  },
+  "expenses": "Despesas",
+  "@expenses": {
+    "description": "Label para despesas no resumo do orçamento"
   }
 }

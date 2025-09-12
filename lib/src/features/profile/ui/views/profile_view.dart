@@ -33,7 +33,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
       builder: (context) => ChangeNameDialog(currentName: currentName),
     ).then((result) {
       if (result == true) {
-        // Recarregar perfil se o nome foi atualizado
         ref.read(profileViewModelProvider.notifier).loadUserProfile();
       }
     });
@@ -52,7 +51,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
       builder: (context) => const DeleteAccountDialog(),
     ).then((result) {
       if (result == true && mounted) {
-        // Redirecionar para a tela de login após exclusão da conta
         context.go('/auth');
       }
     });
@@ -63,13 +61,11 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
     final l10n = context.strings;
     final state = ref.watch(profileViewModelProvider);
 
-    // Listener para mudanças de estado que afetam a navegação
     ref.listen<ProfileViewModelState>(profileViewModelProvider, (
       previous,
       next,
     ) {
       if (next is ProfileAccountDeletedState) {
-        // Navegar para tela de auth após exclusão da conta
         context.go('/auth');
       }
     });
@@ -132,7 +128,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Informações do usuário
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -189,7 +184,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
 
             const SizedBox(height: 24),
 
-            // Opções de perfil
             Text(
               l10n.editProfile,
               style: Theme.of(
@@ -199,7 +193,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
 
             const SizedBox(height: 16),
 
-            // Alterar nome
             Card(
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(
@@ -216,7 +209,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
 
             const SizedBox(height: 8),
 
-            // Alterar senha
             Card(
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(
@@ -233,7 +225,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
 
             const SizedBox(height: 32),
 
-            // Zona perigosa
             Text(
               l10n.deleteAccount,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -244,7 +235,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
 
             const SizedBox(height: 16),
 
-            // Excluir conta
             Card(
               color: Theme.of(context).colorScheme.errorContainer,
               child: ListTile(

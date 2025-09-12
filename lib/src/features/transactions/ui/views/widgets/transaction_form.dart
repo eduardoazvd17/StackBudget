@@ -59,7 +59,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     _descriptionController.text = transaction.description ?? '';
     _selectedCategory = transaction.category;
 
-    // Formatar o valor para o campo
     final currency = ref.read(currencyProvider);
     final formattedAmount = CurrencyFormatter.format(
       transaction.amount,
@@ -121,11 +120,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Tipo da transação (Receita/Despesa)
             _buildTransactionTypeSelector(),
             const SizedBox(height: Spacing.lg),
 
-            // Título
             TextFormField(
               controller: _titleController,
               decoration: InputDecoration(
@@ -139,7 +136,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             ),
             const SizedBox(height: Spacing.md),
 
-            // Valor
             TextFormField(
               controller: _amountController,
               decoration: InputDecoration(
@@ -154,14 +150,12 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 CurrencyInputFormatter(currency: ref.watch(currencyProvider)),
               ],
               onChanged: (value) {
-                // Atualizar o estado para recalcular valor da parcela
                 setState(() {});
               },
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return context.strings.amountRequiredLabel;
                 }
-                // Extrai apenas os dígitos e converte para double
                 final digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
                 if (digitsOnly.isEmpty) {
                   return context.strings.amountRequiredLabel;
@@ -176,11 +170,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             ),
             const SizedBox(height: Spacing.md),
 
-            // Categoria
             _buildCategorySelector(),
             const SizedBox(height: Spacing.md),
 
-            // Descrição
             TextFormField(
               controller: _descriptionController,
               decoration: InputDecoration(
@@ -194,16 +186,13 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             ),
             const SizedBox(height: Spacing.lg),
 
-            // Frequência
             _buildFrequencySelector(),
             const SizedBox(height: Spacing.md),
 
-            // Campos específicos por frequência
             ..._buildFrequencySpecificFields(),
 
             const SizedBox(height: Spacing.xl),
 
-            // Botão de salvar
             ElevatedButton(
               onPressed:
                   formState is TransactionFormLoadingState ? null : _submitForm,
@@ -288,7 +277,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       onTap: () {
         setState(() {
           _selectedType = type;
-          // Reset categoria quando o tipo muda
           _selectedCategory = null;
         });
       },
@@ -404,7 +392,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       ),
       const SizedBox(height: Spacing.sm),
 
-      // Data de início
       ListTile(
         leading: const Icon(Icons.calendar_today),
         title: Text(context.strings.startMonthRequiredLabel),
@@ -417,7 +404,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         contentPadding: EdgeInsets.zero,
       ),
 
-      // Data de fim (opcional)
       ListTile(
         leading: Icon(
           Icons.event_busy,
@@ -455,7 +441,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       ),
       const SizedBox(height: Spacing.sm),
 
-      // Número de parcelas
       TextFormField(
         initialValue: _totalInstallments?.toString(),
         decoration: InputDecoration(
@@ -482,7 +467,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         },
       ),
 
-      // Exibir valor por parcela se ambos os campos estiverem preenchidos
       if (_canCalculateInstallmentValue())
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
@@ -510,7 +494,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         ),
       const SizedBox(height: Spacing.md),
 
-      // Data da primeira parcela
       ListTile(
         leading: const Icon(Icons.calendar_today),
         title: Text('${context.strings.firstInstallmentMonth} *'),
@@ -536,7 +519,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       ),
       const SizedBox(height: Spacing.sm),
 
-      // Mês do ano
       DropdownButtonFormField<MonthEnum>(
         value: _selectedYearlyMonth,
         decoration: InputDecoration(
@@ -573,7 +555,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   Widget _buildCategorySelector() {
-    // Filtra as categorias baseado no tipo de transação selecionado
     final categories =
         _selectedType == TransactionTypeEnum.income
             ? CategoryEnum.incomeCategories
@@ -612,7 +593,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   IconData _getCategoryIcon(CategoryEnum category) {
-    // O enum já contém o nome do ícone, então podemos criar um método helper
     return _getIconFromName(category.iconName);
   }
 
@@ -732,13 +712,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     final currentDate = _startDate ?? DateTime.now();
     final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
-    // Define a data mínima como janeiro do ano de cadastro do usuário, ou 2020 como fallback
     final firstDate =
         userRegistrationDate != null
             ? DateTime(userRegistrationDate.year, 1, 1)
             : DateTime(2020);
 
-    // Define a data máxima como dezembro do ano atual + 2 anos (para recorrências longas)
     final now = DateTime.now();
     final lastDate = DateTime(now.year + 2, 12, 1);
 
@@ -754,11 +732,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       setState(() {
         _startDate = newStartDate;
 
-        // Se a nova data de início é igual ou posterior à data de fim, limpar a data de fim
-        // Para recorrências, a data de fim deve ser posterior (não igual) à data de início
         if (_endDate != null && !newStartDate.isBefore(_endDate!)) {
           _endDate = null;
-          // Mostrar aviso informativo
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
@@ -773,27 +748,21 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   Future<void> _selectEndDate() async {
-    // Sempre abre no mês atual, independente da data de fim já selecionada
     final now = DateTime.now();
     final currentDate = _endDate ?? DateTime(now.year, now.month, 1);
     final userRegistrationDate = ref.read(userRegistrationDateProvider);
 
-    // Define a data mínima baseada na data de início (se definida) ou na data de cadastro
     DateTime firstDate;
     if (_startDate != null) {
-      // Se há data de início, a data de fim deve ser no mês seguinte (posterior)
-      // Para gastos recorrentes, precisa ter pelo menos 2 meses
       final nextMonth = DateTime(_startDate!.year, _startDate!.month + 1, 1);
       firstDate = nextMonth;
     } else {
-      // Se não há data de início, usar a data de cadastro como fallback
       firstDate =
           userRegistrationDate != null
               ? DateTime(userRegistrationDate.year, 1, 1)
               : DateTime(2020);
     }
 
-    // Define a data máxima como dezembro do ano atual
     final lastDate = DateTime(now.year, 12, 1);
 
     final selectedDate = await showMonthYearPicker(
@@ -803,7 +772,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       lastDate: lastDate,
     );
     if (selectedDate != null) {
-      // Define como último dia do mês selecionado
       final lastDay =
           DateTime(selectedDate.year, selectedDate.month + 1, 0).day;
       setState(
@@ -825,13 +793,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   void _submitForm() {
     if (!_formKey.currentState!.validate()) return;
 
-    // Validação mínima para transações mensais
     if (_selectedFrequency == TransactionFrequencyEnum.monthly &&
         _startDate == null) {
       return; // Não deve acontecer na interface, mas mantém a segurança
     }
 
-    // Extrai apenas os dígitos do valor formatado e converte para double
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
     final amount = digitsOnly.isEmpty ? 0.0 : double.parse(digitsOnly) / 100;
 

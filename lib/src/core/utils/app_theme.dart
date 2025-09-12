@@ -20,7 +20,6 @@ class AppTheme {
     _disabledColor = Colors.grey;
   }
 
-  // Método factory para compatibilidade com código existente
   factory AppTheme.fromContext(BuildContext context) {
     final isDarkMode =
         MediaQuery.platformBrightnessOf(context) == Brightness.dark;
@@ -163,7 +162,6 @@ class AppTheme {
     const String displayFontString = 'Alatsi';
     const String bodyFontString = 'Lato';
 
-    // Criar um tema base baseado no modo
     final baseTextTheme =
         isDarkMode ? ThemeData.dark().textTheme : ThemeData.light().textTheme;
 

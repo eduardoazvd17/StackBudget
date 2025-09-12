@@ -5,7 +5,6 @@ import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 import 'package:stackbudget/src/features/profile/data/models/models.dart';
 
-// Provider
 final profileDatasourceProvider = Provider<ProfileDatasource>((ref) {
   return ProfileDatasourceImpl(
     firebaseAuth: FirebaseAuth.instance,
@@ -37,12 +36,10 @@ class ProfileDatasourceImpl implements ProfileDatasource {
         throw AppException.userNotAuthenticated('User not logged in');
       }
 
-      // Atualizar nome no Firestore
       await _firestore.collection('users').doc(user.uid).update({
         'name': request.newName,
       });
 
-      // Buscar dados atualizados do usuário
       final userDoc = await _firestore.collection('users').doc(user.uid).get();
 
       if (!userDoc.exists) {
@@ -66,7 +63,6 @@ class ProfileDatasourceImpl implements ProfileDatasource {
         throw AppException.userNotAuthenticated('User not logged in');
       }
 
-      // Reautenticar o usuário com a senha atual
       final credential = EmailAuthProvider.credential(
         email: user.email!,
         password: request.currentPassword,
@@ -74,7 +70,6 @@ class ProfileDatasourceImpl implements ProfileDatasource {
 
       await user.reauthenticateWithCredential(credential);
 
-      // Atualizar a senha
       await user.updatePassword(request.newPassword);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
@@ -101,7 +96,6 @@ class ProfileDatasourceImpl implements ProfileDatasource {
         throw AppException.userNotAuthenticated('User not logged in');
       }
 
-      // Reautenticar o usuário com a senha atual
       final credential = EmailAuthProvider.credential(
         email: user.email!,
         password: request.currentPassword,
@@ -109,10 +103,8 @@ class ProfileDatasourceImpl implements ProfileDatasource {
 
       await user.reauthenticateWithCredential(credential);
 
-      // Excluir todos os dados do usuário no Firestore
       await _deleteUserData(user.uid);
 
-      // Excluir a conta do Firebase Auth
       await user.delete();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
@@ -135,11 +127,9 @@ class ProfileDatasourceImpl implements ProfileDatasource {
     final batch = _firestore.batch();
 
     try {
-      // Excluir documento do usuário
       final userDoc = _firestore.collection('users').doc(userId);
       batch.delete(userDoc);
 
-      // Excluir todas as transações do usuário
       final transactionsQuery =
           await _firestore
               .collection('transactions')
@@ -150,7 +140,6 @@ class ProfileDatasourceImpl implements ProfileDatasource {
         batch.delete(doc.reference);
       }
 
-      // Excluir todas as transações mensais do usuário
       final monthlyTransactionsQuery =
           await _firestore
               .collection('monthlyTransactions')
@@ -161,11 +150,9 @@ class ProfileDatasourceImpl implements ProfileDatasource {
         batch.delete(doc.reference);
       }
 
-      // Excluir configurações do usuário
       final settingsDoc = _firestore.collection('settings').doc(userId);
       batch.delete(settingsDoc);
 
-      // Executar todas as exclusões em lote
       await batch.commit();
     } catch (e) {
       throw AppException.firestoreError(

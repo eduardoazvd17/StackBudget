@@ -44,7 +44,6 @@ class DashboardHeader extends ConsumerWidget {
             ),
           ),
 
-          // Menu de opções
           PopupMenuButton<String>(
             icon: Icon(Icons.more_horiz, color: context.colorScheme.onSurface),
             onSelected: (value) async {

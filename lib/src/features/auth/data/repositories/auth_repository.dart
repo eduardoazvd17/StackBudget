@@ -5,7 +5,6 @@ import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/datasources/datasources.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 
-// Provider
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepositoryImpl(datasource: ref.read(authDatasourceProvider));
 });

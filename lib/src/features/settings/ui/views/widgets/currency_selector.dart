@@ -28,8 +28,6 @@ class CurrencySelector extends StatelessWidget {
 
   String _getCurrencyDisplayName(String currency) {
     switch (currency) {
-      // TODO: Implementar internacionalização baseada no context
-      // Por enquanto retorna em português
       case 'BRL':
         return 'Real Brasileiro';
       case 'USD':

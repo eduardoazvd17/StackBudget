@@ -35,7 +35,6 @@ class ErrorHandler {
     }
   }
 
-  /// Handle synchronous operations
   static Either<AppException, T> handleSync<T>(
     String identifier, {
     required T Function() onTry,

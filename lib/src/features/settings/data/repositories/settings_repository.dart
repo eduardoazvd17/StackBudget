@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../datasources/datasources.dart';
 import '../models/models.dart';
 
-// Provider
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   final dataSource = ref.watch(settingsDataSourceProvider);
   return SettingsRepository(dataSource);

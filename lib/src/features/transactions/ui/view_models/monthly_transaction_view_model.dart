@@ -7,7 +7,6 @@ import 'package:stackbudget/src/features/transactions/data/repositories/reposito
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/monthly_transaction_view_model_state.dart';
 
-// Provider para o ViewModel de transações mensais
 final monthlyTransactionViewModelProvider = StateNotifierProvider<
   MonthlyTransactionViewModel,
   MonthlyTransactionViewModelState
@@ -24,7 +23,6 @@ class MonthlyTransactionViewModel
   MonthlyTransactionViewModel(this._repository, this._ref)
     : super(const MonthlyTransactionInitialState());
 
-  /// Carrega os dados de uma transação para um mês específico
   Future<void> loadMonthlyTransaction({
     required String transactionId,
     required int year,
@@ -43,7 +41,6 @@ class MonthlyTransactionViewModel
 
       final userId = authState.user.id;
 
-      // Buscar a transação base
       final baseTransactionResult = await _repository.getTransactionById(
         transactionId,
       );
@@ -60,7 +57,6 @@ class MonthlyTransactionViewModel
         return;
       }
 
-      // Verificar se é uma transação recorrente mensal
       if (baseTransaction.frequency != TransactionFrequencyEnum.monthly) {
         state = const MonthlyTransactionErrorState(
           message: 'Esta transação não permite ajustes mensais',
@@ -68,7 +64,6 @@ class MonthlyTransactionViewModel
         return;
       }
 
-      // Buscar override mensal se existir
       final monthlyTransactionsResult = await _repository
           .getMonthlyTransactions(userId, year, month);
 
@@ -77,7 +72,6 @@ class MonthlyTransactionViewModel
         (transactions) => transactions,
       );
 
-      // Encontrar override específico para esta transação
       final monthlyOverride =
           monthlyTransactions
                   .where((mt) => mt.parentTransactionId == transactionId)
@@ -103,7 +97,6 @@ class MonthlyTransactionViewModel
     }
   }
 
-  /// Atualiza o valor para um mês específico
   Future<void> updateMonthlyValue({
     required String transactionId,
     required int year,
@@ -132,7 +125,6 @@ class MonthlyTransactionViewModel
       final userId = authState.user.id;
       final baseTransaction = currentState.baseTransaction;
 
-      // Se o novo valor é igual ao valor base, remover override
       if (newAmount == baseTransaction.amount) {
         if (currentState.hasOverride) {
           await _removeMonthlyOverride(currentState.monthlyOverride!.id);
@@ -150,7 +142,6 @@ class MonthlyTransactionViewModel
       MonthlyTransactionModel monthlyTransaction;
 
       if (currentState.hasOverride) {
-        // Atualizar override existente
         monthlyTransaction = currentState.monthlyOverride!.copyWith(
           amount: newAmount,
           updatedAt: DateTime.now(),
@@ -165,7 +156,6 @@ class MonthlyTransactionViewModel
           (updated) => monthlyTransaction = updated,
         );
       } else {
-        // Criar novo override
         monthlyTransaction = MonthlyTransactionModel(
           id: _repository.generateTransactionId(),
           userId: userId,
@@ -192,7 +182,6 @@ class MonthlyTransactionViewModel
         monthlyTransaction: monthlyTransaction,
       );
 
-      // Atualizar dashboard
       _ref.read(dashboardViewModelProvider.notifier).refresh();
     } catch (e) {
       state = MonthlyTransactionErrorState(
@@ -201,7 +190,6 @@ class MonthlyTransactionViewModel
     }
   }
 
-  /// Remove um override mensal (volta ao valor base)
   Future<void> removeMonthlyOverride() async {
     if (state is! MonthlyTransactionLoadedState) {
       state = const MonthlyTransactionErrorState(
@@ -228,7 +216,6 @@ class MonthlyTransactionViewModel
         message: 'Ajuste mensal removido. Valor restaurado para o padrão.',
       );
 
-      // Atualizar dashboard
       _ref.read(dashboardViewModelProvider.notifier).refresh();
     } catch (e) {
       state = MonthlyTransactionErrorState(
@@ -248,7 +235,6 @@ class MonthlyTransactionViewModel
     );
   }
 
-  /// Reseta o estado
   void resetState() {
     state = const MonthlyTransactionInitialState();
   }

@@ -12,10 +12,8 @@ class LocaleNotifier extends StateNotifier<Locale> {
   final Ref _ref;
 
   LocaleNotifier(this._ref) : super(const Locale('pt')) {
-    // Carregar configurações iniciais
     _loadInitialSettings();
 
-    // Escuta mudanças nas configurações
     _ref.listen(settingsViewModelProvider, (previous, next) {
       if (next is SettingsLoadedState) {
         final language = next.settings.language;
@@ -34,7 +32,6 @@ class LocaleNotifier extends StateNotifier<Locale> {
       final locale = language == 'pt' ? const Locale('pt') : const Locale('en');
       state = locale;
     } catch (e) {
-      // Mantém o locale padrão em caso de erro
       state = const Locale('pt');
     }
   }

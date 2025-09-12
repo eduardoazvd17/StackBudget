@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stackbudget/src/core/core.dart';
 
-/// Modelo para resumo mensal do orçamento
-/// Otimizado para consultas rápidas na tela principal
 class MonthlyBudgetModel {
   final String id;
   final String userId;
@@ -15,7 +13,6 @@ class MonthlyBudgetModel {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  // Resumos por categoria (opcional)
   final Map<CategoryEnum, double>? plannedExpensesByCategory;
   final Map<CategoryEnum, double>? actualExpensesByCategory;
 
@@ -34,20 +31,15 @@ class MonthlyBudgetModel {
     this.actualExpensesByCategory,
   });
 
-  /// Saldo planejado (receitas - despesas planejadas)
   double get plannedBalance => plannedIncome - plannedExpenses;
 
-  /// Saldo atual (receitas atuais - despesas atuais)
   double get actualBalance => actualIncome - actualExpenses;
 
-  /// Diferença entre planejado e atual
   double get balanceDifference => actualBalance - plannedBalance;
 
-  /// Percentual gasto do planejado
   double get expensePercentage =>
       plannedExpenses > 0 ? (actualExpenses / plannedExpenses) * 100 : 0;
 
-  /// Chave única para o mês/ano
   String get monthYearKey => '${year}_${month.toString().padLeft(2, '0')}';
 
   Map<String, dynamic> toMap() {

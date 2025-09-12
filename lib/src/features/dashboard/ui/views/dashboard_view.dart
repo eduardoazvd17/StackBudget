@@ -16,10 +16,8 @@ class DashboardView extends ConsumerWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            // Header com saudação e logout
             const SliverToBoxAdapter(child: DashboardHeader()),
 
-            // Filtro de mês/ano
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Spacing.lg),
@@ -29,7 +27,6 @@ class DashboardView extends ConsumerWidget {
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
-            // Resumo do orçamento (saldo, receitas, despesas)
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Spacing.lg),
@@ -39,7 +36,6 @@ class DashboardView extends ConsumerWidget {
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.lg)),
 
-            // Header geral das transações
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
@@ -55,7 +51,6 @@ class DashboardView extends ConsumerWidget {
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
-            // Lista de transações recorrentes (mensais e anuais)
             SliverToBoxAdapter(
               child: SimpleExpandableSection(
                 title: context.strings.recurringTransactions,
@@ -67,7 +62,6 @@ class DashboardView extends ConsumerWidget {
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
-            // Lista de parcelas
             SliverToBoxAdapter(
               child: SimpleExpandableSection(
                 title: context.strings.installments,
@@ -79,7 +73,6 @@ class DashboardView extends ConsumerWidget {
 
             const SliverToBoxAdapter(child: SizedBox(height: Spacing.md)),
 
-            // Lista de transações únicas
             SliverToBoxAdapter(
               child: SimpleExpandableSection(
                 title: context.strings.monthlyTransactions,
@@ -89,13 +82,11 @@ class DashboardView extends ConsumerWidget {
               ),
             ),
 
-            // Espaço para o FAB
             const SliverToBoxAdapter(child: SizedBox(height: 80)),
           ],
         ),
       ),
 
-      // Botão flutuante para adicionar transação
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => AppRoutes.goToAddTransaction(context),
         icon: const Icon(Icons.add),

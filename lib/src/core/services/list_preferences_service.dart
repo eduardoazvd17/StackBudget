@@ -9,7 +9,7 @@ class ListPreferencesService {
       'one_time_transactions_expanded';
 
   static ListPreferencesService? _instance;
-  late SharedPreferences _prefs;
+  late final SharedPreferences _prefs;
 
   ListPreferencesService._(this._prefs);
 
@@ -21,7 +21,6 @@ class ListPreferencesService {
     return _instance!;
   }
 
-  // Gastos Recorrentes
   Future<bool> getRecurringTransactionsExpanded() async {
     final value = _prefs.getBool(_recurringTransactionsKey) ?? true;
     return value;
@@ -31,7 +30,6 @@ class ListPreferencesService {
     await _prefs.setBool(_recurringTransactionsKey, expanded);
   }
 
-  // Parcelas
   Future<bool> getInstallmentTransactionsExpanded() async {
     final value = _prefs.getBool(_installmentTransactionsKey) ?? true;
     return value;
@@ -41,7 +39,6 @@ class ListPreferencesService {
     await _prefs.setBool(_installmentTransactionsKey, expanded);
   }
 
-  // Transações Únicas
   Future<bool> getOneTimeTransactionsExpanded() async {
     final value = _prefs.getBool(_oneTimeTransactionsKey) ?? true;
     return value;

@@ -12,24 +12,18 @@ class TransactionModel {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  // Para transações recorrentes e anuais
   final DateTime? startDate;
   final DateTime? endDate;
 
-  // Para transações parceladas
   final int? totalInstallments;
   final int? currentInstallment;
 
-  // Para transações anuais
   final MonthEnum? yearlyMonth; // Em qual mês do ano ocorre
 
-  // Para transações mensais com valores dinâmicos
   final bool isDynamic; // Se o valor pode ser alterado mês a mês
 
-  // Categoria (opcional para organização)
   final CategoryEnum? category;
 
-  // Tags (opcional)
   final List<String>? tags;
 
   const TransactionModel({
