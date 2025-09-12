@@ -52,6 +52,7 @@ class AppTheme {
       bottomSheetTheme: _bottomSheetTheme(colorScheme),
       dialogTheme: _dialogTheme(colorScheme),
       popupMenuTheme: _popupMenuTheme(colorScheme),
+      dropdownMenuTheme: _dropdownMenuTheme(colorScheme),
       switchTheme: _switchTheme(colorScheme),
     );
   }
@@ -216,7 +217,32 @@ class AppTheme {
   PopupMenuThemeData _popupMenuTheme(ColorScheme colorScheme) {
     return PopupMenuThemeData(
       shape: Borders.radius.medium.circularShape,
-      color: colorScheme.surfaceContainerLowest,
+      color: colorScheme.surfaceContainer,
+    );
+  }
+
+  DropdownMenuThemeData _dropdownMenuTheme(ColorScheme colorScheme) {
+    return DropdownMenuThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: colorScheme.surfaceContainer,
+        border: OutlineInputBorder(
+          borderRadius: Borders.radius.medium.circular,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: Borders.radius.medium.circular,
+          borderSide: BorderSide(color: colorScheme.outlineVariant),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: Borders.radius.medium.circular,
+          borderSide: BorderSide(color: colorScheme.primary),
+        ),
+      ),
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStateProperty.all(colorScheme.surfaceContainer),
+        shape: WidgetStateProperty.all(Borders.radius.medium.circularShape),
+        elevation: WidgetStateProperty.all(2),
+      ),
     );
   }
 
@@ -288,7 +314,8 @@ class AppTheme {
         if (states.contains(WidgetState.error)) {
           return colorScheme.error.withValues(alpha: 0.05);
         }
-        return colorScheme.primary.withValues(alpha: 0.1); // Default color
+        return colorScheme
+            .surfaceContainer; // Use card color for better consistency
       }),
       disabledBorder: OutlineInputBorder(
         borderRadius: Borders.radius.medium.circular,

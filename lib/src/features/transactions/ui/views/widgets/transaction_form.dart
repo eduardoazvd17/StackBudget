@@ -8,6 +8,380 @@ import 'package:stackbudget/src/features/transactions/ui/view_models/transaction
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 
+class FrequencyBottomSheet extends StatefulWidget {
+  final TransactionFrequencyEnum initialFrequency;
+
+  const FrequencyBottomSheet({super.key, required this.initialFrequency});
+
+  @override
+  State<FrequencyBottomSheet> createState() => _FrequencyBottomSheetState();
+}
+
+class _FrequencyBottomSheetState extends State<FrequencyBottomSheet> {
+  late TransactionFrequencyEnum selectedFrequency;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedFrequency = widget.initialFrequency;
+  }
+
+  String _getFrequencyDisplayName(
+    TransactionFrequencyEnum frequency,
+    BuildContext context,
+  ) {
+    switch (frequency) {
+      case TransactionFrequencyEnum.oneTime:
+        return context.strings.frequencyOneTime;
+      case TransactionFrequencyEnum.monthly:
+        return context.strings.frequencyMonthly;
+      case TransactionFrequencyEnum.installment:
+        return context.strings.frequencyInstallment;
+      case TransactionFrequencyEnum.yearly:
+        return context.strings.frequencyYearly;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.repeat,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                context.strings.frequency,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          ...TransactionFrequencyEnum.values.map((frequency) {
+            final isSelected = selectedFrequency == frequency;
+            return InkWell(
+              onTap: () {
+                setState(() => selectedFrequency = frequency);
+                Navigator.of(context).pop(frequency);
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+                margin: const EdgeInsets.only(bottom: 8),
+                decoration: BoxDecoration(
+                  color:
+                      isSelected
+                          ? Theme.of(context).colorScheme.primaryContainer
+                          : Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color:
+                        isSelected
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(
+                              context,
+                            ).colorScheme.outline.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _getFrequencyDisplayName(frequency, context),
+                        style: TextStyle(
+                          color:
+                              isSelected
+                                  ? Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimaryContainer
+                                  : Theme.of(context).colorScheme.onSurface,
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    if (isSelected)
+                      Icon(
+                        Icons.check,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 20,
+                      ),
+                  ],
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class CategoryBottomSheet extends StatefulWidget {
+  final List<CategoryEnum> categories;
+  final CategoryEnum? initialCategory;
+
+  const CategoryBottomSheet({
+    super.key,
+    required this.categories,
+    this.initialCategory,
+  });
+
+  @override
+  State<CategoryBottomSheet> createState() => _CategoryBottomSheetState();
+}
+
+class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
+  late CategoryEnum? selectedCategory;
+  late List<CategoryEnum> filteredCategories;
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCategory = widget.initialCategory;
+    filteredCategories = widget.categories;
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterCategories(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredCategories = widget.categories;
+      } else {
+        filteredCategories =
+            widget.categories
+                .where(
+                  (category) => category
+                      .getDisplayName(context)
+                      .toLowerCase()
+                      .contains(query.toLowerCase()),
+                )
+                .toList();
+      }
+    });
+  }
+
+  IconData _getCategoryIcon(CategoryEnum category) {
+    switch (category.iconName) {
+      case 'work':
+        return Icons.work;
+      case 'laptop':
+        return Icons.laptop;
+      case 'trending_up':
+        return Icons.trending_up;
+      case 'star':
+        return Icons.star;
+      case 'card_giftcard':
+        return Icons.card_giftcard;
+      case 'attach_money':
+        return Icons.attach_money;
+      case 'home':
+        return Icons.home;
+      case 'electrical_services':
+        return Icons.electrical_services;
+      case 'local_grocery_store':
+        return Icons.local_grocery_store;
+      case 'directions_car':
+        return Icons.directions_car;
+      case 'security':
+        return Icons.security;
+      case 'local_hospital':
+        return Icons.local_hospital;
+      case 'restaurant':
+        return Icons.restaurant;
+      case 'movie':
+        return Icons.movie;
+      case 'shopping_bag':
+        return Icons.shopping_bag;
+      case 'flight':
+        return Icons.flight;
+      case 'palette':
+        return Icons.palette;
+      case 'fitness_center':
+        return Icons.fitness_center;
+      case 'face':
+        return Icons.face;
+      case 'account_balance':
+        return Icons.account_balance;
+      case 'credit_card':
+        return Icons.credit_card;
+      case 'receipt':
+        return Icons.receipt;
+      case 'money_off':
+        return Icons.money_off;
+      case 'school':
+        return Icons.school;
+      case 'menu_book':
+        return Icons.menu_book;
+      case 'play_lesson':
+        return Icons.play_lesson;
+      case 'child_care':
+        return Icons.child_care;
+      case 'pets':
+        return Icons.pets;
+      case 'redeem':
+        return Icons.redeem;
+      case 'volunteer_activism':
+        return Icons.volunteer_activism;
+      case 'savings':
+        return Icons.savings;
+      default:
+        return Icons.category;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.category,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                context.strings.categoryField,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: 'Buscar categoria...',
+              prefixIcon: const Icon(Icons.search),
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onChanged: _filterCategories,
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 300,
+            child: ListView.builder(
+              itemCount: filteredCategories.length,
+              itemBuilder: (context, index) {
+                final category = filteredCategories[index];
+                final isSelected = selectedCategory == category;
+
+                return InkWell(
+                  onTap: () {
+                    setState(() => selectedCategory = category);
+                    Navigator.of(context).pop(category);
+                  },
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 16,
+                    ),
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color:
+                          isSelected
+                              ? Theme.of(context).colorScheme.primaryContainer
+                              : Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color:
+                            isSelected
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(
+                                  context,
+                                ).colorScheme.outline.withValues(alpha: 0.3),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          _getCategoryIcon(category),
+                          size: 20,
+                          color:
+                              isSelected
+                                  ? Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimaryContainer
+                                  : Theme.of(context).colorScheme.onSurface
+                                      .withValues(alpha: 0.6),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            category.getDisplayName(context),
+                            style: TextStyle(
+                              color:
+                                  isSelected
+                                      ? Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimaryContainer
+                                      : Theme.of(context).colorScheme.onSurface,
+                              fontWeight:
+                                  isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                        if (isSelected)
+                          Icon(
+                            Icons.check,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20,
+                          ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
 class TransactionForm extends ConsumerStatefulWidget {
   final TransactionModel? transaction; // Para edição
 
@@ -367,32 +741,33 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
           ),
         ),
         const SizedBox(height: Spacing.sm),
-        DropdownButtonFormField<TransactionFrequencyEnum>(
-          value: _selectedFrequency,
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.repeat),
-            hintText: context.strings.selectFrequency,
+        InkWell(
+          onTap: () => _showFrequencyBottomSheet(),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainer,
+              border: Border.all(
+                color: Theme.of(context).colorScheme.outlineVariant,
+              ),
+              borderRadius: Borders.radius.medium.circular,
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.repeat),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    _getFrequencyDisplayName(_selectedFrequency),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.arrow_drop_down),
+              ],
+            ),
           ),
-          items:
-              TransactionFrequencyEnum.values.map((frequency) {
-                return DropdownMenuItem(
-                  value: frequency,
-                  child: Text(_getFrequencyDisplayName(frequency)),
-                );
-              }).toList(),
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                _selectedFrequency = value;
-                _resetFrequencyFields();
-              });
-            }
-          },
-          validator:
-              (value) =>
-                  value == null
-                      ? context.strings.selectFrequencyRequired
-                      : null,
         ),
       ],
     );
@@ -411,6 +786,78 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     }
   }
 
+  Widget _buildSelectionButton({
+    required IconData icon,
+    required String label,
+    required String value,
+    VoidCallback? onTap,
+    Color? iconColor,
+    Color? labelColor,
+    Color? valueColor,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceContainer,
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outlineVariant,
+          ),
+          borderRadius: Borders.radius.medium.circular,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color:
+                  iconColor ??
+                  Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color:
+                          labelColor ?? Theme.of(context).colorScheme.onSurface,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    value,
+                    style: TextStyle(
+                      color:
+                          valueColor ??
+                          Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.7),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.arrow_drop_down,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.4),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   List<Widget> _buildMonthlyFields() {
     return [
       const SizedBox(height: Spacing.md),
@@ -422,40 +869,36 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       ),
       const SizedBox(height: Spacing.sm),
 
-      ListTile(
-        leading: const Icon(Icons.calendar_today),
-        title: Text(context.strings.startMonthRequiredLabel),
-        subtitle: Text(
-          _startDate != null
-              ? '${MonthEnum.values[_startDate!.month - 1].getDisplayName(context)} de ${_startDate!.year}'
-              : context.strings.selectStartDate,
-        ),
+      _buildSelectionButton(
+        icon: Icons.calendar_today,
+        label: context.strings.startMonthRequiredLabel,
+        value:
+            _startDate != null
+                ? '${MonthEnum.values[_startDate!.month - 1].getDisplayName(context)} de ${_startDate!.year}'
+                : context.strings.selectStartDate,
         onTap: () => _selectStartDate(),
-        contentPadding: EdgeInsets.zero,
       ),
 
-      ListTile(
-        leading: Icon(
-          Icons.event_busy,
-          color: _startDate == null ? Colors.grey : null,
-        ),
-        title: Text(
-          context.strings.endMonthOptional,
-          style: _startDate == null ? TextStyle(color: Colors.grey) : null,
-        ),
-        subtitle: Text(
-          _endDate != null
-              ? '${MonthEnum.values[_endDate!.month - 1].getDisplayName(context)} de ${_endDate!.year}'
-              : _startDate != null
-              ? context.strings.endDateAfterStartSpecific(
-                MonthEnum.values[_startDate!.month - 1].getDisplayName(context),
-                _startDate!.year.toString(),
-              )
-              : context.strings.selectStartDateFirst,
-          style: _startDate == null ? TextStyle(color: Colors.grey) : null,
-        ),
+      const SizedBox(height: Spacing.sm),
+
+      _buildSelectionButton(
+        icon: Icons.event_busy,
+        iconColor: _startDate == null ? Colors.grey : null,
+        label: context.strings.endMonthOptional,
+        labelColor: _startDate == null ? Colors.grey : null,
+        value:
+            _endDate != null
+                ? '${MonthEnum.values[_endDate!.month - 1].getDisplayName(context)} de ${_endDate!.year}'
+                : _startDate != null
+                ? context.strings.endDateAfterStartSpecific(
+                  MonthEnum.values[_startDate!.month - 1].getDisplayName(
+                    context,
+                  ),
+                  _startDate!.year.toString(),
+                )
+                : context.strings.selectStartDateFirst,
+        valueColor: _startDate == null ? Colors.grey : null,
         onTap: _startDate != null ? () => _selectEndDate() : null,
-        contentPadding: EdgeInsets.zero,
       ),
     ];
   }
@@ -524,16 +967,14 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         ),
       const SizedBox(height: Spacing.md),
 
-      ListTile(
-        leading: const Icon(Icons.calendar_today),
-        title: Text('${context.strings.firstInstallmentMonth} *'),
-        subtitle: Text(
-          _startDate != null
-              ? '${MonthEnum.values[_startDate!.month - 1].getDisplayName(context)} de ${_startDate!.year}'
-              : context.strings.selectFirstInstallmentMonth,
-        ),
+      _buildSelectionButton(
+        icon: Icons.calendar_today,
+        label: '${context.strings.firstInstallmentMonth} *',
+        value:
+            _startDate != null
+                ? '${MonthEnum.values[_startDate!.month - 1].getDisplayName(context)} de ${_startDate!.year}'
+                : context.strings.selectFirstInstallmentMonth,
         onTap: () => _selectStartDate(),
-        contentPadding: EdgeInsets.zero,
       ),
     ];
   }
@@ -549,16 +990,14 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       ),
       const SizedBox(height: Spacing.sm),
 
-      ListTile(
-        leading: const Icon(Icons.calendar_today),
-        title: Text(context.strings.yearlyMonthRequiredLabel),
-        subtitle: Text(
-          _selectedYearlyMonth != null
-              ? _selectedYearlyMonth!.getDisplayName(context)
-              : context.strings.selectYearlyMonth,
-        ),
+      _buildSelectionButton(
+        icon: Icons.calendar_today,
+        label: context.strings.yearlyMonthRequiredLabel,
+        value:
+            _selectedYearlyMonth != null
+                ? _selectedYearlyMonth!.getDisplayName(context)
+                : context.strings.selectYearlyMonth,
         onTap: () => _selectYearlyMonth(),
-        contentPadding: EdgeInsets.zero,
       ),
     ];
   }
@@ -577,47 +1016,62 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   Widget _buildCategorySelector() {
-    final categories =
-        _selectedType == TransactionTypeEnum.income
-            ? CategoryEnum.incomeCategories
-            : CategoryEnum.expenseCategories;
-
-    return DropdownButtonFormField<CategoryEnum>(
-      value: _selectedCategory,
-      decoration: InputDecoration(
-        labelText: context.strings.categoryField,
-        hintText: context.strings.selectCategory,
-        prefixIcon: const Icon(Icons.category),
-      ),
-      items:
-          categories.map((category) {
-            return DropdownMenuItem(
-              value: category,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    _getCategoryIcon(category),
-                    size: 20,
-                    color: context.colorScheme.onSurface.withValues(alpha: 0.6),
-                  ),
-                  const SizedBox(width: 8),
-                  Flexible(child: Text(category.getDisplayName(context))),
-                ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.strings.categoryField,
+          style: context.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: Spacing.sm),
+        InkWell(
+          onTap: () => _showCategoryBottomSheet(),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainer,
+              border: Border.all(
+                color: Theme.of(context).colorScheme.outlineVariant,
               ),
-            );
-          }).toList(),
-      onChanged: (value) => setState(() => _selectedCategory = value),
-      validator: (value) => null, // Categoria é opcional
+              borderRadius: Borders.radius.medium.circular,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  _selectedCategory != null
+                      ? _getCategoryIcon(_selectedCategory!)
+                      : Icons.category,
+                  color:
+                      _selectedCategory != null
+                          ? Theme.of(context).colorScheme.onSurface
+                          : Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    _selectedCategory != null
+                        ? _selectedCategory!.getDisplayName(context)
+                        : context.strings.selectCategory,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   IconData _getCategoryIcon(CategoryEnum category) {
-    return _getIconFromName(category.iconName);
-  }
-
-  IconData _getIconFromName(String iconName) {
-    switch (iconName) {
+    switch (category.iconName) {
       case 'work':
         return Icons.work;
       case 'laptop':
@@ -680,7 +1134,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         return Icons.volunteer_activism;
       case 'savings':
         return Icons.savings;
-      case 'category':
       default:
         return Icons.category;
     }
@@ -781,6 +1234,53 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     );
     if (selectedMonth != null) {
       setState(() => _selectedYearlyMonth = selectedMonth);
+    }
+  }
+
+  Future<void> _showFrequencyBottomSheet() async {
+    final selectedFrequency =
+        await showModalBottomSheet<TransactionFrequencyEnum>(
+          context: context,
+          isScrollControlled: true,
+          useSafeArea: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          builder:
+              (context) =>
+                  FrequencyBottomSheet(initialFrequency: _selectedFrequency),
+        );
+
+    if (selectedFrequency != null) {
+      setState(() {
+        _selectedFrequency = selectedFrequency;
+        _resetFrequencyFields();
+      });
+    }
+  }
+
+  Future<void> _showCategoryBottomSheet() async {
+    final categories =
+        _selectedType == TransactionTypeEnum.income
+            ? CategoryEnum.incomeCategories
+            : CategoryEnum.expenseCategories;
+
+    final selectedCategory = await showModalBottomSheet<CategoryEnum>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder:
+          (context) => CategoryBottomSheet(
+            categories: categories,
+            initialCategory: _selectedCategory,
+          ),
+    );
+
+    if (selectedCategory != null) {
+      setState(() => _selectedCategory = selectedCategory);
     }
   }
 

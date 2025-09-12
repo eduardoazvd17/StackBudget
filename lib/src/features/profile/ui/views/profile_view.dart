@@ -150,7 +150,14 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                     children: [
                       CircleAvatar(
                         radius: 30,
-                        backgroundColor: Theme.of(context).primaryColor,
+                        backgroundColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? const Color(
+                                  0xff1e40af,
+                                ) // Azul mais intenso para dark mode
+                                : Theme.of(
+                                  context,
+                                ).primaryColor, // Cor primária para light mode
                         child: Text(
                           user.name.isNotEmpty
                               ? user.name[0].toUpperCase()
