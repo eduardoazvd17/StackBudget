@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/core/constants/app_constants.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
@@ -189,7 +190,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 if (digitsOnly.isEmpty) {
                   return context.strings.amountRequiredLabel;
                 }
-                final numValue = double.parse(digitsOnly) / 100;
+                final numValue =
+                    double.parse(digitsOnly) / AppConstants.centsToRealDivider;
                 if (numValue <= 0) {
                   return context.strings.amountPositive;
                 }
@@ -700,7 +702,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
     if (digitsOnly.isEmpty) return false;
 
-    final amount = double.parse(digitsOnly) / 100;
+    final amount = double.parse(digitsOnly) / AppConstants.centsToRealDivider;
     return amount > 0;
   }
 
@@ -711,7 +713,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     }
 
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
-    final totalAmount = double.parse(digitsOnly) / 100;
+    final totalAmount =
+        double.parse(digitsOnly) / AppConstants.centsToRealDivider;
     final installmentValue = totalAmount / _totalInstallments!;
 
     return CurrencyFormatter.format(installmentValue, currency);
@@ -724,7 +727,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     final firstDate =
         userRegistrationDate != null
             ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(2020);
+            : DateTime(AppConstants.minYear);
 
     final now = DateTime.now();
     final lastDate = DateTime(now.year + 2, 12, 1);
@@ -767,7 +770,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       firstDate =
           userRegistrationDate != null
               ? DateTime(userRegistrationDate.year, 1, 1)
-              : DateTime(2020);
+              : DateTime(AppConstants.minYear);
     }
 
     final lastDate = DateTime(now.year, 12, 1);
@@ -806,7 +809,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     }
 
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
-    final amount = digitsOnly.isEmpty ? 0.0 : double.parse(digitsOnly) / 100;
+    final amount =
+        digitsOnly.isEmpty
+            ? 0.0
+            : double.parse(digitsOnly) / AppConstants.centsToRealDivider;
 
     final viewModel = ref.read(transactionFormViewModelProvider.notifier);
 

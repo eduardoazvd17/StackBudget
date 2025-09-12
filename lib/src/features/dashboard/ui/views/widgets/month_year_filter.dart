@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/core/constants/app_constants.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 
 class MonthYearFilter extends ConsumerWidget {
@@ -79,7 +80,7 @@ class MonthYearFilter extends ConsumerWidget {
     final firstAllowedDate =
         userRegistrationDate != null
             ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(2020);
+            : DateTime(AppConstants.minYear);
 
     if (!previousMonth.isBefore(firstAllowedDate)) {
       ref.read(selectedPeriodProvider.notifier).state = previousMonth;
@@ -91,7 +92,11 @@ class MonthYearFilter extends ConsumerWidget {
     final nextMonth = DateTime(currentDate.year, currentDate.month + 1, 1);
 
     final now = DateTime.now();
-    final lastAllowedDate = DateTime(now.year + 2, 12, 1);
+    final lastAllowedDate = DateTime(
+      now.year.toInt() + AppConstants.futureYearsLimit,
+      12,
+      1,
+    );
 
     if (!nextMonth.isAfter(lastAllowedDate)) {
       ref.read(selectedPeriodProvider.notifier).state = nextMonth;
@@ -105,10 +110,14 @@ class MonthYearFilter extends ConsumerWidget {
     final firstDate =
         userRegistrationDate != null
             ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(2020);
+            : DateTime(AppConstants.minYear);
 
     final now = DateTime.now();
-    final lastDate = DateTime(now.year + 2, 12, 1);
+    final lastDate = DateTime(
+      now.year.toInt() + AppConstants.futureYearsLimit,
+      12,
+      1,
+    );
 
     final selectedDate = await showMonthYearPicker(
       context: context,
@@ -130,7 +139,7 @@ class MonthYearFilter extends ConsumerWidget {
     final firstAllowedDate =
         userRegistrationDate != null
             ? DateTime(userRegistrationDate.year, 1, 1)
-            : DateTime(2020);
+            : DateTime(AppConstants.minYear);
 
     return !previousMonth.isBefore(firstAllowedDate);
   }
@@ -140,7 +149,11 @@ class MonthYearFilter extends ConsumerWidget {
     final nextMonth = DateTime(currentDate.year, currentDate.month + 1, 1);
 
     final now = DateTime.now();
-    final lastAllowedDate = DateTime(now.year + 2, 12, 1);
+    final lastAllowedDate = DateTime(
+      now.year.toInt() + AppConstants.futureYearsLimit,
+      12,
+      1,
+    );
 
     return !nextMonth.isAfter(lastAllowedDate);
   }

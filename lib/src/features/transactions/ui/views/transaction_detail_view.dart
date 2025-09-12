@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
@@ -214,12 +213,12 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                     _buildDetailSection(context.strings.dates, [
                       _buildDetailItem(
                         context.strings.createdAt,
-                        _formatDateTime(transaction.createdAt),
+                        transaction.createdAt.formatToDateTime(),
                         Icons.calendar_today,
                       ),
                       _buildDetailItem(
                         context.strings.updatedAt,
-                        _formatDateTime(transaction.updatedAt),
+                        transaction.updatedAt.formatToDateTime(),
                         Icons.update,
                       ),
                     ]),
@@ -269,13 +268,13 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
             if (widget.transaction.startDate != null)
               _buildDetailItem(
                 context.strings.startMonth,
-                _formatMonthYear(widget.transaction.startDate!),
+                widget.transaction.startDate!.formatToMonthYear(context),
                 Icons.play_arrow,
               ),
             if (widget.transaction.endDate != null)
               _buildDetailItem(
                 context.strings.endMonth,
-                _formatMonthYear(widget.transaction.endDate!),
+                widget.transaction.endDate!.formatToMonthYear(context),
                 Icons.stop,
               ),
           ]),
@@ -299,7 +298,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
             if (widget.transaction.startDate != null)
               _buildDetailItem(
                 context.strings.firstInstallmentMonth,
-                _formatMonthYear(widget.transaction.startDate!),
+                widget.transaction.startDate!.formatToMonthYear(context),
                 Icons.calendar_today,
               ),
           ]),
@@ -344,14 +343,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
         ),
       ],
     );
-  }
-
-  String _formatMonthYear(DateTime date) {
-    return '${MonthEnum.values[date.month - 1].getDisplayName(context)} de ${date.year}';
-  }
-
-  String _formatDateTime(DateTime date) {
-    return DateFormat('dd/MM/yyyy HH:mm').format(date);
   }
 
   String _getFrequencyDisplayName(

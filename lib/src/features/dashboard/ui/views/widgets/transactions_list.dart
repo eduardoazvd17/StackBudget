@@ -213,7 +213,7 @@ class TransactionListItem extends ConsumerWidget {
             if (transaction.frequency == TransactionFrequencyEnum.oneTime ||
                 showAllTypes) ...[
               Text(
-                _formatDate(transaction.createdAt),
+                transaction.createdAt.formatToSimpleDate(),
                 style: context.textTheme.bodySmall?.copyWith(
                   color: context.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
@@ -323,10 +323,6 @@ class TransactionListItem extends ConsumerWidget {
       case TransactionFrequencyEnum.oneTime:
         return context.strings.frequencyOneTime;
     }
-  }
-
-  String _formatDate(DateTime date) {
-    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}';
   }
 
   int _getCurrentInstallmentNumber(

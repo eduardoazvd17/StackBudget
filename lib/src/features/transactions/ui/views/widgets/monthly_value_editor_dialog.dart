@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/core/constants/app_constants.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/monthly_transaction_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/monthly_transaction_view_model_state.dart';
@@ -177,7 +178,8 @@ class _MonthlyValueEditorDialogState
                 if (digitsOnly.isEmpty) {
                   return context.strings.amountRequired;
                 }
-                final numValue = double.parse(digitsOnly) / 100;
+                final numValue =
+                    double.parse(digitsOnly) / AppConstants.centsToRealDivider;
                 if (numValue <= 0) {
                   return context.strings.amountMustBePositive;
                 }
@@ -241,7 +243,10 @@ class _MonthlyValueEditorDialogState
     if (!_formKey.currentState!.validate()) return;
 
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
-    final amount = digitsOnly.isEmpty ? 0.0 : double.parse(digitsOnly) / 100;
+    final amount =
+        digitsOnly.isEmpty
+            ? 0.0
+            : double.parse(digitsOnly) / AppConstants.centsToRealDivider;
 
     ref
         .read(monthlyTransactionViewModelProvider.notifier)

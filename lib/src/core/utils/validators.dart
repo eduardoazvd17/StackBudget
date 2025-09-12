@@ -1,3 +1,5 @@
+import '../constants/app_constants.dart';
+
 class Validators {
   Validators._();
 
@@ -31,7 +33,7 @@ class Validators {
     if (value == null || value.isEmpty) {
       return errorMessage('passwordRequired');
     }
-    if (value.length < 6) {
+    if (value.length < AppConstants.minPasswordLength) {
       return errorMessage('passwordMinLength');
     }
     return null;
@@ -57,7 +59,7 @@ class Validators {
     if (value == null || value.trim().isEmpty) {
       return errorMessage('nameRequired');
     }
-    if (value.trim().length < 2) {
+    if (value.trim().length < AppConstants.minNameLength) {
       return errorMessage('nameMinLength');
     }
     return null;

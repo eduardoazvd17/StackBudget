@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/core/constants/app_constants.dart';
 
 class MonthYearPicker extends StatefulWidget {
   final DateTime initialDate;
@@ -178,8 +179,14 @@ Future<DateTime?> showMonthYearPicker({
     builder:
         (context) => MonthYearPicker(
           initialDate: initialDate,
-          firstDate: firstDate ?? DateTime(2020),
-          lastDate: lastDate ?? DateTime(DateTime.now().year + 2, 12, 1),
+          firstDate: firstDate ?? DateTime(AppConstants.minYear),
+          lastDate:
+              lastDate ??
+              DateTime(
+                DateTime.now().year.toInt() + AppConstants.futureYearsLimit,
+                12,
+                1,
+              ),
           onDateSelected: (date) => selectedDate = date,
         ),
   );
