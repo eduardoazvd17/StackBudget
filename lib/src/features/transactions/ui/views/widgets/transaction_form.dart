@@ -549,31 +549,16 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       ),
       const SizedBox(height: Spacing.sm),
 
-      TextFormField(
-        controller: TextEditingController(
-          text: _selectedYearlyMonth?.getDisplayName(context),
+      ListTile(
+        leading: const Icon(Icons.calendar_today),
+        title: Text(context.strings.yearlyMonthRequiredLabel),
+        subtitle: Text(
+          _selectedYearlyMonth != null
+              ? _selectedYearlyMonth!.getDisplayName(context)
+              : context.strings.selectYearlyMonth,
         ),
-        readOnly: true,
-        decoration: InputDecoration(
-          labelText: context.strings.yearlyMonthRequiredLabel,
-          prefixIcon: const Icon(Icons.calendar_month),
-          hintText: context.strings.selectYearlyMonth,
-          suffixIcon: const Icon(Icons.arrow_drop_down),
-        ),
-        onTap: () async {
-          final selectedMonth = await showMonthPicker(
-            context: context,
-            initialMonth: _selectedYearlyMonth ?? MonthEnum.january,
-          );
-          if (selectedMonth != null) {
-            setState(() => _selectedYearlyMonth = selectedMonth);
-          }
-        },
-        validator:
-            (value) =>
-                _selectedYearlyMonth == null
-                    ? context.strings.selectMonthRequired
-                    : null,
+        onTap: () => _selectYearlyMonth(),
+        contentPadding: EdgeInsets.zero,
       ),
     ];
   }
@@ -786,6 +771,16 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         () =>
             _endDate = DateTime(selectedDate.year, selectedDate.month, lastDay),
       );
+    }
+  }
+
+  Future<void> _selectYearlyMonth() async {
+    final selectedMonth = await showMonthPicker(
+      context: context,
+      initialMonth: _selectedYearlyMonth ?? MonthEnum.january,
+    );
+    if (selectedMonth != null) {
+      setState(() => _selectedYearlyMonth = selectedMonth);
     }
   }
 
