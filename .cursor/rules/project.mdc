@@ -32,3 +32,4 @@ OBS:
 - Devemos otimizar as consultas ao firebase, já que o usuario verá os dados mês a mês.
 - Devemos otimizar a estrutura de dados no firebase pra economizar leituras.
 - Na tela inicial terá um filtro de mês e ano, onde ano será a partir da data de cadastro do usuário até o ano atual.
+- Não tentar rodar o projeto, nunca rodar flutter run ou flutter build, pois o apesta rodando pelo vscode com hotreload então eu vou ver a alteração realizada automaticamente.
