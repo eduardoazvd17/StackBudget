@@ -174,10 +174,15 @@ Future<DateTime?> showMonthYearPicker({
 }) async {
   DateTime? selectedDate;
 
-  await showDialog<void>(
+  await showModalBottomSheet<void>(
     context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
     builder:
-        (context) => MonthYearPicker(
+        (context) => MonthYearPickerBottomSheet(
           initialDate: initialDate,
           firstDate: firstDate ?? DateTime(AppConstants.minYear),
           lastDate:
@@ -192,4 +197,214 @@ Future<DateTime?> showMonthYearPicker({
   );
 
   return selectedDate;
+}
+
+class MonthYearPickerBottomSheet extends StatefulWidget {
+  final DateTime initialDate;
+  final DateTime firstDate;
+  final DateTime lastDate;
+  final void Function(DateTime selectedDate) onDateSelected;
+
+  const MonthYearPickerBottomSheet({
+    super.key,
+    required this.initialDate,
+    required this.firstDate,
+    required this.lastDate,
+    required this.onDateSelected,
+  });
+
+  @override
+  State<MonthYearPickerBottomSheet> createState() =>
+      _MonthYearPickerBottomSheetState();
+}
+
+class _MonthYearPickerBottomSheetState
+    extends State<MonthYearPickerBottomSheet> {
+  late int selectedYear;
+  late int selectedMonth;
+  late int currentMonth;
+  late int currentYear;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedYear = widget.initialDate.year;
+    selectedMonth = widget.initialDate.month;
+
+    // Get current month and year
+    final now = DateTime.now();
+    currentMonth = now.month;
+    currentYear = now.year;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Row(
+            children: [
+              Icon(
+                Icons.calendar_month,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                context.strings.selectPeriod,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+
+          // Year selector
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed:
+                    selectedYear > widget.firstDate.year
+                        ? () => setState(() => selectedYear--)
+                        : null,
+                icon: const Icon(Icons.chevron_left),
+              ),
+              Text(
+                selectedYear.toString(),
+                style: context.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                onPressed:
+                    selectedYear < widget.lastDate.year
+                        ? () => setState(() => selectedYear++)
+                        : null,
+                icon: const Icon(Icons.chevron_right),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: Spacing.lg),
+
+          // Month grid
+          SizedBox(
+            height: 250,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 2.5,
+                crossAxisSpacing: Spacing.sm,
+                mainAxisSpacing: Spacing.sm,
+              ),
+              itemCount: 12,
+              itemBuilder: (context, index) {
+                final month = index + 1;
+                final isSelected = month == selectedMonth;
+                final isCurrentMonth =
+                    month == currentMonth && selectedYear == currentYear;
+                final isEnabled = _isMonthEnabled(month);
+
+                return InkWell(
+                  onTap:
+                      isEnabled
+                          ? () {
+                            final selectedDate = DateTime(
+                              selectedYear,
+                              month,
+                              1,
+                            );
+                            widget.onDateSelected(selectedDate);
+                            Navigator.of(context).pop();
+                          }
+                          : null,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color:
+                          isSelected
+                              ? context.colorScheme.primary
+                              : isCurrentMonth && isEnabled
+                              ? context.colorScheme.primaryContainer.withValues(
+                                alpha: 0.6,
+                              )
+                              : isEnabled
+                              ? context.colorScheme.surface
+                              : context.colorScheme.surface.withValues(
+                                alpha: 0.3,
+                              ),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color:
+                            isSelected
+                                ? context.colorScheme.primary
+                                : isCurrentMonth && isEnabled
+                                ? context.colorScheme.primary.withValues(
+                                  alpha: 0.7,
+                                )
+                                : context.colorScheme.outline.withValues(
+                                  alpha: 0.3,
+                                ),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        MonthEnum.getAbbreviationByNumber(month, context),
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color:
+                              isSelected
+                                  ? context.colorScheme.onPrimary
+                                  : isCurrentMonth && isEnabled
+                                  ? context.colorScheme.primary
+                                  : isEnabled
+                                  ? context.colorScheme.onSurface
+                                  : context.colorScheme.onSurface.withValues(
+                                    alpha: 0.4,
+                                  ),
+                          fontWeight:
+                              isSelected
+                                  ? FontWeight.bold
+                                  : isCurrentMonth && isEnabled
+                                  ? FontWeight.w600
+                                  : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          const SizedBox(height: 24),
+        ],
+      ),
+    );
+  }
+
+  bool _isMonthEnabled(int month) {
+    final date = DateTime(selectedYear, month, 1);
+    final firstAllowed = DateTime(
+      widget.firstDate.year,
+      widget.firstDate.month,
+      1,
+    );
+    final lastAllowed = DateTime(
+      widget.lastDate.year,
+      widget.lastDate.month,
+      1,
+    );
+
+    return !date.isBefore(firstAllowed) && !date.isAfter(lastAllowed);
+  }
 }
