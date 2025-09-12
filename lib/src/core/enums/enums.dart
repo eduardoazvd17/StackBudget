@@ -1,4 +1,5 @@
 export 'app_exception_type_enum.dart';
+export 'category_enum.dart';
 export 'moth_enum.dart';
 export 'transaction_type_enum.dart';
 export 'transaction_frequency_enum.dart';

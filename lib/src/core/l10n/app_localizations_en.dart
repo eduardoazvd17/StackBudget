@@ -713,4 +713,100 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transactionNotFoundDescription => 'The transaction may have been deleted or the ID is incorrect.';
+
+  @override
+  String get categorySalary => 'Salary';
+
+  @override
+  String get categoryFreelance => 'Freelance';
+
+  @override
+  String get categoryInvestment => 'Investments';
+
+  @override
+  String get categoryBonus => 'Bonus';
+
+  @override
+  String get categoryGiftIncome => 'Gift Received';
+
+  @override
+  String get categoryOtherIncome => 'Other Income';
+
+  @override
+  String get categoryHousing => 'Housing';
+
+  @override
+  String get categoryUtilities => 'Utilities';
+
+  @override
+  String get categoryGroceries => 'Groceries';
+
+  @override
+  String get categoryTransportation => 'Transportation';
+
+  @override
+  String get categoryInsurance => 'Insurance';
+
+  @override
+  String get categoryHealthcare => 'Healthcare';
+
+  @override
+  String get categoryDining => 'Dining';
+
+  @override
+  String get categoryEntertainment => 'Entertainment';
+
+  @override
+  String get categoryShopping => 'Shopping';
+
+  @override
+  String get categoryTravel => 'Travel';
+
+  @override
+  String get categoryHobbies => 'Hobbies';
+
+  @override
+  String get categoryFitness => 'Gym/Sports';
+
+  @override
+  String get categoryBeauty => 'Beauty';
+
+  @override
+  String get categoryLoans => 'Loans';
+
+  @override
+  String get categoryCreditCard => 'Credit Card';
+
+  @override
+  String get categoryTaxes => 'Taxes';
+
+  @override
+  String get categoryFees => 'Fees';
+
+  @override
+  String get categoryEducation => 'Education';
+
+  @override
+  String get categoryBooks => 'Books';
+
+  @override
+  String get categoryCourses => 'Courses';
+
+  @override
+  String get categoryChildcare => 'Childcare';
+
+  @override
+  String get categoryPets => 'Pets';
+
+  @override
+  String get categoryGifts => 'Gifts';
+
+  @override
+  String get categoryCharity => 'Charity';
+
+  @override
+  String get categoryEmergencyFund => 'Emergency Fund';
+
+  @override
+  String get categoryOther => 'Other';
 }

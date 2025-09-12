@@ -23,7 +23,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
   final _categoryController = TextEditingController();
-  TransactionCategoryEnum? _selectedCategory;
+  CategoryEnum? _selectedCategory;
 
   TransactionTypeEnum _selectedType = TransactionTypeEnum.expense;
   TransactionFrequencyEnum _selectedFrequency =
@@ -576,10 +576,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     // Filtra as categorias baseado no tipo de transação selecionado
     final categories =
         _selectedType == TransactionTypeEnum.income
-            ? TransactionCategoryEnum.incomeCategories
-            : TransactionCategoryEnum.expenseCategories;
+            ? CategoryEnum.incomeCategories
+            : CategoryEnum.expenseCategories;
 
-    return DropdownButtonFormField<TransactionCategoryEnum>(
+    return DropdownButtonFormField<CategoryEnum>(
       value: _selectedCategory,
       decoration: InputDecoration(
         labelText: context.strings.categoryField,
@@ -599,7 +599,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                     color: context.colorScheme.onSurface.withOpacity(0.6),
                   ),
                   const SizedBox(width: 8),
-                  Flexible(child: Text(category.displayName)),
+                  Flexible(
+                    child: Text(category.getDisplayName(context)),
+                  ),
                 ],
               ),
             );
@@ -609,8 +611,13 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     );
   }
 
-  IconData _getCategoryIcon(TransactionCategoryEnum category) {
-    switch (category.iconName) {
+  IconData _getCategoryIcon(CategoryEnum category) {
+    // O enum já contém o nome do ícone, então podemos criar um método helper
+    return _getIconFromName(category.iconName);
+  }
+
+  IconData _getIconFromName(String iconName) {
+    switch (iconName) {
       case 'work':
         return Icons.work;
       case 'laptop':

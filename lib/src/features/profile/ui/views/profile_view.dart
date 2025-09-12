@@ -208,7 +208,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                 ),
                 leading: const Icon(Icons.person_outline),
                 title: Text(l10n.changeName),
-                subtitle: Text('${l10n.currentName}: ${user.name}'),
+                subtitle: Text(user.name),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _showChangeNameDialog(user.name),
               ),

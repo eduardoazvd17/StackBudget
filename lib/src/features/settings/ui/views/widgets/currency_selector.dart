@@ -28,10 +28,12 @@ class CurrencySelector extends StatelessWidget {
 
   String _getCurrencyDisplayName(String currency) {
     switch (currency) {
+      // TODO: Implementar internacionalização baseada no context
+      // Por enquanto retorna em português
       case 'BRL':
         return 'Real Brasileiro';
       case 'USD':
-        return 'Dolar Americano';
+        return 'Dólar Americano';
       case 'EUR':
         return 'Euro';
       default:
@@ -44,12 +46,12 @@ class CurrencySelector extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Moeda'),
+          title: Text(context.strings.currency),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile<String>(
-                title: Text('Real Brasileiro'),
+                title: Text(context.strings.brazilianReal),
                 value: 'BRL',
                 groupValue: currentCurrency,
                 onChanged: (value) {
@@ -60,7 +62,7 @@ class CurrencySelector extends StatelessWidget {
                 },
               ),
               RadioListTile<String>(
-                title: Text('Dolar Americano'),
+                title: Text(context.strings.usDollar),
                 value: 'USD',
                 groupValue: currentCurrency,
                 onChanged: (value) {
@@ -71,7 +73,7 @@ class CurrencySelector extends StatelessWidget {
                 },
               ),
               RadioListTile<String>(
-                title: Text('Euro'),
+                title: Text(context.strings.euro),
                 value: 'EUR',
                 groupValue: currentCurrency,
                 onChanged: (value) {

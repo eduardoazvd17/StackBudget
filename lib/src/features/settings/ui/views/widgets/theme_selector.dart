@@ -79,7 +79,7 @@ class ThemeSelector extends ConsumerWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancelar'),
+                child: Text(context.strings.cancel),
               ),
             ],
           ),

@@ -20,7 +20,7 @@ class LanguageSelector extends StatelessWidget {
         color: Theme.of(context).colorScheme.primary,
       ),
       title: Text(context.strings.language),
-      subtitle: Text(currentLanguage == 'pt' ? 'Português' : 'English'),
+      subtitle: Text(currentLanguage == 'pt' ? context.strings.portuguese : context.strings.english),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () => _showLanguageDialog(context),
     );
@@ -31,12 +31,12 @@ class LanguageSelector extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Idioma'),
+          title: Text(context.strings.language),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile<String>(
-                title: Text('Português'),
+                title: Text(context.strings.portuguese),
                 value: 'pt',
                 groupValue: currentLanguage,
                 onChanged: (value) {
@@ -47,7 +47,7 @@ class LanguageSelector extends StatelessWidget {
                 },
               ),
               RadioListTile<String>(
-                title: Text('English'),
+                title: Text(context.strings.english),
                 value: 'en',
                 groupValue: currentLanguage,
                 onChanged: (value) {

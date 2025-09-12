@@ -27,7 +27,7 @@ class TransactionModel {
   final bool isDynamic; // Se o valor pode ser alterado mês a mês
 
   // Categoria (opcional para organização)
-  final TransactionCategoryEnum? category;
+  final CategoryEnum? category;
 
   // Tags (opcional)
   final List<String>? tags;
@@ -104,16 +104,16 @@ class TransactionModel {
       yearlyMonth:
           map['yearlyMonth'] != null
               ? MonthEnum.values.firstWhere(
-                  (e) => e.name == map['yearlyMonth'],
-                  orElse: () => MonthEnum.january,
-                )
+                (e) => e.name == map['yearlyMonth'],
+                orElse: () => MonthEnum.january,
+              )
               : null,
       isDynamic: map['isDynamic'] as bool? ?? false,
       category:
           map['category'] != null
-              ? TransactionCategoryEnum.values.firstWhere(
+              ? CategoryEnum.values.firstWhere(
                 (e) => e.name == map['category'],
-                orElse: () => TransactionCategoryEnum.other,
+                orElse: () => CategoryEnum.other,
               )
               : null,
       tags: map['tags'] != null ? List<String>.from(map['tags'] as List) : null,
@@ -136,7 +136,7 @@ class TransactionModel {
     int? currentInstallment,
     MonthEnum? yearlyMonth,
     bool? isDynamic,
-    TransactionCategoryEnum? category,
+    CategoryEnum? category,
     List<String>? tags,
   }) {
     return TransactionModel(

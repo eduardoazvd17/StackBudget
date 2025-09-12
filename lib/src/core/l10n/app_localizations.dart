@@ -1498,6 +1498,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The transaction may have been deleted or the ID is incorrect.'**
   String get transactionNotFoundDescription;
+
+  /// Category name for Salary
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get categorySalary;
+
+  /// Category name for Freelance
+  ///
+  /// In en, this message translates to:
+  /// **'Freelance'**
+  String get categoryFreelance;
+
+  /// Category name for Investments
+  ///
+  /// In en, this message translates to:
+  /// **'Investments'**
+  String get categoryInvestment;
+
+  /// Category name for Bonus
+  ///
+  /// In en, this message translates to:
+  /// **'Bonus'**
+  String get categoryBonus;
+
+  /// Category name for Gift Received
+  ///
+  /// In en, this message translates to:
+  /// **'Gift Received'**
+  String get categoryGiftIncome;
+
+  /// Category name for Other Income
+  ///
+  /// In en, this message translates to:
+  /// **'Other Income'**
+  String get categoryOtherIncome;
+
+  /// Category name for Housing
+  ///
+  /// In en, this message translates to:
+  /// **'Housing'**
+  String get categoryHousing;
+
+  /// Category name for Utilities
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities'**
+  String get categoryUtilities;
+
+  /// Category name for Groceries
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries'**
+  String get categoryGroceries;
+
+  /// Category name for Transportation
+  ///
+  /// In en, this message translates to:
+  /// **'Transportation'**
+  String get categoryTransportation;
+
+  /// Category name for Insurance
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get categoryInsurance;
+
+  /// Category name for Healthcare
+  ///
+  /// In en, this message translates to:
+  /// **'Healthcare'**
+  String get categoryHealthcare;
+
+  /// Category name for Dining
+  ///
+  /// In en, this message translates to:
+  /// **'Dining'**
+  String get categoryDining;
+
+  /// Category name for Entertainment
+  ///
+  /// In en, this message translates to:
+  /// **'Entertainment'**
+  String get categoryEntertainment;
+
+  /// Category name for Shopping
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get categoryShopping;
+
+  /// Category name for Travel
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get categoryTravel;
+
+  /// Category name for Hobbies
+  ///
+  /// In en, this message translates to:
+  /// **'Hobbies'**
+  String get categoryHobbies;
+
+  /// Category name for Gym/Sports
+  ///
+  /// In en, this message translates to:
+  /// **'Gym/Sports'**
+  String get categoryFitness;
+
+  /// Category name for Beauty
+  ///
+  /// In en, this message translates to:
+  /// **'Beauty'**
+  String get categoryBeauty;
+
+  /// Category name for Loans
+  ///
+  /// In en, this message translates to:
+  /// **'Loans'**
+  String get categoryLoans;
+
+  /// Category name for Credit Card
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Card'**
+  String get categoryCreditCard;
+
+  /// Category name for Taxes
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes'**
+  String get categoryTaxes;
+
+  /// Category name for Fees
+  ///
+  /// In en, this message translates to:
+  /// **'Fees'**
+  String get categoryFees;
+
+  /// Category name for Education
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get categoryEducation;
+
+  /// Category name for Books
+  ///
+  /// In en, this message translates to:
+  /// **'Books'**
+  String get categoryBooks;
+
+  /// Category name for Courses
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get categoryCourses;
+
+  /// Category name for Childcare
+  ///
+  /// In en, this message translates to:
+  /// **'Childcare'**
+  String get categoryChildcare;
+
+  /// Category name for Pets
+  ///
+  /// In en, this message translates to:
+  /// **'Pets'**
+  String get categoryPets;
+
+  /// Category name for Gifts
+  ///
+  /// In en, this message translates to:
+  /// **'Gifts'**
+  String get categoryGifts;
+
+  /// Category name for Charity
+  ///
+  /// In en, this message translates to:
+  /// **'Charity'**
+  String get categoryCharity;
+
+  /// Category name for Emergency Fund
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Fund'**
+  String get categoryEmergencyFund;
+
+  /// Category name for Other
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get categoryOther;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

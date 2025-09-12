@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:stackbudget/src/core/core.dart';
 
 /// Modelo para resumo mensal do orçamento
 /// Otimizado para consultas rápidas na tela principal
@@ -15,8 +16,8 @@ class MonthlyBudgetModel {
   final DateTime updatedAt;
 
   // Resumos por categoria (opcional)
-  final Map<String, double>? plannedExpensesByCategory;
-  final Map<String, double>? actualExpensesByCategory;
+  final Map<CategoryEnum, double>? plannedExpensesByCategory;
+  final Map<CategoryEnum, double>? actualExpensesByCategory;
 
   const MonthlyBudgetModel({
     required this.id,
@@ -80,7 +81,7 @@ class MonthlyBudgetModel {
       updatedAt: (map['updatedAt'] as Timestamp).toDate(),
       plannedExpensesByCategory:
           map['plannedExpensesByCategory'] != null
-              ? Map<String, double>.from(
+              ? Map<CategoryEnum, double>.from(
                 (map['plannedExpensesByCategory'] as Map).map(
                   (key, value) =>
                       MapEntry(key.toString(), (value as num).toDouble()),
@@ -89,7 +90,7 @@ class MonthlyBudgetModel {
               : null,
       actualExpensesByCategory:
           map['actualExpensesByCategory'] != null
-              ? Map<String, double>.from(
+              ? Map<CategoryEnum, double>.from(
                 (map['actualExpensesByCategory'] as Map).map(
                   (key, value) =>
                       MapEntry(key.toString(), (value as num).toDouble()),
@@ -110,8 +111,8 @@ class MonthlyBudgetModel {
     double? actualExpenses,
     DateTime? createdAt,
     DateTime? updatedAt,
-    Map<String, double>? plannedExpensesByCategory,
-    Map<String, double>? actualExpensesByCategory,
+    Map<CategoryEnum, double>? plannedExpensesByCategory,
+    Map<CategoryEnum, double>? actualExpensesByCategory,
   }) {
     return MonthlyBudgetModel(
       id: id ?? this.id,

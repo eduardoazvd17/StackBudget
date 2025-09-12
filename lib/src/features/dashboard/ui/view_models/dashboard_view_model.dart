@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dart';
@@ -72,16 +73,17 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
   }
 
   /// Carrega os dados do dashboard para um período específico
-  Future<void> loadDashboardData(DateTime period) async {
+  Future<void> loadDashboardData(
+    DateTime period, {
+    BuildContext? context,
+  }) async {
     state = const DashboardLoadingState();
 
     try {
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
         state = DashboardErrorState(
-          exception: AppException.userNotAuthenticated(
-            'User not authenticated',
-          ),
+          exception: AppException.userNotAuthenticated(),
         );
         return;
       }

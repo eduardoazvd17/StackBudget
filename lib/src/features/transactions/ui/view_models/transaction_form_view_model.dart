@@ -31,7 +31,7 @@ class TransactionFormViewModel
     required double amount,
     required TransactionTypeEnum type,
     required TransactionFrequencyEnum frequency,
-    TransactionCategoryEnum? category,
+    CategoryEnum? category,
     List<String>? tags,
     DateTime? startDate,
     DateTime? endDate,
@@ -46,7 +46,7 @@ class TransactionFormViewModel
       if (authState is! AuthenticatedState) {
         state = TransactionFormErrorState(
           exception: AppException.userNotAuthenticated(
-            'User not authenticated',
+            // TODO: Passar context para internacionalização
           ),
         );
         return;
@@ -155,7 +155,7 @@ class TransactionFormViewModel
     required double amount,
     required TransactionTypeEnum type,
     required TransactionFrequencyEnum frequency,
-    TransactionCategoryEnum? category,
+    CategoryEnum? category,
     List<String>? tags,
     DateTime? startDate,
     DateTime? endDate,
@@ -170,7 +170,7 @@ class TransactionFormViewModel
       if (authState is! AuthenticatedState) {
         state = TransactionFormErrorState(
           exception: AppException.userNotAuthenticated(
-            'User not authenticated',
+            // TODO: Passar context para internacionalização
           ),
         );
         return;
@@ -243,7 +243,7 @@ class TransactionFormViewModel
       if (authState is! AuthenticatedState) {
         state = TransactionFormErrorState(
           exception: AppException.userNotAuthenticated(
-            'User not authenticated',
+            // TODO: Passar context para internacionalização
           ),
         );
         return;

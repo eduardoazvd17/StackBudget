@@ -26,8 +26,8 @@ class BudgetCalculationService {
     double plannedExpenses = 0.0;
     double actualExpenses = 0.0;
 
-    final Map<String, double> plannedExpensesByCategory = {};
-    final Map<String, double> actualExpensesByCategory = {};
+    final Map<CategoryEnum, double> plannedExpensesByCategory = {};
+    final Map<CategoryEnum, double> actualExpensesByCategory = {};
 
     // Processar transações base
     for (final transaction in applicableTransactions) {
@@ -46,7 +46,7 @@ class BudgetCalculationService {
         actualExpenses += amount;
 
         // Agrupar por categoria
-        final category = transaction.category?.displayName ?? 'Outros';
+        final category = transaction.category ?? CategoryEnum.other;
         plannedExpensesByCategory[category] =
             (plannedExpensesByCategory[category] ?? 0) + transaction.amount;
         actualExpensesByCategory[category] =

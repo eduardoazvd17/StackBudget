@@ -713,4 +713,100 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get transactionNotFoundDescription => 'A transação pode ter sido excluída ou o ID está incorreto.';
+
+  @override
+  String get categorySalary => 'Salário';
+
+  @override
+  String get categoryFreelance => 'Freelance';
+
+  @override
+  String get categoryInvestment => 'Investimentos';
+
+  @override
+  String get categoryBonus => 'Bônus';
+
+  @override
+  String get categoryGiftIncome => 'Presente Recebido';
+
+  @override
+  String get categoryOtherIncome => 'Outras Receitas';
+
+  @override
+  String get categoryHousing => 'Moradia';
+
+  @override
+  String get categoryUtilities => 'Contas Básicas';
+
+  @override
+  String get categoryGroceries => 'Mercado';
+
+  @override
+  String get categoryTransportation => 'Transporte';
+
+  @override
+  String get categoryInsurance => 'Seguros';
+
+  @override
+  String get categoryHealthcare => 'Saúde';
+
+  @override
+  String get categoryDining => 'Restaurantes';
+
+  @override
+  String get categoryEntertainment => 'Entretenimento';
+
+  @override
+  String get categoryShopping => 'Compras';
+
+  @override
+  String get categoryTravel => 'Viagens';
+
+  @override
+  String get categoryHobbies => 'Hobbies';
+
+  @override
+  String get categoryFitness => 'Academia/Esportes';
+
+  @override
+  String get categoryBeauty => 'Beleza';
+
+  @override
+  String get categoryLoans => 'Empréstimos';
+
+  @override
+  String get categoryCreditCard => 'Cartão de Crédito';
+
+  @override
+  String get categoryTaxes => 'Impostos';
+
+  @override
+  String get categoryFees => 'Taxas';
+
+  @override
+  String get categoryEducation => 'Educação';
+
+  @override
+  String get categoryBooks => 'Livros';
+
+  @override
+  String get categoryCourses => 'Cursos';
+
+  @override
+  String get categoryChildcare => 'Cuidados Infantis';
+
+  @override
+  String get categoryPets => 'Pets';
+
+  @override
+  String get categoryGifts => 'Presentes';
+
+  @override
+  String get categoryCharity => 'Caridade';
+
+  @override
+  String get categoryEmergencyFund => 'Reserva de Emergência';
+
+  @override
+  String get categoryOther => 'Outros';
 }

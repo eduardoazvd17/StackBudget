@@ -955,5 +955,133 @@
   "transactionNotFoundDescription": "The transaction may have been deleted or the ID is incorrect.",
   "@transactionNotFoundDescription": {
     "description": "Description explaining why transaction was not found"
+  },
+  "categorySalary": "Salary",
+  "@categorySalary": {
+    "description": "Category name for Salary"
+  },
+  "categoryFreelance": "Freelance",
+  "@categoryFreelance": {
+    "description": "Category name for Freelance"
+  },
+  "categoryInvestment": "Investments",
+  "@categoryInvestment": {
+    "description": "Category name for Investments"
+  },
+  "categoryBonus": "Bonus",
+  "@categoryBonus": {
+    "description": "Category name for Bonus"
+  },
+  "categoryGiftIncome": "Gift Received",
+  "@categoryGiftIncome": {
+    "description": "Category name for Gift Received"
+  },
+  "categoryOtherIncome": "Other Income",
+  "@categoryOtherIncome": {
+    "description": "Category name for Other Income"
+  },
+  "categoryHousing": "Housing",
+  "@categoryHousing": {
+    "description": "Category name for Housing"
+  },
+  "categoryUtilities": "Utilities",
+  "@categoryUtilities": {
+    "description": "Category name for Utilities"
+  },
+  "categoryGroceries": "Groceries",
+  "@categoryGroceries": {
+    "description": "Category name for Groceries"
+  },
+  "categoryTransportation": "Transportation",
+  "@categoryTransportation": {
+    "description": "Category name for Transportation"
+  },
+  "categoryInsurance": "Insurance",
+  "@categoryInsurance": {
+    "description": "Category name for Insurance"
+  },
+  "categoryHealthcare": "Healthcare",
+  "@categoryHealthcare": {
+    "description": "Category name for Healthcare"
+  },
+  "categoryDining": "Dining",
+  "@categoryDining": {
+    "description": "Category name for Dining"
+  },
+  "categoryEntertainment": "Entertainment",
+  "@categoryEntertainment": {
+    "description": "Category name for Entertainment"
+  },
+  "categoryShopping": "Shopping",
+  "@categoryShopping": {
+    "description": "Category name for Shopping"
+  },
+  "categoryTravel": "Travel",
+  "@categoryTravel": {
+    "description": "Category name for Travel"
+  },
+  "categoryHobbies": "Hobbies",
+  "@categoryHobbies": {
+    "description": "Category name for Hobbies"
+  },
+  "categoryFitness": "Gym/Sports",
+  "@categoryFitness": {
+    "description": "Category name for Gym/Sports"
+  },
+  "categoryBeauty": "Beauty",
+  "@categoryBeauty": {
+    "description": "Category name for Beauty"
+  },
+  "categoryLoans": "Loans",
+  "@categoryLoans": {
+    "description": "Category name for Loans"
+  },
+  "categoryCreditCard": "Credit Card",
+  "@categoryCreditCard": {
+    "description": "Category name for Credit Card"
+  },
+  "categoryTaxes": "Taxes",
+  "@categoryTaxes": {
+    "description": "Category name for Taxes"
+  },
+  "categoryFees": "Fees",
+  "@categoryFees": {
+    "description": "Category name for Fees"
+  },
+  "categoryEducation": "Education",
+  "@categoryEducation": {
+    "description": "Category name for Education"
+  },
+  "categoryBooks": "Books",
+  "@categoryBooks": {
+    "description": "Category name for Books"
+  },
+  "categoryCourses": "Courses",
+  "@categoryCourses": {
+    "description": "Category name for Courses"
+  },
+  "categoryChildcare": "Childcare",
+  "@categoryChildcare": {
+    "description": "Category name for Childcare"
+  },
+  "categoryPets": "Pets",
+  "@categoryPets": {
+    "description": "Category name for Pets"
+  },
+  "categoryGifts": "Gifts",
+  "@categoryGifts": {
+    "description": "Category name for Gifts"
+  },
+  "categoryCharity": "Charity",
+  "@categoryCharity": {
+    "description": "Category name for Charity"
+  },
+  "categoryEmergencyFund": "Emergency Fund",
+  "@categoryEmergencyFund": {
+    "description": "Category name for Emergency Fund"
+  },
+  "categoryOther": "Other",
+  "@categoryOther": {
+    "description": "Category name for Other"
   }
 }

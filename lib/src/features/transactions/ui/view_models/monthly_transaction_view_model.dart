@@ -36,7 +36,7 @@ class MonthlyTransactionViewModel
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
         state = const MonthlyTransactionErrorState(
-          message: 'Usuário não autenticado',
+          message: 'User not authenticated', // TODO: Internationalize
         );
         return;
       }
@@ -124,7 +124,7 @@ class MonthlyTransactionViewModel
       final authState = _ref.read(authViewModelProvider);
       if (authState is! AuthenticatedState) {
         state = const MonthlyTransactionErrorState(
-          message: 'Usuário não autenticado',
+          message: 'User not authenticated', // TODO: Internationalize
         );
         return;
       }

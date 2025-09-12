@@ -204,7 +204,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                       if (widget.transaction.category != null)
                         _buildDetailItem(
                           context.strings.categoryField,
-                          widget.transaction.category!.displayName,
+                          widget.transaction.category!.getDisplayName(context),
                           Icons.category,
                         ),
                     ]),
@@ -217,14 +217,14 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                     const SizedBox(height: Spacing.lg),
 
                     // Informações de data
-                    _buildDetailSection('Datas', [
+                    _buildDetailSection(context.strings.dates, [
                       _buildDetailItem(
-                        'Criado em',
+                        context.strings.createdAt,
                         _formatDateTime(transaction.createdAt),
                         Icons.calendar_today,
                       ),
                       _buildDetailItem(
-                        'Atualizado em',
+                        context.strings.updatedAt,
                         _formatDateTime(transaction.updatedAt),
                         Icons.update,
                       ),
