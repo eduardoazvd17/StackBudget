@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/categories/data/models/models.dart';
+
+// Provider
+final categoryDatasourceProvider = Provider<CategoryDatasource>((ref) {
+  return CategoryDatasourceImpl();
+});
 
 abstract class CategoryDatasource {
   Future<List<CategoryModel>> getCategoriesByUser(String userId);

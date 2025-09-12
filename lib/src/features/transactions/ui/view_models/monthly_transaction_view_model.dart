@@ -7,6 +7,15 @@ import 'package:stackbudget/src/features/transactions/data/repositories/reposito
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/monthly_transaction_view_model_state.dart';
 
+// Provider para o ViewModel de transações mensais
+final monthlyTransactionViewModelProvider = StateNotifierProvider<
+  MonthlyTransactionViewModel,
+  MonthlyTransactionViewModelState
+>(
+  (ref) =>
+      MonthlyTransactionViewModel(ref.read(transactionRepositoryProvider), ref),
+);
+
 class MonthlyTransactionViewModel
     extends StateNotifier<MonthlyTransactionViewModelState> {
   final TransactionRepository _repository;
@@ -244,12 +253,3 @@ class MonthlyTransactionViewModel
     state = const MonthlyTransactionInitialState();
   }
 }
-
-// Provider para o ViewModel de transações mensais
-final monthlyTransactionViewModelProvider = StateNotifierProvider<
-  MonthlyTransactionViewModel,
-  MonthlyTransactionViewModelState
->(
-  (ref) =>
-      MonthlyTransactionViewModel(ref.read(transactionRepositoryProvider), ref),
-);

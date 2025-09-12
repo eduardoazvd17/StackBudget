@@ -9,6 +9,16 @@ import 'package:stackbudget/src/features/profile/data/models/models.dart';
 import 'package:stackbudget/src/features/profile/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model_state.dart';
 
+final profileViewModelProvider =
+    StateNotifierProvider<ProfileViewModel, ProfileViewModelState>((ref) {
+      final datasource = ProfileDatasourceImpl(
+        firebaseAuth: FirebaseAuth.instance,
+        firestore: FirebaseFirestore.instance,
+      );
+      final repository = ProfileRepositoryImpl(datasource: datasource);
+      return ProfileViewModel(repository, ref);
+    });
+
 class ProfileViewModel extends StateNotifier<ProfileViewModelState> {
   final ProfileRepository _repository;
   final Ref _ref;
@@ -83,13 +93,3 @@ class ProfileViewModel extends StateNotifier<ProfileViewModelState> {
     state = const ProfileInitialState();
   }
 }
-
-final profileViewModelProvider =
-    StateNotifierProvider<ProfileViewModel, ProfileViewModelState>((ref) {
-      final datasource = ProfileDatasourceImpl(
-        firebaseAuth: FirebaseAuth.instance,
-        firestore: FirebaseFirestore.instance,
-      );
-      final repository = ProfileRepositoryImpl(datasource: datasource);
-      return ProfileViewModel(repository, ref);
-    });

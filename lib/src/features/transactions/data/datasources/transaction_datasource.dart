@@ -1,7 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/enums/enums.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
+
+// Provider
+final transactionDatasourceProvider = Provider<TransactionDatasource>((ref) {
+  return TransactionDatasourceImpl(firestore: FirebaseFirestore.instance);
+});
 
 abstract class TransactionDatasource {
   String generateTransactionId();

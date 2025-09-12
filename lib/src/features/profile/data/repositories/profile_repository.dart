@@ -1,8 +1,14 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 import 'package:stackbudget/src/features/profile/data/datasources/datasources.dart';
 import 'package:stackbudget/src/features/profile/data/models/models.dart';
+
+// Provider
+final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
+  return ProfileRepositoryImpl(datasource: ref.read(profileDatasourceProvider));
+});
 
 abstract class ProfileRepository {
   Future<Either<AppException, UserModel>> updateName(UpdateNameRequest request);

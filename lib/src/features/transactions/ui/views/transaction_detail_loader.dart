@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
-import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
+import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/transactions/ui/views/transaction_detail_view.dart';
 
 /// Loader que busca uma transação pelo ID e exibe os detalhes

@@ -1,11 +1,62 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
-import 'package:stackbudget/src/features/transactions/data/datasources/datasources.dart';
 import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
+
+// Providers
+final budgetCalculationServiceProvider = Provider<BudgetCalculationService>((
+  ref,
+) {
+  return const BudgetCalculationService();
+});
+
+final dashboardViewModelProvider =
+    StateNotifierProvider<DashboardViewModel, DashboardViewModelState>(
+      (ref) => DashboardViewModel(
+        ref.read(transactionRepositoryProvider),
+        ref.read(budgetCalculationServiceProvider),
+        ref,
+      ),
+    );
+
+// Provider para o período selecionado (substitui o antigo selectedDateProvider)
+final selectedPeriodProvider = StateProvider<DateTime>((ref) => DateTime.now());
+
+// Provider para obter a data de cadastro do usuário atual
+final userRegistrationDateProvider = Provider<DateTime?>((ref) {
+  final authState = ref.watch(authViewModelProvider);
+  if (authState is AuthenticatedState) {
+    return authState.user.registrationDate;
+  }
+  return null;
+});
+
+// Provider que inicializa o dashboard quando o usuário está autenticado
+final dashboardInitializerProvider = Provider<void>((ref) {
+  final authState = ref.watch(authViewModelProvider);
+  final selectedPeriod = ref.watch(selectedPeriodProvider);
+
+  if (authState is AuthenticatedState) {
+    final dashboardNotifier = ref.read(dashboardViewModelProvider.notifier);
+    final currentDashboardState = ref.read(dashboardViewModelProvider);
+
+    // Carregar se estiver no estado inicial, se não há dados para o período atual,
+    // ou se estiver em estado de erro
+    if (currentDashboardState is DashboardInitialState ||
+        currentDashboardState is DashboardErrorState ||
+        (currentDashboardState is DashboardLoadedState &&
+            currentDashboardState.selectedPeriod != selectedPeriod)) {
+      // Definir estado de loading imediatamente para evitar mostrar dados antigos
+      // (isso será feito dentro do loadDashboardData)
+
+      Future.microtask(
+        () => dashboardNotifier.loadDashboardData(selectedPeriod),
+      );
+    }
+  }
+});
 
 class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
   final TransactionRepository _transactionRepository;
@@ -110,66 +161,3 @@ class DashboardViewModel extends StateNotifier<DashboardViewModelState> {
     return null;
   }
 }
-
-// Providers
-final budgetCalculationServiceProvider = Provider<BudgetCalculationService>((
-  ref,
-) {
-  return const BudgetCalculationService();
-});
-
-final transactionDatasourceProvider = Provider<TransactionDatasource>((ref) {
-  return TransactionDatasourceImpl(firestore: FirebaseFirestore.instance);
-});
-
-final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
-  return TransactionRepositoryImpl(
-    datasource: ref.read(transactionDatasourceProvider),
-  );
-});
-
-final dashboardViewModelProvider =
-    StateNotifierProvider<DashboardViewModel, DashboardViewModelState>(
-      (ref) => DashboardViewModel(
-        ref.read(transactionRepositoryProvider),
-        ref.read(budgetCalculationServiceProvider),
-        ref,
-      ),
-    );
-
-// Provider para o período selecionado (substitui o antigo selectedDateProvider)
-final selectedPeriodProvider = StateProvider<DateTime>((ref) => DateTime.now());
-
-// Provider para obter a data de cadastro do usuário atual
-final userRegistrationDateProvider = Provider<DateTime?>((ref) {
-  final authState = ref.watch(authViewModelProvider);
-  if (authState is AuthenticatedState) {
-    return authState.user.registrationDate;
-  }
-  return null;
-});
-
-// Provider que inicializa o dashboard quando o usuário está autenticado
-final dashboardInitializerProvider = Provider<void>((ref) {
-  final authState = ref.watch(authViewModelProvider);
-  final selectedPeriod = ref.watch(selectedPeriodProvider);
-
-  if (authState is AuthenticatedState) {
-    final dashboardNotifier = ref.read(dashboardViewModelProvider.notifier);
-    final currentDashboardState = ref.read(dashboardViewModelProvider);
-
-    // Carregar se estiver no estado inicial, se não há dados para o período atual,
-    // ou se estiver em estado de erro
-    if (currentDashboardState is DashboardInitialState ||
-        currentDashboardState is DashboardErrorState ||
-        (currentDashboardState is DashboardLoadedState &&
-            currentDashboardState.selectedPeriod != selectedPeriod)) {
-      // Definir estado de loading imediatamente para evitar mostrar dados antigos
-      // (isso será feito dentro do loadDashboardData)
-
-      Future.microtask(
-        () => dashboardNotifier.loadDashboardData(selectedPeriod),
-      );
-    }
-  }
-});

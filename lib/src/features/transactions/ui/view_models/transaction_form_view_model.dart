@@ -7,6 +7,15 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
 
+// Provider para o ViewModel do formulário
+final transactionFormViewModelProvider = StateNotifierProvider<
+  TransactionFormViewModel,
+  TransactionFormViewModelState
+>(
+  (ref) =>
+      TransactionFormViewModel(ref.read(transactionRepositoryProvider), ref),
+);
+
 class TransactionFormViewModel
     extends StateNotifier<TransactionFormViewModelState> {
   final TransactionRepository _repository;
@@ -275,12 +284,3 @@ class TransactionFormViewModel
     state = const TransactionFormInitialState();
   }
 }
-
-// Provider para o ViewModel do formulário
-final transactionFormViewModelProvider = StateNotifierProvider<
-  TransactionFormViewModel,
-  TransactionFormViewModelState
->(
-  (ref) =>
-      TransactionFormViewModel(ref.read(transactionRepositoryProvider), ref),
-);

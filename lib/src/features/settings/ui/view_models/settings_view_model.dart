@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/datasources/datasources.dart';
 import '../../data/repositories/repositories.dart';
 import '../../data/models/models.dart';
 import 'settings_view_model_state.dart';
+
+// Providers
+
+final settingsViewModelProvider =
+    StateNotifierProvider<SettingsViewModel, SettingsViewModelState>(
+      (ref) => SettingsViewModel(ref.watch(settingsRepositoryProvider)),
+    );
+
+// Provider dedicado para o tema
+final themeModeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((
+  ref,
+) {
+  final notifier = ThemeNotifier(ref);
+  // Carregar configurações iniciais
+  ref.listen(settingsViewModelProvider, (previous, next) {
+    if (next is SettingsLoadedState) {
+      notifier.updateThemeModeFromType(next.settings.themeMode);
+    }
+  });
+  return notifier;
+});
 
 class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
   final SettingsRepository _repository;
@@ -67,35 +87,6 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
     }
   }
 }
-
-// Providers
-final settingsDataSourceProvider = Provider<SettingsDataSource>((ref) {
-  throw UnimplementedError('Should be overridden in main.dart');
-});
-
-final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
-  final dataSource = ref.watch(settingsDataSourceProvider);
-  return SettingsRepository(dataSource);
-});
-
-final settingsViewModelProvider =
-    StateNotifierProvider<SettingsViewModel, SettingsViewModelState>(
-      (ref) => SettingsViewModel(ref.watch(settingsRepositoryProvider)),
-    );
-
-// Provider dedicado para o tema
-final themeModeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((
-  ref,
-) {
-  final notifier = ThemeNotifier(ref);
-  // Carregar configurações iniciais
-  ref.listen(settingsViewModelProvider, (previous, next) {
-    if (next is SettingsLoadedState) {
-      notifier.updateThemeModeFromType(next.settings.themeMode);
-    }
-  });
-  return notifier;
-});
 
 class ThemeNotifier extends StateNotifier<ThemeMode> {
   final Ref _ref;

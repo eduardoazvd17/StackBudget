@@ -1,7 +1,15 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/transactions/data/datasources/datasources.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
+
+// Provider
+final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
+  return TransactionRepositoryImpl(
+    datasource: ref.read(transactionDatasourceProvider),
+  );
+});
 
 abstract class TransactionRepository {
   String generateTransactionId();

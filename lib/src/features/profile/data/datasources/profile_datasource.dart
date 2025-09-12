@@ -1,8 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
 import 'package:stackbudget/src/features/profile/data/models/models.dart';
+
+// Provider
+final profileDatasourceProvider = Provider<ProfileDatasource>((ref) {
+  return ProfileDatasourceImpl(
+    firebaseAuth: FirebaseAuth.instance,
+    firestore: FirebaseFirestore.instance,
+  );
+});
 
 abstract class ProfileDatasource {
   Future<UserModel> updateName(UpdateNameRequest request);

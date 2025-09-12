@@ -7,6 +7,23 @@ import 'package:stackbudget/src/features/auth/data/repositories/repositories.dar
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/settings_view_model.dart';
 
+// Providers
+final authDatasourceProvider = Provider<AuthDatasource>((ref) {
+  return AuthDatasourceImpl(
+    firebaseAuth: FirebaseAuth.instance,
+    firestore: FirebaseFirestore.instance,
+  );
+});
+
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  return AuthRepositoryImpl(datasource: ref.read(authDatasourceProvider));
+});
+
+final authViewModelProvider =
+    StateNotifierProvider<AuthViewModel, AuthViewModelState>(
+      (ref) => AuthViewModel(ref.read(authRepositoryProvider), ref),
+    );
+
 class AuthViewModel extends StateNotifier<AuthViewModelState> {
   final AuthRepository _repository;
   final Ref _ref;
@@ -111,20 +128,3 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
     }
   }
 }
-
-// Providers
-final authDatasourceProvider = Provider<AuthDatasource>((ref) {
-  return AuthDatasourceImpl(
-    firebaseAuth: FirebaseAuth.instance,
-    firestore: FirebaseFirestore.instance,
-  );
-});
-
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepositoryImpl(datasource: ref.read(authDatasourceProvider));
-});
-
-final authViewModelProvider =
-    StateNotifierProvider<AuthViewModel, AuthViewModelState>(
-      (ref) => AuthViewModel(ref.read(authRepositoryProvider), ref),
-    );

@@ -1,7 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/data/models/models.dart';
+
+// Provider
+final authDatasourceProvider = Provider<AuthDatasource>((ref) {
+  return AuthDatasourceImpl(
+    firebaseAuth: FirebaseAuth.instance,
+    firestore: FirebaseFirestore.instance,
+  );
+});
 
 abstract class AuthDatasource {
   Future<UserModel> signInWithEmailAndPassword({
