@@ -100,7 +100,6 @@
   "selectFirstInstallmentMonth": "Select the month of the first installment",
   "installmentValueForm": "Installment value",
   "titleHint": "Ex: Salary, Rent, Groceries...",
-  "amountHint": "R$ 0.00",
   "endMonthOptional": "End Month (optional)",
   "startMonthRequiredLabel": "Start Month *",
   "yearlyMonthRequiredLabel": "Yearly Month *",

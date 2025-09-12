@@ -90,7 +90,6 @@
   "selectFirstInstallmentMonth": "Selecione o mês da primeira parcela",
   "installmentValueForm": "Valor por parcela",
   "titleHint": "Ex: Salário, Aluguel, Supermercado...",
-  "amountHint": "R$ 0,00",
   "endMonthOptional": "Mês de Fim (opcional)",
   "startMonthRequiredLabel": "Mês de Início *",
   "yearlyMonthRequiredLabel": "Mês do Ano *",

@@ -635,12 +635,6 @@ abstract class AppLocalizations {
   /// **'Ex: Salary, Rent, Groceries...'**
   String get titleHint;
 
-  /// No description provided for @amountHint.
-  ///
-  /// In en, this message translates to:
-  /// **'R\$ 0.00'**
-  String get amountHint;
-
   /// No description provided for @endMonthOptional.
   ///
   /// In en, this message translates to:

@@ -281,9 +281,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get titleHint => 'Ex: Salário, Aluguel, Supermercado...';
 
   @override
-  String get amountHint => 'R\$ 0,00';
-
-  @override
   String get endMonthOptional => 'Mês de Fim (opcional)';
 
   @override
