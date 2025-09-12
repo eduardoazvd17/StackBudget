@@ -111,11 +111,11 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                       value: 'delete',
                       child: Row(
                         children: [
-                          const Icon(Icons.delete, color: Colors.red),
+                          Icon(Icons.delete, color: context.colors.error),
                           const SizedBox(width: 8),
                           Text(
                             context.strings.delete,
-                            style: const TextStyle(color: Colors.red),
+                            style: TextStyle(color: context.colors.error),
                           ),
                         ],
                       ),
@@ -567,7 +567,9 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                       .read(transactionFormViewModelProvider.notifier)
                       .deleteTransaction(widget.transaction.id);
                 },
-                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                style: TextButton.styleFrom(
+                  foregroundColor: context.colors.error,
+                ),
                 child: Text(context.strings.delete),
               ),
             ],

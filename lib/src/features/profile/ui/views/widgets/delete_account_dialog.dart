@@ -85,7 +85,7 @@ class _DeleteAccountBottomSheetState
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.exception.getMessage(context)),
-            backgroundColor: Colors.red,
+            backgroundColor: context.colors.error,
           ),
         );
         // Reset the state to show the profile again after error

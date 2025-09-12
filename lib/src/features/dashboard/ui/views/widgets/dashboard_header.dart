@@ -81,10 +81,10 @@ class DashboardHeader extends ConsumerWidget {
                   PopupMenuItem(
                     value: 'logout',
                     child: ListTile(
-                      leading: Icon(Icons.logout, color: Colors.red),
+                      leading: Icon(Icons.logout, color: context.colors.error),
                       title: Text(
                         context.strings.logout,
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: context.colors.error),
                       ),
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -125,7 +125,7 @@ class DashboardHeader extends ConsumerWidget {
                   await ref.read(authViewModelProvider.notifier).signOut();
                 },
                 style: FilledButton.styleFrom(
-                  backgroundColor: Colors.red,
+                  backgroundColor: context.colors.error,
                   foregroundColor: Colors.white,
                 ),
                 child: Text(context.strings.logout),
