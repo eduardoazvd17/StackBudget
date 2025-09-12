@@ -4,7 +4,6 @@ import '../../data/repositories/repositories.dart';
 import '../../data/models/models.dart';
 import 'settings_view_model_state.dart';
 
-
 final settingsViewModelProvider =
     StateNotifierProvider<SettingsViewModel, SettingsViewModelState>(
       (ref) => SettingsViewModel(ref.watch(settingsRepositoryProvider)),
@@ -78,8 +77,7 @@ class SettingsViewModel extends StateNotifier<SettingsViewModelState> {
     try {
       await _repository.syncSettingsFromFirebase();
       await loadSettings(); // Recarrega as configurações após sincronização
-    } catch (e) {
-    }
+    } catch (_) {}
   }
 }
 
@@ -123,8 +121,7 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
       state = ThemeMode.dark;
     } else if (state == ThemeMode.dark) {
       state = ThemeMode.light;
-    }
-    else {
+    } else {
       state = ThemeMode.dark;
     }
   }

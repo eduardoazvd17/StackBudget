@@ -131,8 +131,7 @@ class SettingsDataSource {
 
           await saveSettings(firebaseSettings);
         }
-      } catch (e) {
-      }
+      } catch (_) {}
     }
   }
 }

@@ -25,7 +25,9 @@ class MonthYearFilter extends ConsumerWidget {
                   Text(
                     'Período',
                     style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.onSurface.withOpacity(0.7),
+                      color: context.colorScheme.onSurface.withValues(
+                        alpha: 0.7,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 2),

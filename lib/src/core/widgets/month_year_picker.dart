@@ -94,14 +94,16 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
                                 ? context.colorScheme.primary
                                 : isEnabled
                                 ? context.colorScheme.surface
-                                : context.colorScheme.surface.withOpacity(0.3),
+                                : context.colorScheme.surface.withValues(
+                                  alpha: 0.3,
+                                ),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color:
                               isSelected
                                   ? context.colorScheme.primary
-                                  : context.colorScheme.outline.withOpacity(
-                                    0.3,
+                                  : context.colorScheme.outline.withValues(
+                                    alpha: 0.3,
                                   ),
                         ),
                       ),
@@ -114,8 +116,8 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
                                     ? context.colorScheme.onPrimary
                                     : isEnabled
                                     ? context.colorScheme.onSurface
-                                    : context.colorScheme.onSurface.withOpacity(
-                                      0.4,
+                                    : context.colorScheme.onSurface.withValues(
+                                      alpha: 0.4,
                                     ),
                             fontWeight: isSelected ? FontWeight.bold : null,
                           ),

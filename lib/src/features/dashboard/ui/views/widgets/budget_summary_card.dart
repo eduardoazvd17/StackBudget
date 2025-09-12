@@ -97,7 +97,7 @@ class BudgetSummaryCard extends ConsumerWidget {
             children: [
               Icon(
                 Icons.account_balance_wallet_outlined,
-                color: context.colorScheme.onSurface.withOpacity(0.3),
+                color: context.colorScheme.onSurface.withValues(alpha: 0.3),
                 size: 48,
               ),
               const SizedBox(height: Spacing.md),
@@ -173,8 +173,8 @@ class BudgetSummaryCard extends ConsumerWidget {
                       decoration: BoxDecoration(
                         color:
                             balanceDifference > 0
-                                ? Colors.green.withOpacity(0.2)
-                                : Colors.red.withOpacity(0.2),
+                                ? Colors.green.withValues(alpha: 0.2)
+                                : Colors.red.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
@@ -255,7 +255,9 @@ class BudgetSummaryCard extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(Spacing.md),
       decoration: BoxDecoration(
-        border: Border.all(color: context.colorScheme.outline.withOpacity(0.3)),
+        border: Border.all(
+          color: context.colorScheme.outline.withValues(alpha: 0.3),
+        ),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -268,7 +270,7 @@ class BudgetSummaryCard extends ConsumerWidget {
               Text(
                 title,
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colorScheme.onSurface.withOpacity(0.7),
+                  color: context.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
             ],

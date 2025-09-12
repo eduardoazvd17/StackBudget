@@ -1,8 +1,12 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
+// ignore_for_file: type=lint
 
+/// The translations for Portuguese (`pt`).
 class AppLocalizationsPt extends AppLocalizations {
-  AppLocalizationsPt([super.locale = 'pt']);
+  AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
   String get frequencyOneTime => 'Única';
@@ -106,13 +110,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enterTitle => 'Digite o título da transação';
 
   @override
-  String get titleRequired => 'Digite um título';
+  String get titleRequired => 'Please enter a title';
 
   @override
-  String get description => 'Descrição';
-
-  @override
-  String get enterDescription => 'Digite a descrição (opcional)';
+  String get enterDescription => 'Digite descrição (opcional)';
 
   @override
   String get amountField => 'Valor';
@@ -130,7 +131,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get type => 'Tipo';
 
   @override
-  String get income => 'Receitas';
+  String get income => 'Receita';
 
   @override
   String get expense => 'Despesa';
@@ -432,9 +433,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get backToTransactions => 'Voltar às Transações';
 
   @override
-  String get profile => 'Perfil';
-
-  @override
   String get profileComingSoon => 'Perfil - Em breve!';
 
   @override
@@ -589,6 +587,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get storageError => 'Erro no armazenamento. Tente novamente.';
+
+  @override
+  String get profile => 'Perfil';
 
   @override
   String get editProfile => 'Editar Perfil';

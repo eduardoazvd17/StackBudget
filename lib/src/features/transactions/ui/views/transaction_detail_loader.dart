@@ -67,7 +67,7 @@ class TransactionDetailLoader extends ConsumerWidget {
                   Icon(
                     Icons.search_off,
                     size: 64,
-                    color: context.colorScheme.onSurface.withOpacity(0.3),
+                    color: context.colorScheme.onSurface.withValues(alpha: 0.3),
                   ),
                   const SizedBox(height: Spacing.md),
                   Text(

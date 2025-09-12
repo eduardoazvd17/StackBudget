@@ -118,7 +118,6 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
   void _syncUserSettings() {
     try {
       _ref.read(settingsViewModelProvider.notifier).syncSettingsFromFirebase();
-    } catch (e) {
-    }
+    } catch (_) {}
   }
 }

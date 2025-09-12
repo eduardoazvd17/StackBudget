@@ -114,7 +114,6 @@ class _ExpandableTransactionsSectionState
         break;
     }
 
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
       child: Column(
@@ -138,7 +137,7 @@ class _ExpandableTransactionsSectionState
                   Icon(
                     widget.icon,
                     size: 20,
-                    color: context.colorScheme.onSurface.withOpacity(0.7),
+                    color: context.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   const SizedBox(width: Spacing.sm),
                   Expanded(
@@ -153,7 +152,9 @@ class _ExpandableTransactionsSectionState
                   Text(
                     '(${filteredTransactions.length})',
                     style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colorScheme.onSurface.withOpacity(0.6),
+                      color: context.colorScheme.onSurface.withValues(
+                        alpha: 0.6,
+                      ),
                     ),
                   ),
                   const SizedBox(width: Spacing.xs),
@@ -185,7 +186,9 @@ class _ExpandableTransactionsSectionState
                     child: Text(
                       'Nenhuma transação encontrada',
                       style: context.textTheme.bodyMedium?.copyWith(
-                        color: context.colorScheme.onSurface.withOpacity(0.5),
+                        color: context.colorScheme.onSurface.withValues(
+                          alpha: 0.5,
+                        ),
                       ),
                     ),
                   )

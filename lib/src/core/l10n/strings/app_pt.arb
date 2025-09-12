@@ -32,9 +32,6 @@
   "addFirstTransaction": "Adicione sua primeira transação para começar",
   "titleField": "Título",
   "enterTitle": "Digite o título da transação",
-  "titleRequired": "Digite um título",
-  "description": "Descrição",
-  "enterDescription": "Digite a descrição (opcional)",
   "amountField": "Valor",
   "enterAmount": "Digite o valor",
   "amountRequired": "Digite um valor",
@@ -78,6 +75,7 @@
   "defaultValue": "Valor Padrão",
   "notes": "Observações",
   "enterNotes": "Digite observações (opcional)",
+  "enterDescription": "Digite descrição (opcional)",
   "customAmount": "Valor Personalizado",
   "hasAdjustment": "Tem ajuste",
   "transactionType": "Tipo da Transação",
@@ -195,7 +193,6 @@
   "dataParsingError": "Erro ao processar dados. Tente novamente.",
   "cacheError": "Erro no cache. Tente novamente.",
   "storageError": "Erro no armazenamento. Tente novamente.",
-  "profile": "Perfil",
   "editProfile": "Editar Perfil",
   "changeName": "Alterar Nome",
   "changePassword": "Alterar Senha",
@@ -237,159 +234,41 @@
   "transactionNotFound": "Transação não encontrada",
   "transactionNotFoundDescription": "A transação pode ter sido excluída ou o ID está incorreto.",
   "categorySalary": "Salário",
-  "@categorySalary": {
-    "description": "Nome da categoria Salário"
-  },
   "categoryFreelance": "Freelance",
-  "@categoryFreelance": {
-    "description": "Nome da categoria Freelance"
-  },
   "categoryInvestment": "Investimentos",
-  "@categoryInvestment": {
-    "description": "Nome da categoria Investimentos"
-  },
   "categoryBonus": "Bônus",
-  "@categoryBonus": {
-    "description": "Nome da categoria Bônus"
-  },
   "categoryGiftIncome": "Presente Recebido",
-  "@categoryGiftIncome": {
-    "description": "Nome da categoria Presente Recebido"
-  },
   "categoryOtherIncome": "Outras Receitas",
-  "@categoryOtherIncome": {
-    "description": "Nome da categoria Outras Receitas"
-  },
   "categoryHousing": "Moradia",
-  "@categoryHousing": {
-    "description": "Nome da categoria Moradia"
-  },
   "categoryUtilities": "Contas Básicas",
-  "@categoryUtilities": {
-    "description": "Nome da categoria Contas Básicas"
-  },
   "categoryGroceries": "Mercado",
-  "@categoryGroceries": {
-    "description": "Nome da categoria Mercado"
-  },
   "categoryTransportation": "Transporte",
-  "@categoryTransportation": {
-    "description": "Nome da categoria Transporte"
-  },
   "categoryInsurance": "Seguros",
-  "@categoryInsurance": {
-    "description": "Nome da categoria Seguros"
-  },
   "categoryHealthcare": "Saúde",
-  "@categoryHealthcare": {
-    "description": "Nome da categoria Saúde"
-  },
   "categoryDining": "Restaurantes",
-  "@categoryDining": {
-    "description": "Nome da categoria Restaurantes"
-  },
   "categoryEntertainment": "Entretenimento",
-  "@categoryEntertainment": {
-    "description": "Nome da categoria Entretenimento"
-  },
   "categoryShopping": "Compras",
-  "@categoryShopping": {
-    "description": "Nome da categoria Compras"
-  },
   "categoryTravel": "Viagens",
-  "@categoryTravel": {
-    "description": "Nome da categoria Viagens"
-  },
   "categoryHobbies": "Hobbies",
-  "@categoryHobbies": {
-    "description": "Nome da categoria Hobbies"
-  },
   "categoryFitness": "Academia/Esportes",
-  "@categoryFitness": {
-    "description": "Nome da categoria Academia/Esportes"
-  },
   "categoryBeauty": "Beleza",
-  "@categoryBeauty": {
-    "description": "Nome da categoria Beleza"
-  },
   "categoryLoans": "Empréstimos",
-  "@categoryLoans": {
-    "description": "Nome da categoria Empréstimos"
-  },
   "categoryCreditCard": "Cartão de Crédito",
-  "@categoryCreditCard": {
-    "description": "Nome da categoria Cartão de Crédito"
-  },
   "categoryTaxes": "Impostos",
-  "@categoryTaxes": {
-    "description": "Nome da categoria Impostos"
-  },
   "categoryFees": "Taxas",
-  "@categoryFees": {
-    "description": "Nome da categoria Taxas"
-  },
   "categoryEducation": "Educação",
-  "@categoryEducation": {
-    "description": "Nome da categoria Educação"
-  },
   "categoryBooks": "Livros",
-  "@categoryBooks": {
-    "description": "Nome da categoria Livros"
-  },
   "categoryCourses": "Cursos",
-  "@categoryCourses": {
-    "description": "Nome da categoria Cursos"
-  },
   "categoryChildcare": "Cuidados Infantis",
-  "@categoryChildcare": {
-    "description": "Nome da categoria Cuidados Infantis"
-  },
   "categoryPets": "Pets",
-  "@categoryPets": {
-    "description": "Nome da categoria Pets"
-  },
   "categoryGifts": "Presentes",
-  "@categoryGifts": {
-    "description": "Nome da categoria Presentes"
-  },
   "categoryCharity": "Caridade",
-  "@categoryCharity": {
-    "description": "Nome da categoria Caridade"
-  },
   "categoryEmergencyFund": "Reserva de Emergência",
-  "@categoryEmergencyFund": {
-    "description": "Nome da categoria Reserva de Emergência"
-  },
   "categoryOther": "Outros",
-  "@categoryOther": {
-    "description": "Nome da categoria Outros"
-  },
   "errorLoadingData": "Erro ao carregar dados",
-  "@errorLoadingData": {
-    "description": "Mensagem de erro quando falha ao carregar dados"
-  },
   "noDataFound": "Nenhum dado encontrado",
-  "@noDataFound": {
-    "description": "Mensagem quando nenhum dado é encontrado"
-  },
   "addTransactionsToSeeSummary": "Adicione transações para ver o resumo",
-  "@addTransactionsToSeeSummary": {
-    "description": "Mensagem incentivando o usuário a adicionar transações para ver o resumo"
-  },
   "budgetSummary": "Resumo do Orçamento",
-  "@budgetSummary": {
-    "description": "Título da seção de resumo do orçamento"
-  },
   "currentBalance": "Saldo Atual",
-  "@currentBalance": {
-    "description": "Label para o saldo atual no resumo do orçamento"
-  },
-  "income": "Receitas",
-  "@income": {
-    "description": "Label para receitas no resumo do orçamento"
-  },
-  "expenses": "Despesas",
-  "@expenses": {
-    "description": "Label para despesas no resumo do orçamento"
-  }
+  "expenses": "Despesas"
 }

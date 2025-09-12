@@ -82,13 +82,13 @@ class TransactionsList extends ConsumerWidget {
               Icon(
                 Icons.receipt_long_outlined,
                 size: 64,
-                color: context.colorScheme.onSurface.withOpacity(0.3),
+                color: context.colorScheme.onSurface.withValues(alpha: 0.3),
               ),
               const SizedBox(height: Spacing.md),
               Text(
                 context.strings.noTransactionsFound,
                 style: context.textTheme.titleMedium?.copyWith(
-                  color: context.colorScheme.onSurface.withOpacity(0.7),
+                  color: context.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: Spacing.xs),
@@ -96,7 +96,7 @@ class TransactionsList extends ConsumerWidget {
                 context.strings.addFirstTransaction,
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodyMedium?.copyWith(
-                  color: context.colorScheme.onSurface.withOpacity(0.5),
+                  color: context.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
               ),
             ],
@@ -140,7 +140,7 @@ class TransactionListItem extends ConsumerWidget {
     final defaultColor = isIncome ? Colors.green : Colors.red;
 
     Color iconColor = defaultColor;
-    Color backgroundColor = defaultColor.withOpacity(0.1);
+    Color backgroundColor = defaultColor.withValues(alpha: 0.1);
 
     return Card(
       margin: EdgeInsets.zero,
@@ -171,7 +171,7 @@ class TransactionListItem extends ConsumerWidget {
             Text(
               _getFrequencyText(context, transaction.frequency),
               style: context.textTheme.bodySmall?.copyWith(
-                color: context.colorScheme.onSurface.withOpacity(0.5),
+                color: context.colorScheme.onSurface.withValues(alpha: 0.5),
               ),
             ),
             if (transaction.frequency == TransactionFrequencyEnum.installment &&
@@ -216,7 +216,7 @@ class TransactionListItem extends ConsumerWidget {
               Text(
                 _formatDate(transaction.createdAt),
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colorScheme.onSurface.withOpacity(0.5),
+                  color: context.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
               ),
             ],

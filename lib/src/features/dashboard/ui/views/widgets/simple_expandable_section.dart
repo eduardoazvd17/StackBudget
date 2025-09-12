@@ -135,7 +135,7 @@ class SimpleExpandableSection extends ConsumerWidget {
                   Icon(
                     icon,
                     size: 20,
-                    color: context.colorScheme.onSurface.withOpacity(0.7),
+                    color: context.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   const SizedBox(width: Spacing.sm),
                   Expanded(
@@ -150,7 +150,9 @@ class SimpleExpandableSection extends ConsumerWidget {
                   Text(
                     '(${filteredTransactions.length})',
                     style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colorScheme.onSurface.withOpacity(0.6),
+                      color: context.colorScheme.onSurface.withValues(
+                        alpha: 0.6,
+                      ),
                     ),
                   ),
                   const SizedBox(width: Spacing.xs),
@@ -181,7 +183,9 @@ class SimpleExpandableSection extends ConsumerWidget {
                     child: Text(
                       'Nenhuma transação encontrada',
                       style: context.textTheme.bodyMedium?.copyWith(
-                        color: context.colorScheme.onSurface.withOpacity(0.5),
+                        color: context.colorScheme.onSurface.withValues(
+                          alpha: 0.5,
+                        ),
                       ),
                     ),
                   )

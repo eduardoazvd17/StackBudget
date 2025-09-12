@@ -339,7 +339,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
               widget.transaction.tags!.map((tag) {
                 return Chip(
                   label: Text(tag),
-                  backgroundColor: Colors.blue.withOpacity(0.1),
+                  backgroundColor: Colors.blue.withValues(alpha: 0.1),
                 );
               }).toList(),
         ),
@@ -443,7 +443,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           Text(
             'Valor total: ${_formatCurrency(widget.transaction.amount)}',
             style: context.textTheme.bodySmall?.copyWith(
-              color: context.colorScheme.onSurface.withOpacity(0.6),
+              color: context.colorScheme.onSurface.withValues(alpha: 0.6),
             ),
           ),
         ],
@@ -469,7 +469,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
                 ? 'Valor padrão da parcela: ${_formatCurrency(widget.transaction.amount / widget.transaction.totalInstallments!)}'
                 : 'Valor padrão: ${_formatCurrency(widget.transaction.amount)}',
             style: context.textTheme.bodySmall?.copyWith(
-              color: context.colorScheme.onSurface.withOpacity(0.6),
+              color: context.colorScheme.onSurface.withValues(alpha: 0.6),
             ),
           ),
         ],
@@ -586,7 +586,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       year: selectedPeriod.year,
       month: selectedPeriod.month,
     );
-
   }
 
   void _editTransaction(BuildContext context) {

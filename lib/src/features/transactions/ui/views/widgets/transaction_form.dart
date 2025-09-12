@@ -176,7 +176,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             TextFormField(
               controller: _descriptionController,
               decoration: InputDecoration(
-                labelText: context.strings.description,
+                labelText: context.strings.enterDescription,
                 hintText: context.strings.additionalDetails,
                 prefixIcon: const Icon(Icons.description),
               ),
@@ -287,11 +287,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             color:
                 isSelected
                     ? color
-                    : context.colorScheme.outline.withOpacity(0.3),
+                    : context.colorScheme.outline.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(12),
-          color: isSelected ? color.withOpacity(0.1) : null,
+          color: isSelected ? color.withValues(alpha: 0.1) : null,
         ),
         child: Column(
           children: [
@@ -299,7 +299,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: color.withOpacity(isSelected ? 0.2 : 0.1),
+                color: color.withValues(alpha: isSelected ? 0.2 : 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, color: color, size: 24),
@@ -316,7 +316,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             Text(
               subtitle,
               style: context.textTheme.bodySmall?.copyWith(
-                color: context.colorScheme.onSurface.withOpacity(0.6),
+                color: context.colorScheme.onSurface.withValues(alpha: 0.6),
               ),
               textAlign: TextAlign.center,
             ),
@@ -577,12 +577,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                   Icon(
                     _getCategoryIcon(category),
                     size: 20,
-                    color: context.colorScheme.onSurface.withOpacity(0.6),
+                    color: context.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                   const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(category.getDisplayName(context)),
-                  ),
+                  Flexible(child: Text(category.getDisplayName(context))),
                 ],
               ),
             );

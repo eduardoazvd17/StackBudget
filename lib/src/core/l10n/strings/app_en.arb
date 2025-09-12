@@ -32,7 +32,8 @@
       "startYear": {
         "type": "String"
       }
-    },
+    }
+  },
   "transactions": "Transactions",
   "recurringTransactions": "Recurring Transactions",
   "installments": "Installments",
@@ -159,7 +160,6 @@
   "back": "Back",
   "notFound": "Not Found",
   "backToTransactions": "Back to Transactions",
-  "profile": "Profile",
   "profileComingSoon": "Profile - Coming soon!",
   "logout": "Logout",
   "confirmLogout": "Confirm Logout",
@@ -290,6 +290,5 @@
   "addTransactionsToSeeSummary": "Add transactions to see the summary",
   "budgetSummary": "Budget Summary",
   "currentBalance": "Current Balance",
-  "income": "Income",
-  "expenses": "Expenses",
+  "expenses": "Expenses"
 }
