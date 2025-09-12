@@ -5,16 +5,17 @@ import 'package:stackbudget/src/core/utils/utils.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model_state.dart';
 
-class ChangeNameDialog extends ConsumerStatefulWidget {
+class ChangeNameBottomSheet extends ConsumerStatefulWidget {
   final String currentName;
 
-  const ChangeNameDialog({super.key, required this.currentName});
+  const ChangeNameBottomSheet({super.key, required this.currentName});
 
   @override
-  ConsumerState<ChangeNameDialog> createState() => _ChangeNameDialogState();
+  ConsumerState<ChangeNameBottomSheet> createState() =>
+      _ChangeNameBottomSheetState();
 }
 
-class _ChangeNameDialogState extends ConsumerState<ChangeNameDialog> {
+class _ChangeNameBottomSheetState extends ConsumerState<ChangeNameBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   bool _isLoading = false;
@@ -23,6 +24,10 @@ class _ChangeNameDialogState extends ConsumerState<ChangeNameDialog> {
   void initState() {
     super.initState();
     _nameController.text = widget.currentName;
+    // Foco automático no campo quando o bottom sheet abrir
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(FocusNode());
+    });
   }
 
   @override
@@ -87,45 +92,104 @@ class _ChangeNameDialogState extends ConsumerState<ChangeNameDialog> {
       }
     });
 
-    return AlertDialog(
-      title: Text(l10n.changeName),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: l10n.newName,
-                hintText: l10n.currentName,
-                border: const OutlineInputBorder(),
-              ),
-              validator:
-                  (value) => Validators.profileName(value, _getErrorMessage),
-              enabled: !_isLoading,
-              textCapitalization: TextCapitalization.words,
-            ),
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.only(
+        left: 24,
+        right: 24,
+        top: 24,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
       ),
-      actions: [
-        TextButton(
-          onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
-        ),
-        ElevatedButton(
-          onPressed: _isLoading ? null : _handleSubmit,
-          child:
-              _isLoading
-                  ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                  : Text(l10n.updateName),
-        ),
-      ],
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Row(
+            children: [
+              Icon(
+                Icons.person_outline,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                l10n.changeName,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+
+          // Form
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: l10n.newName,
+                    hintText: l10n.currentName,
+                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surface,
+                  ),
+                  validator:
+                      (value) =>
+                          Validators.profileName(value, _getErrorMessage),
+                  enabled: !_isLoading,
+                  textCapitalization: TextCapitalization.words,
+                  autofocus: true,
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Action buttons
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed:
+                      _isLoading ? null : () => Navigator.of(context).pop(),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: Text(l10n.cancel),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: _isLoading ? null : _handleSubmit,
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child:
+                      _isLoading
+                          ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                          : Text(l10n.updateName),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

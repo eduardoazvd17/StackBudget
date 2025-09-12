@@ -7,9 +7,12 @@ import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dar
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model_state.dart';
-import 'package:stackbudget/src/features/profile/ui/views/widgets/change_name_dialog.dart';
-import 'package:stackbudget/src/features/profile/ui/views/widgets/change_password_dialog.dart';
-import 'package:stackbudget/src/features/profile/ui/views/widgets/delete_account_dialog.dart';
+import 'package:stackbudget/src/features/profile/ui/views/widgets/change_name_dialog.dart'
+    as change_name;
+import 'package:stackbudget/src/features/profile/ui/views/widgets/change_password_dialog.dart'
+    as change_password;
+import 'package:stackbudget/src/features/profile/ui/views/widgets/delete_account_dialog.dart'
+    as delete_account;
 
 class ProfileView extends ConsumerStatefulWidget {
   const ProfileView({super.key});
@@ -27,33 +30,42 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
     });
   }
 
-  void _showChangeNameDialog(String currentName) {
-    showDialog<bool>(
+  void _showChangeNameBottomSheet(String currentName) {
+    showModalBottomSheet(
       context: context,
-      builder: (context) => ChangeNameDialog(currentName: currentName),
-    ).then((result) {
-      if (result == true) {
-        ref.read(profileViewModelProvider.notifier).loadUserProfile();
-      }
-    });
-  }
-
-  void _showChangePasswordDialog() {
-    showDialog<bool>(
-      context: context,
-      builder: (context) => const ChangePasswordDialog(),
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder:
+          (context) =>
+              change_name.ChangeNameBottomSheet(currentName: currentName),
     );
   }
 
-  void _showDeleteAccountDialog() {
-    showDialog<bool>(
+  void _showChangePasswordBottomSheet() {
+    showModalBottomSheet(
       context: context,
-      builder: (context) => const DeleteAccountDialog(),
-    ).then((result) {
-      if (result == true && mounted) {
-        context.go('/auth');
-      }
-    });
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => const change_password.ChangePasswordBottomSheet(),
+    );
+  }
+
+  void _showDeleteAccountBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => const delete_account.DeleteAccountBottomSheet(),
+    );
   }
 
   @override
@@ -115,7 +127,8 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
 
     if (state is ProfileLoadedState ||
         state is ProfileNameUpdatedState ||
-        state is ProfilePasswordUpdatedState) {
+        state is ProfilePasswordUpdatedState ||
+        state is ProfileErrorState) {
       final user =
           state is ProfileLoadedState
               ? state.user
@@ -128,57 +141,54 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Theme.of(context).primaryColor,
-                          child: Text(
-                            user.name.isNotEmpty
-                                ? user.name[0].toUpperCase()
-                                : 'U',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: Text(
+                          user.name.isNotEmpty
+                              ? user.name[0].toUpperCase()
+                              : 'U',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.name,
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user.name,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
+                            const SizedBox(height: 4),
+                            Text(
+                              user.email,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium?.copyWith(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).colorScheme.onSurfaceVariant,
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                user.email,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodyMedium?.copyWith(
-                                  color:
-                                      Theme.of(
-                                        context,
-                                      ).colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
 
@@ -203,7 +213,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                 title: Text(l10n.changeName),
                 subtitle: Text(user.name),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _showChangeNameDialog(user.name),
+                onTap: () => _showChangeNameBottomSheet(user.name),
               ),
             ),
 
@@ -219,7 +229,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                 title: Text(l10n.changePassword),
                 subtitle: Text('••••••••'),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: _showChangePasswordDialog,
+                onTap: _showChangePasswordBottomSheet,
               ),
             ),
 
@@ -263,7 +273,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                   Icons.chevron_right,
                   color: Theme.of(context).colorScheme.error,
                 ),
-                onTap: _showDeleteAccountDialog,
+                onTap: _showDeleteAccountBottomSheet,
               ),
             ),
           ],

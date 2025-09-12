@@ -5,23 +5,34 @@ import 'package:stackbudget/src/core/utils/utils.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model_state.dart';
 
-class DeleteAccountDialog extends ConsumerStatefulWidget {
-  const DeleteAccountDialog({super.key});
+class DeleteAccountBottomSheet extends ConsumerStatefulWidget {
+  const DeleteAccountBottomSheet({super.key});
 
   @override
-  ConsumerState<DeleteAccountDialog> createState() =>
-      _DeleteAccountDialogState();
+  ConsumerState<DeleteAccountBottomSheet> createState() =>
+      _DeleteAccountBottomSheetState();
 }
 
-class _DeleteAccountDialogState extends ConsumerState<DeleteAccountDialog> {
+class _DeleteAccountBottomSheetState
+    extends ConsumerState<DeleteAccountBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   bool _showPassword = false;
-  bool _confirmDeletion = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordController.addListener(_onPasswordChanged);
+  }
+
+  void _onPasswordChanged() {
+    setState(() {});
+  }
 
   @override
   void dispose() {
+    _passwordController.removeListener(_onPasswordChanged);
     _passwordController.dispose();
     super.dispose();
   }
@@ -77,98 +88,154 @@ class _DeleteAccountDialogState extends ConsumerState<DeleteAccountDialog> {
             backgroundColor: Colors.red,
           ),
         );
+        // Reset the state to show the profile again after error
+        ref.read(profileViewModelProvider.notifier).resetState();
+        ref.read(profileViewModelProvider.notifier).loadUserProfile();
       }
     });
 
-    return AlertDialog(
-      title: Text(l10n.deleteAccountConfirmation),
-      content: SingleChildScrollView(
+    return Container(
+      padding: EdgeInsets.only(
+        left: 24,
+        right: 24,
+        top: 24,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              l10n.deleteAccountWarning,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 16),
-            CheckboxListTile(
-              value: _confirmDeletion,
-              onChanged:
-                  _isLoading
-                      ? null
-                      : (value) {
-                        setState(() {
-                          _confirmDeletion = value ?? false;
-                        });
-                      },
-              title: Text(
-                l10n.confirm,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              controlAffinity: ListTileControlAffinity.leading,
-              contentPadding: EdgeInsets.zero,
-            ),
-            if (_confirmDeletion) ...[
-              const SizedBox(height: 16),
-              Text(
-                l10n.enterCurrentPasswordToDelete,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 8),
-              Form(
-                key: _formKey,
-                child: TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: l10n.currentPassword,
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _showPassword ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _showPassword = !_showPassword;
-                        });
-                      },
+            // Header with warning icon
+            Row(
+              children: [
+                Icon(
+                  Icons.warning_amber_rounded,
+                  color: Theme.of(context).colorScheme.error,
+                  size: 24,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    l10n.deleteAccountConfirmation,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.error,
                     ),
                   ),
-                  obscureText: !_showPassword,
-                  validator:
-                      (value) =>
-                          Validators.currentPassword(value, _getErrorMessage),
-                  enabled: !_isLoading,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Warning text
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.errorContainer,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.error.withValues(alpha: 0.3),
                 ),
               ),
-            ],
+              child: Text(
+                l10n.deleteAccountWarning,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onErrorContainer,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Password field (always visible)
+            Text(
+              l10n.enterCurrentPasswordToDelete,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Form(
+              key: _formKey,
+              child: TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  hintText: l10n.currentPassword,
+                  border: const OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Theme.of(context).colorScheme.surface,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _showPassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _showPassword = !_showPassword;
+                      });
+                    },
+                  ),
+                ),
+                obscureText: !_showPassword,
+                validator:
+                    (value) =>
+                        Validators.currentPassword(value, _getErrorMessage),
+                enabled: !_isLoading,
+                autofocus: true,
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            // Action buttons
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed:
+                        _isLoading ? null : () => Navigator.of(context).pop(),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    child: Text(l10n.cancel),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed:
+                        _isLoading || _passwordController.text.isEmpty
+                            ? null
+                            : _handleSubmit,
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: Theme.of(context).colorScheme.error,
+                      foregroundColor: Theme.of(context).colorScheme.onError,
+                    ),
+                    child:
+                        _isLoading
+                            ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                            : Text(l10n.deleteAccountAction),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
-        ),
-        ElevatedButton(
-          onPressed: _isLoading || !_confirmDeletion ? null : _handleSubmit,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-          ),
-          child:
-              _isLoading
-                  ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                  : Text(l10n.deleteAccountAction),
-        ),
-      ],
     );
   }
 }
