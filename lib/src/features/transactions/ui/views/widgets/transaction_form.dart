@@ -426,7 +426,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         title: Text(context.strings.startMonthRequiredLabel),
         subtitle: Text(
           _startDate != null
-              ? '${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])} de ${_startDate!.year}'
+              ? '${MonthEnum.values[_startDate!.month - 1].getDisplayName(context)} de ${_startDate!.year}'
               : context.strings.selectStartDate,
         ),
         onTap: () => _selectStartDate(),
@@ -444,10 +444,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         ),
         subtitle: Text(
           _endDate != null
-              ? '${_getMonthDisplayName(MonthEnum.values[_endDate!.month - 1])} de ${_endDate!.year}'
+              ? '${MonthEnum.values[_endDate!.month - 1].getDisplayName(context)} de ${_endDate!.year}'
               : _startDate != null
               ? context.strings.endDateAfterStartSpecific(
-                _getMonthDisplayName(MonthEnum.values[_startDate!.month - 1]),
+                MonthEnum.values[_startDate!.month - 1].getDisplayName(context),
                 _startDate!.year.toString(),
               )
               : context.strings.selectStartDateFirst,
@@ -528,7 +528,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         title: Text('${context.strings.firstInstallmentMonth} *'),
         subtitle: Text(
           _startDate != null
-              ? '${_getMonthDisplayName(MonthEnum.values[_startDate!.month - 1])} de ${_startDate!.year}'
+              ? '${MonthEnum.values[_startDate!.month - 1].getDisplayName(context)} de ${_startDate!.year}'
               : context.strings.selectFirstInstallmentMonth,
         ),
         onTap: () => _selectStartDate(),
@@ -559,7 +559,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             MonthEnum.values.map((month) {
               return DropdownMenuItem(
                 value: month,
-                child: Text(_getMonthDisplayName(month)),
+                child: Text(month.getDisplayName(context)),
               );
             }).toList(),
         onChanged: (value) => setState(() => _selectedYearlyMonth = value),
@@ -715,35 +715,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     final installmentValue = totalAmount / _totalInstallments!;
 
     return CurrencyFormatter.format(installmentValue, currency);
-  }
-
-  String _getMonthDisplayName(MonthEnum month) {
-    switch (month) {
-      case MonthEnum.january:
-        return context.strings.monthJanuary;
-      case MonthEnum.february:
-        return context.strings.monthFebruary;
-      case MonthEnum.march:
-        return context.strings.monthMarch;
-      case MonthEnum.april:
-        return context.strings.monthApril;
-      case MonthEnum.may:
-        return context.strings.monthMayExt;
-      case MonthEnum.june:
-        return context.strings.monthJune;
-      case MonthEnum.july:
-        return context.strings.monthJuly;
-      case MonthEnum.august:
-        return context.strings.monthAugust;
-      case MonthEnum.september:
-        return context.strings.monthSeptember;
-      case MonthEnum.october:
-        return context.strings.monthOctober;
-      case MonthEnum.november:
-        return context.strings.monthNovember;
-      case MonthEnum.december:
-        return context.strings.monthDecember;
-    }
   }
 
   Future<void> _selectStartDate() async {

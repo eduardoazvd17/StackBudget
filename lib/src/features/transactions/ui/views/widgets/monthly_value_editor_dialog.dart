@@ -52,42 +52,6 @@ class _MonthlyValueEditorDialogState
     super.dispose();
   }
 
-  String _getMonthName(int month) {
-    switch (month) {
-      case 1:
-        return context.strings.monthJanuary;
-      case 2:
-        return context.strings.monthFebruary;
-      case 3:
-        return context.strings.monthMarch;
-      case 4:
-        return context.strings.monthApril;
-      case 5:
-        return context.strings.monthMayExt;
-      case 6:
-        return context.strings.monthJune;
-      case 7:
-        return context.strings.monthJuly;
-      case 8:
-        return context.strings.monthAugust;
-      case 9:
-        return context.strings.monthSeptember;
-      case 10:
-        return context.strings.monthOctober;
-      case 11:
-        return context.strings.monthNovember;
-      case 12:
-        return context.strings.monthDecember;
-      default:
-        return '';
-    }
-  }
-
-  String _formatCurrency(double value, WidgetRef ref) {
-    final currency = ref.watch(currencyProvider);
-    return CurrencyFormatter.format(value, currency);
-  }
-
   void _populateAmount(double amount, WidgetRef ref) {
     final currency = ref.read(currencyProvider);
     final formattedAmount = CurrencyFormatter.format(amount, currency);
@@ -139,7 +103,7 @@ class _MonthlyValueEditorDialogState
         children: [
           Text(
             context.strings.adjustValue(
-              _getMonthName(widget.month),
+              MonthEnum.getNameByNumber(widget.month, context),
               widget.year.toString(),
             ),
           ),
@@ -173,7 +137,7 @@ class _MonthlyValueEditorDialogState
                   ),
                   const SizedBox(width: Spacing.xs),
                   Text(
-                    '${context.strings.defaultAmount}: ${_formatCurrency(widget.transaction.amount, ref)}',
+                    '${context.strings.defaultAmount}: ${ref.formatCurrency(widget.transaction.amount)}',
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),

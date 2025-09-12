@@ -109,7 +109,7 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
                       ),
                       child: Center(
                         child: Text(
-                          _getMonthAbbreviation(month),
+                          MonthEnum.getAbbreviationByNumber(month, context),
                           style: context.textTheme.bodyMedium?.copyWith(
                             color:
                                 isSelected
@@ -162,37 +162,6 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
     );
 
     return !date.isBefore(firstAllowed) && !date.isAfter(lastAllowed);
-  }
-
-  String _getMonthAbbreviation(int month) {
-    switch (month) {
-      case 1:
-        return context.strings.monthJan;
-      case 2:
-        return context.strings.monthFeb;
-      case 3:
-        return context.strings.monthMar;
-      case 4:
-        return context.strings.monthApr;
-      case 5:
-        return context.strings.monthMay;
-      case 6:
-        return context.strings.monthJun;
-      case 7:
-        return context.strings.monthJul;
-      case 8:
-        return context.strings.monthAug;
-      case 9:
-        return context.strings.monthSep;
-      case 10:
-        return context.strings.monthOct;
-      case 11:
-        return context.strings.monthNov;
-      case 12:
-        return context.strings.monthDec;
-      default:
-        return '';
-    }
   }
 }
 

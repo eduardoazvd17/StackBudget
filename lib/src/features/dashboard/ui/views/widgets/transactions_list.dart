@@ -4,7 +4,6 @@ import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
-import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 
 class TransactionsList extends ConsumerWidget {
   final bool onlyOneTimeTransactions;
@@ -205,7 +204,7 @@ class TransactionListItem extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              '${isIncome ? '+' : '-'} ${_formatCurrency(_getCurrentMonthValue(ref, transaction), ref)}',
+              '${isIncome ? '+' : '-'} ${ref.formatCurrency(_getCurrentMonthValue(ref, transaction))}',
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: defaultColor,
@@ -324,11 +323,6 @@ class TransactionListItem extends ConsumerWidget {
       case TransactionFrequencyEnum.oneTime:
         return context.strings.frequencyOneTime;
     }
-  }
-
-  String _formatCurrency(double value, WidgetRef ref) {
-    final currency = ref.watch(currencyProvider);
-    return CurrencyFormatter.format(value, currency);
   }
 
   String _formatDate(DateTime date) {

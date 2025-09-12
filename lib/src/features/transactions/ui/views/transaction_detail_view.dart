@@ -8,7 +8,6 @@ import 'package:stackbudget/src/features/transactions/ui/view_models/transaction
 import 'package:stackbudget/src/features/transactions/ui/views/widgets/monthly_value_editor_dialog.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
-import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 
 class TransactionDetailView extends ConsumerStatefulWidget {
   static const routeName = 'transaction-detail';
@@ -312,7 +311,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
             if (widget.transaction.yearlyMonth != null)
               _buildDetailItem(
                 context.strings.yearlyMonth,
-                _getMonthDisplayName(widget.transaction.yearlyMonth!),
+                widget.transaction.yearlyMonth!.getDisplayName(context),
                 Icons.calendar_month,
               ),
           ]),
@@ -347,13 +346,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     );
   }
 
-  String _formatCurrency(double value) {
-    final currency = ref.watch(currencyProvider);
-    return CurrencyFormatter.format(value, currency);
-  }
-
   String _formatMonthYear(DateTime date) {
-    return '${_getMonthDisplayName(MonthEnum.values[date.month - 1])} de ${date.year}';
+    return '${MonthEnum.values[date.month - 1].getDisplayName(context)} de ${date.year}';
   }
 
   String _formatDateTime(DateTime date) {
@@ -373,35 +367,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
         return context.strings.frequencyInstallment;
       case TransactionFrequencyEnum.yearly:
         return context.strings.frequencyYearly;
-    }
-  }
-
-  String _getMonthDisplayName(MonthEnum month) {
-    switch (month) {
-      case MonthEnum.january:
-        return context.strings.monthJanuary;
-      case MonthEnum.february:
-        return context.strings.monthFebruary;
-      case MonthEnum.march:
-        return context.strings.monthMarch;
-      case MonthEnum.april:
-        return context.strings.monthApril;
-      case MonthEnum.may:
-        return context.strings.monthMayExt;
-      case MonthEnum.june:
-        return context.strings.monthJune;
-      case MonthEnum.july:
-        return context.strings.monthJuly;
-      case MonthEnum.august:
-        return context.strings.monthAugust;
-      case MonthEnum.september:
-        return context.strings.monthSeptember;
-      case MonthEnum.october:
-        return context.strings.monthOctober;
-      case MonthEnum.november:
-        return context.strings.monthNovember;
-      case MonthEnum.december:
-        return context.strings.monthDecember;
     }
   }
 
@@ -432,7 +397,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          _formatCurrency(currentPeriodValue),
+          ref.formatCurrency(currentPeriodValue),
           style: context.textTheme.headlineSmall?.copyWith(
             color: color,
             fontWeight: FontWeight.bold,
@@ -452,7 +417,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           ),
           const SizedBox(height: Spacing.xs),
           Text(
-            '${context.strings.totalValue}: ${_formatCurrency(widget.transaction.amount)}',
+            '${context.strings.totalValue}: ${ref.formatCurrency(widget.transaction.amount)}',
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colorScheme.onSurface.withValues(alpha: 0.6),
             ),
@@ -466,7 +431,7 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
               Icon(Icons.tune, size: 16, color: Colors.orange),
               const SizedBox(width: Spacing.xs),
               Text(
-                '${context.strings.adjustedValue} ${_getMonthName(selectedPeriod.month)}/${selectedPeriod.year}',
+                '${context.strings.adjustedValue} ${MonthEnum.getNameByNumber(selectedPeriod.month, context)}/${selectedPeriod.year}',
                 style: context.textTheme.bodySmall?.copyWith(
                   color: Colors.orange,
                   fontWeight: FontWeight.w500,
@@ -477,8 +442,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           const SizedBox(height: Spacing.xs),
           Text(
             isInstallment
-                ? '${context.strings.defaultInstallmentValue}: ${_formatCurrency(widget.transaction.amount / widget.transaction.totalInstallments!)}'
-                : '${context.strings.defaultValue}: ${_formatCurrency(widget.transaction.amount)}',
+                ? '${context.strings.defaultInstallmentValue}: ${ref.formatCurrency(widget.transaction.amount / widget.transaction.totalInstallments!)}'
+                : '${context.strings.defaultValue}: ${ref.formatCurrency(widget.transaction.amount)}',
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colorScheme.onSurface.withValues(alpha: 0.6),
             ),
@@ -565,37 +530,6 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
     final installmentNumber = monthsDifference + 1;
 
     return installmentNumber.clamp(1, widget.transaction.totalInstallments!);
-  }
-
-  String _getMonthName(int month) {
-    switch (month) {
-      case 1:
-        return context.strings.monthJanuary;
-      case 2:
-        return context.strings.monthFebruary;
-      case 3:
-        return context.strings.monthMarch;
-      case 4:
-        return context.strings.monthApril;
-      case 5:
-        return context.strings.monthMayExt;
-      case 6:
-        return context.strings.monthJune;
-      case 7:
-        return context.strings.monthJuly;
-      case 8:
-        return context.strings.monthAugust;
-      case 9:
-        return context.strings.monthSeptember;
-      case 10:
-        return context.strings.monthOctober;
-      case 11:
-        return context.strings.monthNovember;
-      case 12:
-        return context.strings.monthDecember;
-      default:
-        return '';
-    }
   }
 
   bool _canAdjustMonthlyValue() {

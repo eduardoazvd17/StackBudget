@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
-import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
 
@@ -155,7 +154,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        _formatCurrency(actualBalance, ref),
+                        ref.formatCurrency(actualBalance),
                         style: context.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: context.colorScheme.onPrimaryContainer,
@@ -192,7 +191,7 @@ class BudgetSummaryCard extends ConsumerWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            _formatCurrency(balanceDifference.abs(), ref),
+                            ref.formatCurrency(balanceDifference.abs()),
                             style: context.textTheme.bodySmall?.copyWith(
                               color:
                                   balanceDifference > 0
@@ -277,7 +276,7 @@ class BudgetSummaryCard extends ConsumerWidget {
           ),
           const SizedBox(height: Spacing.xs),
           Text(
-            _formatCurrency(actual, ref),
+            ref.formatCurrency(actual),
             style: context.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -285,10 +284,5 @@ class BudgetSummaryCard extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  String _formatCurrency(double value, WidgetRef ref) {
-    final currency = ref.watch(currencyProvider);
-    return CurrencyFormatter.format(value, currency);
   }
 }
