@@ -278,58 +278,56 @@ class _MonthPickerBottomSheetState extends State<MonthPickerBottomSheet> {
           const SizedBox(height: 24),
 
           // Month grid
-          SizedBox(
-            height: 200,
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 2.5,
-                crossAxisSpacing: Spacing.sm,
-                mainAxisSpacing: Spacing.sm,
-              ),
-              itemCount: 12,
-              itemBuilder: (context, index) {
-                final month = MonthEnum.values[index];
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 2.5,
+              crossAxisSpacing: Spacing.sm,
+              mainAxisSpacing: Spacing.sm,
+            ),
+            itemCount: 12,
+            itemBuilder: (context, index) {
+              final month = MonthEnum.values[index];
 
-                return InkWell(
-                  onTap: () {
-                    widget.onMonthSelected(month);
-                    Navigator.of(context).pop();
-                  },
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    decoration: BoxDecoration(
+              return InkWell(
+                onTap: () {
+                  widget.onMonthSelected(month);
+                  Navigator.of(context).pop();
+                },
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color:
+                        selectedMonth == month
+                            ? context.colorScheme.primary
+                            : context.colorScheme.surface,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
                       color:
                           selectedMonth == month
                               ? context.colorScheme.primary
-                              : context.colorScheme.surface,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
+                              : context.colorScheme.outline.withValues(
+                                alpha: 0.3,
+                              ),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      month.getDisplayName(context),
+                      style: context.textTheme.bodyMedium?.copyWith(
                         color:
                             selectedMonth == month
-                                ? context.colorScheme.primary
-                                : context.colorScheme.outline.withValues(
-                                  alpha: 0.3,
-                                ),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        month.getDisplayName(context),
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color:
-                              selectedMonth == month
-                                  ? context.colorScheme.onPrimary
-                                  : context.colorScheme.onSurface,
-                          fontWeight:
-                              selectedMonth == month ? FontWeight.bold : null,
-                        ),
+                                ? context.colorScheme.onPrimary
+                                : context.colorScheme.onSurface,
+                        fontWeight:
+                            selectedMonth == month ? FontWeight.bold : null,
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
 
           const SizedBox(height: 24),
