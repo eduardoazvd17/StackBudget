@@ -8,6 +8,7 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
+import 'package:stackbudget/src/core/widgets/search_text_field.dart';
 
 class TransactionForm extends ConsumerStatefulWidget {
   final TransactionModel? transaction; // Para edição
@@ -26,6 +27,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   final _categoryController = TextEditingController();
   final _categorySearchController = TextEditingController();
   CategoryEnum? _selectedCategory;
+  TransactionFormViewModelState? _currentFormState;
 
   TransactionTypeEnum _selectedType = TransactionTypeEnum.expense;
   TransactionFrequencyEnum _selectedFrequency =
@@ -80,6 +82,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   @override
   Widget build(BuildContext context) {
     final formState = ref.watch(transactionFormViewModelProvider);
+    _currentFormState = formState;
 
     ref.listen<TransactionFormViewModelState>(
       transactionFormViewModelProvider,
@@ -726,7 +729,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Selecione a categoria (opcional)',
+                          context.strings.selectCategoryOptional,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -764,7 +767,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                       ).colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                     const SizedBox(width: 12),
-                    Text('Nenhum'),
+                    Text(context.strings.none),
                   ],
                 ),
               ),
@@ -815,30 +818,13 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             ),
             dropdownSearchData: DropdownSearchData(
               searchController: _categorySearchController,
-              searchInnerWidgetHeight: 50,
+              searchInnerWidgetHeight: 60,
               searchInnerWidget: Container(
-                height: 50,
-                padding: const EdgeInsets.only(
-                  top: 8,
-                  bottom: 4,
-                  right: 8,
-                  left: 8,
-                ),
-                child: TextFormField(
-                  expands: true,
-                  maxLines: null,
+                padding: const EdgeInsets.all(Spacing.sm),
+                child: SearchTextField(
                   controller: _categorySearchController,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 8,
-                    ),
-                    hintText: 'Buscar categoria...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                  hintText: context.strings.searchCategory,
+                  enabled: _currentFormState is! TransactionFormLoadingState,
                 ),
               ),
               searchMatchFn: (item, searchValue) {

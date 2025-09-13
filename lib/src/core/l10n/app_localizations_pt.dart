@@ -143,6 +143,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get selectCategory => 'Selecione categoria (opcional)';
 
   @override
+  String get searchCategory => 'Buscar categoria...';
+
+  @override
+  String get selectCategoryOptional => 'Selecione a categoria (opcional)';
+
+  @override
+  String get none => 'Nenhum(a)';
+
+  @override
   String get save => 'Salvar';
 
   @override
@@ -983,7 +992,4 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get appDescription => 'Seu planejamento financeiro inteligente';
-
-  @override
-  String get none => 'Nenhum(a)';
 }

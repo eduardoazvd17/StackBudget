@@ -359,6 +359,24 @@ abstract class AppLocalizations {
   /// **'Select category (optional)'**
   String get selectCategory;
 
+  /// No description provided for @searchCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Search category...'**
+  String get searchCategory;
+
+  /// No description provided for @selectCategoryOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Select category (optional)'**
+  String get selectCategoryOptional;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
+
   /// No description provided for @save.
   ///
   /// In en, this message translates to:
@@ -2038,12 +2056,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your smart financial planning'**
   String get appDescription;
-
-  /// No description provided for @none.
-  ///
-  /// In en, this message translates to:
-  /// **'None'**
-  String get none;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
