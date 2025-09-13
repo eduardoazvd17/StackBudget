@@ -11,62 +11,58 @@ class MonthYearFilter extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDate = ref.watch(selectedPeriodProvider);
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(Spacing.md),
-        child: Row(
-          children: [
-            Icon(Icons.calendar_month, color: context.colorScheme.primary),
-            const SizedBox(width: Spacing.sm),
+    return Padding(
+      padding: const EdgeInsets.all(Spacing.md),
+      child: Row(
+        children: [
+          Icon(Icons.calendar_month, color: context.colorScheme.primary),
+          const SizedBox(width: Spacing.sm),
 
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.strings.period,
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.onSurface.withValues(
-                        alpha: 0.7,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    _formatMonthYear(selectedDate, context),
-                    style: context.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Row(
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  onPressed:
-                      _canNavigateToPrevious(ref)
-                          ? () => _previousMonth(ref)
-                          : null,
-                  icon: const Icon(Icons.chevron_left),
-                  tooltip: context.strings.previousMonth,
+                Text(
+                  context.strings.period,
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: context.colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
                 ),
-                IconButton(
-                  onPressed:
-                      _canNavigateToNext(ref) ? () => _nextMonth(ref) : null,
-                  icon: const Icon(Icons.chevron_right),
-                  tooltip: context.strings.nextMonth,
-                ),
-                IconButton(
-                  onPressed: () => _showDatePicker(context, ref),
-                  icon: const Icon(Icons.date_range),
-                  tooltip: context.strings.selectDate,
+                const SizedBox(height: 2),
+                Text(
+                  _formatMonthYear(selectedDate, context),
+                  style: context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+
+          Row(
+            children: [
+              IconButton(
+                onPressed:
+                    _canNavigateToPrevious(ref)
+                        ? () => _previousMonth(ref)
+                        : null,
+                icon: const Icon(Icons.chevron_left),
+                tooltip: context.strings.previousMonth,
+              ),
+              IconButton(
+                onPressed:
+                    _canNavigateToNext(ref) ? () => _nextMonth(ref) : null,
+                icon: const Icon(Icons.chevron_right),
+                tooltip: context.strings.nextMonth,
+              ),
+              IconButton(
+                onPressed: () => _showDatePicker(context, ref),
+                icon: const Icon(Icons.date_range),
+                tooltip: context.strings.selectDate,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
