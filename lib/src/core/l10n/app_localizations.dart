@@ -719,6 +719,18 @@ abstract class AppLocalizations {
   /// **'At least one month must be selected for custom recurrence'**
   String get customMonthsRequiredError;
 
+  /// No description provided for @customMonthlyEndYearOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'End Year (Optional)'**
+  String get customMonthlyEndYearOptional;
+
+  /// No description provided for @selectedMonthsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} months selected'**
+  String selectedMonthsCount(Object count);
+
   /// No description provided for @totalInstallmentsRequiredLabel.
   ///
   /// In en, this message translates to:

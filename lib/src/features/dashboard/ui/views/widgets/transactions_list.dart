@@ -210,17 +210,6 @@ class TransactionListItem extends ConsumerWidget {
                 color: defaultColor,
               ),
             ),
-            if (transaction.frequency == TransactionFrequencyEnum.oneTime ||
-                showAllTypes) ...[
-              Text(
-                transaction.createdAt.formatToSimpleDate(
-                  Localizations.localeOf(context).toString(),
-                ),
-                style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colorScheme.onSurface.withValues(alpha: 0.5),
-                ),
-              ),
-            ],
           ],
         ),
 

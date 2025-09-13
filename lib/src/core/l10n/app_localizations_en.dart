@@ -323,6 +323,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customMonthsRequiredError => 'At least one month must be selected for custom recurrence';
 
   @override
+  String get customMonthlyEndYearOptional => 'End Year (Optional)';
+
+  @override
+  String selectedMonthsCount(Object count) {
+    return '$count months selected';
+  }
+
+  @override
   String get totalInstallmentsRequiredLabel => 'Total Installments *';
 
   @override

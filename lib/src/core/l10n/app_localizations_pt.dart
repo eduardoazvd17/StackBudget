@@ -323,6 +323,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get customMonthsRequiredError => 'Pelo menos um mês deve ser selecionado para recorrência personalizada';
 
   @override
+  String get customMonthlyEndYearOptional => 'Ano de Fim (Opcional)';
+
+  @override
+  String selectedMonthsCount(Object count) {
+    return '$count meses selecionados';
+  }
+
+  @override
   String get totalInstallmentsRequiredLabel => 'Total de Parcelas *';
 
   @override

@@ -754,8 +754,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
       _buildSelectionButton(
         icon: Icons.event_busy,
-        label: 'Ano de Fim (Opcional)',
-        value: _endYear != null ? _endYear!.toString() : 'Selecione o ano em que termina',
+        label: context.strings.customMonthlyEndYearOptional,
+        value:
+            _endYear != null
+                ? _endYear!.toString()
+                : 'Selecione o ano em que termina',
         onTap: () => _selectEndYear(),
       ),
 
@@ -771,15 +774,13 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             ),
             child: Row(
               children: [
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.blue.shade700,
-                  size: 20,
-                ),
+                Icon(Icons.check_circle, color: Colors.blue.shade700, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    '${_selectedCustomMonths.length} meses selecionados',
+                    context.strings.selectedMonthsCount(
+                      _selectedCustomMonths.length,
+                    ),
                     style: TextStyle(
                       color: Colors.blue.shade700,
                       fontWeight: FontWeight.w500,
@@ -808,10 +809,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 Expanded(
                   child: Text(
                     'A recorrência terminará no ano de $_endYear',
-                    style: TextStyle(
-                      color: Colors.blue.shade700,
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(color: Colors.blue.shade700, fontSize: 12),
                   ),
                 ),
               ],

@@ -79,22 +79,24 @@ class SimpleExpandableSection extends ConsumerWidget {
       case TransactionFrequencyEnum.customMonthly:
       case TransactionFrequencyEnum.yearly:
         filteredTransactions =
-            dashboardState.transactions
-                .where(
-                  (t) =>
-                      t.frequency == TransactionFrequencyEnum.monthly ||
-                      t.frequency == TransactionFrequencyEnum.customMonthly ||
-                      t.frequency == TransactionFrequencyEnum.yearly,
-                )
-                .toList();
+            (dashboardState.transactions
+                  .where(
+                    (t) =>
+                        t.frequency == TransactionFrequencyEnum.monthly ||
+                        t.frequency == TransactionFrequencyEnum.customMonthly ||
+                        t.frequency == TransactionFrequencyEnum.yearly,
+                  )
+                  .toList())
+              ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
         break;
       case TransactionFrequencyEnum.installment:
         filteredTransactions =
-            dashboardState.transactions
-                .where(
-                  (t) => t.frequency == TransactionFrequencyEnum.installment,
-                )
-                .toList();
+            (dashboardState.transactions
+                  .where(
+                    (t) => t.frequency == TransactionFrequencyEnum.installment,
+                  )
+                  .toList())
+              ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
         break;
       case TransactionFrequencyEnum.oneTime:
         filteredTransactions =

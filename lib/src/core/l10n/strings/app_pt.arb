@@ -104,6 +104,8 @@
   "selectCustomMonths": "Selecione os meses em que a transação deve aparecer",
   "customMonthsRequired": "Selecione pelo menos um mês",
   "customMonthsRequiredError": "Pelo menos um mês deve ser selecionado para recorrência personalizada",
+  "customMonthlyEndYearOptional": "Ano de Fim (Opcional)",
+  "selectedMonthsCount": "{count} meses selecionados",
   "totalInstallmentsRequiredLabel": "Total de Parcelas *",
   "titleRequiredLabel": "Título *",
   "amountRequiredLabel": "Valor *",

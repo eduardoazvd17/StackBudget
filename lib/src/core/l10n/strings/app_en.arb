@@ -114,6 +114,8 @@
   "selectCustomMonths": "Select the months when the transaction should appear",
   "customMonthsRequired": "Select at least one month",
   "customMonthsRequiredError": "At least one month must be selected for custom recurrence",
+  "customMonthlyEndYearOptional": "End Year (Optional)",
+  "selectedMonthsCount": "{count} months selected",
   "totalInstallmentsRequiredLabel": "Total Installments *",
   "titleRequiredLabel": "Title *",
   "amountRequiredLabel": "Amount *",
