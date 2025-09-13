@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/core/enums/category_enum.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
 import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model_state.dart';
 import 'package:stackbudget/src/features/transactions/data/models/models.dart';
@@ -168,7 +169,7 @@ class TransactionListItem extends ConsumerWidget {
         subtitle: Row(
           children: [
             Text(
-              _getFrequencyText(context, transaction.frequency),
+              _getSubtitleText(context, transaction),
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colorScheme.onSurface.withValues(alpha: 0.5),
               ),
@@ -298,6 +299,17 @@ class TransactionListItem extends ConsumerWidget {
       default:
         return Icons.category;
     }
+  }
+
+  String _getSubtitleText(BuildContext context, TransactionModel transaction) {
+    // Se a transação tem categoria, mostra a categoria
+    if (transaction.category != null) {
+      final CategoryEnum category = transaction.category!;
+      return category.getDisplayName(context);
+    }
+
+    // Caso contrário, mostra a frequência
+    return _getFrequencyText(context, transaction.frequency);
   }
 
   String _getFrequencyText(
