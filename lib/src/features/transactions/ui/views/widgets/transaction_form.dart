@@ -8,7 +8,6 @@ import 'package:stackbudget/src/features/transactions/data/models/models.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
 import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
-import 'package:stackbudget/src/core/widgets/search_text_field.dart';
 
 class TransactionForm extends ConsumerStatefulWidget {
   final TransactionModel? transaction; // Para edição
@@ -36,6 +35,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   DateTime? _endDate;
   int? _totalInstallments;
   MonthEnum? _selectedYearlyMonth;
+  int? _endYear;
 
   bool get _isEditing => widget.transaction != null;
 
@@ -77,6 +77,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     _endDate = transaction.endDate;
     _totalInstallments = transaction.totalInstallments;
     _selectedYearlyMonth = transaction.yearlyMonth;
+    _endYear = transaction.endYear;
   }
 
   @override
@@ -677,6 +678,43 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 : context.strings.selectYearlyMonth,
         onTap: () => _selectYearlyMonth(),
       ),
+
+      const SizedBox(height: Spacing.sm),
+
+      _buildSelectionButton(
+        icon: Icons.event_busy,
+        label: context.strings.endYearOptional,
+        value:
+            _endYear != null
+                ? _endYear!.toString()
+                : context.strings.selectEndYear,
+        onTap: () => _selectEndYear(),
+      ),
+
+      if (_endYear != null)
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.blue.shade200),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.info, color: Colors.blue.shade700, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    context.strings.endYearHelp,
+                    style: TextStyle(color: Colors.blue.shade700, fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
     ];
   }
 
@@ -1015,12 +1053,174 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     }
   }
 
+  Future<void> _selectEndYear() async {
+    final now = DateTime.now();
+    final currentYear = now.year;
+
+    final selectedYear = await showModalBottomSheet<int>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header
+              Row(
+                children: [
+                  Icon(
+                    Icons.event_busy,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Selecionar Ano de Fim',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+
+              // Year grid (similar to month picker)
+              SizedBox(
+                height: 340, // Ajustado para acomodar 12 itens (4 linhas)
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 2.5,
+                    crossAxisSpacing: Spacing.sm,
+                    mainAxisSpacing: Spacing.sm,
+                  ),
+                  itemCount: 12, // 11 anos (2025-2035) + opção "Nenhum"
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      // Opção "Nenhum" na primeira posição
+                      return InkWell(
+                        onTap: () => Navigator.of(context).pop(0),
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color:
+                                _endYear == null
+                                    ? context.colorScheme.primary
+                                    : context.colorScheme.surface,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color:
+                                  _endYear == null
+                                      ? context.colorScheme.primary
+                                      : context.colorScheme.outline.withValues(
+                                        alpha: 0.3,
+                                      ),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Nenhum',
+                              style: context.textTheme.bodyMedium?.copyWith(
+                                color:
+                                    _endYear == null
+                                        ? context.colorScheme.onPrimary
+                                        : context.colorScheme.onSurface,
+                                fontWeight:
+                                    _endYear == null ? FontWeight.bold : null,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+
+                    final yearIndex =
+                        index -
+                        1; // 0-10 para 11 anos (currentYear até currentYear+10)
+                    final year = currentYear + yearIndex; // Inclui o ano atual
+
+                    return InkWell(
+                      onTap: () => Navigator.of(context).pop(year),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color:
+                              _endYear == year
+                                  ? context.colorScheme.primary
+                                  : year == currentYear
+                                  ? context.colorScheme.primaryContainer
+                                      .withValues(alpha: 0.6)
+                                  : context.colorScheme.surface,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color:
+                                _endYear == year
+                                    ? context.colorScheme.primary
+                                    : year == currentYear
+                                    ? context.colorScheme.primary.withValues(
+                                      alpha: 0.7,
+                                    )
+                                    : context.colorScheme.outline.withValues(
+                                      alpha: 0.3,
+                                    ),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            year.toString(),
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color:
+                                  _endYear == year
+                                      ? context.colorScheme.onPrimary
+                                      : year == currentYear
+                                      ? context.colorScheme.primary
+                                      : context.colorScheme.onSurface,
+                              fontWeight:
+                                  _endYear == year
+                                      ? FontWeight.bold
+                                      : year == currentYear
+                                      ? FontWeight.w600
+                                      : null,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 24),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (selectedYear != null && selectedYear > 0) {
+      setState(() => _endYear = selectedYear);
+    } else if (selectedYear == 0) {
+      setState(() => _endYear = null);
+    }
+  }
+
   void _resetFrequencyFields() {
     setState(() {
       _startDate = null;
       _endDate = null;
       _totalInstallments = null;
       _selectedYearlyMonth = null;
+      _endYear = null;
     });
   }
 
@@ -1056,6 +1256,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         endDate: _endDate,
         totalInstallments: _totalInstallments,
         yearlyMonth: _selectedYearlyMonth,
+        endYear: _endYear,
         isDynamic: true,
       );
     } else {
@@ -1073,6 +1274,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         endDate: _endDate,
         totalInstallments: _totalInstallments,
         yearlyMonth: _selectedYearlyMonth,
+        endYear: _endYear,
         isDynamic: true,
       );
     }

@@ -299,6 +299,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yearlyMonthRequiredLabel => 'Yearly Month *';
 
   @override
+  String get endYearOptional => 'End Year (Optional)';
+
+  @override
+  String get selectEndYear => 'Select the year when recurrence ends';
+
+  @override
+  String get endYearAfterCurrent => 'End year must be greater than or equal to current year';
+
+  @override
+  String get endYearHelp => 'Recurrence will continue until selected year';
+
+  @override
   String get totalInstallmentsRequiredLabel => 'Total Installments *';
 
   @override

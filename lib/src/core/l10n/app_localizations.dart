@@ -671,6 +671,30 @@ abstract class AppLocalizations {
   /// **'Yearly Month *'**
   String get yearlyMonthRequiredLabel;
 
+  /// No description provided for @endYearOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'End Year (Optional)'**
+  String get endYearOptional;
+
+  /// No description provided for @selectEndYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the year when recurrence ends'**
+  String get selectEndYear;
+
+  /// No description provided for @endYearAfterCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'End year must be greater than or equal to current year'**
+  String get endYearAfterCurrent;
+
+  /// No description provided for @endYearHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurrence will continue until selected year'**
+  String get endYearHelp;
+
   /// No description provided for @totalInstallmentsRequiredLabel.
   ///
   /// In en, this message translates to:

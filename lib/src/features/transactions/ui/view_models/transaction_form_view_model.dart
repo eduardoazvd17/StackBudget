@@ -35,6 +35,7 @@ class TransactionFormViewModel
     DateTime? endDate,
     int? totalInstallments,
     MonthEnum? yearlyMonth,
+    int? endYear,
     bool isDynamic = true,
   }) async {
     state = const TransactionFormLoadingState();
@@ -56,6 +57,7 @@ class TransactionFormViewModel
         startDate: startDate,
         totalInstallments: totalInstallments,
         yearlyMonth: yearlyMonth,
+        endYear: endYear,
       );
 
       if (validationError != null) {
@@ -81,6 +83,7 @@ class TransactionFormViewModel
         currentInstallment:
             frequency == TransactionFrequencyEnum.installment ? 0 : null,
         yearlyMonth: yearlyMonth,
+        endYear: endYear,
         isDynamic: isDynamic,
         category: category,
         tags: tags,
@@ -109,6 +112,7 @@ class TransactionFormViewModel
     DateTime? startDate,
     int? totalInstallments,
     MonthEnum? yearlyMonth,
+    int? endYear,
   }) {
     switch (frequency) {
       case TransactionFrequencyEnum.monthly:
@@ -129,6 +133,9 @@ class TransactionFormViewModel
       case TransactionFrequencyEnum.yearly:
         if (yearlyMonth == null) {
           return 'yearlyMonthRequiredForYearly';
+        }
+        if (endYear != null && endYear < DateTime.now().year) {
+          return 'endYearAfterCurrent';
         }
         break;
 
@@ -152,6 +159,7 @@ class TransactionFormViewModel
     DateTime? endDate,
     int? totalInstallments,
     MonthEnum? yearlyMonth,
+    int? endYear,
     bool isDynamic = true,
   }) async {
     state = const TransactionFormLoadingState();
@@ -173,6 +181,7 @@ class TransactionFormViewModel
         startDate: startDate,
         totalInstallments: totalInstallments,
         yearlyMonth: yearlyMonth,
+        endYear: endYear,
       );
 
       if (validationError != null) {
@@ -198,6 +207,7 @@ class TransactionFormViewModel
         currentInstallment:
             frequency == TransactionFrequencyEnum.installment ? 0 : null,
         yearlyMonth: yearlyMonth,
+        endYear: endYear,
         isDynamic: isDynamic,
         category: category,
         tags: tags,

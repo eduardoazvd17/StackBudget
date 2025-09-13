@@ -100,7 +100,14 @@ class BudgetCalculationService {
 
       case TransactionFrequencyEnum.yearly:
         if (transaction.yearlyMonth == null) return false;
-        return transaction.yearlyMonth!.value == month;
+        if (transaction.yearlyMonth!.value != month) return false;
+
+        // Verificar se o ano atual está dentro do período de recorrência
+        if (transaction.endYear != null && year > transaction.endYear!) {
+          return false;
+        }
+
+        return true;
 
       case TransactionFrequencyEnum.installment:
         if (transaction.totalInstallments == null ||

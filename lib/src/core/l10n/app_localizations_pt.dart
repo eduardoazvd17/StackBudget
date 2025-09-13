@@ -299,6 +299,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get yearlyMonthRequiredLabel => 'Mês do Ano *';
 
   @override
+  String get endYearOptional => 'Ano de Fim (Opcional)';
+
+  @override
+  String get selectEndYear => 'Selecione o ano em que a recorrência termina';
+
+  @override
+  String get endYearAfterCurrent => 'Ano de fim deve ser maior ou igual ao ano atual';
+
+  @override
+  String get endYearHelp => 'A recorrência continuará até o ano selecionado';
+
+  @override
   String get totalInstallmentsRequiredLabel => 'Total de Parcelas *';
 
   @override
