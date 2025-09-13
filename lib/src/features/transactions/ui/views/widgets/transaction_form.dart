@@ -750,21 +750,30 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         ),
       ),
 
+      const SizedBox(height: Spacing.sm),
+
+      _buildSelectionButton(
+        icon: Icons.event_busy,
+        label: 'Ano de Fim (Opcional)',
+        value: _endYear != null ? _endYear!.toString() : 'Selecione o ano em que termina',
+        onTap: () => _selectEndYear(),
+      ),
+
       if (_selectedCustomMonths.isNotEmpty)
         Padding(
           padding: const EdgeInsets.only(top: Spacing.sm),
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.green.shade50,
+              color: Colors.blue.shade50,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.green.shade200),
+              border: Border.all(color: Colors.blue.shade200),
             ),
             child: Row(
               children: [
                 Icon(
                   Icons.check_circle,
-                  color: Colors.green.shade700,
+                  color: Colors.blue.shade700,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -772,8 +781,36 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                   child: Text(
                     '${_selectedCustomMonths.length} meses selecionados',
                     style: TextStyle(
-                      color: Colors.green.shade700,
+                      color: Colors.blue.shade700,
                       fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+      if (_endYear != null)
+        Padding(
+          padding: const EdgeInsets.only(top: Spacing.sm),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.blue.shade200),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.info, color: Colors.blue.shade700, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'A recorrência terminará no ano de $_endYear',
+                    style: TextStyle(
+                      color: Colors.blue.shade700,
+                      fontSize: 12,
                     ),
                   ),
                 ),

@@ -268,7 +268,14 @@ class TransactionDatasourceImpl implements TransactionDatasource {
             transaction.customMonths!.isEmpty) {
           return false;
         }
-        return transaction.customMonths!.contains(month);
+        if (!transaction.customMonths!.contains(month)) return false;
+
+        // Verificar se o ano atual está dentro do período de recorrência
+        if (transaction.endYear != null && year > transaction.endYear!) {
+          return false;
+        }
+
+        return true;
 
       case TransactionFrequencyEnum.yearly:
         if (transaction.yearlyMonth == null) return false;
