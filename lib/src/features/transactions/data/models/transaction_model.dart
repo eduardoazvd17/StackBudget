@@ -20,6 +20,8 @@ class TransactionModel {
 
   final MonthEnum? yearlyMonth; // Em qual mês do ano ocorre
   final int? endYear; // Ano em que a recorrência anual termina (opcional)
+  final List<int>?
+  customMonths; // Meses específicos para recorrência customizada (1-12)
 
   final bool isDynamic; // Se o valor pode ser alterado mês a mês
 
@@ -43,6 +45,7 @@ class TransactionModel {
     this.currentInstallment,
     this.yearlyMonth,
     this.endYear,
+    this.customMonths,
     this.isDynamic = false,
     this.category,
     this.tags,
@@ -65,6 +68,7 @@ class TransactionModel {
       'currentInstallment': currentInstallment,
       'yearlyMonth': yearlyMonth?.name,
       'endYear': endYear,
+      'customMonths': customMonths,
       'isDynamic': isDynamic,
       'category': category?.name,
       'tags': tags,
@@ -106,6 +110,10 @@ class TransactionModel {
               )
               : null,
       endYear: map['endYear'] as int?,
+      customMonths:
+          map['customMonths'] != null
+              ? List<int>.from(map['customMonths'] as List)
+              : null,
       isDynamic: map['isDynamic'] as bool? ?? false,
       category:
           map['category'] != null
@@ -134,6 +142,7 @@ class TransactionModel {
     int? currentInstallment,
     MonthEnum? yearlyMonth,
     int? endYear,
+    List<int>? customMonths,
     bool? isDynamic,
     CategoryEnum? category,
     List<String>? tags,
@@ -154,6 +163,7 @@ class TransactionModel {
       currentInstallment: currentInstallment ?? this.currentInstallment,
       yearlyMonth: yearlyMonth ?? this.yearlyMonth,
       endYear: endYear ?? this.endYear,
+      customMonths: customMonths ?? this.customMonths,
       isDynamic: isDynamic ?? this.isDynamic,
       category: category ?? this.category,
       tags: tags ?? this.tags,

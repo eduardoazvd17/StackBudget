@@ -263,6 +263,13 @@ class TransactionDatasourceImpl implements TransactionDatasource {
 
         return true;
 
+      case TransactionFrequencyEnum.customMonthly:
+        if (transaction.customMonths == null ||
+            transaction.customMonths!.isEmpty) {
+          return false;
+        }
+        return transaction.customMonths!.contains(month);
+
       case TransactionFrequencyEnum.yearly:
         if (transaction.yearlyMonth == null) return false;
         if (transaction.yearlyMonth!.value != month) return false;

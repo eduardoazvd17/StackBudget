@@ -76,12 +76,14 @@ class SimpleExpandableSection extends ConsumerWidget {
 
     switch (filterType) {
       case TransactionFrequencyEnum.monthly:
+      case TransactionFrequencyEnum.customMonthly:
       case TransactionFrequencyEnum.yearly:
         filteredTransactions =
             dashboardState.transactions
                 .where(
                   (t) =>
                       t.frequency == TransactionFrequencyEnum.monthly ||
+                      t.frequency == TransactionFrequencyEnum.customMonthly ||
                       t.frequency == TransactionFrequencyEnum.yearly,
                 )
                 .toList();

@@ -36,6 +36,7 @@ class TransactionFormViewModel
     int? totalInstallments,
     MonthEnum? yearlyMonth,
     int? endYear,
+    List<int>? customMonths,
     bool isDynamic = true,
   }) async {
     state = const TransactionFormLoadingState();
@@ -58,6 +59,7 @@ class TransactionFormViewModel
         totalInstallments: totalInstallments,
         yearlyMonth: yearlyMonth,
         endYear: endYear,
+        customMonths: customMonths,
       );
 
       if (validationError != null) {
@@ -84,6 +86,7 @@ class TransactionFormViewModel
             frequency == TransactionFrequencyEnum.installment ? 0 : null,
         yearlyMonth: yearlyMonth,
         endYear: endYear,
+        customMonths: customMonths,
         isDynamic: isDynamic,
         category: category,
         tags: tags,
@@ -113,6 +116,7 @@ class TransactionFormViewModel
     int? totalInstallments,
     MonthEnum? yearlyMonth,
     int? endYear,
+    List<int>? customMonths,
   }) {
     switch (frequency) {
       case TransactionFrequencyEnum.monthly:
@@ -127,6 +131,12 @@ class TransactionFormViewModel
         }
         if (startDate == null) {
           return 'startDateRequiredForInstallments';
+        }
+        break;
+
+      case TransactionFrequencyEnum.customMonthly:
+        if (customMonths == null || customMonths.isEmpty) {
+          return 'customMonthsRequired';
         }
         break;
 
@@ -160,6 +170,7 @@ class TransactionFormViewModel
     int? totalInstallments,
     MonthEnum? yearlyMonth,
     int? endYear,
+    List<int>? customMonths,
     bool isDynamic = true,
   }) async {
     state = const TransactionFormLoadingState();
@@ -182,6 +193,7 @@ class TransactionFormViewModel
         totalInstallments: totalInstallments,
         yearlyMonth: yearlyMonth,
         endYear: endYear,
+        customMonths: customMonths,
       );
 
       if (validationError != null) {
@@ -208,6 +220,7 @@ class TransactionFormViewModel
             frequency == TransactionFrequencyEnum.installment ? 0 : null,
         yearlyMonth: yearlyMonth,
         endYear: endYear,
+        customMonths: customMonths,
         isDynamic: isDynamic,
         category: category,
         tags: tags,

@@ -36,6 +36,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   int? _totalInstallments;
   MonthEnum? _selectedYearlyMonth;
   int? _endYear;
+  List<int> _selectedCustomMonths = [];
 
   bool get _isEditing => widget.transaction != null;
 
@@ -78,6 +79,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     _totalInstallments = transaction.totalInstallments;
     _selectedYearlyMonth = transaction.yearlyMonth;
     _endYear = transaction.endYear;
+    _selectedCustomMonths = transaction.customMonths ?? [];
   }
 
   @override
@@ -114,6 +116,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 break;
               case 'yearlyMonthRequiredForYearly':
                 errorMessage = context.strings.yearlyMonthRequiredForYearly;
+                break;
+              case 'customMonthsRequired':
+                errorMessage = context.strings.customMonthsRequiredError;
                 break;
             }
           }
@@ -458,6 +463,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     switch (_selectedFrequency) {
       case TransactionFrequencyEnum.monthly:
         return _buildMonthlyFields();
+      case TransactionFrequencyEnum.customMonthly:
+        return _buildCustomMonthlyFields();
       case TransactionFrequencyEnum.installment:
         return _buildInstallmentFields();
       case TransactionFrequencyEnum.yearly:
@@ -658,6 +665,125 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     ];
   }
 
+  List<Widget> _buildCustomMonthlyFields() {
+    return [
+      const SizedBox(height: Spacing.md),
+      Text(
+        'Configurações Mensais Personalizadas',
+        style: context.textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+
+      Text(
+        context.strings.selectCustomMonths,
+        style: context.textTheme.bodyMedium?.copyWith(
+          color: context.colorScheme.onSurface.withValues(alpha: 0.7),
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+
+      Container(
+        padding: const EdgeInsets.all(Spacing.md),
+        decoration: BoxDecoration(
+          color: context.colorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: context.colorScheme.outlineVariant),
+        ),
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 2.5,
+            crossAxisSpacing: Spacing.sm,
+            mainAxisSpacing: Spacing.sm,
+          ),
+          itemCount: 12,
+          itemBuilder: (context, index) {
+            final monthNumber = index + 1;
+            final isSelected = _selectedCustomMonths.contains(monthNumber);
+
+            return InkWell(
+              onTap: () {
+                setState(() {
+                  if (isSelected) {
+                    _selectedCustomMonths.remove(monthNumber);
+                  } else {
+                    _selectedCustomMonths.add(monthNumber);
+                  }
+                });
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                decoration: BoxDecoration(
+                  color:
+                      isSelected
+                          ? context.colorScheme.primary
+                          : context.colorScheme.surface,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color:
+                        isSelected
+                            ? context.colorScheme.primary
+                            : context.colorScheme.outline.withValues(
+                              alpha: 0.3,
+                            ),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    MonthEnum.getAbbreviationByNumber(monthNumber, context),
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color:
+                          isSelected
+                              ? context.colorScheme.onPrimary
+                              : context.colorScheme.onSurface,
+                      fontWeight: isSelected ? FontWeight.bold : null,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+
+      if (_selectedCustomMonths.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.only(top: Spacing.sm),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.green.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.green.shade200),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.green.shade700,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${_selectedCustomMonths.length} meses selecionados',
+                    style: TextStyle(
+                      color: Colors.green.shade700,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+    ];
+  }
+
   List<Widget> _buildYearlyFields() {
     return [
       const SizedBox(height: Spacing.md),
@@ -724,6 +850,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         return context.strings.frequencyOneTime;
       case TransactionFrequencyEnum.monthly:
         return context.strings.frequencyMonthly;
+      case TransactionFrequencyEnum.customMonthly:
+        return context.strings.frequencyCustomMonthly;
       case TransactionFrequencyEnum.installment:
         return context.strings.frequencyInstallment;
       case TransactionFrequencyEnum.yearly:
@@ -1221,6 +1349,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       _totalInstallments = null;
       _selectedYearlyMonth = null;
       _endYear = null;
+      _selectedCustomMonths = [];
     });
   }
 
@@ -1230,6 +1359,11 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     if (_selectedFrequency == TransactionFrequencyEnum.monthly &&
         _startDate == null) {
       return; // Não deve acontecer na interface, mas mantém a segurança
+    }
+
+    if (_selectedFrequency == TransactionFrequencyEnum.customMonthly &&
+        _selectedCustomMonths.isEmpty) {
+      return; // Pelo menos um mês deve ser selecionado
     }
 
     final digitsOnly = _amountController.text.replaceAll(RegExp(r'[^\d]'), '');
@@ -1257,6 +1391,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         totalInstallments: _totalInstallments,
         yearlyMonth: _selectedYearlyMonth,
         endYear: _endYear,
+        customMonths: _selectedCustomMonths,
         isDynamic: true,
       );
     } else {
@@ -1275,6 +1410,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         totalInstallments: _totalInstallments,
         yearlyMonth: _selectedYearlyMonth,
         endYear: _endYear,
+        customMonths: _selectedCustomMonths,
         isDynamic: true,
       );
     }

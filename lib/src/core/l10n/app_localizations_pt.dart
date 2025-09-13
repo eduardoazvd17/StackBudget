@@ -311,6 +311,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get endYearHelp => 'A recorrência continuará até o ano selecionado';
 
   @override
+  String get frequencyCustomMonthly => 'Mensal Personalizado';
+
+  @override
+  String get selectCustomMonths => 'Selecione os meses em que a transação deve aparecer';
+
+  @override
+  String get customMonthsRequired => 'Selecione pelo menos um mês';
+
+  @override
+  String get customMonthsRequiredError => 'Pelo menos um mês deve ser selecionado para recorrência personalizada';
+
+  @override
   String get totalInstallmentsRequiredLabel => 'Total de Parcelas *';
 
   @override

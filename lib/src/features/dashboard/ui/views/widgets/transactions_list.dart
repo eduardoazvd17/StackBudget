@@ -318,6 +318,8 @@ class TransactionListItem extends ConsumerWidget {
     switch (frequency) {
       case TransactionFrequencyEnum.monthly:
         return context.strings.frequencyMonthly;
+      case TransactionFrequencyEnum.customMonthly:
+        return context.strings.frequencyCustomMonthly;
       case TransactionFrequencyEnum.yearly:
         return context.strings.frequencyYearly;
       case TransactionFrequencyEnum.installment:

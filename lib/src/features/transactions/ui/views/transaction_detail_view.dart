@@ -284,6 +284,24 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
           ]),
         ];
 
+      case TransactionFrequencyEnum.customMonthly:
+        return [
+          _buildDetailSection('Meses Personalizados', [
+            if (widget.transaction.customMonths != null &&
+                widget.transaction.customMonths!.isNotEmpty)
+              _buildDetailItem(
+                'Meses Selecionados',
+                widget.transaction.customMonths!
+                    .map(
+                      (month) =>
+                          MonthEnum.getAbbreviationByNumber(month, context),
+                    )
+                    .join(', '),
+                Icons.calendar_view_month,
+              ),
+          ]),
+        ];
+
       case TransactionFrequencyEnum.installment:
         return [
           _buildDetailSection(context.strings.installmentInformation, [
@@ -358,6 +376,8 @@ class _TransactionDetailViewState extends ConsumerState<TransactionDetailView> {
         return context.strings.frequencyOneTime;
       case TransactionFrequencyEnum.monthly:
         return context.strings.frequencyMonthly;
+      case TransactionFrequencyEnum.customMonthly:
+        return context.strings.frequencyCustomMonthly;
       case TransactionFrequencyEnum.installment:
         return context.strings.frequencyInstallment;
       case TransactionFrequencyEnum.yearly:

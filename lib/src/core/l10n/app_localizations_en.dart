@@ -311,6 +311,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get endYearHelp => 'Recurrence will continue until selected year';
 
   @override
+  String get frequencyCustomMonthly => 'Custom Monthly';
+
+  @override
+  String get selectCustomMonths => 'Select the months when the transaction should appear';
+
+  @override
+  String get customMonthsRequired => 'Select at least one month';
+
+  @override
+  String get customMonthsRequiredError => 'At least one month must be selected for custom recurrence';
+
+  @override
   String get totalInstallmentsRequiredLabel => 'Total Installments *';
 
   @override

@@ -695,6 +695,30 @@ abstract class AppLocalizations {
   /// **'Recurrence will continue until selected year'**
   String get endYearHelp;
 
+  /// No description provided for @frequencyCustomMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Monthly'**
+  String get frequencyCustomMonthly;
+
+  /// No description provided for @selectCustomMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the months when the transaction should appear'**
+  String get selectCustomMonths;
+
+  /// No description provided for @customMonthsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one month'**
+  String get customMonthsRequired;
+
+  /// No description provided for @customMonthsRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one month must be selected for custom recurrence'**
+  String get customMonthsRequiredError;
+
   /// No description provided for @totalInstallmentsRequiredLabel.
   ///
   /// In en, this message translates to:
