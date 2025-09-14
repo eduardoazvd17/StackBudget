@@ -631,27 +631,19 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
       if (_canCalculateInstallmentValue())
         Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.blue.shade200),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.calculate, color: Colors.blue.shade700, size: 20),
-                const SizedBox(width: 8),
-                Text(
-                  '${context.strings.installmentValueForm}: ${_getInstallmentValueText()}',
-                  style: TextStyle(
-                    color: Colors.blue.shade700,
-                    fontWeight: FontWeight.w600,
-                  ),
+          padding: const EdgeInsets.only(top: 8, left: 8),
+          child: Row(
+            children: [
+              Icon(Icons.calculate, color: Colors.blue.shade700, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                '${context.strings.installmentValueForm}: ${_getInstallmentValueText()}',
+                style: TextStyle(
+                  color: Colors.blue.shade700,
+                  fontWeight: FontWeight.w600,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       const SizedBox(height: Spacing.md),
@@ -894,61 +886,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 : 'Selecione o ano em que termina',
         onTap: () => _selectEndYear(),
       ),
-
-      if (_selectedCustomMonths.isNotEmpty)
-        Padding(
-          padding: const EdgeInsets.only(top: Spacing.sm),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.blue.shade200),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.check_circle, color: Colors.blue.shade700, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    context.strings.selectedMonthsCount(
-                      _selectedCustomMonths.length,
-                    ),
-                    style: TextStyle(
-                      color: Colors.blue.shade700,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-      if (_endYear != null)
-        Padding(
-          padding: const EdgeInsets.only(top: Spacing.sm),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.blue.shade200),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.info, color: Colors.blue.shade700, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'A recorrência terminará no ano de $_endYear',
-                    style: TextStyle(color: Colors.blue.shade700, fontSize: 12),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
     ];
   }
 
@@ -984,31 +921,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 : context.strings.selectEndYear,
         onTap: () => _selectEndYear(),
       ),
-
-      if (_endYear != null)
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.blue.shade200),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.info, color: Colors.blue.shade700, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    context.strings.endYearHelp,
-                    style: TextStyle(color: Colors.blue.shade700, fontSize: 12),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
     ];
   }
 
