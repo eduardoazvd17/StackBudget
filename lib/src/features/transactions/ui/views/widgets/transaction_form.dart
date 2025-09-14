@@ -46,6 +46,17 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     super.initState();
     if (_isEditing) {
       _populateFieldsForEditing();
+      // Verificar se a frequência é válida para o tipo selecionado
+      _ensureValidFrequencyForType();
+    }
+  }
+
+  void _ensureValidFrequencyForType() {
+    // Se for income e estiver selecionado installment, resetar para oneTime
+    if (_selectedType == TransactionTypeEnum.income &&
+        _selectedFrequency == TransactionFrequencyEnum.installment) {
+      _selectedFrequency = TransactionFrequencyEnum.oneTime;
+      _resetFrequencyFields();
     }
   }
 
@@ -328,6 +339,13 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         setState(() {
           _selectedType = type;
           _selectedCategory = null;
+
+          // Se mudou para income e estava selecionado installment, resetar para oneTime
+          if (type == TransactionTypeEnum.income &&
+              _selectedFrequency == TransactionFrequencyEnum.installment) {
+            _selectedFrequency = TransactionFrequencyEnum.oneTime;
+            _resetFrequencyFields();
+          }
         });
       },
       child: Container(
@@ -408,6 +426,13 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             ),
             items:
                 TransactionFrequencyEnum.values
+                    .where((frequency) {
+                      // Só mostrar installment para despesas
+                      if (frequency == TransactionFrequencyEnum.installment) {
+                        return _selectedType == TransactionTypeEnum.expense;
+                      }
+                      return true;
+                    })
                     .map(
                       (TransactionFrequencyEnum item) =>
                           DropdownMenuItem<TransactionFrequencyEnum>(
