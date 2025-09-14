@@ -260,8 +260,8 @@ class AppTheme {
     );
   }
 
-  CardTheme _cardTheme() {
-    return CardTheme(
+  CardThemeData _cardTheme() {
+    return CardThemeData(
       margin: EdgeInsets.zero,
       shape: Borders.radius.medium.circularShape,
     );

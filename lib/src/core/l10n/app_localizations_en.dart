@@ -167,7 +167,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteConfirmation => 'Delete Transaction';
 
   @override
-  String get deleteConfirmationMessage => 'Are you sure you want to delete this transaction? This action cannot be undone.';
+  String get deleteConfirmationMessage =>
+      'Are you sure you want to delete this transaction? This action cannot be undone.';
 
   @override
   String get yes => 'Yes';
@@ -281,7 +282,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get installmentsPositive => 'Must be a number greater than zero';
 
   @override
-  String get selectFirstInstallmentMonth => 'Select the month of the first installment';
+  String get selectFirstInstallmentMonth =>
+      'Select the month of the first installment';
 
   @override
   String get installmentValueForm => 'Installment value';
@@ -308,7 +310,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectEndYearTitle => 'Select End Year';
 
   @override
-  String get endYearAfterCurrent => 'End year must be greater than or equal to current year';
+  String get endYearAfterCurrent =>
+      'End year must be greater than or equal to current year';
 
   @override
   String get endYearHelp => 'Recurrence will continue until selected year';
@@ -326,13 +329,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get removeAll => 'Remove All';
 
   @override
-  String get selectCustomMonths => 'Select the months when the transaction should appear';
+  String get selectCustomMonths =>
+      'Select the months when the transaction should appear';
 
   @override
   String get customMonthsRequired => 'Select at least one month';
 
   @override
-  String get customMonthsRequiredError => 'At least one month must be selected for custom recurrence';
+  String get customMonthsRequiredError =>
+      'At least one month must be selected for custom recurrence';
 
   @override
   String get customMonthlyEndYearOptional => 'End Year (Optional)';
@@ -468,7 +473,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmLogout => 'Confirm Logout';
 
   @override
-  String get confirmLogoutMessage => 'Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.';
+  String get confirmLogoutMessage =>
+      'Are you sure you want to logout from your account?\n\nYou will need to login again to access the app.';
 
   @override
   String get authErrorTitle => 'Authentication Error';
@@ -495,34 +501,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get generalErrorTitle => 'Error';
 
   @override
-  String get userNotFoundError => 'User not found. Please check your email and try again.';
+  String get userNotFoundError =>
+      'User not found. Please check your email and try again.';
 
   @override
-  String get wrongPasswordError => 'Wrong password. Please check your password and try again.';
+  String get wrongPasswordError =>
+      'Wrong password. Please check your password and try again.';
 
   @override
-  String get emailAlreadyInUseError => 'This email is already being used by another account.';
+  String get emailAlreadyInUseError =>
+      'This email is already being used by another account.';
 
   @override
-  String get weakPasswordError => 'Password must be at least 6 characters long.';
+  String get weakPasswordError =>
+      'Password must be at least 6 characters long.';
 
   @override
   String get invalidEmailError => 'The email provided is not valid.';
 
   @override
-  String get userDisabledError => 'This account has been disabled. Please contact support.';
+  String get userDisabledError =>
+      'This account has been disabled. Please contact support.';
 
   @override
-  String get tooManyRequestsError => 'Too many login attempts. Please try again in a few minutes.';
+  String get tooManyRequestsError =>
+      'Too many login attempts. Please try again in a few minutes.';
 
   @override
-  String get operationNotAllowedError => 'Operation not allowed. Please check your settings.';
+  String get operationNotAllowedError =>
+      'Operation not allowed. Please check your settings.';
 
   @override
-  String get invalidCredentialError => 'Invalid credentials. Please check your information and try again.';
+  String get invalidCredentialError =>
+      'Invalid credentials. Please check your information and try again.';
 
   @override
-  String get authenticationFailedError => 'Authentication failed. Please try again.';
+  String get authenticationFailedError =>
+      'Authentication failed. Please try again.';
 
   @override
   String get userDataNotFoundError => 'User data not found.';
@@ -537,7 +552,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get getCurrentUserFailedError => 'Error retrieving user data.';
 
   @override
-  String get networkError => 'Connection error. Please check your internet and try again.';
+  String get networkError =>
+      'Connection error. Please check your internet and try again.';
 
   @override
   String get connectionTimeoutError => 'Connection timeout. Please try again.';
@@ -546,16 +562,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get serverError => 'Server error. Please try again in a few minutes.';
 
   @override
-  String get noInternetConnectionError => 'No internet connection. Please check your connection.';
+  String get noInternetConnectionError =>
+      'No internet connection. Please check your connection.';
 
   @override
-  String get firebaseError => 'Service error. Please try again in a few minutes.';
+  String get firebaseError =>
+      'Service error. Please try again in a few minutes.';
 
   @override
   String get firestoreError => 'Database error. Please try again.';
 
   @override
-  String get permissionDeniedError => 'Access denied. Please check your permissions.';
+  String get permissionDeniedError =>
+      'Access denied. Please check your permissions.';
 
   @override
   String get documentNotFoundError => 'Document not found.';
@@ -567,34 +586,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionNotFoundError => 'Transaction not found.';
 
   @override
-  String get transactionSaveFailedError => 'Error saving transaction. Please try again.';
+  String get transactionSaveFailedError =>
+      'Error saving transaction. Please try again.';
 
   @override
-  String get transactionDeleteFailedError => 'Error deleting transaction. Please try again.';
+  String get transactionDeleteFailedError =>
+      'Error deleting transaction. Please try again.';
 
   @override
-  String get transactionUpdateFailedError => 'Error updating transaction. Please try again.';
+  String get transactionUpdateFailedError =>
+      'Error updating transaction. Please try again.';
 
   @override
-  String get transactionLoadFailedError => 'Error loading transactions. Please try again.';
+  String get transactionLoadFailedError =>
+      'Error loading transactions. Please try again.';
 
   @override
   String get invalidTransactionDataError => 'Invalid transaction data.';
 
   @override
-  String get budgetCalculationFailedError => 'Error calculating budget. Please try again.';
+  String get budgetCalculationFailedError =>
+      'Error calculating budget. Please try again.';
 
   @override
   String get budgetDataInvalidError => 'Invalid budget data.';
 
   @override
-  String get settingsSaveFailedError => 'Error saving settings. Please try again.';
+  String get settingsSaveFailedError =>
+      'Error saving settings. Please try again.';
 
   @override
-  String get settingsLoadFailedError => 'Error loading settings. Please try again.';
+  String get settingsLoadFailedError =>
+      'Error loading settings. Please try again.';
 
   @override
-  String get validationError => 'Invalid data. Please check the fields and try again.';
+  String get validationError =>
+      'Invalid data. Please check the fields and try again.';
 
   @override
   String get invalidDataError => 'Invalid data provided.';
@@ -603,7 +630,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requiredFieldMissingError => 'Required field not filled.';
 
   @override
-  String get unknownError => 'Unknown error. Please try again or contact support.';
+  String get unknownError =>
+      'Unknown error. Please try again or contact support.';
 
   @override
   String get dataParsingError => 'Error processing data. Please try again.';
@@ -654,10 +682,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAccountConfirmation => 'Delete Account Permanently';
 
   @override
-  String get deleteAccountWarning => 'This action is irreversible!\n\nAll your data will be permanently deleted:\n• Transactions\n• Settings\n• Financial history\n\nAre you sure you want to continue?';
+  String get deleteAccountWarning =>
+      'This action is irreversible!\n\nAll your data will be permanently deleted:\n• Transactions\n• Settings\n• Financial history\n\nAre you sure you want to continue?';
 
   @override
-  String get enterCurrentPasswordToDelete => 'Enter your current password to confirm deletion:';
+  String get enterCurrentPasswordToDelete =>
+      'Enter your current password to confirm deletion:';
 
   @override
   String get accountDeletedSuccess => 'Account deleted successfully!';
@@ -666,7 +696,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get incorrectPassword => 'Current password is incorrect';
 
   @override
-  String get passwordTooWeak => 'Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character';
+  String get passwordTooWeak =>
+      'Password must contain at least 8 characters, including: 1 uppercase letter, 1 lowercase letter, and 1 special character';
 
   @override
   String get nameRequired => 'Name is required';
@@ -696,7 +727,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountDeleteError => 'Error deleting account';
 
   @override
-  String get reauthenticationRequired => 'Identity confirmation is required for this action';
+  String get reauthenticationRequired =>
+      'Identity confirmation is required for this action';
 
   @override
   String get dashboard => 'Dashboard';
@@ -726,7 +758,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionNotFound => 'Transaction not found';
 
   @override
-  String get transactionNotFoundDescription => 'The transaction may have been deleted or the ID is incorrect.';
+  String get transactionNotFoundDescription =>
+      'The transaction may have been deleted or the ID is incorrect.';
 
   @override
   String get categorySalary => 'Salary';
@@ -831,7 +864,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noDataFound => 'No data found';
 
   @override
-  String get addTransactionsToSeeSummary => 'Add transactions to see the summary';
+  String get addTransactionsToSeeSummary =>
+      'Add transactions to see the summary';
 
   @override
   String get budgetSummary => 'Budget Summary';
@@ -897,16 +931,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get monthDecember => 'December';
 
   @override
-  String get installmentsMustBeGreaterThanZero => 'Number of installments must be greater than zero';
+  String get installmentsMustBeGreaterThanZero =>
+      'Number of installments must be greater than zero';
 
   @override
-  String get startDateRequiredForInstallments => 'Start date is required for installment transactions';
+  String get startDateRequiredForInstallments =>
+      'Start date is required for installment transactions';
 
   @override
-  String get startDateRequiredForMonthly => 'Start date is required for monthly transactions';
+  String get startDateRequiredForMonthly =>
+      'Start date is required for monthly transactions';
 
   @override
-  String get yearlyMonthRequiredForYearly => 'Yearly month is required for yearly transactions';
+  String get yearlyMonthRequiredForYearly =>
+      'Yearly month is required for yearly transactions';
 
   @override
   String get fieldRequired => 'This field is required';
