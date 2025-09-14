@@ -169,7 +169,7 @@ class _MonthYearPickerState extends State<MonthYearPicker> {
 
 Future<DateTime?> showMonthYearPicker({
   required BuildContext context,
-  required DateTime initialDate,
+  DateTime? initialDate,
   DateTime? firstDate,
   DateTime? lastDate,
 }) async {
@@ -338,14 +338,14 @@ class _MonthPickerBottomSheetState extends State<MonthPickerBottomSheet> {
 }
 
 class MonthYearPickerBottomSheet extends StatefulWidget {
-  final DateTime initialDate;
+  final DateTime? initialDate;
   final DateTime firstDate;
   final DateTime lastDate;
   final void Function(DateTime selectedDate) onDateSelected;
 
   const MonthYearPickerBottomSheet({
     super.key,
-    required this.initialDate,
+    this.initialDate,
     required this.firstDate,
     required this.lastDate,
     required this.onDateSelected,
@@ -364,8 +364,15 @@ class _MonthYearPickerBottomSheetState
   @override
   void initState() {
     super.initState();
-    selectedYear = widget.initialDate.year;
-    selectedMonth = widget.initialDate.month;
+    if (widget.initialDate != null) {
+      selectedYear = widget.initialDate!.year;
+      selectedMonth = widget.initialDate!.month;
+    } else {
+      // Quando não há data inicial, não selecionar nenhum mês
+      final now = DateTime.now();
+      selectedYear = now.year;
+      selectedMonth = -1; // -1 significa nenhum mês selecionado
+    }
   }
 
   @override
@@ -413,8 +420,10 @@ class _MonthYearPickerBottomSheetState
                     selectedYear > widget.firstDate.year
                         ? () => setState(() {
                           selectedYear--;
-                          selectedMonth =
-                              -1; // Reset selection when year changes
+                          // Só resetar se havia um mês selecionado
+                          if (selectedMonth != -1) {
+                            selectedMonth = -1;
+                          }
                         })
                         : null,
                 icon: const Icon(Icons.chevron_left),
@@ -430,8 +439,10 @@ class _MonthYearPickerBottomSheetState
                     selectedYear < widget.lastDate.year
                         ? () => setState(() {
                           selectedYear++;
-                          selectedMonth =
-                              -1; // Reset selection when year changes
+                          // Só resetar se havia um mês selecionado
+                          if (selectedMonth != -1) {
+                            selectedMonth = -1;
+                          }
                         })
                         : null,
                 icon: const Icon(Icons.chevron_right),

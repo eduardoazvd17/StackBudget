@@ -1214,8 +1214,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   Future<void> _selectStartDate() async {
-    final currentDate = _startDate ?? DateTime.now();
-
     final firstDate = DateTime(AppConstants.minYear);
 
     final now = DateTime.now();
@@ -1223,7 +1221,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
     final selectedDate = await showMonthYearPicker(
       context: context,
-      initialDate: currentDate,
+      initialDate: _startDate, // Passa null se não há seleção
       firstDate: firstDate,
       lastDate: lastDate,
     );
@@ -1251,7 +1249,6 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
   Future<void> _selectEndDate() async {
     final now = DateTime.now();
-    final currentDate = _endDate ?? DateTime(now.year, now.month, 1);
 
     DateTime firstDate;
     if (_startDate != null) {
@@ -1265,7 +1262,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
 
     final selectedDate = await showMonthYearPicker(
       context: context,
-      initialDate: currentDate,
+      initialDate: _endDate, // Passa null se não há seleção
       firstDate: firstDate,
       lastDate: lastDate,
     );
@@ -1283,7 +1280,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     final currentDate =
         _selectedYearlyMonth != null && _selectedYearlyYear != null
             ? DateTime(_selectedYearlyYear!, _selectedYearlyMonth!.index + 1, 1)
-            : DateTime.now();
+            : null; // Passa null se não há seleção
 
     final selectedDate = await showMonthYearPicker(
       context: context,
