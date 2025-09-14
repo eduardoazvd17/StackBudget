@@ -507,33 +507,32 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     required String label,
     required String value,
     VoidCallback? onTap,
+    VoidCallback? onClear,
     Color? iconColor,
     Color? labelColor,
     Color? valueColor,
   }) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceContainer,
-          border: Border.all(
-            color: Theme.of(context).colorScheme.outlineVariant,
+    final hasSelection = onClear != null;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainer,
+        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+        borderRadius: Borders.radius.medium.circular,
+      ),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color:
+                iconColor ??
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
           ),
-          borderRadius: Borders.radius.medium.circular,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color:
-                  iconColor ??
-                  Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.6),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
+          const SizedBox(width: 12),
+          Expanded(
+            child: InkWell(
+              onTap: onTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -560,14 +559,20 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 ],
               ),
             ),
-            Icon(
-              Icons.arrow_drop_down,
-              color: Theme.of(
-                context,
-              ).colorScheme.onSurface.withValues(alpha: 0.4),
+          ),
+          InkWell(
+            onTap: hasSelection ? onClear : onTap,
+            child: Icon(
+              hasSelection ? Icons.clear : Icons.arrow_drop_down,
+              color:
+                  hasSelection
+                      ? Theme.of(context).colorScheme.error
+                      : Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.4),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -613,6 +618,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 : context.strings.selectStartDateFirst,
         valueColor: _startDate == null ? Colors.grey : null,
         onTap: _startDate != null ? () => _selectEndDate() : null,
+        onClear: _endDate != null ? () => _clearEndDate() : null,
       ),
     ];
   }
@@ -1465,6 +1471,12 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       _selectedYearlyYear = null;
       _endYear = null;
       _selectedCustomMonths = [];
+    });
+  }
+
+  void _clearEndDate() {
+    setState(() {
+      _endDate = null;
     });
   }
 
