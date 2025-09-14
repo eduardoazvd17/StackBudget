@@ -35,6 +35,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   DateTime? _endDate;
   int? _totalInstallments;
   MonthEnum? _selectedYearlyMonth;
+  int? _selectedYearlyYear;
   int? _endYear;
   List<int> _selectedCustomMonths = [];
 
@@ -78,6 +79,8 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     _endDate = transaction.endDate;
     _totalInstallments = transaction.totalInstallments;
     _selectedYearlyMonth = transaction.yearlyMonth;
+    _selectedYearlyYear =
+        transaction.yearlyMonth != null ? DateTime.now().year : null;
     _endYear = transaction.endYear;
     _selectedCustomMonths = transaction.customMonths ?? [];
   }
@@ -691,62 +694,192 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: context.colorScheme.outlineVariant),
         ),
-        child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 2.5,
-            crossAxisSpacing: Spacing.sm,
-            mainAxisSpacing: Spacing.sm,
-          ),
-          itemCount: 12,
-          itemBuilder: (context, index) {
-            final monthNumber = index + 1;
-            final isSelected = _selectedCustomMonths.contains(monthNumber);
+        child: Column(
+          children: [
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 2.5,
+                crossAxisSpacing: Spacing.sm,
+                mainAxisSpacing: Spacing.sm,
+              ),
+              itemCount: 12,
+              itemBuilder: (context, index) {
+                final monthNumber = index + 1;
+                final isSelected = _selectedCustomMonths.contains(monthNumber);
 
-            return InkWell(
-              onTap: () {
-                setState(() {
-                  if (isSelected) {
-                    _selectedCustomMonths.remove(monthNumber);
-                  } else {
-                    _selectedCustomMonths.add(monthNumber);
-                  }
-                });
-              },
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                decoration: BoxDecoration(
-                  color:
-                      isSelected
-                          ? context.colorScheme.primary
-                          : context.colorScheme.surface,
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (isSelected) {
+                        _selectedCustomMonths.remove(monthNumber);
+                      } else {
+                        _selectedCustomMonths.add(monthNumber);
+                      }
+                    });
+                  },
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color:
-                        isSelected
-                            ? context.colorScheme.primary
-                            : context.colorScheme.outline.withValues(
-                              alpha: 0.3,
-                            ),
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    MonthEnum.getAbbreviationByNumber(monthNumber, context),
-                    style: context.textTheme.bodyMedium?.copyWith(
+                  child: Container(
+                    decoration: BoxDecoration(
                       color:
                           isSelected
-                              ? context.colorScheme.onPrimary
-                              : context.colorScheme.onSurface,
-                      fontWeight: isSelected ? FontWeight.bold : null,
+                              ? context.colorScheme.primary
+                              : context.colorScheme.surface,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color:
+                            isSelected
+                                ? context.colorScheme.primary
+                                : context.colorScheme.outline.withValues(
+                                  alpha: 0.3,
+                                ),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        MonthEnum.getAbbreviationByNumber(monthNumber, context),
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color:
+                              isSelected
+                                  ? context.colorScheme.onPrimary
+                                  : context.colorScheme.onSurface,
+                          fontWeight: isSelected ? FontWeight.bold : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap:
+                        _selectedCustomMonths.length == 12
+                            ? null
+                            : () {
+                              setState(() {
+                                _selectedCustomMonths = List.generate(
+                                  12,
+                                  (index) => index + 1,
+                                );
+                              });
+                            },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color:
+                            _selectedCustomMonths.length == 12
+                                ? context.colorScheme.surface
+                                : context.colorScheme.primary.withValues(
+                                  alpha: 0.1,
+                                ),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color:
+                              _selectedCustomMonths.length == 12
+                                  ? context.colorScheme.outline.withValues(
+                                    alpha: 0.3,
+                                  )
+                                  : context.colorScheme.primary,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.check_circle_outline,
+                            size: 18,
+                            color:
+                                _selectedCustomMonths.length == 12
+                                    ? context.colorScheme.onSurface.withValues(
+                                      alpha: 0.4,
+                                    )
+                                    : context.colorScheme.primary,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Selecionar Todos',
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color:
+                                  _selectedCustomMonths.length == 12
+                                      ? context.colorScheme.onSurface
+                                          .withValues(alpha: 0.4)
+                                      : context.colorScheme.primary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
+                const SizedBox(width: Spacing.sm),
+                Expanded(
+                  child: InkWell(
+                    onTap:
+                        _selectedCustomMonths.isEmpty
+                            ? null
+                            : () {
+                              setState(() {
+                                _selectedCustomMonths.clear();
+                              });
+                            },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color:
+                            _selectedCustomMonths.isEmpty
+                                ? context.colorScheme.surface
+                                : context.colors.error.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color:
+                              _selectedCustomMonths.isEmpty
+                                  ? context.colorScheme.outline.withValues(
+                                    alpha: 0.3,
+                                  )
+                                  : context.colors.error,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.clear,
+                            size: 18,
+                            color:
+                                _selectedCustomMonths.isEmpty
+                                    ? context.colorScheme.onSurface.withValues(
+                                      alpha: 0.4,
+                                    )
+                                    : context.colors.error,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Remover Todos',
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color:
+                                  _selectedCustomMonths.isEmpty
+                                      ? context.colorScheme.onSurface
+                                          .withValues(alpha: 0.4)
+                                      : context.colors.error,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
 
@@ -835,7 +968,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         label: context.strings.yearlyMonthRequiredLabel,
         value:
             _selectedYearlyMonth != null
-                ? _selectedYearlyMonth!.getDisplayName(context)
+                ? '${_selectedYearlyMonth!.getDisplayName(context)} ${_selectedYearlyYear ?? DateTime.now().year}'
                 : context.strings.selectYearlyMonth,
         onTap: () => _selectYearlyMonth(),
       ),
@@ -1207,12 +1340,21 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   Future<void> _selectYearlyMonth() async {
-    final selectedMonth = await showMonthPicker(
+    final currentDate =
+        _selectedYearlyMonth != null && _selectedYearlyYear != null
+            ? DateTime(_selectedYearlyYear!, _selectedYearlyMonth!.index + 1, 1)
+            : DateTime.now();
+
+    final selectedDate = await showMonthYearPicker(
       context: context,
-      initialMonth: _selectedYearlyMonth ?? MonthEnum.january,
+      initialDate: currentDate,
     );
-    if (selectedMonth != null) {
-      setState(() => _selectedYearlyMonth = selectedMonth);
+
+    if (selectedDate != null) {
+      setState(() {
+        _selectedYearlyMonth = MonthEnum.values[selectedDate.month - 1];
+        _selectedYearlyYear = selectedDate.year;
+      });
     }
   }
 
@@ -1383,6 +1525,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       _endDate = null;
       _totalInstallments = null;
       _selectedYearlyMonth = null;
+      _selectedYearlyYear = null;
       _endYear = null;
       _selectedCustomMonths = [];
     });
