@@ -305,6 +305,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectEndYear => 'Select the year when recurrence ends';
 
   @override
+  String get selectEndYearTitle => 'Select End Year';
+
+  @override
   String get endYearAfterCurrent => 'End year must be greater than or equal to current year';
 
   @override
@@ -312,6 +315,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get frequencyCustomMonthly => 'Custom Monthly';
+
+  @override
+  String get customMonthlySettings => 'Custom Monthly Settings';
+
+  @override
+  String get selectAll => 'Select All';
+
+  @override
+  String get removeAll => 'Remove All';
 
   @override
   String get selectCustomMonths => 'Select the months when the transaction should appear';

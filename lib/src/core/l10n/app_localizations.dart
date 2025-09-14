@@ -683,6 +683,12 @@ abstract class AppLocalizations {
   /// **'Select the year when recurrence ends'**
   String get selectEndYear;
 
+  /// No description provided for @selectEndYearTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select End Year'**
+  String get selectEndYearTitle;
+
   /// No description provided for @endYearAfterCurrent.
   ///
   /// In en, this message translates to:
@@ -700,6 +706,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Custom Monthly'**
   String get frequencyCustomMonthly;
+
+  /// No description provided for @customMonthlySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Monthly Settings'**
+  String get customMonthlySettings;
+
+  /// No description provided for @selectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select All'**
+  String get selectAll;
+
+  /// No description provided for @removeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove All'**
+  String get removeAll;
 
   /// No description provided for @selectCustomMonths.
   ///

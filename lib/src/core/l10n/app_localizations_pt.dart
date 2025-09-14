@@ -305,6 +305,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get selectEndYear => 'Selecione o ano em que a recorrência termina';
 
   @override
+  String get selectEndYearTitle => 'Selecionar Ano de Fim';
+
+  @override
   String get endYearAfterCurrent => 'Ano de fim deve ser maior ou igual ao ano atual';
 
   @override
@@ -312,6 +315,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get frequencyCustomMonthly => 'Mensal Personalizado';
+
+  @override
+  String get customMonthlySettings => 'Configurações Mensais Personalizadas';
+
+  @override
+  String get selectAll => 'Selecionar Todos';
+
+  @override
+  String get removeAll => 'Remover Todos';
 
   @override
   String get selectCustomMonths => 'Selecione os meses em que a transação deve aparecer';

@@ -689,7 +689,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
     return [
       const SizedBox(height: Spacing.md),
       Text(
-        'Configurações Mensais Personalizadas',
+        context.strings.customMonthlySettings,
         style: context.textTheme.titleSmall?.copyWith(
           fontWeight: FontWeight.w600,
         ),
@@ -820,7 +820,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Selecionar Todos',
+                            context.strings.selectAll,
                             style: context.textTheme.bodyMedium?.copyWith(
                               color:
                                   _selectedCustomMonths.length == 12
@@ -879,7 +879,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Remover Todos',
+                            context.strings.removeAll,
                             style: context.textTheme.bodyMedium?.copyWith(
                               color:
                                   _selectedCustomMonths.isEmpty
@@ -908,7 +908,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
         value:
             _endYear != null
                 ? _endYear!.toString()
-                : 'Selecione o ano em que termina',
+                : context.strings.selectEndYear,
         onTap: () => _selectEndYear(),
       ),
     ];
@@ -1327,7 +1327,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'Selecionar Ano de Fim',
+                    context.strings.selectEndYearTitle,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -1371,7 +1371,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                           ),
                           child: Center(
                             child: Text(
-                              'Nenhum',
+                              context.strings.none,
                               style: context.textTheme.bodyMedium?.copyWith(
                                 color:
                                     _endYear == null
