@@ -341,5 +341,6 @@
   "monthDec": "Dez",
   "appName": "StackBudget",
   "appDescription": "Seu planejamento financeiro inteligente",
-  "none": "Nenhum(a)"
+  "none": "Nenhum(a)",
+  "termsAndPrivacy": "Termos de Uso e Política de Privacidade"
 }

@@ -54,6 +54,7 @@ class MyApp extends ConsumerWidget {
     final currentLocale = ref.watch(localeProvider);
 
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'StackBudget',
       theme: lightTheme,
       darkTheme: darkTheme,

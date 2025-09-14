@@ -361,5 +361,6 @@
   "monthDec": "Dec",
   "appName": "StackBudget",
   "appDescription": "Your smart financial planning",
-  "none": "None"
+  "none": "None",
+  "termsAndPrivacy": "Terms of Use and Privacy Policy"
 }

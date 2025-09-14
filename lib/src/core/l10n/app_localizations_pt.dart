@@ -1036,4 +1036,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get appDescription => 'Seu planejamento financeiro inteligente';
+
+  @override
+  String get termsAndPrivacy => 'Termos de Uso e Política de Privacidade';
 }

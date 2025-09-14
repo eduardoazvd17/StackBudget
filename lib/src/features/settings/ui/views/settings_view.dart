@@ -6,6 +6,7 @@ import '../view_models/settings_view_model_state.dart';
 import 'widgets/currency_selector.dart';
 import 'widgets/language_selector.dart';
 import 'widgets/theme_selector.dart';
+import 'widgets/terms_link_tile.dart';
 
 class SettingsView extends ConsumerStatefulWidget {
   const SettingsView({super.key});
@@ -110,6 +111,11 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
               },
             ),
           ],
+        ),
+        const SizedBox(height: 24),
+        _buildSection(
+          title: context.strings.termsAndPrivacy,
+          children: [const TermsLinkTile()],
         ),
       ],
     );

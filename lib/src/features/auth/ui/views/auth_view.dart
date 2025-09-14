@@ -7,6 +7,7 @@ import 'package:stackbudget/src/features/auth/ui/views/widgets/auth_form.dart';
 
 class AuthView extends ConsumerWidget {
   static const routeName = 'auth';
+
   const AuthView({super.key});
 
   @override
@@ -53,6 +54,10 @@ class AuthView extends ConsumerWidget {
                   const SizedBox(height: Spacing.xxl),
 
                   const AuthForm(),
+
+                  const SizedBox(height: Spacing.lg),
+
+                  const Center(child: TermsLink()),
                 ],
               ),
             ),

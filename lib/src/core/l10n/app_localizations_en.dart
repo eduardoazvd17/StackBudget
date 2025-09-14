@@ -1036,4 +1036,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appDescription => 'Your smart financial planning';
+
+  @override
+  String get termsAndPrivacy => 'Terms of Use and Privacy Policy';
 }

@@ -2140,6 +2140,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your smart financial planning'**
   String get appDescription;
+
+  /// No description provided for @termsAndPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use and Privacy Policy'**
+  String get termsAndPrivacy;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
