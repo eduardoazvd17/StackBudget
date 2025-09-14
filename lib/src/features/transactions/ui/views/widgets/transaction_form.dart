@@ -1233,7 +1233,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       setState(() {
         _startDate = newStartDate;
 
-        if (_endDate != null && !newStartDate.isBefore(_endDate!)) {
+        if (_endDate != null &&
+            (newStartDate.year > _endDate!.year ||
+                (newStartDate.year == _endDate!.year &&
+                    newStartDate.month >= _endDate!.month))) {
           _endDate = null;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
