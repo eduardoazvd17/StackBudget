@@ -916,6 +916,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 ? _endYear!.toString()
                 : context.strings.selectEndYear,
         onTap: () => _selectEndYear(),
+        onClear: _endYear != null ? () => _clearEndYear() : null,
       ),
     ];
   }
@@ -951,6 +952,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                 ? _endYear!.toString()
                 : context.strings.selectEndYear,
         onTap: () => _selectEndYear(),
+        onClear: _endYear != null ? () => _clearEndYear() : null,
       ),
     ];
   }
@@ -1477,6 +1479,12 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   void _clearEndDate() {
     setState(() {
       _endDate = null;
+    });
+  }
+
+  void _clearEndYear() {
+    setState(() {
+      _endYear = null;
     });
   }
 
