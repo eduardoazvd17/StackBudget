@@ -74,13 +74,18 @@ class _DeleteAccountBottomSheetState
       next,
     ) {
       if (next is ProfileAccountDeletedState) {
-        Navigator.of(context).pop(true);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l10n.accountDeletedSuccess),
-            backgroundColor: Colors.green,
-          ),
-        );
+        // Pequeno delay para garantir que a limpeza dos dados foi concluída
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).pop(true);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l10n.accountDeletedSuccess),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        });
       } else if (next is ProfileErrorState) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

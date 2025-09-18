@@ -57,10 +57,14 @@ class AuthViewModel extends StateNotifier<AuthViewModelState> {
             state = AuthenticatedState(user: userModel);
             _syncUserSettings();
           } else {
+            // Usuário não encontrado no Firestore (possivelmente conta deletada)
+            _clearAllUserData();
             state = const UnauthenticatedState();
           }
         });
       } else {
+        // Usuário desconectado (logout ou conta deletada)
+        _clearAllUserData();
         state = const UnauthenticatedState();
       }
     });

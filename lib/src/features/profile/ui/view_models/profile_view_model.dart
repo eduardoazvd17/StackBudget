@@ -4,10 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stackbudget/src/core/errors/errors.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model.dart';
 import 'package:stackbudget/src/features/auth/ui/view_models/auth_view_model_state.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/dashboard_view_model.dart';
+import 'package:stackbudget/src/features/dashboard/ui/view_models/expansion_state_provider.dart';
 import 'package:stackbudget/src/features/profile/data/datasources/datasources.dart';
 import 'package:stackbudget/src/features/profile/data/models/models.dart';
 import 'package:stackbudget/src/features/profile/data/repositories/repositories.dart';
 import 'package:stackbudget/src/features/profile/ui/view_models/profile_view_model_state.dart';
+import 'package:stackbudget/src/features/settings/ui/view_models/currency_provider.dart';
+import 'package:stackbudget/src/features/settings/ui/view_models/locale_provider.dart';
+import 'package:stackbudget/src/features/settings/ui/view_models/settings_view_model.dart';
+import 'package:stackbudget/src/features/transactions/ui/view_models/monthly_transaction_view_model.dart';
+import 'package:stackbudget/src/features/transactions/ui/view_models/transaction_form_view_model.dart';
 
 final profileViewModelProvider =
     StateNotifierProvider<ProfileViewModel, ProfileViewModelState>((ref) {
@@ -84,8 +91,41 @@ class ProfileViewModel extends StateNotifier<ProfileViewModelState> {
 
     result.fold(
       (exception) => state = ProfileErrorState(exception: exception),
-      (_) => state = const ProfileAccountDeletedState(),
+      (_) {
+        // Limpa todos os dados locais imediatamente após deleção bem-sucedida
+        _clearAllLocalData();
+        state = const ProfileAccountDeletedState();
+      },
     );
+  }
+
+  void _clearAllLocalData() {
+    try {
+      // Limpa dados do dashboard
+      _ref.invalidate(dashboardViewModelProvider);
+
+      // Limpa dados dos formulários de transação
+      _ref.invalidate(transactionFormViewModelProvider);
+      _ref.invalidate(monthlyTransactionViewModelProvider);
+
+      // Limpa dados do perfil
+      _ref.invalidate(profileViewModelProvider);
+
+      // Limpa período selecionado
+      _ref.invalidate(selectedPeriodProvider);
+
+      // Limpa dados do expansion state
+      _ref.invalidate(expansionStateProvider);
+
+      // Limpa dados dos providers de configurações
+      _ref.invalidate(settingsViewModelProvider);
+      _ref.invalidate(currencyProvider);
+      _ref.invalidate(localeProvider);
+      _ref.invalidate(themeModeProvider);
+    } catch (e) {
+      // Em caso de erro, apenas loga, não interrompe o processo
+      print('Erro ao limpar dados locais após deleção: $e');
+    }
   }
 
   void resetState() {
