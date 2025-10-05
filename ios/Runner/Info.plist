@@ -49,5 +49,7 @@
 	<array>
 		<string>https</string>
 	</array>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-9028469861092121~8033060038</string>
 </dict>
 </plist>
