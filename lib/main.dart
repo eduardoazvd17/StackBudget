@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stackbudget/firebase_options.dart';
 import 'package:stackbudget/src/core/core.dart';
+import 'package:stackbudget/src/core/widgets/banner_ad_widget.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/settings_view_model.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/settings_view_model_state.dart';
 import 'package:stackbudget/src/features/settings/ui/view_models/locale_provider.dart';
@@ -75,7 +76,15 @@ class MyApp extends ConsumerWidget {
                 maxScaleFactor: 1.4,
               ),
             ),
-            child: child ?? const SizedBox.shrink(),
+            child: Container(
+              color: context.colors.surface,
+              child: Column(
+                children: [
+                  Expanded(child: child ?? const SizedBox.shrink()),
+                  const BannerAdWidget(),
+                ],
+              ),
+            ),
           ),
         );
       },
